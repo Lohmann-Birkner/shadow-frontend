@@ -1,0 +1,171 @@
+[
+    {
+        "lastName": "Doe",
+        "firstName": "John",
+
+        "dateOfBirth": "10-02-1985",
+        "sex": "männlich",
+        "zipcode": "12345",
+        "insuranceNumber": "INS123456"
+    },
+    {
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "dateOfBirth": "15-07-1990",
+        "sex": "weiblich",
+        "zipcode": "54321",
+        "insuranceNumber": "INS987654"
+    },
+    {
+        "firstName": "Michael",
+        "lastName": "Johnson",
+        "dateOfBirth": "28-11-1978",
+        "sex": "männlich",
+        "zipcode": "67890",
+        "insuranceNumber": "INS246813"
+    },
+    {
+        "firstName": "Emily",
+        "lastName": "Davis",
+        "dateOfBirth": "03-04-2001",
+        "sex": "weiblich",
+        "zipcode": "13579",
+        "insuranceNumber": "INS531864"
+    },
+    {
+        "firstName": "David",
+        "lastName": "Brown",
+        "dateOfBirth": "20-09-1965",
+        "sex": "männlich",
+        "zipcode": "97531",
+        "insuranceNumber": "INS468135"
+    },
+    {
+        "firstName": "Sarah",
+        "lastName": "Wilson",
+        "dateOfBirth": "18-12-1992",
+        "sex": "weiblich",
+        "zipcode": "31415",
+        "insuranceNumber": "INS975318"
+    },
+    {
+        "firstName": "Matthew",
+        "lastName": "Anderson",
+        "dateOfBirth": "25-06-1980",
+        "sex": "männlich",
+        "zipcode": "92657",
+        "insuranceNumber": "INS813792"
+    },
+    {
+        "firstName": "Olivia",
+        "lastName": "Thomas",
+        "dateOfBirth": "12-03-1998",
+        "sex": "weiblich",
+        "zipcode": "64293",
+        "insuranceNumber": "INS753921"
+    },
+    {
+        "firstName": "Christopher",
+        "lastName": "Garcia",
+        "dateOfBirth": "08-08-1974",
+        "sex": "männlich",
+        "zipcode": "28574",
+        "insuranceNumber": "INS219837"
+    },
+    {
+        "firstName": "Emma",
+        "lastName": "Wilson",
+        "dateOfBirth": "02-05-1995",
+        "sex": "weiblich",
+        "zipcode": "83520",
+        "insuranceNumber": "INS963852"
+    },
+    {
+        "firstName": "Daniel",
+        "lastName": "Harris",
+        "dateOfBirth": "11-01-1983",
+        "sex": "männlich",
+        "zipcode": "74210",
+        "insuranceNumber": "INS852963"
+    },
+    {
+        "firstName": "Sophia",
+        "lastName": "Rodriguez",
+        "dateOfBirth": "14-09-1987",
+        "sex": "weiblich",
+        "zipcode": "35790",
+        "insuranceNumber": "INS369852"
+    },
+    {
+        "firstName": "James",
+        "lastName": "Lee",
+        "dateOfBirth": "30-06-1976",
+        "sex": "männlich",
+        "zipcode": "48075",
+        "insuranceNumber": "INS258147"
+    },
+    {
+        "firstName": "Ava",
+        "lastName": "Gonzalez",
+        "dateOfBirth": "17-12-2003",
+        "sex": "weiblich",
+        "zipcode": "62134",
+        "insuranceNumber": "INS741852"
+    },
+    {
+        "firstName": "Benjamin",
+        "lastName": "Lopez",
+        "dateOfBirth": "19-04-1996",
+        "sex": "männlich",
+        "zipcode": "90210",
+        "insuranceNumber": "INS123789"
+    },
+    {
+        "firstName": "Mia",
+        "lastName": "Clark",
+        "dateOfBirth": "22-11-2000",
+        "sex": "weiblich",
+        "zipcode": "94536",
+        "insuranceNumber": "INS789123"
+    },
+    {
+        "firstName": "William",
+        "lastName": "Hill",
+        "dateOfBirth": "07-03-1989",
+        "sex": "männlich",
+        "zipcode": "60173",
+        "insuranceNumber": "INS951357"
+    },
+    {
+        "firstName": "Charlotte",
+        "lastName": "Wright",
+        "dateOfBirth": "09-08-1993",
+        "sex": "weiblich",
+        "zipcode": "10001",
+        "insuranceNumber": "INS753159"
+    },
+    {
+        "firstName": "Alexander",
+        "lastName": "Baker",
+        "dateOfBirth": "26-02-1972",
+        "sex": "männlich",
+        "zipcode": "90265",
+        "insuranceNumber": "INS159753"
+    },
+    {
+        "firstName": "Sofia",
+        "lastName": "Walker",
+        "dateOfBirth": "05-07-1997",
+        "sex": "weiblich",
+        "zipcode": "80202",
+        "insuranceNumber": "INS357951"
+    },
+    {
+        "firstName": "Joseph",
+        "lastName": "Hall",
+        "dateOfBirth": "04-12-1981",
+        "sex": "männlich",
+        "zipcode": "94102",
+        "insuranceNumber": "INS852741"
+    }
+]
