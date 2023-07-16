@@ -23,7 +23,7 @@ function PatientsList({
     selectedItem,
 }: DataTableProps) {
     return (
-        <div className="rounded-md h-[575px] overflow-hidden border overflow-y-scroll">
+        <div className="rounded-md overflow-hidden border overflow-y-scroll">
             <Table>
                 <TableHeader>
                     <TableRow>

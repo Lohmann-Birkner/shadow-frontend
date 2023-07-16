@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import data from "../../mock_insured_patients.json";
 import { useMemo, useState } from "react";
 import { InsuredT } from "../../types";
-import DataTable from "@/components/ui/DataTable";
 import { Input } from "@/components/ui/input";
 import { Edit, ArrowDownUp, Search, ArrowUpDown } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -26,17 +25,10 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ShadDataTable } from "@/components/ui/table/ShadDataTable";
+import { columns, columnsData } from "@/components/ui/table/columns";
 
 const inter = Inter({ subsets: ["latin"] });
-
-const columns = [
-    { accessor: "lastName", header: "Name" },
-    { accessor: "firstName", header: "Vorname" },
-    { accessor: "dateOfBirth", header: "Geburtsdatum" },
-    { accessor: "sex", header: "Geschlecht" },
-    { accessor: "zipcode", header: "Postleitzahl" },
-    { accessor: "insuranceNumber", header: "Versichertennummer" },
-];
 
 export default function Home() {
     const [selectedItem, setSelectedItem] = useState<InsuredT | null>(null);
@@ -97,26 +89,28 @@ export default function Home() {
 
     const headerValue = () => {
         // Find the corresponding header value
-        const column = columns.find((column) => column.accessor === sortBy);
+        const column = columnsData.find(
+            (column) => column.accessorKey === sortBy
+        );
         const headerValue = column ? column.header : "";
         return headerValue;
     };
 
     return (
         <main
-            className={`grid px-4 pb-4 gap-4 rounded-md grid-cols-2 ${inter.className}`}>
+            className={`grid px-6 2xl:px-16 pb-4 gap-5 2xl:gap-8 min-h-[calc(100vh-3.5rem)] rounded-md grid-cols-2 ${inter.className}`}>
             <section>
-                <div className="py-4 flex w-full justify-between">
+                <div className="mt-5 mb-4 flex w-full justify-between">
                     <Input
                         placeholder="Suchen..."
                         onChange={(event) => setSearchInput(event.target.value)}
-                        className="w-44"
+                        className="w-40"
                         icon={<Search className="mx-2 h-4 w-4" />}
                     />
                     <div className="flex gap-3">
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
-                                <Button size={"sm"} variant="outline">
+                                <Button variant="outline">
                                     <Edit className="h-4 w-4 mr-2" />
                                     Documentation
                                 </Button>
@@ -131,7 +125,7 @@ export default function Home() {
                                         adipisicing elit. Ad, delectus!
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
-                                <Textarea />
+                                <Textarea className="h-40" />
 
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>
@@ -144,7 +138,6 @@ export default function Home() {
                             </AlertDialogContent>
                         </AlertDialog>
                         <Button
-                            size={"sm"}
                             onClick={() => setIsFlipped(!isFlipped)}
                             variant="outline">
                             {isFlipped ? (
@@ -155,7 +148,7 @@ export default function Home() {
                         </Button>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button size={"sm"} variant="outline">
+                                <Button variant="outline">
                                     Sortiert nach:{" "}
                                     <b className="ml-1">{headerValue()}</b>
                                 </Button>
@@ -164,10 +157,10 @@ export default function Home() {
                                 <DropdownMenuRadioGroup
                                     value={sortBy}
                                     onValueChange={setSortBy}>
-                                    {columns.map((column) => (
+                                    {columnsData.map((column) => (
                                         <DropdownMenuRadioItem
-                                            key={column.accessor}
-                                            value={column.accessor}>
+                                            key={column.header}
+                                            value={column.accessorKey}>
                                             {column.header}
                                         </DropdownMenuRadioItem>
                                     ))}
@@ -176,17 +169,17 @@ export default function Home() {
                         </DropdownMenu>
                     </div>
                 </div>
-                <DataTable
-                    setSelectedItem={setSelectedItem}
-                    selectedItem={selectedItem}
-                    columns={columns}
-                    data={filteredItems}
-                />
+                {filteredItems && (
+                    <ShadDataTable
+                        setSelectedItem={setSelectedItem}
+                        selectedItem={selectedItem}
+                        columns={columns}
+                        data={filteredItems}
+                    />
+                )}
             </section>
             <section>
-                <Tabs
-                    defaultValue={"doctor_information"}
-                    className="mt-4 h-full">
+                <Tabs defaultValue={"doctor_information"} className="py-5">
                     <TabsList>
                         <TabsTrigger
                             disabled={!selectedItem}
