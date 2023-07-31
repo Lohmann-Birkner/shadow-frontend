@@ -98,7 +98,7 @@ export default function Home() {
 
     return (
         <main
-            className={`grid px-6 2xl:px-16 pb-4 gap-5 2xl:gap-8 min-h-[calc(100vh-3.5rem)] rounded-md grid-cols-2 ${inter.className}`}>
+            className={`grid px-5 2xl:px-16 pb-4 gap-5 2xl:gap-8 min-h-[calc(100vh-3.5rem)] rounded-md grid-cols-2 ${inter.className}`}>
             <section>
                 <div className="mt-5 mb-4 flex w-full justify-between">
                     <Input
