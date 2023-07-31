@@ -30,7 +30,7 @@ export function DataTablePagination<TData>({
             </div>
             <div className="flex items-center space-x-6 lg:space-x-8">
                 <div className="flex items-center space-x-2">
-                    <p className="text-xs font-medium">Rows per page</p>
+                    <p className="text-xs font-medium">Zeilen pro Seite</p>
                     <Select
                         value={`${table.getState().pagination.pageSize}`}
                         onValueChange={(value) => {
@@ -54,7 +54,7 @@ export function DataTablePagination<TData>({
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="flex w-[100px] items-center justify-center text-xs font-medium">
+                <div className="flex w-[80px] items-center justify-center text-xs font-medium">
                     Seite {table.getState().pagination.pageIndex + 1} von{" "}
                     {table.getPageCount()}
                 </div>
