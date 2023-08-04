@@ -3,9 +3,7 @@ import data from "../../mock_insured_patients.json";
 import { useMemo, useState } from "react";
 import { InsuredT } from "../../types";
 import { Input } from "@/components/ui/input";
-import { Edit, ArrowDownUp, Search, ArrowUpDown } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { ArrowDownUp, Search, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -14,19 +12,10 @@ import {
     DropdownMenuRadioItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { ShadDataTable } from "@/components/ui/table/ShadDataTable";
+import { ShadDataTable } from "@/components/ui/table/data-table";
 import { columns, columnsData } from "@/components/ui/table/columns";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -98,45 +87,16 @@ export default function Home() {
 
     return (
         <main
-            className={`grid px-5 2xl:px-16 pb-4 gap-5 2xl:gap-8 min-h-[calc(100vh-3.5rem)] rounded-md grid-cols-2 ${inter.className}`}>
-            <section>
+            className={`grid px-5 2xl:px-16 pt-12 pb-4 2xl:gap-8 rounded-md grid-cols-[60%_40%] ${inter.className}`}>
+            <section className="mr-5">
                 <div className="mt-5 mb-4 flex w-full justify-between">
                     <Input
                         placeholder="Suchen..."
                         onChange={(event) => setSearchInput(event.target.value)}
-                        className="w-40"
+                        className="w-48"
                         icon={<Search className="mx-2 h-4 w-4" />}
                     />
                     <div className="flex gap-3">
-                        <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                                <Button variant="outline">
-                                    <Edit className="h-4 w-4 mr-2" />
-                                    Documentation
-                                </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>
-                                        Information eingeben
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        Lorem, ipsum dolor sit amet consectetur
-                                        adipisicing elit. Ad, delectus!
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <Textarea className="h-40" />
-
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>
-                                        Abbrechen
-                                    </AlertDialogCancel>
-                                    <AlertDialogAction>
-                                        Speichern
-                                    </AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
                         <Button
                             onClick={() => setIsFlipped(!isFlipped)}
                             variant="outline">
@@ -179,132 +139,29 @@ export default function Home() {
                 )}
             </section>
             <section>
-                <Tabs defaultValue={"doctor_information"} className="py-5">
-                    <TabsList>
-                        <TabsTrigger
-                            disabled={!selectedItem}
-                            value="doctor_information">
-                            Arztdaten
-                        </TabsTrigger>
-                        <TabsTrigger
-                            disabled={!selectedItem}
-                            value="medication">
-                            Arzneimittel
-                        </TabsTrigger>
-                        <TabsTrigger
-                            disabled={!selectedItem}
-                            value="medical_certificates">
-                            AU
-                        </TabsTrigger>
-                        <TabsTrigger
-                            disabled={!selectedItem}
-                            value="therapeutic_and_aid_supplies">
-                            Heil- und Hilfsmittel
-                        </TabsTrigger>
-                        <TabsTrigger disabled={!selectedItem} value="hospital">
-                            Krankenhaus
-                        </TabsTrigger>
-                        <TabsTrigger disabled={!selectedItem} value="medicines">
-                            Medikamente
-                        </TabsTrigger>
-                        <TabsTrigger
-                            disabled={!selectedItem}
-                            value="rehabilitation">
-                            Reha
-                        </TabsTrigger>
-                    </TabsList>
-                    {selectedItem && (
-                        <>
-                            <TabsContent value="doctor_information">
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Qui, dolorum ducimus. Quae
-                                nesciunt architecto aspernatur corrupti et optio
-                                voluptatibus consequuntur dolore laborum
-                                cupiditate, alias aut eius, ex reprehenderit
-                                perferendis repudiandae. Voluptatibus,
-                                necessitatibus, architecto quis quaerat quam
-                                asperiores dolor incidunt enim tempora id
-                                eligendi maiores voluptatum. Explicabo autem vel
-                                vitae tenetur sunt! Architecto ipsa animi
-                                officiis nulla velit tempora iusto similique ut
-                                id at ullam mollitia, consequuntur molestias
-                                laudantium optio, debitis, in rem. Dolorum culpa
-                                necessitatibus facere quas quibusdam alias animi
-                                obcaecati dolor laudantium blanditiis sunt ipsam
-                                autem distinctio omnis fuga, harum nulla
-                                mollitia voluptate nostrum esse totam odio.
-                                Consectetur distinctio velit, voluptatum
-                                provident facilis explicabo quam ut enim
-                                architecto quae modi laudantium, inventore vero
-                                aperiam molestiae sed necessitatibus deleniti ea
-                                pariatur officiis delectus quis? Dicta pariatur,
-                                officiis totam fugit aspernatur, est corrupti
-                                eaque praesentium culpa dolor delectus tempora
-                                aperiam ut. Nemo similique autem impedit magni!
-                                Iste laudantium, repellat eius, optio beatae
-                                libero incidunt dolorem voluptatum placeat quia
-                                sint minus! Blanditiis odio incidunt illum sequi
-                                quos consequuntur tempore veritatis labore
-                                repellat doloremque quam voluptates reiciendis
-                                officiis ab cumque, reprehenderit deserunt
-                                animi. Voluptatem, eligendi necessitatibus
-                                assumenda itaque non iure eveniet minus fugit
-                                error deserunt, et praesentium, ducimus dolorum
-                                minima! Harum, esse quos.
-                            </TabsContent>
-                            <TabsContent value="medication">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Adipisci dolores corporis
-                                aliquam mollitia ad accusamus rerum rem
-                                perferendis alias animi!
-                            </TabsContent>
-                            <TabsContent value="medical_certificates">
-                                est corrupti eaque praesentium culpa dolor
-                                delectus tempora aperiam ut. Nemo similique
-                                autem impedit magni! Iste laudantium, repellat
-                                eius, optio beatae libero incidunt dolorem
-                                voluptatum placeat quia sint minus! Blanditiis
-                                odio incidunt illum sequi quos consequuntur
-                                tempore veritatis labore repellat doloremque
-                                quam voluptates reiciendis officiis ab cumque,
-                                reprehenderit deserunt animi. Voluptatem,
-                                eligendi necessitatibus assumenda itaque non
-                                iure eveniet minus fugit error deserunt, et
-                                praesentium, ducimus dolorum minima! Harum, esse
-                                quos.
-                            </TabsContent>
-                            <TabsContent value="therapeutic_and_aid_supplies">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Adipisci dolores corporis
-                                aliquam mollitia ad accusamus rerum rem
-                                perferendis alias animi!
-                            </TabsContent>
-                            <TabsContent value="hospital">
-                                culpa necessitatibus facere quas quibusdam alias
-                                animi obcaecati dolor laudantium blanditiis sunt
-                                ipsam autem distinctio omnis fuga, harum nulla
-                                mollitia voluptate nostrum esse totam odio.
-                                Consectetur distinctio velit, voluptatum
-                                provident facilis explicabo quam ut enim
-                                architecto quae modi laudantium, inventore vero
-                                aperiam
-                            </TabsContent>
-                            <TabsContent value="medicines">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Adipisci dolores corporis
-                                aliquam mollitia ad accusamus rerum rem
-                                perferendis alias animi!
-                            </TabsContent>
-                            <TabsContent value="rehabilitation">
-                                reprehenderit deserunt animi. Voluptatem,
-                                eligendi necessitatibus assumenda itaque non
-                                iure eveniet minus fugit error deserunt, et
-                                praesentium, ducimus dolorum minima! Harum, esse
-                                quos.
-                            </TabsContent>
-                        </>
-                    )}
-                </Tabs>
+                <Card className="mt-[4.25rem] bg-slate-50">
+                    <CardHeader>
+                        <CardTitle className="text-lg">Lorem ipsum</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        dolor sit amet consectetur adipisicing elit. Nulla illum
+                        dolore vero ratione velit, reprehenderit deleniti, nisi
+                        sequi, dolores optio minus quae cumque similique unde
+                        veniam impedit distinctio ducimus delectus fuga nihil
+                        molestiae minima provident alias! Rerum ad, repudiandae
+                        asperiores ut assumenda non accusantium reiciendis sunt
+                        eveniet.
+                        <Separator className="my-4" />
+                        Delectus ad consectetur dolore! Temporibus nesciunt
+                        consequatur quidem facere itaque recusandae assumenda
+                        vel beatae minus optio, nobis molestiae ipsam voluptatem
+                        nam odio, accusamus velit voluptatum animi tempora
+                        soluta est iusto ad. Deleniti nostrum numquam voluptatem
+                        nulla atque sunt totam ipsum exercitationem aliquid
+                        consequatur voluptatibus possimus, quasi delectus fugit?
+                        Tempore, consequatur!
+                    </CardContent>
+                </Card>
             </section>
         </main>
     );

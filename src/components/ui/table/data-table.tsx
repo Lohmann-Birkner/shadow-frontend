@@ -5,6 +5,7 @@ import {
     useReactTable,
     getPaginationRowModel,
 } from "@tanstack/react-table";
+import { useRouter } from "next/router";
 
 import {
     Table,
@@ -16,7 +17,6 @@ import {
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
-import { Triangle } from "lucide-react";
 import { InsuredT } from "../../../../types";
 
 interface DataTableProps<TData, TValue> {
@@ -43,6 +43,13 @@ export function ShadDataTable<TData, TValue>({
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
     });
+
+    const { push } = useRouter();
+
+    const onRowClick = (insured: InsuredT) => {
+        setSelectedItem(insured);
+        push(`/versichert/${insured.insuranceNumber}`);
+    };
 
     return (
         <>
@@ -73,9 +80,7 @@ export function ShadDataTable<TData, TValue>({
                                 <TableRow
                                     key={row.id}
                                     onClick={() =>
-                                        setSelectedItem(
-                                            row.original as InsuredT
-                                        )
+                                        onRowClick(row.original as InsuredT)
                                     }
                                     data-state={
                                         row.original === selectedItem &&
