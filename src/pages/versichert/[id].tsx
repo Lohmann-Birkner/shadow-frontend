@@ -41,8 +41,8 @@ export default function Page() {
     };
 
     return (
-        <main className="grid pt-12 px-5 2xl:px-16 2xl:gap-8 h-screen rounded-md grid-cols-3">
-            <section className="col-span-1 flex flex-col h-[calc(100vh-3rem)] pb-5">
+        <main className="grid  px-5 2xl:px-16 2xl:gap-8 h-screen rounded-md grid-cols-3">
+            <section className="col-span-1 flex flex-col  pb-5">
                 <Card className="mt-5">
                     <CardContent className="px-4 py-5">
                         <CardTitle className="mb-1 text-lg">
@@ -97,7 +97,7 @@ export default function Page() {
                     </CardContent>
                 </Card>
             </section>
-            <section className="col-span-2 ml-4 grid grid-rows-2 h-[calc(100vh-3rem)] pb-5">
+            <section className="col-span-2 ml-4 grid grid-rows-2  pb-5">
                 <Tabs
                     defaultValue={"doctor_information"}
                     className="py-5 flex flex-col">

@@ -87,59 +87,70 @@ export default function Home() {
 
     return (
         <main
-            className={`grid px-5 2xl:px-16 pt-12 pb-4 2xl:gap-8 rounded-md grid-cols-[60%_40%] ${inter.className}`}>
+            className={`grid px-5 2xl:px-16 py-6 2xl:gap-8 rounded-md grid-cols-[60%_40%] ${inter.className}`}>
             <section className="mr-5">
-                <div className="mt-5 mb-4 flex w-full justify-between">
-                    <Input
-                        placeholder="Suchen..."
-                        onChange={(event) => setSearchInput(event.target.value)}
-                        className="w-48"
-                        icon={<Search className="mx-2 h-4 w-4" />}
-                    />
-                    <div className="flex gap-3">
-                        <Button
-                            onClick={() => setIsFlipped(!isFlipped)}
-                            variant="outline">
-                            {isFlipped ? (
-                                <ArrowDownUp className="h-4 w-4" />
-                            ) : (
-                                <ArrowUpDown className="h-4 w-4" />
-                            )}
-                        </Button>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline">
-                                    Sortiert nach:{" "}
-                                    <b className="ml-1">{headerValue()}</b>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Versicherten</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="mt-5 mb-4 flex w-full justify-between">
+                            <Input
+                                placeholder="Suchen..."
+                                onChange={(event) =>
+                                    setSearchInput(event.target.value)
+                                }
+                                className="w-48"
+                                icon={<Search className="mx-2 h-4 w-4" />}
+                            />
+                            <div className="flex gap-3">
+                                <Button
+                                    onClick={() => setIsFlipped(!isFlipped)}
+                                    variant="outline">
+                                    {isFlipped ? (
+                                        <ArrowDownUp className="h-4 w-4" />
+                                    ) : (
+                                        <ArrowUpDown className="h-4 w-4" />
+                                    )}
                                 </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-48">
-                                <DropdownMenuRadioGroup
-                                    value={sortBy}
-                                    onValueChange={setSortBy}>
-                                    {columnsData.map((column) => (
-                                        <DropdownMenuRadioItem
-                                            key={column.header}
-                                            value={column.accessorKey}>
-                                            {column.header}
-                                        </DropdownMenuRadioItem>
-                                    ))}
-                                </DropdownMenuRadioGroup>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                </div>
-                {filteredItems && (
-                    <ShadDataTable
-                        setSelectedItem={setSelectedItem}
-                        selectedItem={selectedItem}
-                        columns={columns}
-                        data={filteredItems}
-                    />
-                )}
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="outline">
+                                            Sortiert nach:{" "}
+                                            <b className="ml-1">
+                                                {headerValue()}
+                                            </b>
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-48">
+                                        <DropdownMenuRadioGroup
+                                            value={sortBy}
+                                            onValueChange={setSortBy}>
+                                            {columnsData.map((column) => (
+                                                <DropdownMenuRadioItem
+                                                    key={column.header}
+                                                    value={column.accessorKey}>
+                                                    {column.header}
+                                                </DropdownMenuRadioItem>
+                                            ))}
+                                        </DropdownMenuRadioGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                        </div>
+                        {filteredItems && (
+                            <ShadDataTable
+                                setSelectedItem={setSelectedItem}
+                                selectedItem={selectedItem}
+                                columns={columns}
+                                data={filteredItems}
+                            />
+                        )}
+                    </CardContent>
+                </Card>
             </section>
             <section>
-                <Card className="mt-[4.25rem] bg-slate-50">
+                <Card className=" bg-slate-50">
                     <CardHeader>
                         <CardTitle className="text-lg">Lorem ipsum</CardTitle>
                     </CardHeader>
