@@ -25,7 +25,9 @@ export default function Page() {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [documentation, setDocumentation] = useState(mockDocumentation);
 
-    const { data } = useQuery("insured", () => getInsured(query.id as string));
+    const { data } = useQuery("insured", () => getInsured(query.id as string), {
+        enabled: !!query.id,
+    });
 
     const addDocumentation = () => {
         if (textareaRef.current) {
@@ -41,39 +43,43 @@ export default function Page() {
     };
 
     return (
-        <main className="grid  px-5 2xl:px-16 2xl:gap-8 h-screen rounded-md grid-cols-3">
+        <main className="grid grid-cols-1 mt-16 lg:ml-24 lg:grid-cols-3 px-5 2xl:px-16 2xl:gap-8 h-screen rounded-md">
             <section className="col-span-1 flex flex-col  pb-5">
-                <Card className="mt-5">
-                    <CardContent className="px-4 py-5">
-                        <CardTitle className="mb-1 text-lg">
-                            Versicherungsnummer:{" "}
-                            <span className="font-light">
-                                {data?.insuranceNumber}
-                            </span>
-                        </CardTitle>
-                        <CardTitle className="mb-1 text-lg">
-                            Name:{" "}
-                            <span className="font-light">
-                                {`${data?.lastName} ${data?.firstName}`}
-                            </span>
-                        </CardTitle>
-                        <CardTitle className="mb-1 text-lg">
-                            Geburtsdatum:{" "}
-                            <span className="font-light">
-                                {data?.dateOfBirth}
-                            </span>
-                        </CardTitle>
-                        <CardTitle className="mb-1 text-lg">
-                            Geschlecht:{" "}
-                            <span className="font-light">{data?.sex}</span>
-                        </CardTitle>
-                        <CardTitle className="text-lg">
-                            Postleitzahl:{" "}
-                            <span className="font-light">{data?.zipcode}</span>
-                        </CardTitle>
-                    </CardContent>
+                <Card>
+                    {data && (
+                        <CardContent className="px-4 py-5">
+                            <CardTitle className="mb-1 text-lg">
+                                Versicherungsnummer:{" "}
+                                <span className="font-light">
+                                    {data?.insuranceNumber}
+                                </span>
+                            </CardTitle>
+                            <CardTitle className="mb-1 text-lg">
+                                Name:{" "}
+                                <span className="font-light">
+                                    {`${data?.lastName} ${data?.firstName}`}
+                                </span>
+                            </CardTitle>
+                            <CardTitle className="mb-1 text-lg">
+                                Geburtsdatum:{" "}
+                                <span className="font-light">
+                                    {data?.dateOfBirth}
+                                </span>
+                            </CardTitle>
+                            <CardTitle className="mb-1 text-lg">
+                                Geschlecht:{" "}
+                                <span className="font-light">{data?.sex}</span>
+                            </CardTitle>
+                            <CardTitle className="text-lg">
+                                Postleitzahl:{" "}
+                                <span className="font-light">
+                                    {data?.zipcode}
+                                </span>
+                            </CardTitle>
+                        </CardContent>
+                    )}
                 </Card>
-                <Card className="mt-5 flex-1 flex flex-col">
+                <Card className="mt-5  flex flex-col">
                     <CardHeader className="pt-6">
                         <CardTitle className="flex items-center text-lg mb-1">
                             <Edit className="h-4 w-4  mr-2" /> Dokumentation
@@ -83,7 +89,7 @@ export default function Page() {
                     <CardContent className="flex-1 flex flex-col">
                         <Textarea
                             placeholder="Hier Documentation eingeben..."
-                            className="h-full"
+                            className="h-60"
                             ref={textareaRef}
                         />
                         <div className="flex w-full">
@@ -97,10 +103,10 @@ export default function Page() {
                     </CardContent>
                 </Card>
             </section>
-            <section className="col-span-2 ml-4 grid grid-rows-2  pb-5">
+            <section className="col-span-2 lg:ml-4 pb-5">
                 <Tabs
                     defaultValue={"doctor_information"}
-                    className="py-5 flex flex-col">
+                    className="pb-5 flex flex-col">
                     <TabsList className="flex-wrap">
                         <TabsTrigger value="doctor_information">
                             Arztdaten
@@ -119,9 +125,7 @@ export default function Page() {
                         <TabsTrigger value="rehabilitation">Reha</TabsTrigger>
                     </TabsList>
 
-                    <TabsContent
-                        className="pt-2 overflow-y-scroll flex-1"
-                        value="doctor_information">
+                    <TabsContent className="pt-2" value="doctor_information">
                         <Tabs defaultValue={"tab1"}>
                             <TabsList className=" bg-transparent">
                                 <TabsTrigger
@@ -193,14 +197,12 @@ export default function Page() {
                             </TabsContent>
                         </Tabs>
                     </TabsContent>
-                    <TabsContent className="flex-1" value="medication">
+                    <TabsContent value="medication">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Adipisci dolores corporis aliquam mollitia ad accusamus
                         rerum rem perferendis alias animi!
                     </TabsContent>
-                    <TabsContent
-                        className="flex-1"
-                        value="medical_certificates">
+                    <TabsContent value="medical_certificates">
                         est corrupti eaque praesentium culpa dolor delectus
                         tempora aperiam ut. Nemo similique autem impedit magni!
                         Iste laudantium, repellat eius, optio beatae libero
@@ -213,14 +215,12 @@ export default function Page() {
                         deserunt, et praesentium, ducimus dolorum minima! Harum,
                         esse quos.
                     </TabsContent>
-                    <TabsContent
-                        className="flex-1"
-                        value="therapeutic_and_aid_supplies">
+                    <TabsContent value="therapeutic_and_aid_supplies">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Adipisci dolores corporis aliquam mollitia ad accusamus
                         rerum rem perferendis alias animi!
                     </TabsContent>
-                    <TabsContent className="flex-1" value="hospital">
+                    <TabsContent value="hospital">
                         culpa necessitatibus facere quas quibusdam alias animi
                         obcaecati dolor laudantium blanditiis sunt ipsam autem
                         distinctio omnis fuga, harum nulla mollitia voluptate
@@ -228,19 +228,19 @@ export default function Page() {
                         voluptatum provident facilis explicabo quam ut enim
                         architecto quae modi laudantium, inventore vero aperiam
                     </TabsContent>
-                    <TabsContent className="flex-1" value="medicines">
+                    <TabsContent value="medicines">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Adipisci dolores corporis aliquam mollitia ad accusamus
                         rerum rem perferendis alias animi!
                     </TabsContent>
-                    <TabsContent className="flex-1" value="rehabilitation">
+                    <TabsContent value="rehabilitation">
                         reprehenderit deserunt animi. Voluptatem, eligendi
                         necessitatibus assumenda itaque non iure eveniet minus
                         fugit error deserunt, et praesentium, ducimus dolorum
                         minima! Harum, esse quos.
                     </TabsContent>
                 </Tabs>
-                <Card className="flex-1 overflow-y-scroll">
+                <Card>
                     <CardHeader className="pb-1">
                         <CardTitle className="text-xl">Documentation</CardTitle>
                     </CardHeader>

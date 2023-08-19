@@ -2,7 +2,6 @@
     {
         "lastName": "Doe",
         "firstName": "John",
-
         "dateOfBirth": "10-02-1985",
         "sex": "männlich",
         "zipcode": "12345",

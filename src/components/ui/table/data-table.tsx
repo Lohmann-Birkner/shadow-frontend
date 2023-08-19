@@ -22,15 +22,17 @@ import { InsuredT } from "../../../../types";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    setSelectedItem: (item: InsuredT) => void;
-    selectedItem: InsuredT | null;
+    setSelectedItem?: (item: InsuredT) => void;
+    selectedItem?: InsuredT | null;
+    onRowClick?: (item: any) => void;
 }
 
-export function ShadDataTable<TData, TValue>({
+export function DataTable<TData, TValue>({
     columns,
     data,
     setSelectedItem,
     selectedItem,
+    onRowClick,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -44,13 +46,6 @@ export function ShadDataTable<TData, TValue>({
         getPaginationRowModel: getPaginationRowModel(),
     });
 
-    const { push } = useRouter();
-
-    const onRowClick = (insured: InsuredT) => {
-        setSelectedItem(insured);
-        push(`/versichert/${insured.insuranceNumber}`);
-    };
-
     return (
         <>
             <div className="rounded-md border overflow-hidden">
@@ -60,7 +55,9 @@ export function ShadDataTable<TData, TValue>({
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead
+                                            key={header.id}
+                                            className="text-sm">
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -74,12 +71,13 @@ export function ShadDataTable<TData, TValue>({
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="text-sm">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}
                                     onClick={() =>
+                                        onRowClick &&
                                         onRowClick(row.original as InsuredT)
                                     }
                                     data-state={
