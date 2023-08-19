@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Sidebar from "@/components/sidebar";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 
 export default function App({
     Component,
