@@ -88,7 +88,7 @@ export default function Home() {
 
     return (
         <main
-            className={`grid grid-cols-1 mt-16 lg:grid-cols-[60%_40%] mb-5 lg:ml-24 px-5 2xl:px-16  2xl:gap-8  ${inter.className}`}>
+            className={`grid grid-cols-1 mt-16 lg:grid-cols-[65%_35%] mb-5 lg:ml-24 px-5 2xl:px-16  2xl:gap-8  ${inter.className}`}>
             <section className="lg:mr-5 lg:mb-0">
                 <Card>
                     <CardHeader>

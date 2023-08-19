@@ -15,10 +15,7 @@ function Navbar() {
                     Abmelden
                 </Button>
             ) : (
-                <Button
-                    size={"lg"}
-                    variant={"outline"}
-                    onClick={() => signIn()}>
+                <Button variant={"outline"} onClick={() => signIn()}>
                     Anmelden
                 </Button>
             )}
