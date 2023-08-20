@@ -9,19 +9,19 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { ArrowDownUp, ArrowUpDown, Search } from "lucide-react";
+import { ArrowDownUp, ArrowUpDown, Search, Plus } from "lucide-react";
 import { useState } from "react";
-import { tasksColumns, columns } from "@/components/ui/table/columns";
+import { tasksColumns } from "@/components/ui/table/columns";
 import data from "../../mock_tasks.json";
-import data1 from "../../mock_insured_patients.json";
 import { DataTable } from "@/components/ui/table/data-table";
 import { TaskT } from "../../types";
-import { AlertDialog } from "@/components/ui/alert-dialog";
+import TaskDialog from "@/components/forms/task-dialog";
 
 function Aufgaben() {
     const [searchInput, setSearchInput] = useState("");
     const [isFlipped, setIsFlipped] = useState(false);
     const [sortBy, setSortBy] = useState("date");
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const tasks = data as TaskT[];
     const columns = tasksColumns as { header: string; accessorKey: string }[];
@@ -151,6 +151,12 @@ function Aufgaben() {
                                         </DropdownMenuRadioGroup>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
+                                <Button
+                                    onClick={() => setIsDialogOpen(true)}
+                                    variant={"outline"}>
+                                    <Plus className="h-4 w-4 mr-1" />
+                                    Aufgabe hinzufügen
+                                </Button>
                             </div>
                         </div>
                         {filteredItems && (
@@ -162,6 +168,7 @@ function Aufgaben() {
                     </CardContent>
                 </Card>
             </section>
+            <TaskDialog open={isDialogOpen} setOpen={setIsDialogOpen} />
         </main>
     );
 }
