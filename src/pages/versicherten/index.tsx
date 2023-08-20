@@ -88,14 +88,14 @@ export default function Home() {
 
     return (
         <main
-            className={`grid grid-cols-1 mt-16 lg:grid-cols-[65%_35%] mb-5 lg:ml-24 px-5 2xl:px-16  2xl:gap-8  ${inter.className}`}>
+            className={`grid grid-cols-1 mt-12 md:mt-16 space-y-4 md:space-y-0 lg:grid-cols-[65%_35%] mb-5 lg:ml-24 md:px-5 2xl:px-16 2xl:gap-8  ${inter.className}`}>
             <section className="lg:mr-5 lg:mb-0">
                 <Card>
                     <CardHeader>
                         <CardTitle>Versicherten</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div className="mt-5 mb-4 flex w-full justify-between">
+                    <CardContent className="px-4 md:px-6">
+                        <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
                             <Input
                                 placeholder="Suchen..."
                                 onChange={(event) =>
@@ -107,7 +107,8 @@ export default function Home() {
                             <div className="flex gap-3">
                                 <Button
                                     onClick={() => setIsFlipped(!isFlipped)}
-                                    variant="outline">
+                                    variant="outline"
+                                    className="h-9 md:h-8">
                                     {isFlipped ? (
                                         <ArrowDownUp className="h-4 w-4" />
                                     ) : (
@@ -116,7 +117,9 @@ export default function Home() {
                                 </Button>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="outline">
+                                        <Button
+                                            variant="outline"
+                                            className="h-9 md:h-8">
                                             Sortiert nach:{" "}
                                             <b className="ml-1">
                                                 {headerValue()}

@@ -48,16 +48,14 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className="rounded-md border overflow-hidden">
+            <div className="rounded-md border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead
-                                            key={header.id}
-                                            className="text-sm">
+                                        <TableHead key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -71,10 +69,11 @@ export function DataTable<TData, TValue>({
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody className="text-sm">
+                    <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
+                                    className="overflow-hidden"
                                     key={row.id}
                                     onClick={() =>
                                         onRowClick &&

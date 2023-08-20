@@ -11,10 +11,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { ArrowDownUp, ArrowUpDown, Search } from "lucide-react";
 import { useState } from "react";
-import { tasksColumns } from "@/components/ui/table/columns";
+import { tasksColumns, columns } from "@/components/ui/table/columns";
 import data from "../../mock_tasks.json";
+import data1 from "../../mock_insured_patients.json";
 import { DataTable } from "@/components/ui/table/data-table";
 import { TaskT } from "../../types";
+import { AlertDialog } from "@/components/ui/alert-dialog";
 
 function Aufgaben() {
     const [searchInput, setSearchInput] = useState("");
@@ -90,14 +92,14 @@ function Aufgaben() {
     }, [tasks, sortBy, searchInput, isFlipped]);
 
     return (
-        <main className="mt-16 lg:ml-24 px-5">
+        <main className="grid grid-cols-1 h-full mt-12 md:mt-16 lg:ml-24 md:px-5">
             <section className="mb-5">
-                <Card>
+                <Card className="border-none shadow-none">
                     <CardHeader>
                         <CardTitle>Aufgaben</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div className="mt-5 mb-4 flex w-full justify-between">
+                    <CardContent className="px-4 md:px-6">
+                        <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
                             <Input
                                 placeholder="Suchen..."
                                 onChange={(event) =>
@@ -109,7 +111,8 @@ function Aufgaben() {
                             <div className="flex gap-3">
                                 <Button
                                     onClick={() => setIsFlipped(!isFlipped)}
-                                    variant="outline">
+                                    variant="outline"
+                                    className="h-9 md:h-8">
                                     {isFlipped ? (
                                         <ArrowDownUp className="h-4 w-4" />
                                     ) : (
@@ -118,7 +121,9 @@ function Aufgaben() {
                                 </Button>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="outline">
+                                        <Button
+                                            className="h-9 md:h-8"
+                                            variant="outline">
                                             Sortiert nach:{" "}
                                             <b className="ml-1">
                                                 {headerValue()}
