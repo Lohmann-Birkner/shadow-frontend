@@ -86,7 +86,7 @@ function TaskDialog({ task, open, setOpen }: Props) {
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input className="md:h-9" {...field} />
                                     </FormControl>
 
                                     <FormMessage />
