@@ -81,7 +81,7 @@ const SignIn: NextPage = () => {
                                     <FormItem className="mt-3">
                                         <FormLabel>Passwort</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input type="password" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
