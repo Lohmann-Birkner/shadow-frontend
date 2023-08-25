@@ -6,7 +6,8 @@
         "done": false,
         "date": "19-08-2023",
         "deadline": "25-08-2023",
-        "priority": "high"
+        "priority": "high",
+        "insuranceNumber": "123456789"
     },
     {
         "id": "2",
@@ -15,7 +16,8 @@
         "done": false,
         "date": "19-08-2023",
         "deadline": "22-08-2023",
-        "priority": "medium"
+        "priority": "medium",
+        "insuranceNumber": "987654321"
     },
     {
         "id": "3",
@@ -24,7 +26,8 @@
         "done": true,
         "date": "18-08-2023",
         "deadline": "20-08-2023",
-        "priority": "low"
+        "priority": "low",
+        "insuranceNumber": "543216789"
     },
     {
         "id": "4",
@@ -33,7 +36,8 @@
         "done": false,
         "date": "17-08-2023",
         "deadline": "23-08-2023",
-        "priority": "medium"
+        "priority": "medium",
+        "insuranceNumber": "678905432"
     },
     {
         "id": "5",
@@ -42,7 +46,8 @@
         "done": false,
         "date": "17-08-2023",
         "deadline": "21-08-2023",
-        "priority": "medium"
+        "priority": "medium",
+        "insuranceNumber": "234567890"
     },
     {
         "id": "6",
@@ -51,7 +56,8 @@
         "done": true,
         "date": "16-08-2023",
         "deadline": "20-08-2023",
-        "priority": "high"
+        "priority": "high",
+        "insuranceNumber": "789012345"
     },
     {
         "id": "7",
@@ -60,7 +66,8 @@
         "done": false,
         "date": "15-08-2023",
         "deadline": "18-08-2023",
-        "priority": "low"
+        "priority": "low",
+        "insuranceNumber": "345678901"
     },
     {
         "id": "8",
@@ -69,7 +76,8 @@
         "done": false,
         "date": "15-08-2023",
         "deadline": "19-08-2023",
-        "priority": "medium"
+        "priority": "medium",
+        "insuranceNumber": "890123456"
     },
     {
         "id": "9",
@@ -78,7 +86,8 @@
         "done": false,
         "date": "14-08-2023",
         "deadline": "17-08-2023",
-        "priority": "high"
+        "priority": "high",
+        "insuranceNumber": "456789012"
     },
     {
         "id": "10",
@@ -87,6 +96,7 @@
         "done": true,
         "date": "14-08-2023",
         "deadline": "16-08-2023",
-        "priority": "medium"
+        "priority": "medium",
+        "insuranceNumber": "901234567"
     }
 ]

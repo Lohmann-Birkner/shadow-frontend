@@ -38,14 +38,13 @@ const formSchema = z.object({
 });
 
 interface Props {
-    task?: TaskT;
+    task?: TaskT | null;
     open: boolean;
     setOpen: (open: boolean) => void;
 }
 
 function TaskDialog({ task, open, setOpen }: Props) {
     let defaultDeadline; // Default value for deadline
-
     if (task) {
         // Parse the date string and create a Date object
         const [day, month, year] = task.deadline.split("-");

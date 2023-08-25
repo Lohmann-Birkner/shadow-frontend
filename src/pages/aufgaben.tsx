@@ -1,6 +1,12 @@
 import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -22,6 +28,7 @@ function Aufgaben() {
     const [isFlipped, setIsFlipped] = useState(false);
     const [sortBy, setSortBy] = useState("date");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [selectedTask, setSelectedTask] = useState<TaskT | null>(null);
 
     const tasks = data as TaskT[];
     const columns = tasksColumns as { header: string; accessorKey: string }[];
@@ -33,11 +40,17 @@ function Aufgaben() {
         return headerValue;
     };
 
+    const onRowClick = (task: TaskT) => {
+        setSelectedTask(task);
+        setIsDialogOpen(true);
+    };
+
     const filteredItems = useMemo(() => {
         if (tasks) {
             const sorted = tasks.sort((a, b) => {
                 switch (sortBy) {
                     case "date":
+                        // Sort by date, newest first
                         const dateA = a.date.split("-").reverse().join("-");
                         const dateB = b.date.split("-").reverse().join("-");
                         return (
@@ -46,6 +59,7 @@ function Aufgaben() {
                         );
 
                     case "deadline":
+                        // sort by deadline, oldest first
                         const date1 = a.deadline.split("-").reverse().join("-");
                         const date2 = b.deadline.split("-").reverse().join("-");
                         return (
@@ -54,9 +68,11 @@ function Aufgaben() {
                         );
 
                     case "done":
+                        // Sort by done tasks
                         return a.done === b.done ? 0 : a.done ? 1 : -1;
 
                     case "priority":
+                        // Sort by priority, highest first
                         const priorityOrder = { low: 0, medium: 1, high: 2 };
                         return (
                             priorityOrder[b.priority] -
@@ -65,6 +81,7 @@ function Aufgaben() {
 
                     case "title":
                     case "content":
+                        // Sort by title and content alphabetically
                         return a[sortBy].localeCompare(b[sortBy]);
 
                     default:
@@ -85,11 +102,16 @@ function Aufgaben() {
                 );
             }, sorted);
 
+            // Control the flip button
             const flipped = isFlipped ? filteredItems.reverse() : filteredItems;
 
             return flipped;
         } else return null;
     }, [tasks, sortBy, searchInput, isFlipped]);
+
+    const rowOnClick = (task: TaskT) => {
+        setIsDialogOpen(true);
+    };
 
     return (
         <main className="grid grid-cols-1 h-full mt-12 md:mt-16 lg:ml-24 md:px-5">
@@ -108,7 +130,7 @@ function Aufgaben() {
                                 className="w-48"
                                 icon={<Search className="mx-2 h-4 w-4" />}
                             />
-                            <div className="flex gap-3">
+                            <div className="flex gap-3 flex-wrap">
                                 <Button
                                     onClick={() => setIsFlipped(!isFlipped)}
                                     variant="outline"
@@ -145,7 +167,7 @@ function Aufgaben() {
                                                         value={
                                                             column.accessorKey
                                                         }>
-                                                        {column.header}
+                                                        {column.header}]{" "}
                                                     </DropdownMenuRadioItem>
                                                 ))}
                                         </DropdownMenuRadioGroup>

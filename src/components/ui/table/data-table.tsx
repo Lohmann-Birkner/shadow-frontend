@@ -5,8 +5,6 @@ import {
     useReactTable,
     getPaginationRowModel,
 } from "@tanstack/react-table";
-import { useRouter } from "next/router";
-
 import {
     Table,
     TableBody,
@@ -17,13 +15,12 @@ import {
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
-import { InsuredT } from "../../../../types";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    setSelectedItem?: (item: InsuredT) => void;
-    selectedItem?: InsuredT | null;
+    setSelectedItem?: (item: any) => void;
+    selectedItem?: any;
     onRowClick?: (item: any) => void;
 }
 
@@ -75,14 +72,14 @@ export function DataTable<TData, TValue>({
                                 <TableRow
                                     className="overflow-hidden"
                                     key={row.id}
-                                    onClick={() =>
-                                        onRowClick &&
-                                        onRowClick(row.original as InsuredT)
-                                    }
-                                    data-state={
-                                        row.original === selectedItem &&
-                                        "selected"
-                                    }>
+                                    onClick={() => {
+                                        onRowClick && onRowClick(row.original);
+                                    }}
+                                    // data-state={
+                                    //     row.original === selectedItem &&
+                                    //     "selected"
+                                    // }
+                                >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
                                             {flexRender(

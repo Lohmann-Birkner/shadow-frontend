@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import { DataTableRowActions } from "./task-row-actions";
 
+// Insured
+
 export const columns: ColumnDef<InsuredT>[] = [
     { accessorKey: "lastName", header: "Name" },
     { accessorKey: "firstName", header: "Vorname" },
@@ -18,14 +20,7 @@ export const columns: ColumnDef<InsuredT>[] = [
     { accessorKey: "insuranceNumber", header: "Versichertennummer" },
 ];
 
-export const columnsData = [
-    { accessorKey: "lastName", header: "Name" },
-    { accessorKey: "firstName", header: "Vorname" },
-    { accessorKey: "dateOfBirth", header: "Geburtsdatum" },
-    { accessorKey: "sex", header: "Geschlecht" },
-    { accessorKey: "zipcode", header: "Postleitzahl" },
-    { accessorKey: "insuranceNumber", header: "Versichertennummer" },
-];
+// Tasks
 
 export const priorities = [
     {
@@ -59,6 +54,7 @@ export const statuses = [
 ];
 
 export const tasksColumns: ColumnDef<TaskT>[] = [
+    { accessorKey: "insuranceNumber", header: "Versichertennummer" },
     { accessorKey: "date", header: "Datum" },
     {
         accessorKey: "title",

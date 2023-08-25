@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTable } from "@/components/ui/table/data-table";
-import { columns, columnsData } from "@/components/ui/table/columns";
+import { columns } from "@/components/ui/table/columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
@@ -27,6 +27,7 @@ export default function Home() {
     const [sortBy, setSortBy] = useState("lastName");
 
     const { push } = useRouter();
+    const insuredColumns = columns as { header: string; accessorKey: string }[];
 
     const filteredItems = useMemo(() => {
         if (data) {
@@ -74,7 +75,7 @@ export default function Home() {
 
     const headerValue = () => {
         // Find the corresponding header value
-        const column = columnsData.find(
+        const column = insuredColumns.find(
             (column) => column.accessorKey === sortBy
         );
         const headerValue = column ? column.header : "";
@@ -130,7 +131,7 @@ export default function Home() {
                                         <DropdownMenuRadioGroup
                                             value={sortBy}
                                             onValueChange={setSortBy}>
-                                            {columnsData.map((column) => (
+                                            {insuredColumns.map((column) => (
                                                 <DropdownMenuRadioItem
                                                     key={column.header}
                                                     value={column.accessorKey}>

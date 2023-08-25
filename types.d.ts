@@ -9,6 +9,7 @@ export type InsuredT = {
 
 export type TaskT = {
     id: string;
+    insuranceNumber: string;
     title: string;
     content: string;
     done: boolean;

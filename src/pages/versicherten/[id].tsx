@@ -1,9 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Textarea } from "@/components/ui/textarea";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import { getInsured } from "@/api";
-import { Edit } from "lucide-react";
 
 import {
     Card,
@@ -13,34 +11,25 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { DataTable } from "@/components/ui/table/data-table";
+import tasksData from "../../../mock_tasks.json";
+import { tasksColumns } from "@/components/ui/table/columns";
+import { TaskT } from "../../../types";
+import Documentation from "@/components/documentation";
 
-const mockDocumentation = [
-    "reprehenderit deserunt animi. Voluptatem, eligendi necessitatibus assumenda itaque non iure eveniet minus fugit error deserunt, et praesentium, ducimus dolorum minima! Harum, esse quos",
-];
+const mockDocumentation =
+    "reprehenderit deserunt animi. Voluptatem, eligendi necessitatibus assumenda itaque non iure eveniet minus fugit error deserunt, et praesentium, ducimus dolorum minima! Harum, esse quos";
 
 export default function Page() {
     const { query } = useRouter();
-    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [documentation, setDocumentation] = useState(mockDocumentation);
 
     const { data } = useQuery("insured", () => getInsured(query.id as string), {
         enabled: !!query.id,
     });
-
-    const addDocumentation = () => {
-        if (textareaRef.current) {
-            const textareaValue = textareaRef.current.value;
-
-            if (!textareaValue) {
-                return;
-            }
-
-            setDocumentation((prevArray) => [...prevArray, textareaValue]);
-            textareaRef.current.value = ""; // Clear the textarea
-        }
-    };
+    const tasks = tasksData as TaskT[];
+    const columns = tasksColumns as { header: string; accessorKey: string }[];
 
     return (
         <main className="grid grid-cols-1 mt-16 lg:ml-24 lg:grid-cols-3 px-5 2xl:px-16 2xl:gap-8 h-screen rounded-md">
@@ -79,29 +68,10 @@ export default function Page() {
                         </CardContent>
                     )}
                 </Card>
-                <Card className="mt-5  flex flex-col">
-                    <CardHeader className="pt-6">
-                        <CardTitle className="flex items-center text-lg mb-1">
-                            <Edit className="h-4 w-4  mr-2" /> Dokumentation
-                            hinzufügen
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-1 flex flex-col">
-                        <Textarea
-                            placeholder="Hier Documentation eingeben..."
-                            className="h-60"
-                            ref={textareaRef}
-                        />
-                        <div className="flex w-full">
-                            <Button
-                                className="mt-5 ml-auto hover:bg-slate-200"
-                                variant={"secondary"}
-                                onClick={addDocumentation}>
-                                Speichern
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+                <Documentation
+                    data={documentation}
+                    setData={setDocumentation}
+                />
             </section>
             <section className="col-span-2 lg:ml-4 pb-5">
                 <Tabs
@@ -240,18 +210,22 @@ export default function Page() {
                         minima! Harum, esse quos.
                     </TabsContent>
                 </Tabs>
+
                 <Card>
-                    <CardHeader className="pb-1">
-                        <CardTitle className="text-xl">Documentation</CardTitle>
+                    <CardHeader>
+                        <CardTitle className="text-xl mb-3">Aufgaben</CardTitle>
                     </CardHeader>
+
                     <CardContent>
-                        <ul className="list-disc px-5 leading-5">
-                            {documentation.map((item, index) => (
-                                <li className="mt-3" key={index}>
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
+                        {tasks && (
+                            <DataTable
+                                data={tasks.slice(0, 4)}
+                                columns={columns.filter(
+                                    (column) =>
+                                        column.accessorKey !== "insuranceNumber"
+                                )}
+                            />
+                        )}
                     </CardContent>
                 </Card>
             </section>
