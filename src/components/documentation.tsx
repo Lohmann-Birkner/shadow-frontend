@@ -63,7 +63,7 @@ function Documentation({ data, setData }: Props) {
                                     className="mt-5 ml-auto hover:bg-slate-200"
                                     variant={"secondary"}
                                     onClick={addDocumentation}>
-                                    Speichern
+                                    <FormattedMessage id="Save"/>
                                 </Button>
                             </div>
                         </>
