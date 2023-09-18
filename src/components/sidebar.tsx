@@ -2,22 +2,26 @@ import React from "react";
 import { Users2, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/router";
+import { useIntl } from "react-intl";
+
 
 interface Props {
     setOpen?: (open: boolean) => void;
 }
 
 function Sidebar({ setOpen }: Props) {
+    const {formatMessage}=useIntl();
+
     const routes = [
         {
             icon: Users2,
             href: "/versicherten",
-            label: "Versicherten",
+            label: formatMessage({id:"Insured_person"}),
         },
         {
             icon: ClipboardList,
             href: "/aufgaben",
-            label: "Aufgaben",
+            label: formatMessage({id:"Tasks"}),
         },
     ];
 
@@ -39,8 +43,8 @@ function Sidebar({ setOpen }: Props) {
                                 router.pathname === route.href && "bg-slate-100"
                             )}
                             key={route.href}>
-                            <div className="flex flex-col gap-y-1 items-center flex-1">
-                                <route.icon className="h-5 w-5" />
+                            <div className="flex flex-col gap-y-1 items-center flex-1 ">
+                                <route.icon className="h-5 w-5 " />
                                 {route.label}
                             </div>
                         </div>

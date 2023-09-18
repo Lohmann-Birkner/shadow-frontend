@@ -22,6 +22,7 @@ import data from "../../mock_tasks.json";
 import { DataTable } from "@/components/ui/table/data-table";
 import { TaskT } from "../../types";
 import TaskDialog from "@/components/forms/task-dialog";
+import { FormattedMessage, useIntl } from "react-intl";
 
 function Aufgaben() {
     const [searchInput, setSearchInput] = useState("");
@@ -31,7 +32,7 @@ function Aufgaben() {
     const [selectedTask, setSelectedTask] = useState<TaskT | null>(null);
 
     const tasks = data as TaskT[];
-    const columns = tasksColumns as { header: string; accessorKey: string }[];
+    const columns = tasksColumns() as { header: string; accessorKey: string }[];
 
     const headerValue = () => {
         // Find the corresponding header value
@@ -118,7 +119,7 @@ function Aufgaben() {
             <section className="mb-5">
                 <Card className="border-none shadow-none">
                     <CardHeader>
-                        <CardTitle>Aufgaben</CardTitle>
+                        <CardTitle><FormattedMessage id="Task"/></CardTitle>
                     </CardHeader>
                     <CardContent className="px-4 md:px-6">
                         <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
@@ -146,7 +147,7 @@ function Aufgaben() {
                                         <Button
                                             className="h-9 md:h-8"
                                             variant="outline">
-                                            Sortiert nach:{" "}
+                                            <FormattedMessage id="Sorted_by"/>:{" "}
                                             <b className="ml-1">
                                                 {headerValue()}
                                             </b>
@@ -167,7 +168,7 @@ function Aufgaben() {
                                                         value={
                                                             column.accessorKey
                                                         }>
-                                                        {column.header}]{" "}
+                                                        {column.header}{" "}
                                                     </DropdownMenuRadioItem>
                                                 ))}
                                         </DropdownMenuRadioGroup>
@@ -177,14 +178,14 @@ function Aufgaben() {
                                     onClick={() => setIsDialogOpen(true)}
                                     variant={"outline"}>
                                     <Plus className="h-4 w-4 mr-1" />
-                                    Aufgabe hinzufügen
+                                    <FormattedMessage id="Add_task"/>
                                 </Button>
                             </div>
                         </div>
                         {filteredItems && (
                             <DataTable
                                 data={filteredItems}
-                                columns={tasksColumns}
+                                columns={tasksColumns()}
                             />
                         )}
                     </CardContent>

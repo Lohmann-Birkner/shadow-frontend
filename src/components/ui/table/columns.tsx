@@ -8,110 +8,123 @@ import {
     CheckCircle,
 } from "lucide-react";
 import { DataTableRowActions } from "./task-row-actions";
+import {useIntl, MessageDescriptor,FormattedMessage} from "react-intl";
 
 // Insured
 
-export const columns: ColumnDef<InsuredT>[] = [
-    { accessorKey: "lastName", header: "Name" },
-    { accessorKey: "firstName", header: "Vorname" },
-    { accessorKey: "dateOfBirth", header: "Geburtsdatum" },
-    { accessorKey: "sex", header: "Geschlecht" },
-    { accessorKey: "zipcode", header: "Postleitzahl" },
-    { accessorKey: "insuranceNumber", header: "Versichertennummer" },
-];
+export const columns=(): ColumnDef<InsuredT>[] =>{ 
+    const {formatMessage} = useIntl();
+    return[
+    { accessorKey: "lastName", header: formatMessage({id:"Last_name"}) },
+    { accessorKey: "firstName", header: formatMessage({id:"Firstname"}) },
+    { accessorKey: "dateOfBirth", header: formatMessage({id:"Date_of_birth"})  },
+    { accessorKey: "sex", header: formatMessage({id:"Gender"})  },
+    { accessorKey: "zipcode", header: formatMessage({id:"ZIP_code"})  },
+    { accessorKey: "insuranceNumber", header: formatMessage({id:"Insured_person_number"})  },
+]};
 
 // Tasks
 
-export const priorities = [
+export const priorities = ()=>{
+    const {formatMessage} = useIntl();
+    
+    return[
     {
-        label: "Niedrig",
+        label: formatMessage({id:"Priority_low"}),
         value: "low",
         icon: ArrowDown,
     },
     {
-        label: "Mittel",
+        label: formatMessage({id:"Priority_medium"}),
         value: "medium",
         icon: ArrowRight,
     },
     {
-        label: "Hoch",
+        label: formatMessage({id:"Priority_high"}),
         value: "high",
         icon: ArrowUp,
     },
-];
+]};
 
-export const statuses = [
+export const statuses =()=>{
+    const {formatMessage} = useIntl();
+    
+    return [
     {
-        label: "Todo",
+        label: formatMessage({id:"Status_todo"}),
         value: false,
         icon: Circle,
     },
     {
-        label: "Erledigt",
+        label: formatMessage({id:"Status_done"}),
         value: true,
         icon: CheckCircle,
-    },
-];
+    }
+]};
 
-export const tasksColumns: ColumnDef<TaskT>[] = [
-    { accessorKey: "insuranceNumber", header: "Versichertennummer" },
-    { accessorKey: "date", header: "Datum" },
-    {
-        accessorKey: "title",
-        header: "Title",
-        cell: ({ row }) => {
-            return <div className="w-fit">{row.getValue("title")}</div>;
-        },
-    },
-    { accessorKey: "content", header: "Inhalt" },
-    {
-        accessorKey: "done",
-        header: "Status",
-        cell: ({ row }) => {
-            const status = statuses.find(
-                (status) => status.value === row.getValue("done")
-            );
+export const tasksColumns = (): ColumnDef<TaskT>[] => {
+    const {formatMessage} = useIntl();
 
-            if (!status) {
-                return null;
-            }
+    return [
+            { accessorKey: "insuranceNumber", header:  formatMessage({id: "Insured_person_number"})  },
+            { accessorKey: "date", header: formatMessage({id: "Date"}) },
+            {
+                accessorKey: "title",
+                header: formatMessage({id: "Title"}),
+                cell: ({ row }) => {
+                    return <div className="w-fit">{row.getValue("title")}</div>;
+                },
+            },
+            { accessorKey: "content", header: formatMessage({id: "Content"}) },
+            {
+                accessorKey: "done",
+                header: formatMessage({id: "Done"}),
+                cell: ({ row }) => {
+                    const status = statuses().find(
+                        (status) => status.value === row.getValue("done")
+                    );
 
-            return (
-                <div className="flex items-center">
-                    {status.icon && (
-                        <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
-                    <span>{status.label}</span>
-                </div>
-            );
-        },
-    },
+                    if (!status) {
+                        return null;
+                    }
 
-    {
-        accessorKey: "priority",
-        header: "Priorität",
-        cell: ({ row }) => {
-            const priority = priorities.find(
-                (priority) => priority.value === row.getValue("priority")
-            );
+                    return (
+                        <div className="flex items-center">
+                            {status.icon && (
+                                <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                            )}
+                            <span>{status.label}</span>
+                        </div>
+                    );
+                },
+            },
 
-            if (!priority) {
-                return null;
-            }
+            {
+                accessorKey: "priority",
+                header:formatMessage({id: "Priority"}),
+                cell: ({ row }) => {
+                    const priority = priorities().find(
+                        (priority) => priority.value === row.getValue("priority")
+                    );
 
-            return (
-                <div className="flex items-center">
-                    {priority.icon && (
-                        <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
-                    <span>{priority.label}</span>
-                </div>
-            );
-        },
-    },
-    { accessorKey: "deadline", header: "Deadline" },
-    {
-        id: "actions",
-        cell: ({ row }) => <DataTableRowActions row={row} />,
-    },
-];
+                    if (!priority) {
+                        return null;
+                    }
+
+                    return (
+                        <div className="flex items-center">
+                            {priority.icon && (
+                                <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                            )}
+                            <span>{priority.label}</span>
+                        </div>
+                    );
+                }
+            },
+            { accessorKey: "deadline", header: formatMessage({id: "Deadline"}) },
+            {
+                id: "actions",
+                cell: ({ row }) => <DataTableRowActions row={row} />,
+            },
+        ]
+};

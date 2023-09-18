@@ -15,6 +15,7 @@ import {
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
+import {FormattedMessage, useIntl} from "react-intl";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -31,6 +32,17 @@ export function DataTable<TData, TValue>({
     selectedItem,
     onRowClick,
 }: DataTableProps<TData, TValue>) {
+
+    // const {formatMessage} = useIntl();
+    // const aaa = columns.map((col)=>{
+    //     // const cc = col.header;
+    //     // const bb = {...col}
+    //     // bb.header=formatMessage({id:cc?.toString()})
+    //     // return bb;
+    //     col.header=formatMessage({id:col.header?.toString()})
+    //     return col;
+    // })
+
     const table = useReactTable({
         data,
         columns,

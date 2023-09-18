@@ -17,6 +17,8 @@ import { columns } from "@/components/ui/table/columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
+import { FormattedMessage } from "react-intl";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +29,7 @@ export default function Home() {
     const [sortBy, setSortBy] = useState("lastName");
 
     const { push } = useRouter();
-    const insuredColumns = columns as { header: string; accessorKey: string }[];
+    const insuredColumns = columns() as { header: string; accessorKey: string }[];
 
     const filteredItems = useMemo(() => {
         if (data) {
@@ -93,7 +95,9 @@ export default function Home() {
             <section className="lg:mr-5 lg:mb-0">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Versicherten</CardTitle>
+                        <CardTitle>
+                            <FormattedMessage id="Insured_person"/>
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="px-4 md:px-6">
                         <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
@@ -121,7 +125,7 @@ export default function Home() {
                                         <Button
                                             variant="outline"
                                             className="h-9 md:h-8">
-                                            Sortiert nach:{" "}
+                                            <FormattedMessage id="Sorted_by"/>:{" "}
                                             <b className="ml-1">
                                                 {headerValue()}
                                             </b>
@@ -147,7 +151,7 @@ export default function Home() {
                             <DataTable
                                 onRowClick={onRowClick}
                                 selectedItem={selectedItem}
-                                columns={columns}
+                                columns={columns()}
                                 data={filteredItems}
                             />
                         )}
