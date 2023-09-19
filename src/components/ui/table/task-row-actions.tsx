@@ -26,7 +26,7 @@ import {
 import { Button } from "../button";
 import { Row } from "@tanstack/react-table";
 import { MoreHorizontal, Trash2, Pencil } from "lucide-react";
-import { priorities, statuses } from "./columns";
+import { Priorities, Statuses } from "./columns";
 import { useState } from "react";
 import { TaskT } from "../../../../types";
 import TaskDialog from "@/components/forms/task-dialog";
@@ -96,7 +96,7 @@ export function DataTableRowActions<TData>({
             <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
-                {statuses().map((status) => (
+                {Statuses().map((status) => (
                   <DropdownMenuRadioItem
                     key={status.label}
                     value={status.value.toString()}
@@ -119,7 +119,7 @@ export function DataTableRowActions<TData>({
                   setPriority(value as TaskT["priority"])
                 }
               >
-                {priorities().map((status) => (
+                {Priorities().map((status) => (
                   <DropdownMenuRadioItem
                     key={status.label}
                     value={status.value}

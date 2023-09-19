@@ -17,12 +17,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { ArrowDownUp, ArrowUpDown, Search, Plus } from "lucide-react";
 import { useState } from "react";
-import { tasksColumns } from "@/components/ui/table/columns";
+import { TasksColumns } from "@/components/ui/table/columns";
 import data from "../../mock_tasks.json";
 import { DataTable } from "@/components/ui/table/data-table";
 import { TaskT } from "../../types";
 import TaskDialog from "@/components/forms/task-dialog";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 function Aufgaben() {
     const [searchInput, setSearchInput] = useState("");
@@ -32,7 +32,7 @@ function Aufgaben() {
     const [selectedTask, setSelectedTask] = useState<TaskT | null>(null);
 
     const tasks = data as TaskT[];
-    const columns = tasksColumns() as { header: string; accessorKey: string }[];
+    const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
     const headerValue = () => {
         // Find the corresponding header value
@@ -185,7 +185,7 @@ function Aufgaben() {
                         {filteredItems && (
                             <DataTable
                                 data={filteredItems}
-                                columns={tasksColumns()}
+                                columns={TasksColumns()}
                             />
                         )}
                     </CardContent>

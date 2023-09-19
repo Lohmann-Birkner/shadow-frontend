@@ -12,7 +12,7 @@ import {useIntl, MessageDescriptor,FormattedMessage} from "react-intl";
 
 // Insured
 
-export const columns=(): ColumnDef<InsuredT>[] =>{ 
+export const Columns=(): ColumnDef<InsuredT>[] =>{ 
     const {formatMessage} = useIntl();
     return[
     { accessorKey: "lastName", header: formatMessage({id:"Last_name"}) },
@@ -25,7 +25,7 @@ export const columns=(): ColumnDef<InsuredT>[] =>{
 
 // Tasks
 
-export const priorities = ()=>{
+export const Priorities = ()=>{
     const {formatMessage} = useIntl();
     
     return[
@@ -46,7 +46,7 @@ export const priorities = ()=>{
     },
 ]};
 
-export const statuses =()=>{
+export const Statuses =()=>{
     const {formatMessage} = useIntl();
     
     return [
@@ -62,7 +62,7 @@ export const statuses =()=>{
     }
 ]};
 
-export const tasksColumns = (): ColumnDef<TaskT>[] => {
+export const TasksColumns = (): ColumnDef<TaskT>[] => {
     const {formatMessage} = useIntl();
 
     return [
@@ -80,7 +80,7 @@ export const tasksColumns = (): ColumnDef<TaskT>[] => {
                 accessorKey: "done",
                 header: formatMessage({id: "Done"}),
                 cell: ({ row }) => {
-                    const status = statuses().find(
+                    const status = Statuses().find(
                         (status) => status.value === row.getValue("done")
                     );
 
@@ -103,7 +103,7 @@ export const tasksColumns = (): ColumnDef<TaskT>[] => {
                 accessorKey: "priority",
                 header:formatMessage({id: "Priority"}),
                 cell: ({ row }) => {
-                    const priority = priorities().find(
+                    const priority = Priorities().find(
                         (priority) => priority.value === row.getValue("priority")
                     );
 

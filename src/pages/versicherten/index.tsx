@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTable } from "@/components/ui/table/data-table";
-import { columns } from "@/components/ui/table/columns";
+import { Columns } from "@/components/ui/table/columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
@@ -29,7 +29,7 @@ export default function Home() {
     const [sortBy, setSortBy] = useState("lastName");
 
     const { push } = useRouter();
-    const insuredColumns = columns() as { header: string; accessorKey: string }[];
+    const insuredColumns = Columns() as { header: string; accessorKey: string }[];
 
     const filteredItems = useMemo(() => {
         if (data) {
@@ -151,7 +151,7 @@ export default function Home() {
                             <DataTable
                                 onRowClick={onRowClick}
                                 selectedItem={selectedItem}
-                                columns={columns()}
+                                columns={Columns()}
                                 data={filteredItems}
                             />
                         )}

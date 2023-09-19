@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/table/data-table";
 import tasksData from "../../../mock_tasks.json";
-import { tasksColumns } from "@/components/ui/table/columns";
+import { TasksColumns } from "@/components/ui/table/columns";
 import { TaskT } from "../../../types";
 import Documentation from "@/components/documentation";
 
@@ -31,7 +31,7 @@ export default function Page() {
     enabled: !!query.id,
   });
   const tasks = tasksData as TaskT[];
-  const columns = tasksColumns() as { header: string; accessorKey: string }[];
+  const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
   return (
     <main className="grid grid-cols-1 mt-16 lg:ml-24 lg:grid-cols-3 px-5 2xl:px-16 2xl:gap-8 h-screen rounded-md">
