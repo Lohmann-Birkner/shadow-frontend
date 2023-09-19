@@ -171,7 +171,10 @@
   "Date_pick":"Datum auswählen",
   "Update":"Aktualisieren",
   "Add":"Hinzufügen",
-  "Save":"Speichern"
+  "Save":"Speichern",
+  "Are_you_sure":"Sind Sie sicher?",
+  "Make_sure_to_delete":"Mit dieser Aktion wird Ihre Aufgabe gelöscht.",
+  "Cancel":"Absagen"
 
 
 

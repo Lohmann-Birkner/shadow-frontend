@@ -171,7 +171,13 @@
   "Date_pick":"Choose Date",
   "Update":"Update",
   "Add":"Add",
-  "Save":"Save"
+  "Save":"Save",
+  "Are_you_sure":"Are you sure?",
+  "Make_sure_to_delete":"This action will delete your task.",
+  "Cancel":"Cancel"
+
+
+
 
 
 

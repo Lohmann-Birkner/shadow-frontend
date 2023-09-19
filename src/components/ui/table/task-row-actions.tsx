@@ -54,15 +54,21 @@ export function DataTableRowActions<TData>({
     <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Sind Sie sicher?</AlertDialogTitle>
+          <AlertDialogTitle>
+            <FormattedMessage id="Are_you_sure" />
+            
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Mit dieser Aktion wird Ihre Aufgabe gelöscht
+            <FormattedMessage id="Make_sure_to_delete" />
+            
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Absagen</AlertDialogCancel>
+          <AlertDialogCancel>
+            <FormattedMessage id="Cancel" />
+          </AlertDialogCancel>
           <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
-            Löschen
+            <FormattedMessage id="Aktion_delete" />
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -82,7 +88,10 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-36" align="end">
-          <DropdownMenuLabel> <FormattedMessage id="Aktions" /></DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {" "}
+            <FormattedMessage id="Aktions" />
+          </DropdownMenuLabel>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
@@ -99,7 +108,10 @@ export function DataTableRowActions<TData>({
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger> <FormattedMessage id="Priority" /></DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>
+              {" "}
+              <FormattedMessage id="Priority" />
+            </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuRadioGroup
                 value={priority}
@@ -132,7 +144,10 @@ export function DataTableRowActions<TData>({
             onClick={() => onActionClick("delete")}
             className="flex justify-between"
           >
-            <span> <FormattedMessage id="delete" /></span>
+            <span>
+              {" "}
+              <FormattedMessage id="Aktion_delete" />
+            </span>
             <Trash2 className="w-4 h-4" />
           </DropdownMenuItem>
         </DropdownMenuContent>
