@@ -29,6 +29,8 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { Button } from "../ui/button";
 import { CalendarIcon } from "lucide-react";
+import { FormattedMessage } from "react-intl";
+
 
 // Define a form schema
 const formSchema = z.object({
@@ -70,7 +72,7 @@ function TaskDialog({ task, open, setOpen }: Props) {
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle className="text-2xl">
-                        {task ? "Aufgabe bearbeiten" : "Aufgabe hinzufügen"}
+                        {task ? <FormattedMessage id="Task_edit" />:  <FormattedMessage id="Add_task"/>}
                     </AlertDialogTitle>
                 </AlertDialogHeader>
 
@@ -97,7 +99,7 @@ function TaskDialog({ task, open, setOpen }: Props) {
                             name="content"
                             render={({ field }) => (
                                 <FormItem className="mt-3">
-                                    <FormLabel>Inhalt</FormLabel>
+                                    <FormLabel><FormattedMessage id="Content" /></FormLabel>
                                     <FormControl>
                                         <Textarea {...field} />
                                     </FormControl>
@@ -110,7 +112,7 @@ function TaskDialog({ task, open, setOpen }: Props) {
                             name="deadline"
                             render={({ field }) => (
                                 <FormItem className="flex flex-col mt-3">
-                                    <FormLabel>Deadline</FormLabel>
+                                    <FormLabel><FormattedMessage id="Deadline" /></FormLabel>
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <FormControl>
@@ -128,7 +130,7 @@ function TaskDialog({ task, open, setOpen }: Props) {
                                                         )
                                                     ) : (
                                                         <span>
-                                                            Datum auswählen
+                                                            <FormattedMessage id="Date_pick" />
                                                         </span>
                                                     )}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -153,7 +155,7 @@ function TaskDialog({ task, open, setOpen }: Props) {
                         <AlertDialogFooter className="mt-8">
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <Button type="submit">
-                                {task ? "Aktualisieren" : "Hinzufügen"}
+                                {task ?  <FormattedMessage id="Update" /> :  <FormattedMessage id="Add" />}
                             </Button>
                         </AlertDialogFooter>
                     </form>

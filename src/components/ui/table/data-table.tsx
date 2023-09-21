@@ -15,6 +15,7 @@ import {
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
+import {FormattedMessage} from "react-intl";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -31,6 +32,9 @@ export function DataTable<TData, TValue>({
     selectedItem,
     onRowClick,
 }: DataTableProps<TData, TValue>) {
+
+   
+
     const table = useReactTable({
         data,
         columns,
@@ -95,7 +99,7 @@ export function DataTable<TData, TValue>({
                                 <TableCell
                                     colSpan={columns.length}
                                     className="h-24 text-center">
-                                    Keine Ergebnisse.
+                                    <FormattedMessage id="No_results"/>
                                 </TableCell>
                             </TableRow>
                         )}

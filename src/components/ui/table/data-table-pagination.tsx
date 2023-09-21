@@ -15,6 +15,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { FormattedMessage } from "react-intl";
+
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>;
@@ -30,7 +32,9 @@ export function DataTablePagination<TData>({
             </div>
             <div className="flex items-center space-x-6 lg:space-x-8">
                 <div className="flex items-center space-x-2">
-                    <p className="text-sm font-medium">Zeilen pro Seite</p>
+                    <p className="text-sm font-medium">
+                        <FormattedMessage id="Lines_per_page"/>
+                    </p>
                     <Select
                         value={`${table.getState().pagination.pageSize}`}
                         onValueChange={(value) => {
@@ -55,7 +59,7 @@ export function DataTablePagination<TData>({
                     </Select>
                 </div>
                 <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-                    Seite {table.getState().pagination.pageIndex + 1} von{" "}
+                    <FormattedMessage id="Page"/> {table.getState().pagination.pageIndex + 1} von{" "}
                     {table.getPageCount()}
                 </div>
                 <div className="hidden md:flex items-center space-x-2">

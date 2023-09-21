@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "./ui/textarea";
 import { Pencil } from "lucide-react";
 import { Button } from "./ui/button";
+import { FormattedMessage } from "react-intl";
 
 interface Props {
     data: string;
@@ -37,7 +38,9 @@ function Documentation({ data, setData }: Props) {
             <Card className="mt-5">
                 <CardHeader className="pt-6">
                     <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg">Dokumentation</CardTitle>
+                        <CardTitle className="text-lg">
+                            <FormattedMessage id="Dokument"/>
+                        </CardTitle>
                         <Button
                             className={cn(isEditMode && "bg-accent")}
                             onClick={() => setIsEditMode(!isEditMode)}
@@ -60,7 +63,7 @@ function Documentation({ data, setData }: Props) {
                                     className="mt-5 ml-auto hover:bg-slate-200"
                                     variant={"secondary"}
                                     onClick={addDocumentation}>
-                                    Speichern
+                                    <FormattedMessage id="Save"/>
                                 </Button>
                             </div>
                         </>
