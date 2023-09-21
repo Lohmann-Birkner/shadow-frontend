@@ -1,0 +1,1 @@
+export const apiUrlBase = "https://thinkhealthapi.org:2053";

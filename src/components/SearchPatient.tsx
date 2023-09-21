@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -23,10 +23,16 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import Link from "next/link";
+// import { getPatientSearchResults } from "../api";
+
+interface searchInputs {
+  catalog: string;
+  input: string;
+}
 
 interface Props {
-  setSearchInput: (data: string) => void;
-  searchInput: string;
+ 
+  getCatalogAndSearchInput:(searchContent: searchInputs|null) => void;
 }
 
 const FormSchema = z.object({
@@ -35,24 +41,30 @@ const FormSchema = z.object({
   }),
 });
 
-export default function SearchPatient({ setSearchInput, searchInput }: Props) {
+export default function SearchPatient({getCatalogAndSearchInput }: Props) {
+
+  const [searchingInput,setSearchingInput]=useState<string>();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data.catalog);
-    console.log(searchInput);
+    console.log(data.catalog)
+    console.log(searchingInput)
+   
+    getCatalogAndSearchInput((data.catalog&&searchingInput)?{catalog:data.catalog,input:searchingInput}:null)
+    
   }
   return (
     <div className="md:w-full lg:w-1/2 ">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
-        //   className=" space-y-6"
+           onSubmit={form.handleSubmit(onSubmit)}
+          //   className=" space-y-6"
+         
         >
           <FormField
-          
             control={form.control}
             name="catalog"
             render={({ field }) => (
@@ -67,25 +79,34 @@ export default function SearchPatient({ setSearchInput, searchInput }: Props) {
                       <SelectTrigger className="w-44 mb-2 mr-2">
                         <SelectValue placeholder="catalog..." />
                       </SelectTrigger>
-                      <Input
-                        placeholder="Suchen..."
-                        onChange={(event) => setSearchInput(event.target.value)}
-                        className="w-48 mb-2 mr-2"
-                        icon={<Search className="mx-2 h-4 w-4" />}
-                      />
-                      <Button type="submit">Search</Button>
+                      {form.control._formValues.catalog === "Birthday" ? (
+                        <input type="date" 
+                         onChange={(e)=>setSearchingInput(e.target.value)}
+                        />
+                      ) : (
+                        <Input
+                          placeholder="Suchen..."
+                           onChange={(event) =>
+                            setSearchingInput(event.target.value)
+                          }
+                          className="w-48 mb-2 mr-2"
+                          icon={<Search className="mx-2 h-4 w-4" />}
+                        />
+                      )}
+
+                      <Button type="submit" >Search</Button>
                     </div>
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="Name">Name</SelectItem>
-                    <SelectItem value="Vorname">Vorname</SelectItem>
-                    <SelectItem value="Geburtsdatum">Geburtsdatum</SelectItem>
-                    <SelectItem value="Postleitzahl">Postleitzahl</SelectItem>
+                    <SelectItem value="Firstname">Vorname</SelectItem>
+                    <SelectItem value="Birthday">Geburtsdatum</SelectItem>
+                    <SelectItem value="Post">Postleitzahl</SelectItem>
 
-                    <SelectItem value="Versichertennummer">
+                    <SelectItem value="Insured_person_number">
                       Versichertennummer
                     </SelectItem>
-                    <SelectItem value="Geschlecht">Geschlecht</SelectItem>
+                    <SelectItem value="Gender">Geschlecht</SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -93,8 +114,6 @@ export default function SearchPatient({ setSearchInput, searchInput }: Props) {
               </FormItem>
             )}
           />
-
-          
         </form>
       </Form>
     </div>

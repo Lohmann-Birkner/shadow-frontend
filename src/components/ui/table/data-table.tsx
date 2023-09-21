@@ -15,6 +15,10 @@ import {
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
+// import { InsuredPersonT } from "../../../../types";
+
+
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];

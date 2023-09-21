@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
-import data from "../../../mock_insured_patients.json";
-import { useMemo, useState } from "react";
-import { InsuredT } from "../../../types";
+import { useMemo, useState, useEffect } from "react";
+import { InsuredPersonT } from "../../../types";
 import { Input } from "@/components/ui/input";
 import { ArrowDownUp, Search, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,53 +18,33 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
 import SearchPatient from "@/components/SearchPatient";
+import { getInsuredPersonSearchResults, getInsuredPerson } from "@/api";
+import { useQuery } from "@tanstack/react-query";
+import { serialize } from "v8";
+import { ca, da } from "date-fns/locale";
 
 const inter = Inter({ subsets: ["latin"] });
 
+interface searchInputs {
+  catalog: string;
+  input: string;
+}
+
 export default function Home() {
-  const [selectedItem, setSelectedItem] = useState<InsuredT | null>(null);
-  const [searchInput, setSearchInput] = useState("");
+  const [selectedItem, setSelectedItem] = useState<InsuredPersonT | null>(null);
+  // const [searchInput, setSearchInput] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
   const [sortBy, setSortBy] = useState("lastName");
+  const [searchParameters, setSearchParameters] = useState<searchInputs | null>(null);
+
+  //get insured persons
+  const { data, refetch } = useQuery({
+    queryKey: ["insuredPersons"],
+    queryFn: () => searchParameters?getInsuredPersonSearchResults(searchParameters.catalog, searchParameters.input):getInsuredPerson(),
+  });
 
   const { push } = useRouter();
   const insuredColumns = columns as { header: string; accessorKey: string }[];
-
-  const filteredItems = useMemo(() => {
-    if (data) {
-      let sorted;
-      sortBy === "dateOfBirth"
-        ? (sorted = data.sort((a, b) => {
-            const dateA = a.dateOfBirth.split("-").reverse().join("-");
-            const dateB = b.dateOfBirth.split("-").reverse().join("-");
-            return new Date(dateB).getTime() - new Date(dateA).getTime();
-          }))
-        : (sorted = data.sort((a, b) => {
-            return a[sortBy as keyof InsuredT].localeCompare(
-              b[sortBy as keyof InsuredT]
-            );
-          }));
-
-      // Filter by searchInput
-      const words = searchInput.trim().toLowerCase().split(/\s+/);
-
-      const filteredItems = words.reduce((results, word) => {
-        return results.filter(
-          (item) =>
-            item.firstName.toLowerCase().startsWith(word) ||
-            item.lastName.toLowerCase().startsWith(word) ||
-            item.dateOfBirth.toLowerCase().includes(word) ||
-            item.sex.toLowerCase().startsWith(word) ||
-            item.zipcode.toLowerCase().startsWith(word) ||
-            item.insuranceNumber.toLowerCase().includes(word)
-        );
-      }, sorted);
-
-      const flipped = isFlipped ? filteredItems.reverse() : filteredItems;
-
-      return flipped;
-    } else return null;
-  }, [searchInput, isFlipped, sortBy]);
 
   const headerValue = () => {
     // Find the corresponding header value
@@ -76,10 +55,49 @@ export default function Home() {
     return headerValue;
   };
 
-  const onRowClick = (insured: InsuredT) => {
+  const onRowClick = (insured: InsuredPersonT) => {
     setSelectedItem(insured);
-    push(`/versicherten/${insured.insuranceNumber}`);
+    push(`/versicherten/${insured.Insured_person_number}`);
   };
+
+  const getCatalogAndSearchInput = (searchContent: searchInputs | null) => {
+    setSearchParameters(searchContent);
+    console.log(searchParameters);
+  };
+
+   useEffect(() => {
+     refetch();
+   }, [searchParameters])
+
+  const filteredItems = useMemo(() => {
+    if (data) {
+      switch(sortBy) {
+        case "Date_of_birth":
+        case "Entry_date":
+        case "Discharge_date":
+          data.sort((a, b) => new Date(b[sortBy]).getTime() - new Date(a[sortBy]).getTime());
+          break;
+        case "Membership_number":
+        case "Person_indicator":
+          data.sort((a, b) => b[sortBy] - a[sortBy]);
+          break;
+        default:
+          data.sort((a, b) => {
+            return (a[sortBy as keyof InsuredPersonT] as string)?.localeCompare(
+              (b[sortBy as keyof InsuredPersonT] as string)
+            );
+          });
+      }
+
+      if(isFlipped){
+        data.reverse();
+      }
+
+      return data;
+    } else {
+      return null;
+    }
+  }, [isFlipped, sortBy,data]);
 
   return (
     <main
@@ -87,14 +105,14 @@ export default function Home() {
     >
       <section className="lg:mr-5 lg:mb-0">
         <Card>
+          <p>{filteredItems&&JSON.stringify(filteredItems[0].Date_of_birth)}</p>
           <CardHeader>
             <CardTitle>Versicherten</CardTitle>
           </CardHeader>
           <CardContent className="px-4 md:px-6">
             <div className=" mt-5 mb-4 lg:flex lg:justify-between w-full   space-y-4 md:space-y-0 ">
               <SearchPatient
-                setSearchInput={setSearchInput}
-                searchInput={searchInput}
+                getCatalogAndSearchInput={getCatalogAndSearchInput}
               />
               <div className="flex gap-3 ">
                 <Button
