@@ -33,16 +33,101 @@ export default function Home() {
   // const [searchInput, setSearchInput] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
   const [sortBy, setSortBy] = useState("Lastname");
-  const [searchParameters, setSearchParameters] = useState<searchInputs | null>(null);
+  const [searchParameters, setSearchParameters] = useState<searchInputs | null>(
+    null
+  );
 
   //get insured persons
-  const { data, refetch } = useQuery({
-    queryKey: ["insuredPersons"],
-    queryFn: () => searchParameters?getInsuredPersonSearchResults(searchParameters.catalog, searchParameters.input):getInsuredPerson(),
-  });
+   const { data } = useQuery({
+    queryKey: ["insuredPersons",searchParameters],
+    queryFn: () =>
+    searchParameters
+      ? getInsuredPersonSearchResults(
+             searchParameters.catalog,
+            searchParameters.input
+           )
+         : getInsuredPerson(),
+   });
+  // const data = [
+    
+  //   {
+  //     "ins_id": "MAXIMA_680127",
+  //     "first_name": "MUSTERFRAU_680127",
+  //     "last_name": "10680127",
+  //     "Membership_number": 1000128,
+  //     "Person_indicator": 0,
+  //     "Gender": "W",
+  //     "Date_of_birth": "1956-08-18",
+  //     "ZIP_code": "21407",
+  //     "Insured_person_number": "00",
+  //     "Entry_date": "1972-04-01",
+  //     "Discharge_date": "1900-01-01",
+  //     "Reason_for_leaving": ""
+  //   },
+  //   {
+  //     "ins_id": "MAXIMA_680150",
+  //     "first_name": "MUSTERFRAU_680150",
+  //     "last_name": "10680150",
+  //     "Membership_number": 1000151,
+  //     "Person_indicator": 0,
+  //     "Gender": "W",
+  //     "Date_of_birth": "1974-01-17",
+  //     "ZIP_code": "18055",
+  //     "Insured_person_number": "00",
+  //     "Entry_date": "1999-01-17",
+  //     "Discharge_date": "1900-01-01",
+  //     "Reason_for_leaving": ""
+  //   },
+  //   {
+  //     "ins_id": "MAXIMA_680151",
+  //     "first_name": "MUSTERFRAU_680151",
+  //     "last_name": "10680151",
+  //     "Membership_number": 1000152,
+  //     "Person_indicator": 0,
+  //     "Gender": "W",
+  //     "Date_of_birth": "1974-01-21",
+  //     "ZIP_code": "56820",
+  //     "Insured_person_number": "00",
+  //     "Entry_date": "1993-10-01",
+  //     "Discharge_date": "1900-01-01",
+  //     "Reason_for_leaving": ""
+  //   },]
 
   const { push } = useRouter();
   const insuredColumns = columns as { header: string; accessorKey: string }[];
+
+  const filteredItems = useMemo(() => {
+    if (data) {
+      switch (sortBy) {
+        case "Date_of_birth":
+        case "Entry_date":
+        case "Discharge_date":
+          data.sort(
+            (a, b) =>
+              new Date(b[sortBy]).getTime() - new Date(a[sortBy]).getTime()
+          );
+          break;
+        case "Membership_number":
+        case "Person_indicator":
+          data.sort((a, b) => b[sortBy] - a[sortBy]);
+          break;
+        default:
+          data.sort((a, b) => {
+            return (a[sortBy as keyof InsuredPersonT] as string)?.localeCompare(
+              b[sortBy as keyof InsuredPersonT] as string
+            );
+          });
+      }
+
+      if (isFlipped) {
+        data.reverse();
+      }
+      console.log(data[0]);
+      return data;
+    } else {
+      return null;
+    }
+  }, [isFlipped, sortBy, data]);
 
   const headerValue = () => {
     // Find the corresponding header value
@@ -63,39 +148,9 @@ export default function Home() {
     console.log(searchParameters);
   };
 
-   useEffect(() => {
-     refetch();
-   }, [searchParameters])
-
-  const filteredItems = useMemo(() => {
-    if (data) {
-      switch(sortBy) {
-        case "Date_of_birth":
-        case "Entry_date":
-        case "Discharge_date":
-          data.sort((a, b) => new Date(b[sortBy]).getTime() - new Date(a[sortBy]).getTime());
-          break;
-        case "Membership_number":
-        case "Person_indicator":
-          data.sort((a, b) => b[sortBy] - a[sortBy]);
-          break;
-        default:
-          data.sort((a, b) => {
-            return (a[sortBy as keyof InsuredPersonT] as string)?.localeCompare(
-              (b[sortBy as keyof InsuredPersonT] as string)
-            );
-          });
-      }
-
-      if(isFlipped){
-        data.reverse();
-      }
-
-      return data;
-    } else {
-      return null;
-    }
-  }, [isFlipped, sortBy,data]);
+  //  useEffect(() => {
+  //    refetch();
+  //  }, [searchParameters]);
 
   return (
     <main
@@ -103,17 +158,19 @@ export default function Home() {
     >
       <section className="lg:mr-5 lg:mb-0">
         <Card>
-          <p>{filteredItems&&JSON.stringify(filteredItems[0].Date_of_birth)}</p>
+          {/* <p>
+            {filteredItems &&
+              JSON.stringify(filteredItems[0].Membership_number) + sortBy}
+          </p> */}
           <CardHeader>
             <CardTitle>Versicherten</CardTitle>
           </CardHeader>
           <CardContent className="px-4 md:px-6">
-            <div className=" mt-5 mb-4 lg:flex lg:justify-between w-full space-y-4 md:space-y-0  gap-3
-            ">
+            <div className=" mt-5 mb-4 xl:flex xl:justify-between w-full space-y-4 md:space-y-0 gap-3 ">
               <SearchPatient
                 getCatalogAndSearchInput={getCatalogAndSearchInput}
               />
-              <div className="flex gap-3 w-1/3 lg:justify-end">
+              <div className="flex gap-3 w-1/3 xl:justify-end">
                 <Button
                   onClick={() => setIsFlipped(!isFlipped)}
                   variant="outline"
@@ -127,8 +184,9 @@ export default function Home() {
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="h-9 md:h-8">
-                      Sortiert nach: <b className="ml-1">{headerValue()}</b>
+                    <Button variant="outline" className="w-{350} h-9 md:h-8 whitespace-nowrap ">
+                      Sortiert nach:
+                       <b className="ml-1">{headerValue()}</b>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-48">
@@ -150,12 +208,15 @@ export default function Home() {
               </div>
             </div>
             {filteredItems && (
-              <DataTable
-                onRowClick={onRowClick}
-                selectedItem={selectedItem}
-                columns={columns}
-                data={filteredItems}
-              />
+              <>
+                {/* <div>happy{filteredItems[0].Date_of_birth}</div> */}
+                <DataTable
+                  onRowClick={onRowClick}
+                  selectedItem={selectedItem}
+                  columns={columns}
+                  data={filteredItems}
+                />
+              </>
             )}
           </CardContent>
         </Card>

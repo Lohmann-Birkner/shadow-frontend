@@ -59,7 +59,7 @@ export default function SearchPatient({ getCatalogAndSearchInput }: Props) {
     );
   }
   return (
-    <div className="md:w-1/2 ">
+    <div className="md:w-4/5 xl:w-1/2 ">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -76,7 +76,7 @@ export default function SearchPatient({ getCatalogAndSearchInput }: Props) {
                   defaultValue={field.value}
                 >
                   <FormControl className=" w-full">
-                    <div className="lg:flex lg:justify-start w-full sm:justify-around">
+                    <div className="lg:flex lg:justify-start w-full sm:justify-around ">
                       <SelectTrigger className="w-44 mb-2 mr-2">
                         <SelectValue placeholder="catalog..." />
                       </SelectTrigger>
@@ -99,7 +99,9 @@ export default function SearchPatient({ getCatalogAndSearchInput }: Props) {
                         />
                       )}
 
-                      <Button type="submit">Search</Button>
+                      <Button type="submit"
+                        className="mb-2"
+                      >Search</Button>
                     </div>
                   </FormControl>
                   <SelectContent>
