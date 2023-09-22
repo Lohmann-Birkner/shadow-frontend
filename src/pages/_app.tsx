@@ -11,42 +11,41 @@ import { useRouter } from "next/router";
 import React from "react";
 
 export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
+    Component,
+    pageProps: { session, ...pageProps },
 }: AppProps) {
-  const queryClient = new QueryClient();
-  const { locale, defaultLocale } = useRouter();
+    const queryClient = new QueryClient();
+    const { locale, defaultLocale } = useRouter();
 
-  const messages = React.useMemo(() => {
-    switch (locale) {
-      case "en":
-        return English;
-        break;
-      case "de":
-        return German;
-        break;
-      default:
-        return German;
-        break;
-    }
-  }, [locale]);
+    const messages = React.useMemo(() => {
+        switch (locale) {
+            case "en":
+                return English;
+                break;
+            case "de":
+                return German;
+                break;
+            default:
+                return German;
+                break;
+        }
+    }, [locale]);
 
-  return (
-    <IntlProvider
-      messages={messages}
-      locale={locale || defaultLocale || ""}
-      defaultLocale={defaultLocale}
-    >
-      <SessionProvider session={session}>
-        <QueryClientProvider client={queryClient}>
-          <Navbar />
-          <div className="hidden md:flex mt-12 w-24 flex-col fixed inset-y-0">
-            <Sidebar />
-          </div>
+    return (
+        <IntlProvider
+            messages={messages}
+            locale={locale || defaultLocale || ""}
+            defaultLocale={defaultLocale}>
+            <SessionProvider session={session}>
+                <QueryClientProvider client={queryClient}>
+                    <Navbar />
+                    <div className="hidden md:flex mt-12 w-24 flex-col fixed inset-y-0">
+                        <Sidebar />
+                    </div>
 
-          <Component {...pageProps} />
-        </QueryClientProvider>
-      </SessionProvider>
-    </IntlProvider>
-  );
+                    <Component {...pageProps} />
+                </QueryClientProvider>
+            </SessionProvider>
+        </IntlProvider>
+    );
 }
