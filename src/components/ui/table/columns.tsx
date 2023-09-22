@@ -12,18 +12,18 @@ import { DataTableRowActions } from "./task-row-actions";
 // Insured
 
 export const columns: ColumnDef<InsuredPersonT>[] = [
-    { accessorKey: "ins_id", header: "ins_id" },
+    // { accessorKey: "ins_id", header: "ins_id" },
     { accessorKey: "first_name", header: "Vorname" },
     { accessorKey: "last_name", header: "Name" },
-    { accessorKey: "Membership_number", header: "Membership_number" },
-    { accessorKey: "Person_indicator", header: "Person_indicator" },
+    { accessorKey: "Membership_number", header: "Mitgliedsnummer" },
+    { accessorKey: "Person_indicator", header: "Personenkennzeichen" },
     { accessorKey: "Gender", header: "Geschlecht" },
     { accessorKey: "Date_of_birth", header: "Geburtsdatum" },
     { accessorKey: "ZIP_code", header: "Postleitzahl" },
     { accessorKey: "Insured_person_number", header: "Versichertennummer" },
-    { accessorKey: "Entry_date", header: "Entry_date" },
-    { accessorKey: "Discharge_date", header: "Discharge_date" },
-    { accessorKey: "Reason_for_leaving", header: "Reason_for_leaving" },
+    { accessorKey: "Entry_date", header: "Eintrittsdatum" },
+    { accessorKey: "Discharge_date", header: "Austrittsdatum" },
+    { accessorKey: "Reason_for_leaving", header: "Austrittsgrund" },
 
 ];
 

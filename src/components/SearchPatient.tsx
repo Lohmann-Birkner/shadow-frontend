@@ -21,9 +21,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
+
+
 import { toast } from "@/components/ui/use-toast";
 import Link from "next/link";
-// import { getPatientSearchResults } from "../api";
 
 interface searchInputs {
   catalog: string;
@@ -31,8 +32,8 @@ interface searchInputs {
 }
 
 interface Props {
- 
-  getCatalogAndSearchInput:(searchContent: searchInputs|null) => void;
+  getCatalogAndSearchInput: (searchContent: searchInputs | null) => void;
+  
 }
 
 const FormSchema = z.object({
@@ -41,28 +42,28 @@ const FormSchema = z.object({
   }),
 });
 
-export default function SearchPatient({getCatalogAndSearchInput }: Props) {
-
-  const [searchingInput,setSearchingInput]=useState<string>();
+export default function SearchPatient({ getCatalogAndSearchInput }: Props) {
+  const [searchingInput, setSearchingInput] = useState<string>();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-  
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data.catalog)
-    console.log(searchingInput)
-   
-    getCatalogAndSearchInput((data.catalog&&searchingInput)?{catalog:data.catalog,input:searchingInput}:null)
-    
+    console.log(data.catalog);
+    console.log(searchingInput);
+
+    getCatalogAndSearchInput(
+      data.catalog && searchingInput
+        ? { catalog: data.catalog, input: searchingInput }
+        : null
+    );
   }
   return (
-    <div className="md:w-full lg:w-1/2 ">
+    <div className="md:w-1/2 ">
       <Form {...form}>
         <form
-           onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit)}
           //   className=" space-y-6"
-         
         >
           <FormField
             control={form.control}
@@ -79,14 +80,18 @@ export default function SearchPatient({getCatalogAndSearchInput }: Props) {
                       <SelectTrigger className="w-44 mb-2 mr-2">
                         <SelectValue placeholder="catalog..." />
                       </SelectTrigger>
-                      {form.control._formValues.catalog === "Birthday" ? (
-                        <input type="date" 
-                         onChange={(e)=>setSearchingInput(e.target.value)}
+                      {form.control._formValues.catalog === "Birthday" ||
+                      form.control._formValues.catalog === "Entry_date" ||
+                      form.control._formValues.catalog === "Discharge_date" ? (
+                        <Input
+                          type="date"
+                          className="w-48 mb-2 mr-2"
+                          onChange={(e) => setSearchingInput(e.target.value)}
                         />
                       ) : (
                         <Input
                           placeholder="Suchen..."
-                           onChange={(event) =>
+                          onChange={(event) =>
                             setSearchingInput(event.target.value)
                           }
                           className="w-48 mb-2 mr-2"
@@ -94,19 +99,33 @@ export default function SearchPatient({getCatalogAndSearchInput }: Props) {
                         />
                       )}
 
-                      <Button type="submit" >Search</Button>
+                      <Button type="submit">Search</Button>
                     </div>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Name">Name</SelectItem>
                     <SelectItem value="Firstname">Vorname</SelectItem>
-                    <SelectItem value="Birthday">Geburtsdatum</SelectItem>
-                    <SelectItem value="Post">Postleitzahl</SelectItem>
+                    <SelectItem value="Name">Name</SelectItem>
+                    <SelectItem value="Membership_number">
+                      Mitgliedsnummer
+                    </SelectItem>
 
+                    <SelectItem value="Person_indicator">
+                      Personenkennzeichen
+                    </SelectItem>
+                    <SelectItem value="Gender">Geschlecht</SelectItem>
+                    <SelectItem value="Birthday">Geburtsdatum</SelectItem>
+
+                    <SelectItem value="Post">Postleitzahl</SelectItem>
                     <SelectItem value="Insured_person_number">
                       Versichertennummer
                     </SelectItem>
-                    <SelectItem value="Gender">Geschlecht</SelectItem>
+                    <SelectItem value="Entry_date">Eintrittsdatum</SelectItem>
+                    <SelectItem value="Discharge_date">
+                      Austrittsdatum
+                    </SelectItem>
+                    <SelectItem value="Reason_for_leaving">
+                      Austrittsgrund
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 

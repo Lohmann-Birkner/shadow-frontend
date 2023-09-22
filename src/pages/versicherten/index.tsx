@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
 import { useMemo, useState, useEffect } from "react";
 import { InsuredPersonT } from "../../../types";
-import { Input } from "@/components/ui/input";
 import { ArrowDownUp, Search, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +20,6 @@ import SearchPatient from "@/components/SearchPatient";
 import { getInsuredPersonSearchResults, getInsuredPerson } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 import { serialize } from "v8";
-import { ca, da } from "date-fns/locale";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,7 +32,7 @@ export default function Home() {
   const [selectedItem, setSelectedItem] = useState<InsuredPersonT | null>(null);
   // const [searchInput, setSearchInput] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
-  const [sortBy, setSortBy] = useState("lastName");
+  const [sortBy, setSortBy] = useState("Lastname");
   const [searchParameters, setSearchParameters] = useState<searchInputs | null>(null);
 
   //get insured persons
@@ -110,11 +108,12 @@ export default function Home() {
             <CardTitle>Versicherten</CardTitle>
           </CardHeader>
           <CardContent className="px-4 md:px-6">
-            <div className=" mt-5 mb-4 lg:flex lg:justify-between w-full   space-y-4 md:space-y-0 ">
+            <div className=" mt-5 mb-4 lg:flex lg:justify-between w-full space-y-4 md:space-y-0  gap-3
+            ">
               <SearchPatient
                 getCatalogAndSearchInput={getCatalogAndSearchInput}
               />
-              <div className="flex gap-3 ">
+              <div className="flex gap-3 w-1/3 lg:justify-end">
                 <Button
                   onClick={() => setIsFlipped(!isFlipped)}
                   variant="outline"

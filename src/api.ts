@@ -15,7 +15,7 @@ export const getInsuredPersonSearchResults = async (
   value: string
 ) => {
   const response = await axios.get(
-    `${apiUrlBase}/api/insured?q=${catalog}%'${value}'`
+    `${apiUrlBase}/api/insured?q=${catalog};${value}`
   );
 
   return response.data as InsuredPersonT[];

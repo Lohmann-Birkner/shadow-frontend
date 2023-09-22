@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
+
 import { useRouter } from "next/router";
 import { getInsured } from "@/api";
 
@@ -25,7 +26,7 @@ export default function Page() {
     const { query } = useRouter();
     const [documentation, setDocumentation] = useState(mockDocumentation);
 
-    const { data } = useQuery("insured", () => getInsured(query.id as string), {
+    const { data } = useQuery(["insured"], () => getInsured(query.id as string), {
         enabled: !!query.id,
     });
     const tasks = tasksData as TaskT[];
