@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { InsuredT, TaskT } from "../../../../types";
+import { PatientT, TaskT } from "../../../../types";
 import {
     ArrowDown,
     ArrowRight,
@@ -12,23 +12,38 @@ import { useIntl } from "react-intl";
 
 // Insured
 
-export const Columns = (): ColumnDef<InsuredT>[] => {
+export const Columns = (): ColumnDef<PatientT>[] => {
     const { formatMessage } = useIntl();
     return [
-        { accessorKey: "lastName", header: formatMessage({ id: "Last_name" }) },
         {
-            accessorKey: "firstName",
+            accessorKey: "last_name",
+            header: formatMessage({ id: "Last_name" }),
+        },
+        {
+            accessorKey: "first_name",
             header: formatMessage({ id: "Firstname" }),
         },
         {
-            accessorKey: "dateOfBirth",
+            accessorKey: "Date_of_birth",
             header: formatMessage({ id: "Date_of_birth" }),
         },
-        { accessorKey: "sex", header: formatMessage({ id: "Gender" }) },
-        { accessorKey: "zipcode", header: formatMessage({ id: "ZIP_code" }) },
+        { accessorKey: "Gender", header: formatMessage({ id: "Gender" }) },
+        { accessorKey: "ZIP_code", header: formatMessage({ id: "ZIP_code" }) },
         {
-            accessorKey: "insuranceNumber",
+            accessorKey: "Insured_person_number",
             header: formatMessage({ id: "Insured_person_number" }),
+        },
+        {
+            accessorKey: "Entry_date",
+            header: formatMessage({ id: "Entry_date" }),
+        },
+        {
+            accessorKey: "Discharge_date",
+            header: formatMessage({ id: "Discharge_date" }),
+        },
+        {
+            accessorKey: "Reason_for_leaving",
+            header: formatMessage({ id: "Reason_for_leaving" }),
         },
     ];
 };

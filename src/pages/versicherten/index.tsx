@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
-import data from "../../../mock_insured_patients.json";
 import { useMemo, useState } from "react";
-import { InsuredT } from "../../../types";
+import { PatientT } from "../../../types";
 import { Input } from "@/components/ui/input";
 import { ArrowDownUp, Search, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,41 +17,63 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
-
+import { useQuery } from "react-query";
+import { getAllPatients } from "@/api";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
-    const [selectedItem, setSelectedItem] = useState<InsuredT | null>(null);
+interface Props {
+    patients: PatientT[];
+}
+
+export default function Home({ patients }: Props) {
+    const [selectedItem, setSelectedItem] = useState<PatientT | null>(null);
     const [searchInput, setSearchInput] = useState("");
     const [isFlipped, setIsFlipped] = useState(false);
-    const [sortBy, setSortBy] = useState("lastName");
+    const [sortBy, setSortBy] = useState("last_name");
 
     const { push } = useRouter();
-    const insuredColumns = Columns() as { header: string; accessorKey: string }[];
+    const insuredColumns = Columns() as {
+        header: string;
+        accessorKey: string;
+    }[];
+
+    const { data } = useQuery({
+        queryKey: ["patients"],
+        queryFn: getAllPatients,
+        initialData: patients,
+    });
 
     const filteredItems = useMemo(() => {
         if (data) {
             let sorted;
-            sortBy === "dateOfBirth"
-                ? (sorted = data.sort((a, b) => {
-                      const dateA = a.dateOfBirth
-                          .split("-")
-                          .reverse()
-                          .join("-");
-                      const dateB = b.dateOfBirth
-                          .split("-")
-                          .reverse()
-                          .join("-");
-                      return (
-                          new Date(dateB).getTime() - new Date(dateA).getTime()
-                      );
-                  }))
-                : (sorted = data.sort((a, b) => {
-                      return a[sortBy as keyof InsuredT].localeCompare(
-                          b[sortBy as keyof InsuredT]
-                      );
-                  }));
+            if (sortBy === "Date_of_birth") {
+                sorted = data.sort((a, b) => {
+                    const dateA = new Date(a.Date_of_birth);
+                    const dateB = new Date(b.Date_of_birth);
+
+                    // Compare the dates and return the result
+                    if (dateA < dateB) {
+                        return 1;
+                    } else if (dateA > dateB) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+            } else {
+                sorted = data.sort((a, b) => {
+                    const valueA = String(a[sortBy as keyof PatientT]);
+                    const valueB = String(b[sortBy as keyof PatientT]);
+
+                    // Add a null/undefined check
+                    if (valueA === null || valueB === null) {
+                        return 0; // Handle the case where the value is null or undefined
+                    }
+
+                    return valueA.localeCompare(valueB);
+                });
+            }
 
             // Filter by searchInput
             const words = searchInput.trim().toLowerCase().split(/\s+/);
@@ -60,12 +81,12 @@ export default function Home() {
             const filteredItems = words.reduce((results, word) => {
                 return results.filter(
                     (item) =>
-                        item.firstName.toLowerCase().startsWith(word) ||
-                        item.lastName.toLowerCase().startsWith(word) ||
-                        item.dateOfBirth.toLowerCase().includes(word) ||
-                        item.sex.toLowerCase().startsWith(word) ||
-                        item.zipcode.toLowerCase().startsWith(word) ||
-                        item.insuranceNumber.toLowerCase().includes(word)
+                        item.first_name.toLowerCase().startsWith(word) ||
+                        item.last_name.toLowerCase().startsWith(word) ||
+                        item.Date_of_birth.toLowerCase().includes(word) ||
+                        item.Gender.toLowerCase().startsWith(word) ||
+                        item.ZIP_code.toLowerCase().startsWith(word) ||
+                        item.Insured_person_number.toLowerCase().includes(word)
                 );
             }, sorted);
 
@@ -73,7 +94,7 @@ export default function Home() {
 
             return flipped;
         } else return null;
-    }, [searchInput, isFlipped, sortBy]);
+    }, [data, sortBy, searchInput, isFlipped]);
 
     const headerValue = () => {
         // Find the corresponding header value
@@ -84,19 +105,19 @@ export default function Home() {
         return headerValue;
     };
 
-    const onRowClick = (insured: InsuredT) => {
+    const onRowClick = (insured: PatientT) => {
         setSelectedItem(insured);
-        push(`/versicherten/${insured.insuranceNumber}`);
+        push(`/versicherten/${insured.Insured_person_number}`);
     };
 
     return (
         <main
-            className={`grid grid-cols-1 mt-12 md:mt-16 space-y-4 md:space-y-0 lg:grid-cols-[65%_35%] mb-5 lg:ml-24 md:px-5 2xl:px-16 2xl:gap-8  ${inter.className}`}>
+            className={`grid grid-cols-1 mt-12 md:mt-16 space-y-4 md:space-y-0 mb-5 lg:ml-24 md:px-5 2xl:px-16 2xl:gap-8  ${inter.className}`}>
             <section className="lg:mr-5 lg:mb-0">
                 <Card>
                     <CardHeader>
                         <CardTitle>
-                            <FormattedMessage id="Insured_person"/>
+                            <FormattedMessage id="Insured_person" />
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="px-4 md:px-6">
@@ -106,7 +127,7 @@ export default function Home() {
                                 onChange={(event) =>
                                     setSearchInput(event.target.value)
                                 }
-                                className="w-48"
+                                className="w-56"
                                 icon={<Search className="mx-2 h-4 w-4" />}
                             />
                             <div className="flex gap-3">
@@ -125,7 +146,7 @@ export default function Home() {
                                         <Button
                                             variant="outline"
                                             className="h-9 md:h-8">
-                                            <FormattedMessage id="Sorted_by"/>:{" "}
+                                            <FormattedMessage id="Sorted_by" />:{" "}
                                             <b className="ml-1">
                                                 {headerValue()}
                                             </b>
@@ -158,7 +179,7 @@ export default function Home() {
                     </CardContent>
                 </Card>
             </section>
-            <section>
+            {/* <section>
                 <Card className="bg-slate-50">
                     <CardHeader>
                         <CardTitle className="text-lg">Lorem ipsum</CardTitle>
@@ -182,7 +203,12 @@ export default function Home() {
                         Tempore, consequatur!
                     </CardContent>
                 </Card>
-            </section>
+            </section> */}
         </main>
     );
+}
+
+export async function getStaticProps() {
+    const patients = await getAllPatients();
+    return { props: { patients }, revalidate: 60 * 3 };
 }
