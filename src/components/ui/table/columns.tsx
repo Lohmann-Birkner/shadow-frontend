@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 
 // Insured
 
-export const Columns = (): ColumnDef<PatientT>[] => {
+export const PatientColumns = (): ColumnDef<PatientT>[] => {
     const { formatMessage } = useIntl();
     return [
         {

@@ -1,8 +1,7 @@
 import { Inter } from "next/font/google";
 import { useMemo, useState } from "react";
-import { PatientT } from "../../../types";
-import { Input } from "@/components/ui/input";
-import { ArrowDownUp, Search, ArrowUpDown } from "lucide-react";
+import { PatientT, searchInputs } from "../../../types";
+import { ArrowDownUp, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -12,13 +11,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTable } from "@/components/ui/table/data-table";
-import { Columns } from "@/components/ui/table/columns";
+import { PatientColumns } from "@/components/ui/table/columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
 import { useQuery } from "react-query";
-import { getAllPatients } from "@/api";
+import { getAllPatients, getPatientByQuery } from "@/api";
+import SearchPatient from "@/components/search-patient";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,77 +28,78 @@ interface Props {
 
 export default function Home({ patients }: Props) {
     const [selectedItem, setSelectedItem] = useState<PatientT | null>(null);
-    const [searchInput, setSearchInput] = useState("");
     const [isFlipped, setIsFlipped] = useState(false);
     const [sortBy, setSortBy] = useState("last_name");
+    const [searchParameters, setSearchParameters] =
+        useState<searchInputs | null>(null);
 
     const { push } = useRouter();
-    const insuredColumns = Columns() as {
+    const PatientColumnsTyped = PatientColumns() as {
         header: string;
         accessorKey: string;
     }[];
 
-    const { data } = useQuery({
+    const { data, isFetching } = useQuery({
         queryKey: ["patients"],
-        queryFn: getAllPatients,
+        queryFn: () => getPatientByQuery(searchParameters!),
         initialData: patients,
+        enabled: Boolean(searchParameters),
     });
 
-    const filteredItems = useMemo(() => {
+    // const { data } = useQuery({
+    //     queryKey: ["patients"],
+    //     queryFn: getAllPatients,
+    //     initialData: patients,
+    // });
+
+    const sortedItems = useMemo(() => {
         if (data) {
-            let sorted;
-            if (sortBy === "Date_of_birth") {
-                sorted = data.sort((a, b) => {
-                    const dateA = new Date(a.Date_of_birth);
-                    const dateB = new Date(b.Date_of_birth);
+            let sortedData;
 
-                    // Compare the dates and return the result
-                    if (dateA < dateB) {
-                        return 1;
-                    } else if (dateA > dateB) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
-                });
-            } else {
-                sorted = data.sort((a, b) => {
-                    const valueA = String(a[sortBy as keyof PatientT]);
-                    const valueB = String(b[sortBy as keyof PatientT]);
+            switch (sortBy) {
+                case "Date_of_birth":
+                case "Entry_date":
+                case "Discharge_date":
+                    sortedData = [...data].sort((a, b) => {
+                        const dateA = new Date(a[sortBy]);
+                        const dateB = new Date(b[sortBy]);
+                        if (dateA < dateB) {
+                            return 1;
+                        } else if (dateA > dateB) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    });
+                    break;
+                default:
+                    sortedData = [...data].sort((a, b) => {
+                        const valueA = String(a[sortBy as keyof PatientT]);
+                        const valueB = String(b[sortBy as keyof PatientT]);
 
-                    // Add a null/undefined check
-                    if (valueA === null || valueB === null) {
-                        return 0; // Handle the case where the value is null or undefined
-                    }
+                        // Add a null/undefined check
+                        if (valueA === null || valueB === null) {
+                            return 0; // Handle the case where the value is null or undefined
+                        }
 
-                    return valueA.localeCompare(valueB);
-                });
+                        return valueA.localeCompare(valueB);
+                    });
             }
 
-            // Filter by searchInput
-            const words = searchInput.trim().toLowerCase().split(/\s+/);
+            // Reverse the sorted data if isFlipped is true
+            if (isFlipped) {
+                sortedData.reverse();
+            }
 
-            const filteredItems = words.reduce((results, word) => {
-                return results.filter(
-                    (item) =>
-                        item.first_name.toLowerCase().startsWith(word) ||
-                        item.last_name.toLowerCase().startsWith(word) ||
-                        item.Date_of_birth.toLowerCase().includes(word) ||
-                        item.Gender.toLowerCase().startsWith(word) ||
-                        item.ZIP_code.toLowerCase().startsWith(word) ||
-                        item.Insured_person_number.toLowerCase().includes(word)
-                );
-            }, sorted);
+            return sortedData;
+        }
 
-            const flipped = isFlipped ? filteredItems.reverse() : filteredItems;
-
-            return flipped;
-        } else return null;
-    }, [data, sortBy, searchInput, isFlipped]);
+        return data;
+    }, [data, sortBy, isFlipped]);
 
     const headerValue = () => {
         // Find the corresponding header value
-        const column = insuredColumns.find(
+        const column = PatientColumnsTyped.find(
             (column) => column.accessorKey === sortBy
         );
         const headerValue = column ? column.header : "";
@@ -122,13 +123,9 @@ export default function Home({ patients }: Props) {
                     </CardHeader>
                     <CardContent className="px-4 md:px-6">
                         <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
-                            <Input
-                                placeholder="Suchen..."
-                                onChange={(event) =>
-                                    setSearchInput(event.target.value)
-                                }
-                                className="w-56"
-                                icon={<Search className="mx-2 h-4 w-4" />}
+                            <SearchPatient
+                                setSearchParameters={setSearchParameters}
+                                isLoading={isFetching}
                             />
                             <div className="flex gap-3">
                                 <Button
@@ -156,24 +153,28 @@ export default function Home({ patients }: Props) {
                                         <DropdownMenuRadioGroup
                                             value={sortBy}
                                             onValueChange={setSortBy}>
-                                            {insuredColumns.map((column) => (
-                                                <DropdownMenuRadioItem
-                                                    key={column.header}
-                                                    value={column.accessorKey}>
-                                                    {column.header}
-                                                </DropdownMenuRadioItem>
-                                            ))}
+                                            {PatientColumnsTyped.map(
+                                                (column) => (
+                                                    <DropdownMenuRadioItem
+                                                        key={column.header}
+                                                        value={
+                                                            column.accessorKey
+                                                        }>
+                                                        {column.header}
+                                                    </DropdownMenuRadioItem>
+                                                )
+                                            )}
                                         </DropdownMenuRadioGroup>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
                         </div>
-                        {filteredItems && (
+                        {sortedItems && (
                             <DataTable
                                 onRowClick={onRowClick}
                                 selectedItem={selectedItem}
-                                columns={Columns()}
-                                data={filteredItems}
+                                columns={PatientColumns()}
+                                data={sortedItems}
                             />
                         )}
                     </CardContent>

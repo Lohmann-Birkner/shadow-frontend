@@ -23,3 +23,8 @@ export type TaskT = {
     deadline: string;
     priority: "low" | "medium" | "high";
 };
+
+export type searchInputs = {
+    catalog: string;
+    searchQuery: string;
+};
