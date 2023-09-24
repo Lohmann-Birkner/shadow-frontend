@@ -74,7 +74,11 @@ function Aufgaben() {
 
                     case "priority":
                         // Sort by priority, highest first
-                        const priorityOrder = { low: 0, medium: 1, high: 2 };
+                        const priorityOrder: any = {
+                            low: 0,
+                            medium: 1,
+                            high: 2,
+                        };
                         return (
                             priorityOrder[b.priority] -
                             priorityOrder[a.priority]
@@ -119,7 +123,9 @@ function Aufgaben() {
             <section className="mb-5">
                 <Card className="border-none shadow-none">
                     <CardHeader>
-                        <CardTitle><FormattedMessage id="Task"/></CardTitle>
+                        <CardTitle>
+                            <FormattedMessage id="Task" />
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="px-4 md:px-6">
                         <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
@@ -147,7 +153,7 @@ function Aufgaben() {
                                         <Button
                                             className="h-9 md:h-8"
                                             variant="outline">
-                                            <FormattedMessage id="Sorted_by"/>:{" "}
+                                            <FormattedMessage id="Sorted_by" />:{" "}
                                             <b className="ml-1">
                                                 {headerValue()}
                                             </b>
@@ -178,7 +184,7 @@ function Aufgaben() {
                                     onClick={() => setIsDialogOpen(true)}
                                     variant={"outline"}>
                                     <Plus className="h-4 w-4 mr-1" />
-                                    <FormattedMessage id="Add_task"/>
+                                    <FormattedMessage id="Add_task" />
                                 </Button>
                             </div>
                         </div>
@@ -186,6 +192,7 @@ function Aufgaben() {
                             <DataTable
                                 data={filteredItems}
                                 columns={TasksColumns()}
+                                pagination
                             />
                         )}
                     </CardContent>
