@@ -1,7 +1,6 @@
 import axios from "axios";
-import data from "../mock_insured_patients.json";
 import { API_URL_BASE } from "./constants";
-import { PatientT, searchInputs } from "../types";
+import { PatientT, searchInputs, MedicalServiceT, MedicationT } from "../types";
 
 export const getAllPatients = async () => {
     const response = await axios.get(`${API_URL_BASE}/somepatients`);
@@ -17,7 +16,20 @@ export const getPatientByQuery = async (searchInputs: searchInputs) => {
     return response.data as PatientT[];
 };
 
-export const getInsured = (id: string) => {
-    const insured = data.find((insured) => insured.insuranceNumber === id);
-    return insured;
+export const getPatientById = async (id: string) => {
+    const response = await axios.get(`${API_URL_BASE}/insured/${id}`);
+
+    return response.data as PatientT;
+};
+
+export const getPatientMedicalService = async (id: string) => {
+    const response = await axios.get(`${API_URL_BASE}/medical_service/${id}`);
+
+    return response.data as MedicalServiceT[];
+};
+
+export const getPatientMedication = async (id: string) => {
+    const response = await axios.get(`${API_URL_BASE}/medication/${id}`);
+
+    return response.data as MedicationT[];
 };

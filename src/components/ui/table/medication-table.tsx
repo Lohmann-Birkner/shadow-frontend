@@ -16,6 +16,9 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { DiagsT, OpsT, PositionsT } from "../../../../types";
+import { DataTable } from "./data-table";
+import { PositionsColumns } from "./columns";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -23,16 +26,14 @@ interface DataTableProps<TData, TValue> {
     setSelectedItem?: (item: any) => void;
     selectedItem?: any;
     onRowClick?: (item: any) => void;
-    pagination: boolean;
 }
 
-export function DataTable<TData, TValue>({
+export function MedicationsTable<TData, TValue>({
     columns,
     data,
     setSelectedItem,
     selectedItem,
     onRowClick,
-    pagination,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -48,7 +49,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className="rounded-md border">
+            <div className="rounded-md border mt-5">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -71,27 +72,48 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    className="overflow-hidden"
-                                    key={row.id}
-                                    onClick={() => {
-                                        onRowClick && onRowClick(row.original);
-                                    }}
-                                    // data-state={
-                                    //     row.original === selectedItem &&
-                                    //     "selected"
-                                    // }
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
+                            table.getRowModel().rows.map((row: any) => (
+                                <>
+                                    <TableRow
+                                        className="overflow-hidden"
+                                        key={row.id}
+                                        onClick={() => {
+                                            onRowClick &&
+                                                onRowClick(row.original);
+                                        }}
+                                        // data-state={
+                                        //     row.original === selectedItem &&
+                                        //     "selected"
+                                        // }
+                                    >
+                                        {row
+                                            .getVisibleCells()
+                                            .map((cell: any) => (
+                                                <TableCell key={cell.id}>
+                                                    {flexRender(
+                                                        cell.column.columnDef
+                                                            .cell,
+                                                        cell.getContext()
+                                                    )}
+                                                </TableCell>
+                                            ))}
+                                    </TableRow>
+
+                                    <h1 className="text-md font-semibold p-4 pb-0">
+                                        Positions:
+                                    </h1>
+                                    <TableRow className="hover:bg-white">
+                                        <TableCell
+                                            className="w-[50%]"
+                                            colSpan={columns.length}>
+                                            <DataTable
+                                                pagination={false}
+                                                columns={PositionsColumns()}
+                                                data={row.original.positions}
+                                            />
                                         </TableCell>
-                                    ))}
-                                </TableRow>
+                                    </TableRow>
+                                </>
                             ))
                         ) : (
                             <TableRow>
@@ -105,7 +127,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            {pagination && <DataTablePagination table={table} />}
+            {/* <DataTablePagination table={table} /> */}
         </>
     );
 }

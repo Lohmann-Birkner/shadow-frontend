@@ -108,7 +108,7 @@ export default function Home({ patients }: Props) {
 
     const onRowClick = (insured: PatientT) => {
         setSelectedItem(insured);
-        push(`/versicherten/${insured.Insured_person_number}`);
+        push(`/versicherten/${insured.ins_id}`);
     };
 
     return (
@@ -175,6 +175,7 @@ export default function Home({ patients }: Props) {
                                 selectedItem={selectedItem}
                                 columns={PatientColumns()}
                                 data={sortedItems}
+                                pagination
                             />
                         )}
                     </CardContent>

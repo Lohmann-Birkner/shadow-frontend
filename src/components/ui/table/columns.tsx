@@ -1,5 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { PatientT, TaskT } from "../../../../types";
+import {
+    MedicalServiceT,
+    MedicationT,
+    OpsT,
+    PatientT,
+    PositionsT,
+    TaskT,
+} from "../../../../types";
 import {
     ArrowDown,
     ArrowRight,
@@ -20,7 +27,7 @@ export const PatientColumns = (): ColumnDef<PatientT>[] => {
             header: formatMessage({ id: "Last_name" }),
         },
         {
-            accessorKey: "first_name",
+            accessorKey: "Insurance_area",
             header: formatMessage({ id: "Firstname" }),
         },
         {
@@ -156,6 +163,155 @@ export const TasksColumns = (): ColumnDef<TaskT>[] => {
         {
             id: "actions",
             cell: ({ row }) => <DataTableRowActions row={row} />,
+        },
+    ];
+};
+
+// Medical Service
+
+export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Case_number",
+            header: formatMessage({ id: "Case_number" }),
+        },
+        {
+            accessorKey: "Insurance_area",
+            header: formatMessage({ id: "Insurance_area" }),
+        },
+        {
+            accessorKey: "Quarter",
+            header: formatMessage({ id: "Quarter" }),
+        },
+        {
+            accessorKey: "ID_Prescriber",
+            header: formatMessage({ id: "ID_Prescriber" }),
+        },
+
+        {
+            accessorKey: "Physician_specialty_group",
+            header: formatMessage({ id: "Physician_specialty_group" }),
+        },
+        {
+            accessorKey: "Is_accident",
+            header: formatMessage({ id: "Is_accident" }),
+        },
+        {
+            accessorKey: "Treatment_type",
+            header: formatMessage({ id: "Treatment_type" }),
+        },
+        {
+            accessorKey: "Points",
+            header: formatMessage({ id: "Points" }),
+        },
+        {
+            accessorKey: "Total_costs",
+            header: formatMessage({ id: "Total_costs" }),
+        },
+        {
+            accessorKey: "Calculated_costs",
+            header: formatMessage({ id: "Calculated_costs" }),
+        },
+        {
+            accessorKey: "Non_budget_costs",
+            header: formatMessage({ id: "Non_budget_costs" }),
+        },
+        {
+            accessorKey: "Dialysis_costs",
+            header: formatMessage({ id: "Dialysis_costs" }),
+        },
+        {
+            accessorKey: "Start_Treatment",
+            header: formatMessage({ id: "Start_Treatment" }),
+        },
+        {
+            accessorKey: "End_Treatment",
+            header: formatMessage({ id: "End_Treatment" }),
+        },
+        {
+            accessorKey: "Insurance_stats_5",
+            header: formatMessage({ id: "Insurance_stats_5th_digit" }),
+        },
+        {
+            accessorKey: "Distance",
+            header: formatMessage({ id: "Distance" }),
+        },
+        {
+            accessorKey: "Insurance_stats_2",
+            header: formatMessage({ id: "Insurance_stats_2nd_digit" }),
+        },
+    ];
+};
+
+export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Issue_date",
+            header: formatMessage({ id: "Issue_date" }),
+        },
+        {
+            accessorKey: "ID_Prescriber",
+            header: formatMessage({ id: "ID_Prescriber" }),
+        },
+        {
+            accessorKey: "Group_prescriber",
+            header: formatMessage({ id: "Group_prescriber" }),
+        },
+        {
+            accessorKey: "KV_area_Prescriber",
+            header: formatMessage({ id: "KV_area_Prescriber" }),
+        },
+    ];
+};
+
+export const PositionsColumns = (): ColumnDef<PositionsT>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Date_Prescription",
+            header: formatMessage({ id: "Date_Prescription" }),
+        },
+        {
+            accessorKey: "Pharmaceutical_registration_number",
+            header: formatMessage({ id: "Pharmaceutical_registration_number" }),
+        },
+        {
+            accessorKey: "Total_cost_medication",
+            header: formatMessage({ id: "Total_cost_medication" }),
+        },
+        {
+            accessorKey: "Individual_cost_medication",
+            header: formatMessage({ id: "Individual_cost_medication" }),
+        },
+        {
+            accessorKey: "Package_size",
+            header: formatMessage({ id: "Package_size" }),
+        },
+        {
+            accessorKey: "Substance_code",
+            header: formatMessage({ id: "Substance_code" }),
+        },
+        {
+            accessorKey: "Daily_dosage",
+            header: formatMessage({ id: "Daily_dosage" }),
+        },
+        {
+            accessorKey: "Total_cost_prescription",
+            header: formatMessage({ id: "Total_cost_prescription" }),
+        },
+        {
+            accessorKey: "Surcharge",
+            header: formatMessage({ id: "Surcharge" }),
+        },
+        {
+            accessorKey: "Care_provider_type",
+            header: formatMessage({ id: "Care_provider_type" }),
+        },
+        {
+            accessorKey: "Medical_Aid_position_number",
+            header: formatMessage({ id: "Medical_Aid_position_number" }),
         },
     ];
 };
