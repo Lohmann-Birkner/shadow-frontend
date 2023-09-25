@@ -115,3 +115,21 @@ export type WorkInabilityT = {
         }[];
     }[];
 };
+
+export type MedaidT = {
+    ID_prescriber: number;
+    Date_prescription: string;
+    Group_prescriber: number;
+    positions: {
+        Occupation_group: number;
+        Start_service: string;
+        End_service: string;
+        Net_amount: number;
+        Count: number;
+        Number_medical_aid: string;
+        Group_medical_aid: string;
+        Group_ID_medical_aid: string;
+        Pharmaceutical_registration_number: number;
+        Diagnosis: string;
+    }[];
+};

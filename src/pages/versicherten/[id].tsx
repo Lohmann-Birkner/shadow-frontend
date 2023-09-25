@@ -15,6 +15,8 @@ import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/table/data-table";
 import tasksData from "../../../mock_tasks.json";
 import {
+    MedaidColumns,
+    MedaidPositionsColumns,
     MedicalServiceColumns,
     MedicalServiceDiagsColumns,
     MedicalServiceOpsColumns,
@@ -28,6 +30,7 @@ import { TaskT } from "../../../types";
 import Documentation from "@/components/documentation";
 import {
     getPatientById,
+    getPatientMedaid,
     getPatientMedicalService,
     getPatientMedication,
     getPatientWorkInability,
@@ -74,6 +77,13 @@ export default function Page() {
         }
     );
 
+    const medaid = useQuery(
+        ["medaid", tab],
+        () => getPatientMedaid(query.id as string),
+        {
+            enabled: !!query.id && tab === "therapeutic_and_aid_supplies",
+        }
+    );
     console.log(medicalService.data);
 
     const tasks = tasksData as TaskT[];
@@ -156,7 +166,9 @@ export default function Page() {
                     <TabsContent className="pt-2" value="medical_service">
                         {medicalService.data ? (
                             medicalService.data.map((row, index: number) => (
-                                <Card className="mb-6 bg-gray-50" key={index}>
+                                <Card
+                                    className="mb-8 mt-4 bg-gray-50"
+                                    key={index}>
                                     <CardContent className="mt-6">
                                         <DataTable
                                             data={[row]}
@@ -169,22 +181,11 @@ export default function Page() {
                                                     Diagnosis:
                                                 </h1>
                                                 <div className="flex flex-col space-y-5">
-                                                    {row.diags.map(
-                                                        (diagnosis) => (
-                                                            <DataTable
-                                                                key={
-                                                                    diagnosis.ICD
-                                                                }
-                                                                data={[
-                                                                    diagnosis,
-                                                                ]}
-                                                                columns={MedicalServiceDiagsColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
-                                                        )
-                                                    )}
+                                                    <DataTable
+                                                        data={row.diags}
+                                                        columns={MedicalServiceDiagsColumns()}
+                                                        pagination={false}
+                                                    />
                                                 </div>
                                             </>
                                         )}
@@ -194,22 +195,11 @@ export default function Page() {
                                                     Operations:
                                                 </h1>
                                                 <div className="flex flex-col space-y-4">
-                                                    {row.ops.map(
-                                                        (operation) => (
-                                                            <DataTable
-                                                                key={
-                                                                    operation.Identifier_operation
-                                                                }
-                                                                data={[
-                                                                    operation,
-                                                                ]}
-                                                                columns={MedicalServiceOpsColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
-                                                        )
-                                                    )}
+                                                    <DataTable
+                                                        data={row.ops}
+                                                        columns={MedicalServiceOpsColumns()}
+                                                        pagination={false}
+                                                    />
                                                 </div>
                                             </>
                                         )}
@@ -225,7 +215,9 @@ export default function Page() {
                     <TabsContent value="medication">
                         {medication.data ? (
                             medication.data.map((row, index: number) => (
-                                <Card className="mb-6 bg-gray-50" key={index}>
+                                <Card
+                                    className="mb-8 mt-4 bg-gray-50"
+                                    key={index}>
                                     <CardContent className="mt-6">
                                         <DataTable
                                             data={[row]}
@@ -238,20 +230,12 @@ export default function Page() {
                                                     Positions:
                                                 </h1>
                                                 <div className="flex flex-col space-y-5">
-                                                    {row.positions.map(
-                                                        (position, index) => (
-                                                            <DataTable
-                                                                key={index}
-                                                                data={[
-                                                                    position,
-                                                                ]}
-                                                                columns={MedicationPositionsColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
-                                                        )
-                                                    )}
+                                                    <DataTable
+                                                        key={index}
+                                                        data={row.positions}
+                                                        columns={MedicationPositionsColumns()}
+                                                        pagination={false}
+                                                    />
                                                 </div>
                                             </>
                                         )}
@@ -269,7 +253,7 @@ export default function Page() {
                             workInability.data.length > 0 ? (
                                 workInability.data.map((row, index: number) => (
                                     <Card
-                                        className="mb-6 bg-gray-50"
+                                        className="mb-8 mt-4 bg-gray-50"
                                         key={index}>
                                         <CardTitle className="p-6 text-lg font-semibold">
                                             Main ICD: {row.Main_ICD}
@@ -315,9 +299,43 @@ export default function Page() {
                         )}
                     </TabsContent>
                     <TabsContent value="therapeutic_and_aid_supplies">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Adipisci dolores corporis aliquam mollitia ad accusamus
-                        rerum rem perferendis alias animi!
+                        {medaid.data ? (
+                            medaid.data.length > 0 ? (
+                                medaid.data.map((row, index: number) => (
+                                    <Card
+                                        className="mb-8 mt-4 bg-gray-50"
+                                        key={index}>
+                                        <CardContent
+                                            className="mt-6"
+                                            key={index}>
+                                            <DataTable
+                                                data={[row]}
+                                                columns={MedaidColumns()}
+                                                pagination={false}
+                                            />
+                                            <h1 className="my-4 font-semibold">
+                                                Positions:
+                                            </h1>
+                                            <div className="flex flex-col space-y-5">
+                                                <DataTable
+                                                    data={row.positions}
+                                                    columns={MedaidPositionsColumns()}
+                                                    pagination={false}
+                                                />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))
+                            ) : (
+                                <div className="w-full flex justify-center items-center">
+                                    <h1>No result found</h1>
+                                </div>
+                            )
+                        ) : (
+                            <div className="w-full flex justify-center items-center">
+                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                            </div>
+                        )}
                     </TabsContent>
                     <TabsContent value="hospital">
                         culpa necessitatibus facere quas quibusdam alias animi

@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import {
+    MedaidT,
     MedicalServiceT,
     MedicationT,
     PatientT,
@@ -499,3 +500,69 @@ export const WorkInabilityDiagnosisColumns =
             },
         ];
     };
+
+// Medaid
+
+export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "ID_prescriber",
+            header: formatMessage({ id: "ID_prescriber" }),
+        },
+        {
+            accessorKey: "Date_prescription",
+            header: formatMessage({ id: "Date_prescription" }),
+        },
+        {
+            accessorKey: "Group_prescriber",
+            header: formatMessage({ id: "Group_prescriber" }),
+        },
+    ];
+};
+
+export const MedaidPositionsColumns = (): ColumnDef<MedaidT["positions"]>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Occupation_group",
+            header: formatMessage({ id: "Occupation_group" }),
+        },
+        {
+            accessorKey: "Start_service",
+            header: formatMessage({ id: "Start_service" }),
+        },
+        {
+            accessorKey: "End_service",
+            header: formatMessage({ id: "End_service" }),
+        },
+        {
+            accessorKey: "Net_amount",
+            header: formatMessage({ id: "Net_amount" }),
+        },
+        {
+            accessorKey: "Count",
+            header: formatMessage({ id: "Count" }),
+        },
+        {
+            accessorKey: "Number_medical_aid",
+            header: formatMessage({ id: "Number_medical_aid" }),
+        },
+        {
+            accessorKey: "Group_medical_aid",
+            header: formatMessage({ id: "Group_medical_aid" }),
+        },
+        {
+            accessorKey: "Group_ID_medical_aid",
+            header: formatMessage({ id: "Group_ID_medical_aid" }),
+        },
+        {
+            accessorKey: "Pharmaceutical_registration_number",
+            header: formatMessage({ id: "Pharmaceutical_registration_number" }),
+        },
+        {
+            accessorKey: "Diagnosis",
+            header: formatMessage({ id: "Diagnosis" }),
+        },
+    ];
+};

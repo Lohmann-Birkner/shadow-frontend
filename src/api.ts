@@ -6,6 +6,7 @@ import {
     MedicalServiceT,
     MedicationT,
     WorkInabilityT,
+    MedaidT,
 } from "../types";
 
 export const getAllPatients = async () => {
@@ -44,4 +45,10 @@ export const getPatientWorkInability = async (id: string) => {
     const response = await axios.get(`${API_URL_BASE}/work_inability/${id}`);
 
     return response.data as WorkInabilityT[];
+};
+
+export const getPatientMedaid = async (id: string) => {
+    const response = await axios.get(`${API_URL_BASE}/medaid/${id}`);
+
+    return response.data as MedaidT[];
 };
