@@ -234,7 +234,9 @@ export default function Page() {
                             </div>
                         )}
                     </TabsContent>
-                    <TabsContent value="therapeutic_and_aid_supplies">
+                    <TabsContent
+                        className="p-5"
+                        value="therapeutic_and_aid_supplies">
                         {medaid.data ? (
                             medaid.data.length > 0 ? (
                                 <MadaidTable
@@ -253,7 +255,7 @@ export default function Page() {
                             </div>
                         )}
                     </TabsContent>
-                    <TabsContent value="hospital">
+                    <TabsContent className="p-5" value="hospital">
                         {hospital.data ? (
                             hospital.data.length > 0 ? (
                                 <HospitalTable
@@ -273,7 +275,7 @@ export default function Page() {
                         )}
                     </TabsContent>
 
-                    <TabsContent value="rehab">
+                    <TabsContent className="p-5" value="rehab">
                         {rehab.data ? (
                             rehab.data.length > 0 ? (
                                 <RehabTable
@@ -292,7 +294,7 @@ export default function Page() {
                             </div>
                         )}
                     </TabsContent>
-                    <TabsContent value="tasks">
+                    <TabsContent className="p-5" value="tasks">
                         {tasks && (
                             <DataTable
                                 pagination
