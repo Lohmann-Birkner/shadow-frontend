@@ -1,6 +1,12 @@
 import axios from "axios";
 import { API_URL_BASE } from "./constants";
-import { PatientT, searchInputs, MedicalServiceT, MedicationT } from "../types";
+import {
+    PatientT,
+    searchInputs,
+    MedicalServiceT,
+    MedicationT,
+    WorkInabilityT,
+} from "../types";
 
 export const getAllPatients = async () => {
     const response = await axios.get(`${API_URL_BASE}/somepatients`);
@@ -32,4 +38,10 @@ export const getPatientMedication = async (id: string) => {
     const response = await axios.get(`${API_URL_BASE}/medication/${id}`);
 
     return response.data as MedicationT[];
+};
+
+export const getPatientWorkInability = async (id: string) => {
+    const response = await axios.get(`${API_URL_BASE}/work_inability/${id}`);
+
+    return response.data as WorkInabilityT[];
 };

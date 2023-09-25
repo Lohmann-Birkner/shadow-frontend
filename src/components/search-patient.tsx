@@ -68,7 +68,10 @@ export default function SearchPatient({
                         render={({ field }) => (
                             <FormItem>
                                 <Select
-                                    onValueChange={field.onChange}
+                                    onValueChange={(value) => {
+                                        field.onChange(value);
+                                        console.log("value", value);
+                                    }}
                                     defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger className="w-[220px]">

@@ -16,8 +16,13 @@ import { DataTable } from "@/components/ui/table/data-table";
 import tasksData from "../../../mock_tasks.json";
 import {
     MedicalServiceColumns,
+    MedicalServiceDiagsColumns,
+    MedicalServiceOpsColumns,
     MedicationColumns,
+    MedicationPositionsColumns,
     TasksColumns,
+    WorkInabilityDiagnosisColumns,
+    WorkInabilityPaymentsColumns,
 } from "@/components/ui/table/columns";
 import { TaskT } from "../../../types";
 import Documentation from "@/components/documentation";
@@ -25,10 +30,9 @@ import {
     getPatientById,
     getPatientMedicalService,
     getPatientMedication,
+    getPatientWorkInability,
 } from "@/api";
 import { Loader2 } from "lucide-react";
-import { MedicalServiceTable } from "@/components/ui/table/medical-service-table";
-import { MedicationsTable } from "@/components/ui/table/medication-table";
 
 const mockDocumentation =
     "reprehenderit deserunt animi. Voluptatem, eligendi necessitatibus assumenda itaque non iure eveniet minus fugit error deserunt, et praesentium, ducimus dolorum minima! Harum, esse quos";
@@ -61,6 +65,16 @@ export default function Page() {
             enabled: !!query.id && tab === "medication",
         }
     );
+
+    const workInability = useQuery(
+        ["work_inability", tab],
+        () => getPatientWorkInability(query.id as string),
+        {
+            enabled: !!query.id && tab === "work_inability",
+        }
+    );
+
+    console.log(medicalService.data);
 
     const tasks = tasksData as TaskT[];
     const columns = TasksColumns() as { header: string; accessorKey: string }[];
@@ -123,8 +137,8 @@ export default function Page() {
                             <FormattedMessage id="Medication" />
                         </TabsTrigger>
 
-                        <TabsTrigger value="medical_certificates">
-                            <FormattedMessage id="medical_certificates" />
+                        <TabsTrigger value="work_inability">
+                            <FormattedMessage id="work_inability" />
                         </TabsTrigger>
 
                         <TabsTrigger value="therapeutic_and_aid_supplies">
@@ -141,15 +155,67 @@ export default function Page() {
 
                     <TabsContent className="pt-2" value="medical_service">
                         {medicalService.data ? (
-                            medicalService.data.map(
-                                (row: any, index: number) => (
-                                    <MedicalServiceTable
-                                        key={index}
-                                        data={[row]}
-                                        columns={MedicalServiceColumns()}
-                                    />
-                                )
-                            )
+                            medicalService.data.map((row, index: number) => (
+                                <Card className="mb-6 bg-gray-50" key={index}>
+                                    <CardContent className="mt-6">
+                                        <DataTable
+                                            data={[row]}
+                                            columns={MedicalServiceColumns()}
+                                            pagination={false}
+                                        />
+                                        {row.diags.length > 0 && (
+                                            <>
+                                                <h1 className="my-4 font-semibold">
+                                                    Diagnosis:
+                                                </h1>
+                                                <div className="flex flex-col space-y-5">
+                                                    {row.diags.map(
+                                                        (diagnosis) => (
+                                                            <DataTable
+                                                                key={
+                                                                    diagnosis.ICD
+                                                                }
+                                                                data={[
+                                                                    diagnosis,
+                                                                ]}
+                                                                columns={MedicalServiceDiagsColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
+                                                        )
+                                                    )}
+                                                </div>
+                                            </>
+                                        )}
+                                        {row.ops.length > 0 && (
+                                            <>
+                                                <h1 className="my-5 font-semibold">
+                                                    Operations:
+                                                </h1>
+                                                <div className="flex flex-col space-y-4">
+                                                    {row.ops.map(
+                                                        (operation) => (
+                                                            <DataTable
+                                                                key={
+                                                                    operation.Identifier_operation
+                                                                }
+                                                                data={[
+                                                                    operation,
+                                                                ]}
+                                                                columns={MedicalServiceOpsColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
+                                                        )
+                                                    )}
+                                                </div>
+                                            </>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            ))
                         ) : (
                             <div className="w-full flex justify-center items-center">
                                 <Loader2 className="h-16 w-16 m-5 animate-spin" />
@@ -158,12 +224,39 @@ export default function Page() {
                     </TabsContent>
                     <TabsContent value="medication">
                         {medication.data ? (
-                            medication.data.map((row: any, index: number) => (
-                                <MedicationsTable
-                                    key={index}
-                                    data={[row]}
-                                    columns={MedicationColumns()}
-                                />
+                            medication.data.map((row, index: number) => (
+                                <Card className="mb-6 bg-gray-50" key={index}>
+                                    <CardContent className="mt-6">
+                                        <DataTable
+                                            data={[row]}
+                                            columns={MedicationColumns()}
+                                            pagination={false}
+                                        />
+                                        {row.positions.length > 0 && (
+                                            <>
+                                                <h1 className="my-4 font-semibold">
+                                                    Positions:
+                                                </h1>
+                                                <div className="flex flex-col space-y-5">
+                                                    {row.positions.map(
+                                                        (position, index) => (
+                                                            <DataTable
+                                                                key={index}
+                                                                data={[
+                                                                    position,
+                                                                ]}
+                                                                columns={MedicationPositionsColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
+                                                        )
+                                                    )}
+                                                </div>
+                                            </>
+                                        )}
+                                    </CardContent>
+                                </Card>
                             ))
                         ) : (
                             <div className="w-full flex justify-center items-center">
@@ -171,18 +264,55 @@ export default function Page() {
                             </div>
                         )}
                     </TabsContent>
-                    <TabsContent value="medical_certificates">
-                        est corrupti eaque praesentium culpa dolor delectus
-                        tempora aperiam ut. Nemo similique autem impedit magni!
-                        Iste laudantium, repellat eius, optio beatae libero
-                        incidunt dolorem voluptatum placeat quia sint minus!
-                        Blanditiis odio incidunt illum sequi quos consequuntur
-                        tempore veritatis labore repellat doloremque quam
-                        voluptates reiciendis officiis ab cumque, reprehenderit
-                        deserunt animi. Voluptatem, eligendi necessitatibus
-                        assumenda itaque non iure eveniet minus fugit error
-                        deserunt, et praesentium, ducimus dolorum minima! Harum,
-                        esse quos.
+                    <TabsContent value="work_inability">
+                        {workInability.data ? (
+                            workInability.data.length > 0 ? (
+                                workInability.data.map((row, index: number) => (
+                                    <Card
+                                        className="mb-6 bg-gray-50"
+                                        key={index}>
+                                        <CardTitle className="p-6 text-lg font-semibold">
+                                            Main ICD: {row.Main_ICD}
+                                        </CardTitle>
+
+                                        {row.payments.map((payment) => (
+                                            <CardContent key={payment.Case_ID}>
+                                                <Card>
+                                                    <CardContent>
+                                                        <h1 className="my-4 font-semibold">
+                                                            Payment:
+                                                        </h1>
+                                                        <DataTable
+                                                            data={[payment]}
+                                                            columns={WorkInabilityPaymentsColumns()}
+                                                            pagination={false}
+                                                        />
+                                                        <h1 className="my-4 font-semibold">
+                                                            Diagnosis:
+                                                        </h1>
+                                                        <DataTable
+                                                            data={
+                                                                payment.diagnosis
+                                                            }
+                                                            columns={WorkInabilityDiagnosisColumns()}
+                                                            pagination={false}
+                                                        />
+                                                    </CardContent>
+                                                </Card>
+                                            </CardContent>
+                                        ))}
+                                    </Card>
+                                ))
+                            ) : (
+                                <div className="w-full flex justify-center items-center">
+                                    <h1>No result found</h1>
+                                </div>
+                            )
+                        ) : (
+                            <div className="w-full flex justify-center items-center">
+                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                            </div>
+                        )}
                     </TabsContent>
                     <TabsContent value="therapeutic_and_aid_supplies">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.

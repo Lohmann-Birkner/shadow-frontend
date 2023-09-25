@@ -2,10 +2,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import {
     MedicalServiceT,
     MedicationT,
-    OpsT,
     PatientT,
-    PositionsT,
     TaskT,
+    WorkInabilityT,
 } from "../../../../types";
 import {
     ArrowDown,
@@ -244,29 +243,81 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     ];
 };
 
+export const MedicalServiceDiagsColumns = (): ColumnDef<
+    MedicalServiceT["diags"]
+>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Number_ICD",
+            header: formatMessage({ id: "Number_ICD" }),
+        },
+        {
+            accessorKey: "ICD",
+            header: formatMessage({ id: "ICD" }),
+        },
+        {
+            accessorKey: "Quality_ICD",
+            header: formatMessage({ id: "Quality_ICD" }),
+        },
+        {
+            accessorKey: "Localization_ICD",
+            header: formatMessage({ id: "Localization_ICD" }),
+        },
+    ];
+};
+
+export const MedicalServiceOpsColumns = (): ColumnDef<
+    MedicalServiceT["ops"]
+>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Quarter",
+            header: formatMessage({ id: "Quarter" }),
+        },
+        {
+            accessorKey: "Number_procedure",
+            header: formatMessage({ id: "Number_procedure" }),
+        },
+        {
+            accessorKey: "Identifier_operation",
+            header: formatMessage({ id: "Identifier_operation" }),
+        },
+        {
+            accessorKey: "Localization_procedure",
+            header: formatMessage({ id: "Localization_procedure" }),
+        },
+    ];
+};
+
+// Medication
+
 export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
     const { formatMessage } = useIntl();
     return [
         {
             accessorKey: "Issue_date",
-            header: formatMessage({ id: "Issue_date" }),
+            header: formatMessage({ id: "issue_date" }),
         },
         {
             accessorKey: "ID_Prescriber",
-            header: formatMessage({ id: "ID_Prescriber" }),
+            header: formatMessage({ id: "id_Prescriber" }),
         },
         {
             accessorKey: "Group_prescriber",
-            header: formatMessage({ id: "Group_prescriber" }),
+            header: formatMessage({ id: "group_prescriber" }),
         },
         {
             accessorKey: "KV_area_Prescriber",
-            header: formatMessage({ id: "KV_area_Prescriber" }),
+            header: formatMessage({ id: "kv_area_Prescriber" }),
         },
     ];
 };
 
-export const PositionsColumns = (): ColumnDef<PositionsT>[] => {
+export const MedicationPositionsColumns = (): ColumnDef<
+    MedicationT["positions"]
+>[] => {
     const { formatMessage } = useIntl();
     return [
         {
@@ -315,3 +366,136 @@ export const PositionsColumns = (): ColumnDef<PositionsT>[] => {
         },
     ];
 };
+
+// Work Inability
+
+export const WorkInabilityPaymentsColumns = (): ColumnDef<
+    WorkInabilityT["payments"][0]["diagnosis"][0]
+>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Case_ID",
+            header: formatMessage({ id: "Case_ID" }),
+        },
+        {
+            accessorKey: "Start_benefits",
+            header: formatMessage({ id: "Start_benefits" }),
+        },
+        {
+            accessorKey: "End_benefits",
+            header: formatMessage({ id: "End_benefits" }),
+        },
+        {
+            accessorKey: "Total_days_benefits",
+            header: formatMessage({ id: "Total_days_benefits" }),
+        },
+        {
+            accessorKey: "ID_Prescriber",
+            header: formatMessage({ id: "ID_Prescriber" }),
+        },
+        {
+            accessorKey: "Core_ID_prescriber",
+            header: formatMessage({ id: "Core_ID_prescriber" }),
+        },
+        {
+            accessorKey: "Physician_Specialty_Group",
+            header: formatMessage({ id: "Physician_Specialty_Group" }),
+        },
+        {
+            accessorKey: "Payment_area",
+            header: formatMessage({ id: "Payment_area" }),
+        },
+        {
+            accessorKey: "Type_EEL",
+            header: formatMessage({ id: "Type_EEL" }),
+        },
+        {
+            accessorKey: "Start_EEL",
+            header: formatMessage({ id: "Start_EEL" }),
+        },
+        {
+            accessorKey: "End_EEL",
+            header: formatMessage({ id: "End_EEL" }),
+        },
+        {
+            accessorKey: "Total_days_EEL",
+            header: formatMessage({ id: "Total_days_EEL" }),
+        },
+        {
+            accessorKey: "Net_amount_EEL",
+            header: formatMessage({ id: "Net_amount_EEL" }),
+        },
+    ];
+};
+
+export const WorkInabilityDiagnosisColumns =
+    (): ColumnDef<WorkInabilityT>[] => {
+        const { formatMessage } = useIntl();
+        return [
+            {
+                accessorKey: "Date_diagnosis",
+                header: formatMessage({ id: "Date_diagnosis" }),
+            },
+            {
+                accessorKey: "Date_healing",
+                header: formatMessage({ id: "Date_healing" }),
+            },
+            {
+                accessorKey: "Primary_diagnosis",
+                header: formatMessage({ id: "Primary_diagnosis" }),
+            },
+            {
+                accessorKey: "Secondary_diagnosis",
+                header: formatMessage({
+                    id: "Secondary_diagnosis",
+                }),
+            },
+            {
+                accessorKey: "Type_diagnosis",
+                header: formatMessage({ id: "Type_diagnosis" }),
+            },
+            {
+                accessorKey: "Localization_diagnosis",
+                header: formatMessage({
+                    id: "Localization_diagnosis",
+                }),
+            },
+            {
+                accessorKey: "Severity_diagnosis",
+                header: formatMessage({ id: "Severity_diagnosis" }),
+            },
+            {
+                accessorKey: "Certainty_diagnosis",
+                header: formatMessage({
+                    id: "Certainty_diagnosis",
+                }),
+            },
+            {
+                accessorKey: "Work_accident",
+                header: formatMessage({ id: "Work_accident" }),
+            },
+            {
+                accessorKey: "Physician_number",
+                header: formatMessage({ id: "Physician_number" }),
+            },
+            {
+                accessorKey: "Start_AU",
+                header: formatMessage({ id: "Start_AU" }),
+            },
+            {
+                accessorKey: "End_AU",
+                header: formatMessage({ id: "End_AU" }),
+            },
+            {
+                accessorKey: "Start_application_AU",
+                header: formatMessage({
+                    id: "Start_application_AU",
+                }),
+            },
+            {
+                accessorKey: "End_application_AU",
+                header: formatMessage({ id: "End_application_AU" }),
+            },
+        ];
+    };

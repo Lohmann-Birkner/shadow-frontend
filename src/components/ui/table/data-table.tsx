@@ -19,7 +19,7 @@ import { FormattedMessage } from "react-intl";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
-    data: TData[];
+    data: any;
     setSelectedItem?: (item: any) => void;
     selectedItem?: any;
     onRowClick?: (item: any) => void;
