@@ -36,7 +36,9 @@ import {
     getPatientWorkInability,
 } from "@/api";
 import { Loader2 } from "lucide-react";
-import { CollapsibleDataTable } from "@/components/ui/table/collapsible-data-table";
+import { MedicalServiceTable } from "@/components/ui/table/medical_service_table";
+import { MedicationTable } from "@/components/ui/table/medication-table";
+import { WorkInabilityTable } from "@/components/ui/table/work-inability-table";
 
 const mockDocumentation =
     "reprehenderit deserunt animi. Voluptatem, eligendi necessitatibus assumenda itaque non iure eveniet minus fugit error deserunt, et praesentium, ducimus dolorum minima! Harum, esse quos";
@@ -164,103 +166,50 @@ export default function Page() {
                         </TabsTrigger>
                     </TabsList>
 
-                    <TabsContent className="pt-2" value="medical_service">
+                    <TabsContent className="p-5" value="medical_service">
                         {medicalService.data ? (
-                            <Card className="mb-8 mt-4">
-                                <CardContent className="mt-6">
-                                    <CollapsibleDataTable
-                                        data={medicalService.data}
-                                        columns={MedicalServiceColumns()}
-                                        pagination={false}
-                                    />
-                                </CardContent>
-                            </Card>
+                            <MedicalServiceTable
+                                data={medicalService.data}
+                                columns={MedicalServiceColumns()}
+                                pagination
+                            />
                         ) : (
                             <div className="w-full flex justify-center items-center">
                                 <Loader2 className="h-16 w-16 m-5 animate-spin" />
                             </div>
                         )}
                     </TabsContent>
-                    <TabsContent value="medication">
+                    <TabsContent className="p-5" value="medication">
                         {medication.data ? (
-                            medication.data.map((row, index: number) => (
+                            <MedicationTable
+                                data={medication.data}
+                                columns={MedicationColumns()}
+                                pagination={false}
+                            />
+                        ) : (
+                            <div className="w-full flex justify-center items-center">
+                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                            </div>
+                        )}
+                    </TabsContent>
+                    <TabsContent className="p-5" value="work_inability">
+                        {workInability.data ? (
+                            workInability.data.map((item) => (
                                 <Card
-                                    className="mb-8 mt-4 bg-gray-50"
-                                    key={index}>
+                                    key={item.Main_ICD}
+                                    className="mb-8 mt-3 p-4">
+                                    <CardTitle className="text-md">
+                                        Main ICD: {item.Main_ICD}
+                                    </CardTitle>
                                     <CardContent className="mt-6">
-                                        <DataTable
-                                            data={[row]}
-                                            columns={MedicationColumns()}
+                                        <WorkInabilityTable
+                                            data={item.payments} // Pass the current item to the table
+                                            columns={WorkInabilityPaymentsColumns()}
                                             pagination={false}
                                         />
-                                        {row.positions.length > 0 && (
-                                            <>
-                                                <h1 className="my-4 font-semibold">
-                                                    Positions:
-                                                </h1>
-                                                <div className="flex flex-col space-y-5">
-                                                    <DataTable
-                                                        key={index}
-                                                        data={row.positions}
-                                                        columns={MedicationPositionsColumns()}
-                                                        pagination={false}
-                                                    />
-                                                </div>
-                                            </>
-                                        )}
                                     </CardContent>
                                 </Card>
                             ))
-                        ) : (
-                            <div className="w-full flex justify-center items-center">
-                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
-                            </div>
-                        )}
-                    </TabsContent>
-                    <TabsContent value="work_inability">
-                        {workInability.data ? (
-                            workInability.data.length > 0 ? (
-                                workInability.data.map((row, index: number) => (
-                                    <Card
-                                        className="mb-8 mt-4 bg-gray-50"
-                                        key={index}>
-                                        <CardTitle className="p-6 text-lg font-semibold">
-                                            Main ICD: {row.Main_ICD}
-                                        </CardTitle>
-
-                                        {row.payments.map((payment) => (
-                                            <CardContent key={payment.Case_ID}>
-                                                <Card>
-                                                    <CardContent>
-                                                        <h1 className="my-4 font-semibold">
-                                                            Payment:
-                                                        </h1>
-                                                        <DataTable
-                                                            data={[payment]}
-                                                            columns={WorkInabilityPaymentsColumns()}
-                                                            pagination={false}
-                                                        />
-                                                        <h1 className="my-4 font-semibold">
-                                                            Diagnosis:
-                                                        </h1>
-                                                        <DataTable
-                                                            data={
-                                                                payment.diagnosis
-                                                            }
-                                                            columns={WorkInabilityDiagnosisColumns()}
-                                                            pagination={false}
-                                                        />
-                                                    </CardContent>
-                                                </Card>
-                                            </CardContent>
-                                        ))}
-                                    </Card>
-                                ))
-                            ) : (
-                                <div className="w-full flex justify-center items-center">
-                                    <h1>No result found</h1>
-                                </div>
-                            )
                         ) : (
                             <div className="w-full flex justify-center items-center">
                                 <Loader2 className="h-16 w-16 m-5 animate-spin" />

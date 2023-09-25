@@ -14,27 +14,25 @@ import {
     TableRow,
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
-import React, { useState } from "react"; // Import useState
+import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import {
-    MedicalServiceDiagsColumns,
-    MedicalServiceOpsColumns,
-} from "./columns";
+import { MedicationPositionsColumns } from "./columns";
+import { MedicationT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
-    data: any[];
+    data: MedicationT[];
     pagination: boolean;
 }
 
-export function CollapsibleDataTable<TData, TValue>({
+export function MedicationTable({
     columns,
     data,
     pagination,
 }: CollapsibleDataTableProps) {
     const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>(
         {}
-    ); // State to track expanded rows
+    );
 
     const table = useReactTable({
         data,
@@ -100,7 +98,9 @@ export function CollapsibleDataTable<TData, TValue>({
                                             </button>
                                         </TableCell> */}
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
+                                            <TableCell
+                                                className="h-14"
+                                                key={cell.id}>
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
                                                     cell.getContext()
@@ -115,45 +115,28 @@ export function CollapsibleDataTable<TData, TValue>({
                                             <TableCell colSpan={columns.length}>
                                                 {/* Add your expanded content here */}
                                                 <>
-                                                    {row.original.diags.length >
-                                                    0 ? (
+                                                    {row.original.positions
+                                                        .length > 0 ? (
                                                         <div className="mb-5 px-3">
                                                             <h1 className="my-4 font-semibold">
-                                                                Diagnosis:
+                                                                Positions:
                                                             </h1>
-
-                                                            <DataTable
-                                                                data={
-                                                                    row.original
-                                                                        .diags
-                                                                }
-                                                                columns={MedicalServiceDiagsColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
+                                                            <div className="flex flex-col space-y-5">
+                                                                <DataTable
+                                                                    data={
+                                                                        row
+                                                                            .original
+                                                                            .positions
+                                                                    }
+                                                                    columns={MedicationPositionsColumns()}
+                                                                    pagination={
+                                                                        false
+                                                                    }
+                                                                />
+                                                            </div>
                                                         </div>
                                                     ) : (
                                                         "No data"
-                                                    )}
-                                                    {row.original.ops.length >
-                                                        0 && (
-                                                        <>
-                                                            <h1 className="my-5 font-semibold">
-                                                                Operations:
-                                                            </h1>
-
-                                                            <DataTable
-                                                                data={
-                                                                    row.original
-                                                                        .ops
-                                                                }
-                                                                columns={MedicalServiceOpsColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
-                                                        </>
                                                     )}
                                                 </>
                                             </TableCell>
