@@ -36,6 +36,7 @@ import {
     getPatientWorkInability,
 } from "@/api";
 import { Loader2 } from "lucide-react";
+import { CollapsibleDataTable } from "@/components/ui/table/collapsible-data-table";
 
 const mockDocumentation =
     "reprehenderit deserunt animi. Voluptatem, eligendi necessitatibus assumenda itaque non iure eveniet minus fugit error deserunt, et praesentium, ducimus dolorum minima! Harum, esse quos";
@@ -165,47 +166,15 @@ export default function Page() {
 
                     <TabsContent className="pt-2" value="medical_service">
                         {medicalService.data ? (
-                            medicalService.data.map((row, index: number) => (
-                                <Card
-                                    className="mb-8 mt-4 bg-gray-50"
-                                    key={index}>
-                                    <CardContent className="mt-6">
-                                        <DataTable
-                                            data={[row]}
-                                            columns={MedicalServiceColumns()}
-                                            pagination={false}
-                                        />
-                                        {row.diags.length > 0 && (
-                                            <>
-                                                <h1 className="my-4 font-semibold">
-                                                    Diagnosis:
-                                                </h1>
-                                                <div className="flex flex-col space-y-5">
-                                                    <DataTable
-                                                        data={row.diags}
-                                                        columns={MedicalServiceDiagsColumns()}
-                                                        pagination={false}
-                                                    />
-                                                </div>
-                                            </>
-                                        )}
-                                        {row.ops.length > 0 && (
-                                            <>
-                                                <h1 className="my-5 font-semibold">
-                                                    Operations:
-                                                </h1>
-                                                <div className="flex flex-col space-y-4">
-                                                    <DataTable
-                                                        data={row.ops}
-                                                        columns={MedicalServiceOpsColumns()}
-                                                        pagination={false}
-                                                    />
-                                                </div>
-                                            </>
-                                        )}
-                                    </CardContent>
-                                </Card>
-                            ))
+                            <Card className="mb-8 mt-4">
+                                <CardContent className="mt-6">
+                                    <CollapsibleDataTable
+                                        data={medicalService.data}
+                                        columns={MedicalServiceColumns()}
+                                        pagination={false}
+                                    />
+                                </CardContent>
+                            </Card>
                         ) : (
                             <div className="w-full flex justify-center items-center">
                                 <Loader2 className="h-16 w-16 m-5 animate-spin" />
