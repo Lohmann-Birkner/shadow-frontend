@@ -16,16 +16,16 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import { WorkInabilityDiagnosisColumns } from "./columns";
-import { WorkInabilityT } from "../../../../types";
+import { MedaidPositionsColumns } from "./columns";
+import { MedaidT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
-    data: WorkInabilityT["payments"];
+    data: MedaidT[];
     pagination: boolean;
 }
 
-export function WorkInabilityTable({
+export function MadaidTable({
     columns,
     data,
     pagination,
@@ -98,7 +98,9 @@ export function WorkInabilityTable({
                                             </button>
                                         </TableCell> */}
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
+                                            <TableCell
+                                                className="h-14"
+                                                key={cell.id}>
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
                                                     cell.getContext()
@@ -113,23 +115,25 @@ export function WorkInabilityTable({
                                             <TableCell colSpan={columns.length}>
                                                 {/* Add your expanded content here */}
                                                 <>
-                                                    {row.original.diagnosis
+                                                    {row.original.positions
                                                         .length > 0 ? (
                                                         <div className="mb-5 px-3">
                                                             <h1 className="my-4 font-semibold">
-                                                                Diagnosis:
+                                                                Positions:
                                                             </h1>
-
-                                                            <DataTable
-                                                                data={
-                                                                    row.original
-                                                                        .diagnosis
-                                                                }
-                                                                columns={WorkInabilityDiagnosisColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
+                                                            <div className="flex flex-col space-y-5">
+                                                                <DataTable
+                                                                    data={
+                                                                        row
+                                                                            .original
+                                                                            .positions
+                                                                    }
+                                                                    columns={MedaidPositionsColumns()}
+                                                                    pagination={
+                                                                        false
+                                                                    }
+                                                                />
+                                                            </div>
                                                         </div>
                                                     ) : (
                                                         "No data"

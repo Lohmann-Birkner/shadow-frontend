@@ -16,16 +16,20 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import { WorkInabilityDiagnosisColumns } from "./columns";
-import { WorkInabilityT } from "../../../../types";
+import {
+    HospitalBillingColumns,
+    HospitalDiagnosisColumns,
+    HospitalProcedureColumns,
+} from "./columns";
+import { HospitalT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
-    data: WorkInabilityT["payments"];
+    data: HospitalT[];
     pagination: boolean;
 }
 
-export function WorkInabilityTable({
+export function HospitalTable({
     columns,
     data,
     pagination,
@@ -98,7 +102,9 @@ export function WorkInabilityTable({
                                             </button>
                                         </TableCell> */}
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
+                                            <TableCell
+                                                className="h-14"
+                                                key={cell.id}>
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
                                                     cell.getContext()
@@ -125,7 +131,7 @@ export function WorkInabilityTable({
                                                                     row.original
                                                                         .diagnosis
                                                                 }
-                                                                columns={WorkInabilityDiagnosisColumns()}
+                                                                columns={HospitalDiagnosisColumns()}
                                                                 pagination={
                                                                     false
                                                                 }
@@ -133,6 +139,44 @@ export function WorkInabilityTable({
                                                         </div>
                                                     ) : (
                                                         "No data"
+                                                    )}
+                                                    {row.original.billing
+                                                        .length > 0 && (
+                                                        <div className="mb-5 px-3">
+                                                            <h1 className="my-5 font-semibold">
+                                                                Billing:
+                                                            </h1>
+
+                                                            <DataTable
+                                                                data={
+                                                                    row.original
+                                                                        .billing
+                                                                }
+                                                                columns={HospitalBillingColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
+                                                        </div>
+                                                    )}
+                                                    {row.original.procedure
+                                                        .length > 0 && (
+                                                        <div className="mb-5 px-3">
+                                                            <h1 className="my-5 font-semibold">
+                                                                Procedure:
+                                                            </h1>
+
+                                                            <DataTable
+                                                                data={
+                                                                    row.original
+                                                                        .procedure
+                                                                }
+                                                                columns={HospitalProcedureColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
+                                                        </div>
                                                     )}
                                                 </>
                                             </TableCell>

@@ -1,9 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import {
+    HospitalT,
     MedaidT,
     MedicalServiceT,
     MedicationT,
     PatientT,
+    RehabT,
     TaskT,
     WorkInabilityT,
 } from "../../../../types";
@@ -563,6 +565,240 @@ export const MedaidPositionsColumns = (): ColumnDef<MedaidT["positions"]>[] => {
         {
             accessorKey: "Diagnosis",
             header: formatMessage({ id: "Diagnosis" }),
+        },
+    ];
+};
+
+// Hospital
+
+export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "ID_Insured",
+            header: formatMessage({ id: "ID_Insured" }),
+        },
+        {
+            accessorKey: "Case_number",
+            header: formatMessage({ id: "Case_number" }),
+        },
+        {
+            accessorKey: "Admission_date",
+            header: formatMessage({ id: "Admission_date" }),
+        },
+        {
+            accessorKey: "Reason_admission",
+            header: formatMessage({ id: "Reason_admission" }),
+        },
+        {
+            accessorKey: "Admission_time",
+            header: formatMessage({ id: "Admission_time" }),
+        },
+        {
+            accessorKey: "Admission_weight_infant",
+            header: formatMessage({ id: "Admission_weight_infant" }),
+        },
+        {
+            accessorKey: "Reason_discharge",
+            header: formatMessage({ id: "Reason_discharge" }),
+        },
+        {
+            accessorKey: "Date_discharge",
+            header: formatMessage({ id: "Date_discharge" }),
+        },
+        {
+            accessorKey: "Time_discharge",
+            header: formatMessage({ id: "Time_discharge" }),
+        },
+        {
+            accessorKey: "Delivery_date",
+            header: formatMessage({ id: "Delivery_date" }),
+        },
+        {
+            accessorKey: "Number_ventilation_days",
+            header: formatMessage({ id: "Number_ventilation_days" }),
+        },
+        {
+            accessorKey: "Cost_total",
+            header: formatMessage({ id: "Cost_total" }),
+        },
+        {
+            accessorKey: "ID_Hospital",
+            header: formatMessage({ id: "ID_Hospital" }),
+        },
+        {
+            accessorKey: "Department_Admission",
+            header: formatMessage({ id: "Department_Admission" }),
+        },
+        {
+            accessorKey: "Department_Discharge",
+            header: formatMessage({ id: "Department_Discharge" }),
+        },
+        {
+            accessorKey: "ICD",
+            header: formatMessage({ id: "ICD" }),
+        },
+        {
+            accessorKey: "DRG",
+            header: formatMessage({ id: "DRG" }),
+        },
+        {
+            accessorKey: "Occupancy_days",
+            header: formatMessage({ id: "Occupancy_days" }),
+        },
+    ];
+};
+
+export const HospitalDiagnosisColumns = (): ColumnDef<
+    HospitalT["diagnosis"]
+>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "ICD_Number",
+            header: formatMessage({ id: "ICD_Number" }),
+        },
+        {
+            accessorKey: "Localization_diagnosis",
+            header: formatMessage({ id: "Localization_diagnosis" }),
+        },
+        {
+            accessorKey: "ID_type_diagnosis",
+            header: formatMessage({ id: "ID_type_diagnosis" }),
+        },
+        {
+            accessorKey: "Type_diagnosis",
+            header: formatMessage({ id: "Type_diagnosis" }),
+        },
+        {
+            accessorKey: "Kind_diagnosis",
+            header: formatMessage({ id: "Kind_diagnosis" }),
+        },
+    ];
+};
+
+export const HospitalBillingColumns = (): ColumnDef<HospitalT["billing"]>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Type_fee",
+            header: formatMessage({ id: "Type_fee" }),
+        },
+        {
+            accessorKey: "Start_billing",
+            header: formatMessage({ id: "Start_billing" }),
+        },
+        {
+            accessorKey: "End_billing",
+            header: formatMessage({ id: "End_billing" }),
+        },
+        {
+            accessorKey: "Number_billings",
+            header: formatMessage({ id: "Number_billings" }),
+        },
+        {
+            accessorKey: "Total_amount_billed",
+            header: formatMessage({ id: "Total_amount_billed" }),
+        },
+    ];
+};
+
+export const HospitalProcedureColumns = (): ColumnDef<
+    HospitalT["procedure"]
+>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "ID_operation",
+            header: formatMessage({ id: "ID_operation" }),
+        },
+        {
+            accessorKey: "Date_operation",
+            header: formatMessage({ id: "Date_operation" }),
+        },
+        {
+            accessorKey: "Localization_Operation",
+            header: formatMessage({ id: "Localization_Operation" }),
+        },
+        {
+            accessorKey: "Category_115_SGB",
+            header: formatMessage({ id: "Category_115_SGB" }),
+        },
+    ];
+};
+
+// Rehab
+
+export const RehabColumns = (): ColumnDef<RehabT>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Hospital_indicator",
+            header: formatMessage({ id: "Hospital_indicator" }),
+        },
+        {
+            accessorKey: "Start_rehab",
+            header: formatMessage({ id: "Start_rehab" }),
+        },
+    ];
+};
+
+export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "Type_diagnosis",
+            header: formatMessage({ id: "Type_diagnosis" }),
+        },
+        {
+            accessorKey: "Main_diagnosis",
+            header: formatMessage({ id: "Main_diagnosis" }),
+        },
+        {
+            accessorKey: "Localization_diagnosis",
+            header: formatMessage({ id: "Localization_diagnosis" }),
+        },
+        {
+            accessorKey: "Localization_diagnosis_addition",
+            header: formatMessage({ id: "Localization_diagnosis_addition" }),
+        },
+        {
+            accessorKey: "Primary_diagnosis",
+            header: formatMessage({ id: "Primary_diagnosis" }),
+        },
+        {
+            accessorKey: "Secondary_diagnosis",
+            header: formatMessage({ id: "Secondary_diagnosis" }),
+        },
+    ];
+};
+
+export const RehabPaymentColumns = (): ColumnDef<RehabT["payment"]>[] => {
+    const { formatMessage } = useIntl();
+    return [
+        {
+            accessorKey: "End_rehab",
+            header: formatMessage({ id: "End_rehab" }),
+        },
+        {
+            accessorKey: "Main_diagnosis",
+            header: formatMessage({ id: "Main_diagnosis" }),
+        },
+        {
+            accessorKey: "Discharge_reason",
+            header: formatMessage({ id: "Discharge_reason" }),
+        },
+        {
+            accessorKey: "ID_care_level",
+            header: formatMessage({ id: "ID_care_level" }),
+        },
+        {
+            accessorKey: "Care_level",
+            header: formatMessage({ id: "Care_level" }),
+        },
+        {
+            accessorKey: "Payment_amount",
+            header: formatMessage({ id: "Payment_amount" }),
         },
     ];
 };

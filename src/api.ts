@@ -7,6 +7,8 @@ import {
     MedicationT,
     WorkInabilityT,
     MedaidT,
+    HospitalT,
+    RehabT,
 } from "../types";
 
 export const getAllPatients = async () => {
@@ -51,4 +53,16 @@ export const getPatientMedaid = async (id: string) => {
     const response = await axios.get(`${API_URL_BASE}/medaid/${id}`);
 
     return response.data as MedaidT[];
+};
+
+export const getPatientHospital = async (id: string) => {
+    const response = await axios.get(`${API_URL_BASE}/hospital/${id}`);
+
+    return response.data as HospitalT[];
+};
+
+export const getPatientRehab = async (id: string) => {
+    const response = await axios.get(`${API_URL_BASE}/rehab/${id}`);
+
+    return response.data as RehabT[];
 };

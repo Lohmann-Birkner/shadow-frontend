@@ -133,3 +133,65 @@ export type MedaidT = {
         Diagnosis: string;
     }[];
 };
+
+export type HospitalT = {
+    ID_Insured: number;
+    Case_number: string;
+    Admission_date: string;
+    Reason_admission: string;
+    Admission_time: string;
+    Admission_weight_infant: number;
+    Reason_discharge: string;
+    Date_discharge: string;
+    Time_discharge: string;
+    Delivery_date: string;
+    Number_ventilation_days: number;
+    Cost_total: number;
+    ID_Hospital: number;
+    Department_Admission: string;
+    Department_Discharge: string;
+    ICD: string;
+    DRG: string;
+    Occupancy_days: number;
+    diagnosis: {
+        ICD_Number: string;
+        Localization_diagnosis: string;
+        ID_type_diagnosis: string;
+        Type_diagnosis: string;
+        Kind_diagnosis: string;
+    }[];
+    billing: {
+        Type_fee: string;
+        Start_billing: string;
+        End_billing: string;
+        Number_billings: number;
+        Total_amount_billed: number;
+    }[];
+    procedure: {
+        ID_operation: string;
+        Date_operation: string;
+        Localization_Operation: string;
+        Category_115_SGB: number;
+    }[];
+};
+
+export type RehabT = {
+    Hospital_indicator: string;
+    Start_rehab: string;
+    payment: {
+        End_rehab: string;
+        Main_diagnosis: string;
+        Discharge_reason: string;
+        ID_care_level: string;
+        Care_level: string;
+        Payment_amount: number;
+    }[];
+    diagnosis: {
+        Type_diagnosis: string;
+        Main_diagnosis: string;
+        Localization_diagnosis: string;
+        Localization_diagnosis_addition: string;
+        Primary_diagnosis: string;
+        Secondary_diagnosis: string;
+    }[];
+};
