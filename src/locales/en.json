@@ -131,6 +131,8 @@
     "Last_name": "Lastname",
     "Firstname": "Firstname",
     "signout": "Sign out",
+    "signin": "Sign in",
+
     "Dokument": "Dokument",
     "Name": "Name",
     "Task": "Task",
@@ -169,5 +171,7 @@
     "Are_you_sure": "Are you sure?",
     "Make_sure_to_delete": "This action will delete your task.",
     "Cancel": "Cancel",
-    "No_results": "No results"
+    "No_results": "No results",
+    "Select_a_catalog":"Select a Catalog"
+
 }

@@ -39,7 +39,7 @@ export default function App({
             <SessionProvider session={session}>
                 <QueryClientProvider client={queryClient}>
                     <Navbar />
-                    <div className="hidden md:flex mt-12 w-24 flex-col fixed inset-y-0">
+                    <div className="hidden lg:flex mt-12 w-24 flex-col fixed inset-y-0">
                         <Sidebar />
                     </div>
 

@@ -126,9 +126,10 @@
     "Entry_date": "Eintrittsdatum",
     "Discharge_date": "Austrittsdatum",
     "Reason_for_leaving": "Austrittsgrund",
-    "Last_name": "Familie Name",
+    "Last_name": "Nachname",
     "Firstname": "Vorname",
     "signout": "Abmelden",
+    "signin": "Anmelden",
     "Dokument": "Dokumentation",
     "Name": "Name",
     "Task": "Aufgabe",
@@ -155,7 +156,7 @@
     "Lines_per_page": "Zeilen pro Seite",
     "Page": "Seite",
     "Tasks": "Aufgaben",
-    "Insured_person": "Versicherten",
+    "Insured_person": "Versicherte",
     "Aktion_edit": "Bearbeiten",
     "Aktion_delete": "Löschen",
     "Aktions": "Aktionen",
@@ -167,5 +168,6 @@
     "Are_you_sure": "Sind Sie sicher?",
     "Make_sure_to_delete": "Mit dieser Aktion wird Ihre Aufgabe gelöscht.",
     "Cancel": "Absagen",
-    "No_results": "Keine Ergebinisse"
+    "No_results": "Keine Ergebinisse",
+    "Select_a_catalog":"Katalog Auswählen"
 }
