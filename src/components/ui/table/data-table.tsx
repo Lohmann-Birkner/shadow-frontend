@@ -19,7 +19,7 @@ import { FormattedMessage } from "react-intl";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
-    data: TData[];
+    data: any;
     setSelectedItem?: (item: any) => void;
     selectedItem?: any;
     onRowClick?: (item: any) => void;
@@ -50,7 +50,7 @@ export function DataTable<TData, TValue>({
         <>
             <div className="rounded-md border">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="border-b">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {

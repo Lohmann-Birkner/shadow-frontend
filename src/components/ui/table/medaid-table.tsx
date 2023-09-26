@@ -16,16 +16,16 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import { MedicationPositionsColumns } from "./columns";
-import { MedicationT } from "../../../../types";
+import { MedaidPositionsColumns } from "./columns";
+import { MedaidT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
-    data: MedicationT[];
+    data: MedaidT[];
     pagination: boolean;
 }
 
-export function MedicationTable({
+export function MadaidTable({
     columns,
     data,
     pagination,
@@ -128,7 +128,7 @@ export function MedicationTable({
                                                                             .original
                                                                             .positions
                                                                     }
-                                                                    columns={MedicationPositionsColumns()}
+                                                                    columns={MedaidPositionsColumns()}
                                                                     pagination={
                                                                         false
                                                                     }

@@ -16,16 +16,16 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import { MedicationPositionsColumns } from "./columns";
-import { MedicationT } from "../../../../types";
+import { WorkInabilityDiagnosisColumns } from "./columns";
+import { WorkInabilityT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
-    data: MedicationT[];
+    data: WorkInabilityT["payments"];
     pagination: boolean;
 }
 
-export function MedicationTable({
+export function WorkInabilityTable({
     columns,
     data,
     pagination,
@@ -98,9 +98,7 @@ export function MedicationTable({
                                             </button>
                                         </TableCell> */}
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell
-                                                className="h-14"
-                                                key={cell.id}>
+                                            <TableCell key={cell.id}>
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
                                                     cell.getContext()
@@ -115,25 +113,23 @@ export function MedicationTable({
                                             <TableCell colSpan={columns.length}>
                                                 {/* Add your expanded content here */}
                                                 <>
-                                                    {row.original.positions
+                                                    {row.original.diagnosis
                                                         .length > 0 ? (
                                                         <div className="mb-5 px-3">
                                                             <h1 className="my-4 font-semibold">
-                                                                Positions:
+                                                                Diagnosis:
                                                             </h1>
-                                                            <div className="flex flex-col space-y-5">
-                                                                <DataTable
-                                                                    data={
-                                                                        row
-                                                                            .original
-                                                                            .positions
-                                                                    }
-                                                                    columns={MedicationPositionsColumns()}
-                                                                    pagination={
-                                                                        false
-                                                                    }
-                                                                />
-                                                            </div>
+
+                                                            <DataTable
+                                                                data={
+                                                                    row.original
+                                                                        .diagnosis
+                                                                }
+                                                                columns={WorkInabilityDiagnosisColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
                                                         </div>
                                                     ) : (
                                                         "No data"

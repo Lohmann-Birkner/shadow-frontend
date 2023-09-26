@@ -55,10 +55,45 @@ export default function SearchPatient({
     setSearchParameters(data);
   }
 
+
   const PatientColumnsTyped = PatientColumns() as {
     header: string;
     accessorKey: string;
   }[];
+
+    return (
+        <div className="md:w-1/2">
+            <Form {...form}>
+                <form
+                    className="flex space-x-4"
+                    onSubmit={form.handleSubmit(onSubmit)}>
+                    <FormField
+                        control={form.control}
+                        name="catalog"
+                        render={({ field }) => (
+                            <FormItem>
+                                <Select
+                                    onValueChange={(value) => {
+                                        field.onChange(value);
+                                        console.log("value", value);
+                                    }}
+                                    defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger className="w-[220px]">
+                                            <SelectValue placeholder="Select Category" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {PatientColumnsTyped.map((column) => (
+                                            <SelectItem
+                                                value={column.accessorKey}
+                                                key={column.accessorKey}>
+                                                {column.header}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+
 
   console.log(form.control._formValues.catalog);
   console.log(seletedCatalog);

@@ -15,20 +15,32 @@ import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/table/data-table";
 import tasksData from "../../../mock_tasks.json";
 import {
+    HospitalColumns,
+    MedaidColumns,
     MedicalServiceColumns,
     MedicationColumns,
+    RehabColumns,
     TasksColumns,
+    WorkInabilityPaymentsColumns,
 } from "@/components/ui/table/columns";
 import { TaskT } from "../../../types";
 import Documentation from "@/components/documentation";
 import {
     getPatientById,
+    getPatientHospital,
+    getPatientMedaid,
     getPatientMedicalService,
     getPatientMedication,
+    getPatientRehab,
+    getPatientWorkInability,
 } from "@/api";
 import { Loader2 } from "lucide-react";
-import { MedicalServiceTable } from "@/components/ui/table/medical-service-table";
-import { MedicationsTable } from "@/components/ui/table/medication-table";
+import { MedicalServiceTable } from "@/components/ui/table/medical_service_table";
+import { MedicationTable } from "@/components/ui/table/medication-table";
+import { WorkInabilityTable } from "@/components/ui/table/work-inability-table";
+import { MadaidTable } from "@/components/ui/table/medaid-table";
+import { HospitalTable } from "@/components/ui/table/hospital-table";
+import { RehabTable } from "@/components/ui/table/rehab-table";
 
 const mockDocumentation =
     "reprehenderit deserunt animi. Voluptatem, eligendi necessitatibus assumenda itaque non iure eveniet minus fugit error deserunt, et praesentium, ducimus dolorum minima! Harum, esse quos";
@@ -62,6 +74,37 @@ export default function Page() {
         }
     );
 
+    const workInability = useQuery(
+        ["work_inability", tab],
+        () => getPatientWorkInability(query.id as string),
+        {
+            enabled: !!query.id && tab === "work_inability",
+        }
+    );
+
+    const medaid = useQuery(
+        ["medaid", tab],
+        () => getPatientMedaid(query.id as string),
+        {
+            enabled: !!query.id && tab === "therapeutic_and_aid_supplies",
+        }
+    );
+
+    const hospital = useQuery(
+        ["hospital", tab],
+        () => getPatientHospital(query.id as string),
+        {
+            enabled: !!query.id && tab === "hospital",
+        }
+    );
+
+    const rehab = useQuery(
+        ["rehab", tab],
+        () => getPatientRehab(query.id as string),
+        {
+            enabled: !!query.id && tab === "rehab",
+        }
+    );
     const tasks = tasksData as TaskT[];
     const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
@@ -123,8 +166,8 @@ export default function Page() {
                             <FormattedMessage id="Medication" />
                         </TabsTrigger>
 
-                        <TabsTrigger value="medical_certificates">
-                            <FormattedMessage id="medical_certificates" />
+                        <TabsTrigger value="work_inability">
+                            <FormattedMessage id="work_inability" />
                         </TabsTrigger>
 
                         <TabsTrigger value="therapeutic_and_aid_supplies">
@@ -134,36 +177,56 @@ export default function Page() {
                             <FormattedMessage id="Hospital" />
                         </TabsTrigger>
 
-                        <TabsTrigger value="rehabilitation">
+                        <TabsTrigger value="rehab">
                             <FormattedMessage id="Rehabilitation" />
+                        </TabsTrigger>
+                        <TabsTrigger value="tasks">
+                            <FormattedMessage id="Tasks" />
                         </TabsTrigger>
                     </TabsList>
 
-                    <TabsContent className="pt-2" value="medical_service">
+                    <TabsContent className="p-5" value="medical_service">
                         {medicalService.data ? (
-                            medicalService.data.map(
-                                (row: any, index: number) => (
-                                    <MedicalServiceTable
-                                        key={index}
-                                        data={[row]}
-                                        columns={MedicalServiceColumns()}
-                                    />
-                                )
-                            )
+                            <MedicalServiceTable
+                                data={medicalService.data}
+                                columns={MedicalServiceColumns()}
+                                pagination
+                            />
                         ) : (
                             <div className="w-full flex justify-center items-center">
                                 <Loader2 className="h-16 w-16 m-5 animate-spin" />
                             </div>
                         )}
                     </TabsContent>
-                    <TabsContent value="medication">
+                    <TabsContent className="p-5" value="medication">
                         {medication.data ? (
-                            medication.data.map((row: any, index: number) => (
-                                <MedicationsTable
-                                    key={index}
-                                    data={[row]}
-                                    columns={MedicationColumns()}
-                                />
+                            <MedicationTable
+                                data={medication.data}
+                                columns={MedicationColumns()}
+                                pagination
+                            />
+                        ) : (
+                            <div className="w-full flex justify-center items-center">
+                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                            </div>
+                        )}
+                    </TabsContent>
+                    <TabsContent className="p-5" value="work_inability">
+                        {workInability.data ? (
+                            workInability.data.map((item) => (
+                                <div
+                                    key={item.Main_ICD}
+                                    className="border p-4 mb-6">
+                                    <h1 className="font-semibold mb-4">
+                                        Main ICD: {item.Main_ICD}
+                                    </h1>
+
+                                    <WorkInabilityTable
+                                        data={item.payments} // Pass the current item to the table
+                                        columns={WorkInabilityPaymentsColumns()}
+                                        pagination
+                                    />
+                                </div>
                             ))
                         ) : (
                             <div className="w-full flex justify-center items-center">
@@ -171,53 +234,67 @@ export default function Page() {
                             </div>
                         )}
                     </TabsContent>
-                    <TabsContent value="medical_certificates">
-                        est corrupti eaque praesentium culpa dolor delectus
-                        tempora aperiam ut. Nemo similique autem impedit magni!
-                        Iste laudantium, repellat eius, optio beatae libero
-                        incidunt dolorem voluptatum placeat quia sint minus!
-                        Blanditiis odio incidunt illum sequi quos consequuntur
-                        tempore veritatis labore repellat doloremque quam
-                        voluptates reiciendis officiis ab cumque, reprehenderit
-                        deserunt animi. Voluptatem, eligendi necessitatibus
-                        assumenda itaque non iure eveniet minus fugit error
-                        deserunt, et praesentium, ducimus dolorum minima! Harum,
-                        esse quos.
+                    <TabsContent
+                        className="p-5"
+                        value="therapeutic_and_aid_supplies">
+                        {medaid.data ? (
+                            medaid.data.length > 0 ? (
+                                <MadaidTable
+                                    data={medaid.data}
+                                    columns={MedaidColumns()}
+                                    pagination
+                                />
+                            ) : (
+                                <div className="w-full flex justify-center items-center">
+                                    <h1>No result found</h1>
+                                </div>
+                            )
+                        ) : (
+                            <div className="w-full flex justify-center items-center">
+                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                            </div>
+                        )}
                     </TabsContent>
-                    <TabsContent value="therapeutic_and_aid_supplies">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Adipisci dolores corporis aliquam mollitia ad accusamus
-                        rerum rem perferendis alias animi!
+                    <TabsContent className="p-5" value="hospital">
+                        {hospital.data ? (
+                            hospital.data.length > 0 ? (
+                                <HospitalTable
+                                    data={hospital.data}
+                                    columns={HospitalColumns()}
+                                    pagination
+                                />
+                            ) : (
+                                <div className="w-full flex justify-center items-center">
+                                    <h1>No result found</h1>
+                                </div>
+                            )
+                        ) : (
+                            <div className="w-full flex justify-center items-center">
+                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                            </div>
+                        )}
                     </TabsContent>
-                    <TabsContent value="hospital">
-                        culpa necessitatibus facere quas quibusdam alias animi
-                        obcaecati dolor laudantium blanditiis sunt ipsam autem
-                        distinctio omnis fuga, harum nulla mollitia voluptate
-                        nostrum esse totam odio. Consectetur distinctio velit,
-                        voluptatum provident facilis explicabo quam ut enim
-                        architecto quae modi laudantium, inventore vero aperiam
-                    </TabsContent>
-                    <TabsContent value="medicines">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Adipisci dolores corporis aliquam mollitia ad accusamus
-                        rerum rem perferendis alias animi!
-                    </TabsContent>
-                    <TabsContent value="rehabilitation">
-                        reprehenderit deserunt animi. Voluptatem, eligendi
-                        necessitatibus assumenda itaque non iure eveniet minus
-                        fugit error deserunt, et praesentium, ducimus dolorum
-                        minima! Harum, esse quos.
-                    </TabsContent>
-                </Tabs>
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="text-xl mb-3">
-                            <FormattedMessage id="Tasks" />
-                        </CardTitle>
-                    </CardHeader>
-
-                    <CardContent>
+                    <TabsContent className="p-5" value="rehab">
+                        {rehab.data ? (
+                            rehab.data.length > 0 ? (
+                                <RehabTable
+                                    data={rehab.data}
+                                    columns={RehabColumns()}
+                                    pagination
+                                />
+                            ) : (
+                                <div className="w-full flex justify-center items-center">
+                                    <h1>No result found</h1>
+                                </div>
+                            )
+                        ) : (
+                            <div className="w-full flex justify-center items-center">
+                                <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                            </div>
+                        )}
+                    </TabsContent>
+                    <TabsContent className="p-5" value="tasks">
                         {tasks && (
                             <DataTable
                                 pagination
@@ -228,8 +305,8 @@ export default function Page() {
                                 )}
                             />
                         )}
-                    </CardContent>
-                </Card>
+                    </TabsContent>
+                </Tabs>
             </section>{" "}
         </main>
     ) : (

@@ -16,16 +16,21 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import { MedicationPositionsColumns } from "./columns";
-import { MedicationT } from "../../../../types";
+import {
+    HospitalBillingColumns,
+    HospitalDiagnosisColumns,
+    RehabDiagnosisColumns,
+    RehabPaymentColumns,
+} from "./columns";
+import { RehabT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
-    data: MedicationT[];
+    data: RehabT[];
     pagination: boolean;
 }
 
-export function MedicationTable({
+export function RehabTable({
     columns,
     data,
     pagination,
@@ -115,28 +120,45 @@ export function MedicationTable({
                                             <TableCell colSpan={columns.length}>
                                                 {/* Add your expanded content here */}
                                                 <>
-                                                    {row.original.positions
+                                                    {row.original.payment
                                                         .length > 0 ? (
                                                         <div className="mb-5 px-3">
                                                             <h1 className="my-4 font-semibold">
-                                                                Positions:
+                                                                Payment:
                                                             </h1>
-                                                            <div className="flex flex-col space-y-5">
-                                                                <DataTable
-                                                                    data={
-                                                                        row
-                                                                            .original
-                                                                            .positions
-                                                                    }
-                                                                    columns={MedicationPositionsColumns()}
-                                                                    pagination={
-                                                                        false
-                                                                    }
-                                                                />
-                                                            </div>
+
+                                                            <DataTable
+                                                                data={
+                                                                    row.original
+                                                                        .payment
+                                                                }
+                                                                columns={RehabPaymentColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
                                                         </div>
                                                     ) : (
                                                         "No data"
+                                                    )}
+                                                    {row.original.diagnosis
+                                                        .length > 0 && (
+                                                        <div className="mb-5 px-3">
+                                                            <h1 className="my-5 font-semibold">
+                                                                Diagnosis:
+                                                            </h1>
+
+                                                            <DataTable
+                                                                data={
+                                                                    row.original
+                                                                        .diagnosis
+                                                                }
+                                                                columns={RehabDiagnosisColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
+                                                        </div>
                                                     )}
                                                 </>
                                             </TableCell>

@@ -16,16 +16,19 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import { MedicationPositionsColumns } from "./columns";
-import { MedicationT } from "../../../../types";
+import {
+    MedicalServiceDiagsColumns,
+    MedicalServiceOpsColumns,
+} from "./columns";
+import { MedicalServiceT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
-    data: MedicationT[];
+    data: MedicalServiceT[];
     pagination: boolean;
 }
 
-export function MedicationTable({
+export function MedicalServiceTable({
     columns,
     data,
     pagination,
@@ -115,28 +118,45 @@ export function MedicationTable({
                                             <TableCell colSpan={columns.length}>
                                                 {/* Add your expanded content here */}
                                                 <>
-                                                    {row.original.positions
-                                                        .length > 0 ? (
+                                                    {row.original.diags.length >
+                                                    0 ? (
                                                         <div className="mb-5 px-3">
                                                             <h1 className="my-4 font-semibold">
-                                                                Positions:
+                                                                Diagnosis:
                                                             </h1>
-                                                            <div className="flex flex-col space-y-5">
-                                                                <DataTable
-                                                                    data={
-                                                                        row
-                                                                            .original
-                                                                            .positions
-                                                                    }
-                                                                    columns={MedicationPositionsColumns()}
-                                                                    pagination={
-                                                                        false
-                                                                    }
-                                                                />
-                                                            </div>
+
+                                                            <DataTable
+                                                                data={
+                                                                    row.original
+                                                                        .diags
+                                                                }
+                                                                columns={MedicalServiceDiagsColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
                                                         </div>
                                                     ) : (
                                                         "No data"
+                                                    )}
+                                                    {row.original.ops.length >
+                                                        0 && (
+                                                        <>
+                                                            <h1 className="my-5 font-semibold">
+                                                                Operations:
+                                                            </h1>
+
+                                                            <DataTable
+                                                                data={
+                                                                    row.original
+                                                                        .ops
+                                                                }
+                                                                columns={MedicalServiceOpsColumns()}
+                                                                pagination={
+                                                                    false
+                                                                }
+                                                            />
+                                                        </>
                                                     )}
                                                 </>
                                             </TableCell>
