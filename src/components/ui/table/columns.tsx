@@ -18,11 +18,12 @@ import {
 } from "lucide-react";
 import { DataTableRowActions } from "./task-row-actions";
 import { useIntl } from "react-intl";
+import { FormatDate } from "@/lib/format-date";
 
 // Insured
 
 export const PatientColumns = (): ColumnDef<PatientT>[] => {
-    const { formatMessage } = useIntl();
+    const { formatMessage, locale } = useIntl();
     return [
         {
             accessorKey: "last_name",
@@ -35,6 +36,7 @@ export const PatientColumns = (): ColumnDef<PatientT>[] => {
         {
             accessorKey: "Date_of_birth",
             header: formatMessage({ id: "Date_of_birth" }),
+            cell: ({ row }) => FormatDate(row.getValue("Date_of_birth")),
         },
         { accessorKey: "Gender", header: formatMessage({ id: "Gender" }) },
         { accessorKey: "ZIP_code", header: formatMessage({ id: "ZIP_code" }) },
@@ -45,10 +47,12 @@ export const PatientColumns = (): ColumnDef<PatientT>[] => {
         {
             accessorKey: "Entry_date",
             header: formatMessage({ id: "Entry_date" }),
+            cell: ({ row }) => FormatDate(row.getValue("Entry_date")),
         },
         {
             accessorKey: "Discharge_date",
             header: formatMessage({ id: "Discharge_date" }),
+            cell: ({ row }) => FormatDate(row.getValue("Discharge_date")),
         },
         {
             accessorKey: "Reason_for_leaving",
@@ -107,7 +111,12 @@ export const TasksColumns = (): ColumnDef<TaskT>[] => {
             accessorKey: "insuranceNumber",
             header: formatMessage({ id: "Insured_person_number" }),
         },
-        { accessorKey: "date", header: formatMessage({ id: "Date" }) },
+        {
+            accessorKey: "date",
+            header: formatMessage({ id: "Date" }),
+            cell: ({ row }) => FormatDate(row.getValue("Date")),
+        },
+
         {
             accessorKey: "title",
             header: formatMessage({ id: "Title" }),
@@ -302,6 +311,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
         {
             accessorKey: "Issue_date",
             header: formatMessage({ id: "issue_date" }),
+            cell: ({ row }) => FormatDate(row.getValue("issue_date")),
         },
         {
             accessorKey: "ID_Prescriber",
@@ -326,6 +336,7 @@ export const MedicationPositionsColumns = (): ColumnDef<
         {
             accessorKey: "Date_Prescription",
             header: formatMessage({ id: "Date_Prescription" }),
+            cell: ({ row }) => FormatDate(row.getValue("Date_Prescription")),
         },
         {
             accessorKey: "Pharmaceutical_registration_number",
@@ -439,10 +450,12 @@ export const WorkInabilityDiagnosisColumns =
             {
                 accessorKey: "Date_diagnosis",
                 header: formatMessage({ id: "Date_diagnosis" }),
+                cell: ({ row }) => FormatDate(row.getValue("Date_diagnosis")),
             },
             {
                 accessorKey: "Date_healing",
                 header: formatMessage({ id: "Date_healing" }),
+                cell: ({ row }) => FormatDate(row.getValue("Date_healing")),
             },
             {
                 accessorKey: "Primary_diagnosis",
@@ -515,6 +528,7 @@ export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
         {
             accessorKey: "Date_prescription",
             header: formatMessage({ id: "Date_prescription" }),
+            cell: ({ row }) => FormatDate(row.getValue("Date_prescription")),
         },
         {
             accessorKey: "Group_prescriber",
@@ -585,6 +599,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
         {
             accessorKey: "Admission_date",
             header: formatMessage({ id: "Admission_date" }),
+            cell: ({ row }) => FormatDate(row.getValue("Admission_date")),
         },
         {
             accessorKey: "Reason_admission",
@@ -605,6 +620,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
         {
             accessorKey: "Date_discharge",
             header: formatMessage({ id: "Date_discharge" }),
+            cell: ({ row }) => FormatDate(row.getValue("Date_discharge")),
         },
         {
             accessorKey: "Time_discharge",
@@ -613,6 +629,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
         {
             accessorKey: "Delivery_date",
             header: formatMessage({ id: "Delivery_date" }),
+            cell: ({ row }) => FormatDate(row.getValue("Delivery_date")),
         },
         {
             accessorKey: "Number_ventilation_days",
@@ -715,6 +732,7 @@ export const HospitalProcedureColumns = (): ColumnDef<
         {
             accessorKey: "Date_operation",
             header: formatMessage({ id: "Date_operation" }),
+            cell: ({ row }) => FormatDate(row.getValue("Date_operation")),
         },
         {
             accessorKey: "Localization_Operation",
