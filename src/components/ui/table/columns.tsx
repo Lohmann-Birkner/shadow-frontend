@@ -114,7 +114,7 @@ export const TasksColumns = (): ColumnDef<TaskT>[] => {
         {
             accessorKey: "date",
             header: formatMessage({ id: "Date" }),
-            cell: ({ row }) => FormatDate(row.getValue("Date")),
+            cell: ({ row }) => FormatDate(row.getValue("date")),
         },
 
         {
@@ -170,7 +170,11 @@ export const TasksColumns = (): ColumnDef<TaskT>[] => {
                 );
             },
         },
-        { accessorKey: "deadline", header: formatMessage({ id: "Deadline" }) },
+        {
+            accessorKey: "deadline",
+            header: formatMessage({ id: "Deadline" }),
+            cell: ({ row }) => FormatDate(row.getValue("deadline")),
+        },
         {
             id: "actions",
             cell: ({ row }) => <DataTableRowActions row={row} />,

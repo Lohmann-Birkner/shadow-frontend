@@ -4,8 +4,8 @@
         "title": "Gesundheitsversicherung Unternehmen",
         "content": "Anruf bei der Krankenversicherung machen",
         "done": false,
-        "date": "19-08-2023",
-        "deadline": "25-08-2023",
+        "date": "2023-08-19",
+        "deadline": "2023-25-08",
         "priority": "high",
         "insuranceNumber": "123456789"
     },
@@ -14,8 +14,8 @@
         "title": "Krankenkasse Anfrage",
         "content": "Anfrage wegen Beitragserhöhung stellen",
         "done": false,
-        "date": "19-08-2023",
-        "deadline": "22-08-2023",
+        "date": "2023-19-08",
+        "deadline": "2023-22-08",
         "priority": "medium",
         "insuranceNumber": "987654321"
     },
@@ -24,8 +24,8 @@
         "title": "Versicherungsdokumente",
         "content": "Versicherungspolice finden und einscannen",
         "done": true,
-        "date": "18-08-2023",
-        "deadline": "20-08-2023",
+        "date": "2023-22-08",
+        "deadline": "2023-18-08",
         "priority": "low",
         "insuranceNumber": "543216789"
     },
@@ -34,69 +34,9 @@
         "title": "Gesundheitsprüfung",
         "content": "Termin für Gesundheitsprüfung vereinbaren",
         "done": false,
-        "date": "17-08-2023",
-        "deadline": "23-08-2023",
+        "date": "2023-17-08",
+        "deadline": "2023-23-08",
         "priority": "medium",
         "insuranceNumber": "678905432"
-    },
-    {
-        "id": "5",
-        "title": "Rechnung Einreichen",
-        "content": "Arztrechnung für Erstattung einreichen",
-        "done": false,
-        "date": "17-08-2023",
-        "deadline": "21-08-2023",
-        "priority": "medium",
-        "insuranceNumber": "234567890"
-    },
-    {
-        "id": "6",
-        "title": "Krankengeld Antrag",
-        "content": "Krankengeld Antrag ausfüllen und abschicken",
-        "done": true,
-        "date": "16-08-2023",
-        "deadline": "20-08-2023",
-        "priority": "high",
-        "insuranceNumber": "789012345"
-    },
-    {
-        "id": "7",
-        "title": "Medikamentenbestellung",
-        "content": "Medikamente nachbestellen",
-        "done": false,
-        "date": "15-08-2023",
-        "deadline": "18-08-2023",
-        "priority": "low",
-        "insuranceNumber": "345678901"
-    },
-    {
-        "id": "8",
-        "title": "Versicherungsberatung",
-        "content": "Termin für Versicherungsberatung vereinbaren",
-        "done": false,
-        "date": "15-08-2023",
-        "deadline": "19-08-2023",
-        "priority": "medium",
-        "insuranceNumber": "890123456"
-    },
-    {
-        "id": "9",
-        "title": "Zahnarzttermin",
-        "content": "Zahnarzttermin für Kontrolle ausmachen",
-        "done": false,
-        "date": "14-08-2023",
-        "deadline": "17-08-2023",
-        "priority": "high",
-        "insuranceNumber": "456789012"
-    },
-    {
-        "id": "10",
-        "title": "Fitnessstudio Mitgliedschaft",
-        "content": "Fitnessstudio Mitgliedschaft kündigen",
-        "done": true,
-        "date": "14-08-2023",
-        "deadline": "16-08-2023",
-        "priority": "medium",
-        "insuranceNumber": "901234567"
     }
 ]
