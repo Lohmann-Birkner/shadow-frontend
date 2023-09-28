@@ -315,7 +315,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
         {
             accessorKey: "Issue_date",
             header: formatMessage({ id: "issue_date" }),
-            cell: ({ row }) => FormatDate(row.getValue("issue_date")),
+            cell: ({ row }) => FormatDate(row.getValue("Issue_date")),
         },
         {
             accessorKey: "ID_Prescriber",
