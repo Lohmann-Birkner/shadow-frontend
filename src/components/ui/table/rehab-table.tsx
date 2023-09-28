@@ -118,7 +118,7 @@ export function RehabTable({
                         {/* Add your expanded content here */}
                         <>
                           {row.original.payment.length > 0 ? (
-                            <div className=" px-10 bg-neutral-100 w-3/4 ">
+                            <div className=" px-10 bg-neutral-100 w-3/4 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Payment:
                               </TableCaption>
@@ -140,7 +140,7 @@ export function RehabTable({
                             </TableRow>
                           )}
                           {row.original.diagnosis.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-3/4 ">
+                            <div className=" px-10 bg-neutral-100 w-3/4 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Diagnosis:
                               </TableCaption>

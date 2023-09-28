@@ -158,7 +158,7 @@ export function HospitalTable({
                         {/* Add your expanded content here */}
                         <>
                           {row.original.diagnosis.length > 0 ? (
-                            <div className=" px-10 bg-neutral-100 w-1/2 ">
+                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Diagnosis:
                               </TableCaption>
@@ -180,7 +180,7 @@ export function HospitalTable({
                             </TableRow>
                           )}
                           {row.original.billing.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 ">
+                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Billings:
                               </TableCaption>
@@ -193,7 +193,7 @@ export function HospitalTable({
                             </div>
                           )}
                           {row.original.procedure.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 ">
+                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3   ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Procedure:
                               </TableCaption>

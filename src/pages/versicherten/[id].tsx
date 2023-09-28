@@ -207,6 +207,7 @@ export default function Page() {
                 data={medication.data}
                 columns={MedicationColumns()}
                 pagination
+                className="border-red-100 overflow-x-auto"
               />
             ) : (
               <div className="w-full flex justify-center items-center">

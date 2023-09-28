@@ -156,7 +156,7 @@ export function MadaidTable({
                         {/* Add your expanded content here */}
                         <>
                           {row.original.positions.length > 0 ? (
-                            <div className="px-10 bg-neutral-100 ">
+                            <div className="px-10 bg-neutral-100 mb-3  ">
                               <TableCaption className="my-4 font-semibold text-slate-950">
                                 Positions:
                               </TableCaption>

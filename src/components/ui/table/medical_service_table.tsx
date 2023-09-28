@@ -134,7 +134,7 @@ export function MedicalServiceTable({
               <>
                 <TableRow
                   key={row.id}
-                  className="cursor-pointer "
+                  className="cursor-pointer"
                   data-state={expandedRows[row.id] && "selected"}
                   onClick={() => toggleRowExpansion(row.id)}
                 >
@@ -146,7 +146,7 @@ export function MedicalServiceTable({
                                             </button>
                                         </TableCell> */}
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="h-14" key={cell.id}>
+                    <TableCell className="h-14 " key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -156,7 +156,7 @@ export function MedicalServiceTable({
                 </TableRow>
                 {expandedRows[row.id] && (
                   <TableRow
-                    className="hover:bg-neutral-100 bg-neutral-100 "
+                    className="hover:bg-neutral-100 bg-neutral-100  "
                     key={`expanded-${row.id}`}
                   >
                     <TableCell colSpan={columns.length}
@@ -168,7 +168,7 @@ export function MedicalServiceTable({
                       row.original.ops.length > 0 ? (
                         <>
                           {row.original.diags.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 ">
+                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3   ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Diagnosis:
                               </TableCaption>

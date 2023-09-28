@@ -35,12 +35,14 @@ interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: MedicationT[];
   pagination: boolean;
+  className:string
 }
 
 export function MedicationTable({
   columns,
   data,
   pagination,
+  className
 }: CollapsibleDataTableProps) {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
@@ -71,7 +73,7 @@ export function MedicationTable({
 
   return (
     <>
-      <div className="rounded-md max-h-[45rem] border-2 h-[40rem] overflow-y-auto  ">
+      <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-scroll  ">
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -100,7 +102,7 @@ export function MedicationTable({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Table className="h-[40rem]">
+        <Table className="h-full w-full  overflow-scroll">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -122,7 +124,7 @@ export function MedicationTable({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody >
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <>
@@ -150,18 +152,19 @@ export function MedicationTable({
                   </TableRow>
                   {expandedRows[row.id] && (
                     <TableRow
-                      className="hover:bg-neutral-100 bg-neutral-100"
+                      className="hover:bg-neutral-100 bg-neutral-100 "
                       key={`expanded-${row.id}`}
                     >
                       <TableCell colSpan={columns.length}>
+                        
                         {/* Add your expanded content here */}
                         <>
                           {row.original.positions.length > 0 ? (
-                            <div className="mb-5 px-10 bg-neutral-100">
+                            <div className="px-10 bg-neutral-100 w-9/10 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Positions:
                               </TableCaption>
-                              <div className="flex flex-col space-y-5">
+                              <div className="flex flex-col space-y-5 overflow-scroll">
                                 <DataTable
                                   data={row.original.positions}
                                   columns={MedicationPositionsColumns()}

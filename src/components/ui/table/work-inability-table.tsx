@@ -8,6 +8,7 @@ import {
 import {
     Table,
     TableBody,
+    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -108,17 +109,17 @@ export function WorkInabilityTable({
                                     </TableRow>
                                     {expandedRows[row.id] && (
                                         <TableRow
-                                            className="bg-white hover:bg-white"
+                                            className="hover:bg-neutral-100 bg-neutral-100 "
                                             key={`expanded-${row.id}`}>
                                             <TableCell colSpan={columns.length}>
                                                 {/* Add your expanded content here */}
                                                 <>
                                                     {row.original.diagnosis
                                                         .length > 0 ? (
-                                                        <div className="mb-5 px-3">
-                                                            <h1 className="my-4 font-semibold">
-                                                                Diagnosis:
-                                                            </h1>
+                                                            <div className=" px-10 bg-neutral-100 w-9/10 mb-3      ">
+                                                            <TableCaption className="my-2 font-semibold text-slate-950">
+                                                              Diagnosis:
+                                                            </TableCaption>
 
                                                             <DataTable
                                                                 data={
