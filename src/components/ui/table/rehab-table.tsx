@@ -16,12 +16,7 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
-import {
-    HospitalBillingColumns,
-    HospitalDiagnosisColumns,
-    RehabDiagnosisColumns,
-    RehabPaymentColumns,
-} from "./columns";
+import { RehabDiagnosisColumns, RehabPaymentColumns } from "./columns";
 import { RehabT } from "../../../../types";
 
 interface CollapsibleDataTableProps {
