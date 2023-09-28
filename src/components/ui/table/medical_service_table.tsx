@@ -1,182 +1,220 @@
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    useReactTable,
-    getPaginationRowModel,
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  getPaginationRowModel,
+  VisibilityState,
 } from "@tanstack/react-table";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
 import {
-    MedicalServiceDiagsColumns,
-    MedicalServiceOpsColumns,
+  MedicalServiceDiagsColumns,
+  MedicalServiceOpsColumns,
 } from "./columns";
 import { MedicalServiceT } from "../../../../types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CollapsibleDataTableProps {
-    columns: ColumnDef<any, any>[];
-    data: MedicalServiceT[];
-    pagination: boolean;
+  columns: ColumnDef<any, any>[];
+  data: MedicalServiceT[];
+  pagination: boolean;
+  
 }
 
 export function MedicalServiceTable({
-    columns,
-    data,
-    pagination,
+  columns,
+  data,
+  pagination,
+ 
 }: CollapsibleDataTableProps) {
-    const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>(
-        {}
-    );
+  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
 
-    const table = useReactTable({
-        data,
-        columns,
-        initialState: {
-            pagination: {
-                pageSize: 12,
-            },
-        },
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-    });
+  const table = useReactTable({
+    data,
+    columns,
+    initialState: {
+      pagination: {
+        pageSize: 12,
+      },
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    state: {
+      columnVisibility,
+    },
+  });
 
-    // Function to toggle the expanded state of a row
-    const toggleRowExpansion = (rowId: string) => {
-        setExpandedRows((prevExpandedRows) => ({
-            ...prevExpandedRows,
-            [rowId]: !prevExpandedRows[rowId],
-        }));
-    };
+  // Function to toggle the expanded state of a row
+  const toggleRowExpansion = (rowId: string) => {
+    setExpandedRows((prevExpandedRows) => ({
+      ...prevExpandedRows,
+      [rowId]: !prevExpandedRows[rowId],
+    }));
+  };
 
-    return (
-        <>
-            <div className="rounded-md border">
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext()
-                                                  )}
-                                        </TableHead>
-                                    );
-                                })}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <>
-                                    <TableRow
-                                        key={row.id}
-                                        className="cursor-pointer"
-                                        data-state={
-                                            expandedRows[row.id] && "selected"
-                                        }
-                                        onClick={() =>
-                                            toggleRowExpansion(row.id)
-                                        }>
-                                        {/* <TableCell>
+  return (
+    <>
+      <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
+        {" "}
+        <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="m-2">
+                Columns <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize "
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <Table className="h-fit max-h-[45rem]" >
+          <TableHeader  >
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead
+                      className="bg-slate-100 text-slate-950 "
+                      key={header.id}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody >
+            {table.getRowModel().rows.map((row) => (
+              <>
+                <TableRow
+                  key={row.id}
+                  className="cursor-pointer "
+                  data-state={expandedRows[row.id] && "selected"}
+                  onClick={() => toggleRowExpansion(row.id)}
+                >
+                  {/* <TableCell>
                                             <button>
                                                 {expandedRows[row.id]
                                                     ? "Collapse"
                                                     : "Expand"}
                                             </button>
                                         </TableCell> */}
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell
-                                                className="h-14"
-                                                key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
-                                                )}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                    {expandedRows[row.id] && (
-                                        <TableRow
-                                            className="bg-white hover:bg-white"
-                                            key={`expanded-${row.id}`}>
-                                            <TableCell colSpan={columns.length}>
-                                                {/* Add your expanded content here */}
-                                                <>
-                                                    {row.original.diags.length >
-                                                    0 ? (
-                                                        <div className="mb-5 px-3">
-                                                            <h1 className="my-4 font-semibold">
-                                                                Diagnosis:
-                                                            </h1>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell className="h-14" key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                {expandedRows[row.id] && (
+                  <TableRow
+                    className="hover:bg-neutral-100 bg-neutral-100 "
+                    key={`expanded-${row.id}`}
+                  >
+                    <TableCell colSpan={columns.length}
+                    
+                    >
+                      {/* Add your expanded content here */}
 
-                                                            <DataTable
-                                                                data={
-                                                                    row.original
-                                                                        .diags
-                                                                }
-                                                                columns={MedicalServiceDiagsColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                        "No data"
-                                                    )}
-                                                    {row.original.ops.length >
-                                                        0 && (
-                                                        <>
-                                                            <h1 className="my-5 font-semibold">
-                                                                Operations:
-                                                            </h1>
+                      {row.original.diags.length > 0 ||
+                      row.original.ops.length > 0 ? (
+                        <>
+                          {row.original.diags.length > 0 && (
+                            <div className=" px-10 bg-neutral-100 w-1/2 ">
+                              <TableCaption className="my-2 font-semibold text-slate-950">
+                                Diagnosis:
+                              </TableCaption>
 
-                                                            <DataTable
-                                                                data={
-                                                                    row.original
-                                                                        .ops
-                                                                }
-                                                                columns={MedicalServiceOpsColumns()}
-                                                                pagination={
-                                                                    false
-                                                                }
-                                                            />
-                                                        </>
-                                                    )}
-                                                </>
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
-                                </>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center">
-                                    No results.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
-            {pagination && <DataTablePagination table={table} />}
-        </>
-    );
+                              <DataTable
+                                data={row.original.diags}
+                                columns={MedicalServiceDiagsColumns()}
+                                pagination={false}
+                              />
+                            </div>
+                          )}
+
+                          {row.original.ops.length > 0 && (
+                            <div className="mb-5 px-10 bg-neutral-100 w-1/2">
+                              <TableCaption className="my-2 font-semibold text-slate-950">
+                                Operations:
+                              </TableCaption>
+
+                              <DataTable
+                                data={row.original.ops}
+                                columns={MedicalServiceOpsColumns()}
+                                pagination={false}
+                                
+                              />
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <TableRow>
+                          <TableCell
+                            colSpan={columns.length}
+                            className="h-14 text-center"
+                          >
+                            No results.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      {pagination && <DataTablePagination table={table} />}
+    </>
+  );
 }

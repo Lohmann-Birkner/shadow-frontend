@@ -177,71 +177,96 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
         {
             accessorKey: "Case_number",
             header: formatMessage({ id: "Case_number" }),
+            id:formatMessage({ id: "Case_number" })
         },
         {
             accessorKey: "Insurance_area",
             header: formatMessage({ id: "Insurance_area" }),
+            id:formatMessage({ id: "Insurance_area" })
         },
         {
             accessorKey: "Quarter",
             header: formatMessage({ id: "Quarter" }),
+            id:formatMessage({ id: "Quarter" })
         },
         {
             accessorKey: "ID_Prescriber",
             header: formatMessage({ id: "ID_Prescriber" }),
+            id:formatMessage({ id: "ID_Prescriber" })
         },
 
         {
             accessorKey: "Physician_specialty_group",
             header: formatMessage({ id: "Physician_specialty_group" }),
+            id:formatMessage({ id: "Physician_specialty_group" })
         },
         {
             accessorKey: "Is_accident",
             header: formatMessage({ id: "Is_accident" }),
+            id:formatMessage({ id: "Is_accident" })
         },
         {
             accessorKey: "Treatment_type",
             header: formatMessage({ id: "Treatment_type" }),
+            id:formatMessage({ id: "Treatment_type" })
         },
         {
             accessorKey: "Points",
             header: formatMessage({ id: "Points" }),
+            id:formatMessage({ id: "Points" })
         },
         {
             accessorKey: "Total_costs",
             header: formatMessage({ id: "Total_costs" }),
+            id: formatMessage({ id: "Total_costs" })
         },
         {
             accessorKey: "Calculated_costs",
             header: formatMessage({ id: "Calculated_costs" }),
+            id: formatMessage({ id: "Calculated_costs" }),
+
         },
         {
             accessorKey: "Non_budget_costs",
             header: formatMessage({ id: "Non_budget_costs" }),
+            id: formatMessage({ id: "Non_budget_costs" }),
+
         },
         {
             accessorKey: "Dialysis_costs",
             header: formatMessage({ id: "Dialysis_costs" }),
+            id: formatMessage({ id: "Dialysis_costs" }),
+
         },
         {
             accessorKey: "Start_Treatment",
             header: formatMessage({ id: "Start_Treatment" }),
+            id: formatMessage({ id: "Start_Treatment" }),
+
         },
         {
             accessorKey: "End_Treatment",
             header: formatMessage({ id: "End_Treatment" }),
+            id: formatMessage({ id: "End_Treatment" }),
+
         },
         {
             accessorKey: "Insurance_stats_5",
             header: formatMessage({ id: "Insurance_stats_5th_digit" }),
+            id: formatMessage({ id: "Insurance_stats_5th_digit" }),
+
         },
         {
             accessorKey: "Distance",
             header: formatMessage({ id: "Distance" }),
+            id: formatMessage({ id: "Distance" }),
+
         },
         {
             accessorKey: "Insurance_stats_2",
             header: formatMessage({ id: "Insurance_stats_2nd_digit" }),
+            id: formatMessage({ id: "Insurance_stats_2nd_digit" }),
+
         },
     ];
 };
@@ -254,18 +279,25 @@ export const MedicalServiceDiagsColumns = (): ColumnDef<
         {
             accessorKey: "Number_ICD",
             header: formatMessage({ id: "Number_ICD" }),
+            id:formatMessage({ id: "Number_ICD" }),
         },
         {
             accessorKey: "ICD",
             header: formatMessage({ id: "ICD" }),
+            id: formatMessage({ id: "ICD" }),
+
         },
         {
             accessorKey: "Quality_ICD",
             header: formatMessage({ id: "Quality_ICD" }),
+            id: formatMessage({ id: "Quality_ICD" }),
+
         },
         {
             accessorKey: "Localization_ICD",
             header: formatMessage({ id: "Localization_ICD" }),
+            id: formatMessage({ id: "Localization_ICD" }),
+
         },
     ];
 };
@@ -278,18 +310,24 @@ export const MedicalServiceOpsColumns = (): ColumnDef<
         {
             accessorKey: "Quarter",
             header: formatMessage({ id: "Quarter" }),
+            id: formatMessage({ id: "Quarter" }),
+
         },
         {
             accessorKey: "Number_procedure",
             header: formatMessage({ id: "Number_procedure" }),
+            id: formatMessage({ id: "Number_procedure" }),
+
         },
         {
             accessorKey: "Identifier_operation",
             header: formatMessage({ id: "Identifier_operation" }),
+            id: formatMessage({ id: "Identifier_operation" }),
         },
         {
             accessorKey: "Localization_procedure",
             header: formatMessage({ id: "Localization_procedure" }),
+            id: formatMessage({ id: "Localization_procedure" }),
         },
     ];
 };
@@ -301,19 +339,23 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
     return [
         {
             accessorKey: "Issue_date",
-            header: formatMessage({ id: "issue_date" }),
+            header: formatMessage({ id: "Issue_date" }),
+            id: formatMessage({ id: "Issue_date" }),
         },
         {
             accessorKey: "ID_Prescriber",
-            header: formatMessage({ id: "id_Prescriber" }),
+            header: formatMessage({ id: "ID_Prescriber" }),
+            id: formatMessage({ id: "ID_Prescriber" }),
         },
         {
             accessorKey: "Group_prescriber",
-            header: formatMessage({ id: "group_prescriber" }),
+            header: formatMessage({ id: "Group_prescriber" }),
+            id: formatMessage({ id: "Group_prescriber" }),
         },
         {
-            accessorKey: "KV_area_Prescriber",
-            header: formatMessage({ id: "kv_area_Prescriber" }),
+            accessorKey: "Kv_area_prescriber",
+            header: formatMessage({ id: "Kv_area_prescriber" }),
+            id: formatMessage({ id: "Kv_area_prescriber" }),
         },
     ];
 };
@@ -325,47 +367,60 @@ export const MedicationPositionsColumns = (): ColumnDef<
     return [
         {
             accessorKey: "Date_Prescription",
-            header: formatMessage({ id: "Date_Prescription" }),
+            header: formatMessage({ id: "Date_prescription" }),
+            id: formatMessage({ id: "Date_prescription" }),
+
         },
         {
             accessorKey: "Pharmaceutical_registration_number",
             header: formatMessage({ id: "Pharmaceutical_registration_number" }),
+            id: formatMessage({ id: "Pharmaceutical_registration_number" }),
+
         },
         {
             accessorKey: "Total_cost_medication",
             header: formatMessage({ id: "Total_cost_medication" }),
+            id: formatMessage({ id: "Total_cost_medication" }),
         },
         {
             accessorKey: "Individual_cost_medication",
             header: formatMessage({ id: "Individual_cost_medication" }),
+            id: formatMessage({ id: "Individual_cost_medication" }),
         },
         {
             accessorKey: "Package_size",
             header: formatMessage({ id: "Package_size" }),
+            id: formatMessage({ id: "Package_size" }),
         },
         {
             accessorKey: "Substance_code",
             header: formatMessage({ id: "Substance_code" }),
+            id: formatMessage({ id: "Substance_code" }),
         },
         {
             accessorKey: "Daily_dosage",
             header: formatMessage({ id: "Daily_dosage" }),
+            id: formatMessage({ id: "Daily_dosage" }),
         },
         {
             accessorKey: "Total_cost_prescription",
             header: formatMessage({ id: "Total_cost_prescription" }),
+            id: formatMessage({ id: "Total_cost_prescription" }),
         },
         {
             accessorKey: "Surcharge",
             header: formatMessage({ id: "Surcharge" }),
+            id: formatMessage({ id: "Surcharge" }),
         },
         {
             accessorKey: "Care_provider_type",
             header: formatMessage({ id: "Care_provider_type" }),
+            id: formatMessage({ id: "Care_provider_type" }),
         },
         {
-            accessorKey: "Medical_Aid_position_number",
-            header: formatMessage({ id: "Medical_Aid_position_number" }),
+            accessorKey: "Medical_aid_position_number",
+            header: formatMessage({ id: "Medical_aid_position_number" }),
+            id: formatMessage({ id: "Medical_aid_position_number" }),
         },
     ];
 };

@@ -56,7 +56,7 @@ export function WorkInabilityTable({
 
     return (
         <>
-            <div className="rounded-md border">
+            <div className="rounded-md max-h-[45rem] border-2 h-[40rem] overflow-y-auto">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -152,7 +152,8 @@ export function WorkInabilityTable({
                     </TableBody>
                 </Table>
             </div>
-            {pagination && <DataTablePagination table={table} />}
+            
+            {/* {pagination && <DataTablePagination table={table} />} */}
         </>
     );
 }

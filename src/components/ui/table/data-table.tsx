@@ -48,7 +48,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className="rounded-md border">
+            <div className="rounded-md ">
                 <Table>
                     <TableHeader className="border-b">
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -70,7 +70,9 @@ export function DataTable<TData, TValue>({
                         ))}
                     </TableHeader>
                     <TableBody>
-                        {table.getRowModel().rows?.length ? (
+
+                        {
+                        table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     className="overflow-hidden"
