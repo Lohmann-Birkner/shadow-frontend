@@ -39,18 +39,12 @@ export default function Home({ patients }: Props) {
         accessorKey: string;
     }[];
 
-    const { data, isFetching } = useQuery({
+    const { data, isFetching, error } = useQuery({
         queryKey: ["patients"],
         queryFn: () => getPatientByQuery(searchParameters!),
         initialData: patients,
         enabled: Boolean(searchParameters),
     });
-
-    // const { data } = useQuery({
-    //     queryKey: ["patients"],
-    //     queryFn: getAllPatients,
-    //     initialData: patients,
-    // });
 
     const sortedItems = useMemo(() => {
         if (data) {
