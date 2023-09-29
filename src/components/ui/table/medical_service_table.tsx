@@ -156,7 +156,7 @@ export function MedicalServiceTable({
                 </TableRow>
                 {expandedRows[row.id] && (
                   <TableRow
-                    className="hover:bg-neutral-100 bg-neutral-100  "
+                    className="hover:bg-neutral-100 bg-neutral-100"
                     key={`expanded-${row.id}`}
                   >
                     <TableCell colSpan={columns.length}
