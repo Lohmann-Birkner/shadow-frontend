@@ -6,7 +6,7 @@ import Sidebar from "./sidebar";
 function MobileSidebar() {
     const [open, setOpen] = useState(false);
     return (
-        <div className="md:hidden">
+        <div className="lg:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger>
                     <Menu />

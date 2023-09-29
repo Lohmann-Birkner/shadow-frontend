@@ -17,7 +17,7 @@ function Navbar() {
   return (
     <header className=" fixed top-0 w-full flex items-center justify-between pl-3 pr-6 py-2 2xl:px-16 shadow-sm mx-0 border-b bg-white h-12">
       <MobileSidebar />
-      <h1 className="hidden md:block text-xl font-bold">SHADOW</h1>
+      <h1 className="hidden lg:block text-xl font-bold">SHADOW</h1>
       <ul className="list-style-none ml-auto flex  pl-0 lg:mt-1 sm:flex-row sm:mt-2 h-10">
         <li className="mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1 mr-5 mt-1">
           <Link
