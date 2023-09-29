@@ -25,7 +25,6 @@ import {
   RehabPaymentColumns,
 } from "./columns";
 
-import { RehabDiagnosisColumns, RehabPaymentColumns } from "./columns";
 
 import { RehabT } from "../../../../types";
 
