@@ -10,7 +10,15 @@ export function showCostInTwoDigit(cost: number) {
     style: "currency",
     currency: "EUR",
   }).format(cost);
-  console.log(costInTwoDigitWithEuro);
+  
   return costInTwoDigitWithEuro;
 }
 
+export function formatedDate(time:string){
+ const formatedDate=new Intl.DateTimeFormat('de-DE').format(new Date(time))
+ return formatedDate
+}
+
+export function formatDaytime(time:any){
+ return new Intl.DateTimeFormat('en-CA').format(time)
+}

@@ -23,7 +23,7 @@ import {
   TasksColumns,
   WorkInabilityPaymentsColumns,
 } from "@/components/ui/table/columns";
-import { TaskT } from "../../../types";
+import { TaskT,WorkInabilityT } from "../../../types";
 import Documentation from "@/components/documentation";
 import {
   getPatientById,
@@ -42,6 +42,8 @@ import { MadaidTable } from "@/components/ui/table/medaid-table";
 import { HospitalTable } from "@/components/ui/table/hospital-table";
 import { RehabTable } from "@/components/ui/table/rehab-table";
 import { DataTablePagination } from "../../components/ui/table/data-table-pagination";
+
+  
 
 
 const mockDocumentation =
@@ -84,6 +86,15 @@ export default function Page() {
       enabled: !!query.id && tab === "work_inability",
     }
   );
+
+  const mappedWorkInability = (data:WorkInabilityT[])=>{
+   const mappedData= data.flatMap(icd =>{
+      const Main_ICD = icd.Main_ICD;
+      return icd.payments.map(payment => {return {...payment,Main_ICD}})
+    })
+    console.log(mappedData)
+    return mappedData;
+  }
 
   const medaid = useQuery(
     ["medaid", tab],
@@ -187,13 +198,15 @@ export default function Page() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent className="p-0 border-0 h-[45rem] max-h-[45rem] " value="medical_service">
+          <TabsContent
+            className="p-0 border-0 h-[45rem] max-h-[45rem] "
+            value="medical_service"
+          >
             {medicalService.data ? (
               <MedicalServiceTable
                 data={medicalService.data}
                 columns={MedicalServiceColumns()}
                 pagination
-                
               />
             ) : (
               <div className="w-full flex justify-center items-center">
@@ -215,35 +228,35 @@ export default function Page() {
               </div>
             )}
           </TabsContent>
-          <TabsContent className="p-0 h-[45rem] border-0" value="work_inability">
+          <TabsContent
+            className="p-0 h-[45rem] border-0"
+            value="work_inability"
+          >
             {workInability.data ? (
-              workInability.data.map((item) => (
-                <div key={item.Main_ICD} className=" p-4 ">
-                  <h1
-                    data-state={expandedRows[item.Main_ICD] && "selected"}
-                    onClick={() => toggleRowExpansion(item.Main_ICD)}
-                    className="font-semibold border-b-2  hover:cursor-pointer"
-                  >
-                    Main ICD: {item.Main_ICD}
-                  </h1>
-                  {expandedRows[item.Main_ICD] &&
-                  <>
-                  <WorkInabilityTable
-                    data={item.payments} // Pass the current item to the table
-                    columns={WorkInabilityPaymentsColumns()}
-                    pagination
-                  />  </>}
-                </div> 
-               
-              ))
+              workInability.data.length > 0 ? (
+                <div className=" p-4 ">
+                    <WorkInabilityTable
+                      data={mappedWorkInability(workInability.data)} // Pass the current item to the table
+                      columns={WorkInabilityPaymentsColumns()}
+                     
+                      pagination
+                    />
+                  </div>
+              ) : (
+                <div className="w-full flex justify-center items-center">
+                  <FormattedMessage id="No_results" />
+                </div>
+              )
             ) : (
               <div className="w-full flex justify-center items-center">
                 <Loader2 className="h-16 w-16 m-5 animate-spin" />
               </div>
             )}
-           
           </TabsContent>
-          <TabsContent className="p-0 h-[45rem] rounded-md" value="therapeutic_and_aid_supplies">
+          <TabsContent
+            className="p-0 h-[45rem] border-0"
+            value="therapeutic_and_aid_supplies"
+          >
             {medaid.data ? (
               medaid.data.length > 0 ? (
                 <MadaidTable
@@ -253,7 +266,7 @@ export default function Page() {
                 />
               ) : (
                 <div className="w-full flex justify-center items-center">
-                  <h1>No result found</h1>
+                  <FormattedMessage id="No_results" />
                 </div>
               )
             ) : (
@@ -262,7 +275,10 @@ export default function Page() {
               </div>
             )}
           </TabsContent>
-          <TabsContent className="p-0 h-[45rem] rounded-md" value="hospital">
+          <TabsContent
+            className="p-0 h-[45rem] border-0 rounded-md"
+            value="hospital"
+          >
             {hospital.data ? (
               hospital.data.length > 0 ? (
                 <HospitalTable
@@ -272,7 +288,7 @@ export default function Page() {
                 />
               ) : (
                 <div className="w-full flex justify-center items-center">
-                  <h1>No result found</h1>
+                  <FormattedMessage id="No_results" />
                 </div>
               )
             ) : (
@@ -292,7 +308,7 @@ export default function Page() {
                 />
               ) : (
                 <div className="w-full flex justify-center items-center">
-                  <h1>No result found</h1>
+                  <FormattedMessage id="No_results" />
                 </div>
               )
             ) : (

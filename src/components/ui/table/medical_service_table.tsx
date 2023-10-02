@@ -33,19 +33,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: MedicalServiceT[];
   pagination: boolean;
-  
 }
 
 export function MedicalServiceTable({
   columns,
   data,
   pagination,
- 
 }: CollapsibleDataTableProps) {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
@@ -83,7 +82,8 @@ export function MedicalServiceTable({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="m-2">
-                Columns <ChevronDown className="ml-2 h-4 w-4" />
+                <FormattedMessage id="Columns" />
+                <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -100,15 +100,15 @@ export function MedicalServiceTable({
                         column.toggleVisibility(!!value)
                       }
                     >
-                      {column.id}
+                      <FormattedMessage id={column.id} />
                     </DropdownMenuCheckboxItem>
                   );
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Table className="h-fit max-h-[45rem]" >
-          <TableHeader  >
+        <Table className="h-fit max-h-[45rem]">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -129,7 +129,7 @@ export function MedicalServiceTable({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody >
+          <TableBody>
             {table.getRowModel().rows.map((row) => (
               <>
                 <TableRow
@@ -159,9 +159,7 @@ export function MedicalServiceTable({
                     className="hover:bg-neutral-100 bg-neutral-100"
                     key={`expanded-${row.id}`}
                   >
-                    <TableCell colSpan={columns.length}
-                    
-                    >
+                    <TableCell colSpan={columns.length}>
                       {/* Add your expanded content here */}
 
                       {row.original.diags.length > 0 ||
@@ -170,7 +168,7 @@ export function MedicalServiceTable({
                           {row.original.diags.length > 0 && (
                             <div className=" px-10 bg-neutral-100 w-1/2 mb-3   ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
-                                Diagnosis:
+                                <FormattedMessage id="Diagnosis" />
                               </TableCaption>
 
                               <DataTable
@@ -191,7 +189,6 @@ export function MedicalServiceTable({
                                 data={row.original.ops}
                                 columns={MedicalServiceOpsColumns()}
                                 pagination={false}
-                                
                               />
                             </div>
                           )}
@@ -202,7 +199,7 @@ export function MedicalServiceTable({
                             colSpan={columns.length}
                             className="h-14 text-center"
                           >
-                            No results.
+                            <FormattedMessage id="No_results" />{" "}
                           </TableCell>
                         </TableRow>
                       )}

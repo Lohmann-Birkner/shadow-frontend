@@ -169,5 +169,6 @@
     "Make_sure_to_delete": "Mit dieser Aktion wird Ihre Aufgabe gelöscht.",
     "Cancel": "Absagen",
     "No_results": "Keine Ergebinisse",
-    "Select_a_catalog":"Katalog Auswählen"
+    "Select_a_catalog":"Katalog Auswählen",
+    "Columns":"Spalten"
 }

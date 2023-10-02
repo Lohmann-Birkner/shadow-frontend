@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FormattedMessage } from "react-intl";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -80,7 +81,9 @@ export function HospitalTable({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="m-2">
-                Columns <ChevronDown className="ml-2 h-4 w-4" />
+                <FormattedMessage id="Columns" />
+
+                <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -97,7 +100,7 @@ export function HospitalTable({
                         column.toggleVisibility(!!value)
                       }
                     >
-                      {column.id}
+                      <FormattedMessage id={column.id} />
                     </DropdownMenuCheckboxItem>
                   );
                 })}
@@ -156,11 +159,11 @@ export function HospitalTable({
                     >
                       <TableCell colSpan={columns.length}>
                         {/* Add your expanded content here */}
-                        <>
+                        <div className="xl:flex">
                           {row.original.diagnosis.length > 0 ? (
-                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3  ">
+                            <div className=" px-5 bg-neutral-100 w-1/2 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
-                                Diagnosis:
+                                <FormattedMessage id="Diagnosis" />
                               </TableCaption>
 
                               <DataTable
@@ -175,12 +178,12 @@ export function HospitalTable({
                                 colSpan={columns.length}
                                 className="h-14 text-center"
                               >
-                                No results.
+                                <FormattedMessage id="No_results" />
                               </TableCell>
                             </TableRow>
                           )}
                           {row.original.billing.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3  ">
+                            <div className=" px-5 bg-neutral-100 w-1/2 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Billings:
                               </TableCaption>
@@ -193,7 +196,7 @@ export function HospitalTable({
                             </div>
                           )}
                           {row.original.procedure.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3   ">
+                            <div className=" px-5 bg-neutral-100 w-1/2 mb-3   ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Procedure:
                               </TableCaption>
@@ -205,7 +208,7 @@ export function HospitalTable({
                               />
                             </div>
                           )}
-                        </>
+                        </div>
                       </TableCell>
                     </TableRow>
                   )}
@@ -217,7 +220,7 @@ export function HospitalTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <FormattedMessage id="No_results" />
                 </TableCell>
               </TableRow>
             )}

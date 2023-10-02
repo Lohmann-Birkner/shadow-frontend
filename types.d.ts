@@ -116,6 +116,43 @@ export type WorkInabilityT = {
     }[];
 };
 
+
+export type MappedWorkInabilityT = {
+    
+    payments: {
+        Main_ICD: string;
+        Case_ID: number;
+        Start_benefits: string;
+        End_benefits: string;
+        Total_days_benefits: number;
+        ID_Prescriber: number;
+        Core_ID_prescriber: number;
+        Physician_Specialty_Group: string;
+        Payment_area: string;
+        Type_EEL: string;
+        Start_EEL: string;
+        End_EEL: string;
+        Total_days_EEL: number;
+        Net_amount_EEL: number;
+        diagnosis: {
+            Date_diagnosis: string;
+            Date_healing: string;
+            Primary_diagnosis: string;
+            Secondary_diagnosis: string;
+            Type_diagnosis: string;
+            Localization_diagnosis: string;
+            Severity_diagnosis: string;
+            Certainty_diagnosis: string;
+            Work_accident: string;
+            Physician_number: string;
+            Start_AU: string;
+            End_AU: string;
+            Start_application_AU: string;
+            End_application_AU: string;
+        }[];
+    }[];
+};
+
 export type MedaidT = {
     ID_prescriber: number;
     Date_prescription: string;
@@ -138,14 +175,14 @@ export type HospitalT = {
     ID_Insured: number;
     Case_number: string;
     Admission_date: string;
-    Reason_admission: string;
+    Reason_for_admission: string;
     Admission_time: string;
     Admission_weight_infant: number;
     Reason_discharge: string;
     Date_discharge: string;
     Time_discharge: string;
     Delivery_date: string;
-    Number_ventilation_days: number;
+    Number_of_ventilation_days: number;
     Cost_total: number;
     ID_Hospital: number;
     Department_Admission: string;

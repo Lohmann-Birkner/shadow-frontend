@@ -30,20 +30,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: MedicationT[];
   pagination: boolean;
-  className:string
+  className: string;
 }
 
 export function MedicationTable({
   columns,
   data,
   pagination,
-  className
+  className,
 }: CollapsibleDataTableProps) {
+  const { formatMessage, locale } = useIntl();
+
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -78,7 +81,9 @@ export function MedicationTable({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="m-2">
-                Columns <ChevronDown className="ml-2 h-4 w-4" />
+                <FormattedMessage id="Columns" />
+
+                <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -95,7 +100,7 @@ export function MedicationTable({
                         column.toggleVisibility(!!value)
                       }
                     >
-                      {column.id}
+                      <FormattedMessage id={column.id} />
                     </DropdownMenuCheckboxItem>
                   );
                 })}
@@ -124,7 +129,7 @@ export function MedicationTable({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody >
+          <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <>
@@ -156,7 +161,6 @@ export function MedicationTable({
                       key={`expanded-${row.id}`}
                     >
                       <TableCell colSpan={columns.length}>
-                        
                         {/* Add your expanded content here */}
                         <>
                           {row.original.positions.length > 0 ? (
@@ -187,7 +191,7 @@ export function MedicationTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <FormattedMessage id="No_results" />
                 </TableCell>
               </TableRow>
             )}
