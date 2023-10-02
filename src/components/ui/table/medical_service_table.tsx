@@ -5,6 +5,8 @@ import {
   useReactTable,
   getPaginationRowModel,
   VisibilityState,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -36,7 +38,6 @@ import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: MedicalServiceT[];
@@ -52,6 +53,8 @@ export function MedicalServiceTable({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
 
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+
   const table = useReactTable({
     data,
     columns,
@@ -63,8 +66,11 @@ export function MedicalServiceTable({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnVisibility,
+      sorting,
     },
   });
 

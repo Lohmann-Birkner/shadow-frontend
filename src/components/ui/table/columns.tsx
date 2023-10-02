@@ -18,10 +18,10 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { DataTableRowActions } from "./task-row-actions";
-import { useIntl } from "react-intl";
-
+import { FormattedMessage, useIntl } from "react-intl";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { showCostInTwoDigit, formatDaytime } from "@/lib/utils";
-
+import { Button } from "@/components/ui/button";
 import { FormatDate } from "@/lib/format-date";
 
 // Insured
@@ -193,7 +193,21 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
   return [
     {
       accessorKey: "Case_number",
-      header: formatMessage({ id: "Case_number" }),
+      header: ({ column }) => {
+
+       
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage  id ="Case_number"/>
+           
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      
     },
     {
       accessorKey: "Insurance_area",
