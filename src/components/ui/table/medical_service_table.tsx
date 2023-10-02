@@ -34,6 +34,8 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -72,6 +74,22 @@ export function MedicalServiceTable({
       ...prevExpandedRows,
       [rowId]: !prevExpandedRows[rowId],
     }));
+  };
+
+  let columnBeingDragged: number;
+
+  const onDragStart = (e: React.DragEvent<HTMLElement>): void => {
+    columnBeingDragged = Number(e.currentTarget.dataset.columnIndex);
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLElement>): void => {
+    e.preventDefault();
+    const newPosition = Number(e.currentTarget.dataset.columnIndex);
+    const currentCols = table.getVisibleLeafColumns().map((c) => c.id);
+    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+
+    currentCols.splice(newPosition, 0, colToBeMoved[0]);
+    table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
   };
 
   return (
@@ -114,8 +132,17 @@ export function MedicalServiceTable({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="bg-slate-100 text-slate-950 "
+                      className="bg-slate-100 text-slate-950 hover:cursor-grab "
                       key={header.id}
+                      draggable={
+                        !table.getState().columnSizingInfo.isResizingColumn
+                      }
+                      data-column-index={header.index}
+                      onDragStart={onDragStart}
+                      onDragOver={(e): void => {
+                        e.preventDefault();
+                      }}
+                      onDrop={onDrop}
                     >
                       {header.isPlaceholder
                         ? null

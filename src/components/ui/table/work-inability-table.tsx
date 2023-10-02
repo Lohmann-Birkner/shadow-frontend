@@ -112,7 +112,9 @@ export function WorkInabilityTable({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id}
+                    
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -135,13 +137,6 @@ export function WorkInabilityTable({
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
-                    {/* <TableCell>
-                                            <button>
-                                                {expandedRows[row.id]
-                                                    ? "Collapse"
-                                                    : "Expand"}
-                                            </button>
-                                        </TableCell> */}
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {flexRender(
