@@ -21,16 +21,16 @@ import { DataTable } from "./data-table";
 import { MedaidPositionsColumns } from "./columns";
 import { MedaidT } from "../../../../types";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
-    DropdownMenuTrigger,
-    DropdownMenuCheckboxItem,
-  } from "@/components/ui/dropdown-menu";
-  import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
-  import { Button } from "@/components/ui/button";
-
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { FormattedMessage } from "react-intl";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -73,8 +73,8 @@ export function MadaidTable({
 
   return (
     <>
-      <div className="rounded-md h-full ">
-      <div>
+      <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto ">
+        {/* <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="m-2">
@@ -101,14 +101,17 @@ export function MadaidTable({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </div> */}
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}  className="bg-slate-100 text-slate-950 ">
+                    <TableHead
+                      key={header.id}
+                      className="bg-slate-100 text-slate-950 "
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -174,7 +177,7 @@ export function MadaidTable({
                                 colSpan={columns.length}
                                 className="h-14 text-center"
                               >
-                                No results.
+                                <FormattedMessage id="No_results" />
                               </TableCell>
                             </TableRow>
                           )}
@@ -190,7 +193,7 @@ export function MadaidTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <FormattedMessage id="No_results" />
                 </TableCell>
               </TableRow>
             )}

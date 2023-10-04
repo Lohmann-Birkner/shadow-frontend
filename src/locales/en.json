@@ -172,6 +172,9 @@
     "Make_sure_to_delete": "This action will delete your task.",
     "Cancel": "Cancel",
     "No_results": "No results",
-    "Select_a_catalog":"Select a Catalog"
+    "Select_a_catalog":"Select a Catalog",
+    "Columns":"Columns"
+    
+
 
 }

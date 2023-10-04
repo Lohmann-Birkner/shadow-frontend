@@ -25,8 +25,8 @@ import {
   RehabPaymentColumns,
 } from "./columns";
 
-
 import { RehabT } from "../../../../types";
+import { FormattedMessage } from "react-intl";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -119,7 +119,7 @@ export function RehabTable({
                     >
                       <TableCell colSpan={columns.length}>
                         {/* Add your expanded content here */}
-                        <>
+                        <div className="lg:flex">
                           {row.original.payment.length > 0 ? (
                             <div className=" px-10 bg-neutral-100 w-3/4 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
@@ -138,14 +138,15 @@ export function RehabTable({
                                 colSpan={columns.length}
                                 className="h-24 text-center"
                               >
-                                No results.
+                                <FormattedMessage id="No_results" />
                               </TableCell>
                             </TableRow>
                           )}
                           {row.original.diagnosis.length > 0 && (
                             <div className=" px-10 bg-neutral-100 w-3/4 mb-3  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
-                                Diagnosis:
+                              <FormattedMessage id="Diagnosis" />
+:
                               </TableCaption>
 
                               <DataTable
@@ -155,7 +156,7 @@ export function RehabTable({
                               />
                             </div>
                           )}
-                        </>
+                        </div>
                       </TableCell>
                     </TableRow>
                   )}
@@ -167,7 +168,7 @@ export function RehabTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <FormattedMessage id="No_results" />
                 </TableCell>
               </TableRow>
             )}
