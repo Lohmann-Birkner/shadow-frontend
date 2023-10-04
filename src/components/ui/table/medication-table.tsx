@@ -5,6 +5,8 @@ import {
   useReactTable,
   getPaginationRowModel,
   VisibilityState,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -45,11 +47,12 @@ export function MedicationTable({
   pagination,
   className,
 }: CollapsibleDataTableProps) {
-  const { formatMessage, locale } = useIntl();
 
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+
   const table = useReactTable({
     data,
     columns,
@@ -61,8 +64,11 @@ export function MedicationTable({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnVisibility,
+      sorting
     },
   });
 

@@ -7,6 +7,8 @@ import {
   VisibilityState,
   SortingState,
   getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -33,10 +35,10 @@ import {
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FormattedMessage, useIntl } from "react-intl";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { FormattedMessage } from "react-intl";
+import { Input } from "@/components/ui/input";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -55,6 +57,10 @@ export function MedicalServiceTable({
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+
   const table = useReactTable({
     data,
     columns,
@@ -67,10 +73,13 @@ export function MedicalServiceTable({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     state: {
       columnVisibility,
       sorting,
+      columnFilters,
     },
   });
 
@@ -101,35 +110,51 @@ export function MedicalServiceTable({
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
-        {" "}
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="m-2">
-                <FormattedMessage id="Columns" />
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize "
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      <FormattedMessage id={column.id} />
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <div className="flex">
+          
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="m-2">
+                  <FormattedMessage id="Columns" />
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize "
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        <FormattedMessage id={column.id} />
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          
+          <div className="flex items-center ">
+            <Input
+              placeholder="Filter Fall Nummer..."
+              value={
+                (table.getColumn("Case_number")?.getFilterValue() as string) ??
+                ""
+              }
+              onChange={(event) =>
+                table
+                  .getColumn("Case_number")
+                  ?.setFilterValue(event.target.value)
+              }
+              className="max-w-sm"
+            />
+          </div>
         </div>
         <Table className="h-fit max-h-[45rem]">
           <TableHeader>
@@ -171,13 +196,6 @@ export function MedicalServiceTable({
                   data-state={expandedRows[row.id] && "selected"}
                   onClick={() => toggleRowExpansion(row.id)}
                 >
-                  {/* <TableCell>
-                                            <button>
-                                                {expandedRows[row.id]
-                                                    ? "Collapse"
-                                                    : "Expand"}
-                                            </button>
-                                        </TableCell> */}
                   {row.getVisibleCells().map((cell) => (
                     <TableCell className="h-14 " key={cell.id}>
                       {flexRender(

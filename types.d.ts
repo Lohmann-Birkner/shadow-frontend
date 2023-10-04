@@ -176,11 +176,11 @@ export type HospitalT = {
     Case_number: string;
     Admission_date: string;
     Reason_for_admission: string;
-    Admission_time: string;
+    
     Admission_weight_infant: number;
     Reason_discharge: string;
     Date_discharge: string;
-    Time_discharge: string;
+    
     Delivery_date: string;
     Number_of_ventilation_days: number;
     Cost_total: number;
