@@ -170,5 +170,7 @@
     "Cancel": "Absagen",
     "No_results": "Keine Ergebinisse",
     "Select_a_catalog":"Katalog Auswählen",
-    "Columns":"Spalten"
+    "Columns":"Spalten",
+    "Search_all_columns":"Alle Spalten suchen"
+
 }

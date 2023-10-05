@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage,useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 
 interface CollapsibleDataTableProps {
@@ -60,6 +60,8 @@ export function MedicalServiceTable({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  const {formatMessage}=useIntl()
 
   const table = useReactTable({
     data,
@@ -80,6 +82,7 @@ export function MedicalServiceTable({
       columnVisibility,
       sorting,
       columnFilters,
+      globalFilter,
     },
   });
 
@@ -90,7 +93,6 @@ export function MedicalServiceTable({
       [rowId]: !prevExpandedRows[rowId],
     }));
   };
-
   let columnBeingDragged: number;
 
   const onDragStart = (e: React.DragEvent<HTMLElement>): void => {
@@ -107,14 +109,47 @@ export function MedicalServiceTable({
     table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
   };
 
+  function DebouncedInput({
+    value: initialValue,
+    onChange,
+    debounce = 500,
+    ...props
+  }: {
+    value: string | number;
+    onChange: (value: string | number) => void;
+    debounce?: number;
+  } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">) {
+    const [value, setValue] = React.useState(initialValue);
+
+    React.useEffect(() => {
+      setValue(initialValue);
+    }, [initialValue]);
+
+    React.useEffect(() => {
+      const timeout = setTimeout(() => {
+        onChange(value);
+      }, debounce);
+
+      return () => clearTimeout(timeout);
+    }, [value]);
+
+    return (
+      <input
+        {...props}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
+  }
+
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
-        <div className="flex">
-          
+        <div className="flex  ">
+          <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="m-2">
+                <Button variant="outline" className="m-2 shadow h-2/3">
                   <FormattedMessage id="Columns" />
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -139,20 +174,14 @@ export function MedicalServiceTable({
                   })}
               </DropdownMenuContent>
             </DropdownMenu>
-          
-          <div className="flex items-center ">
-            <Input
-              placeholder="Filter Fall Nummer..."
-              value={
-                (table.getColumn("Case_number")?.getFilterValue() as string) ??
-                ""
-              }
-              onChange={(event) =>
-                table
-                  .getColumn("Case_number")
-                  ?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
+          </div>
+          <div>
+            <DebouncedInput
+              value={globalFilter ?? ""}
+              onChange={(value) => setGlobalFilter(String(value))}
+              className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
+              placeholder={formatMessage({ id: "Search_all_columns" })}
+              autoFocus
             />
           </div>
         </div>
@@ -163,7 +192,7 @@ export function MedicalServiceTable({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="bg-slate-100 text-slate-950 hover:cursor-grab "
+                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-20"
                       key={header.id}
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn
@@ -187,17 +216,18 @@ export function MedicalServiceTable({
               </TableRow>
             ))}
           </TableHeader>
+         
           <TableBody>
             {table.getRowModel().rows.map((row) => (
               <>
                 <TableRow
                   key={row.id}
-                  className="cursor-pointer"
+                  className="cursor-pointer "
                   data-state={expandedRows[row.id] && "selected"}
                   onClick={() => toggleRowExpansion(row.id)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="h-14 " key={cell.id}>
+                    <TableCell className="h-14 text-center" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -217,7 +247,7 @@ export function MedicalServiceTable({
                       row.original.ops.length > 0 ? (
                         <>
                           {row.original.diags.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3   ">
+                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3 text-center  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>

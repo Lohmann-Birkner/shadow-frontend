@@ -8,7 +8,7 @@ import {
   RehabT,
   TaskT,
   WorkInabilityT,
-  MappedWorkInabilityT
+  MappedWorkInabilityT,
 } from "../../../../types";
 import {
   ArrowDown,
@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { DataTableRowActions } from "./task-row-actions";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { showCostInTwoDigit, formatDateForHospital } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { FormatDate } from "@/lib/format-date";
@@ -194,156 +194,144 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     {
       accessorKey: "Case_number",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Case_number"/>
-           
+            <FormattedMessage id="Case_number" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
-      
+      id: formatMessage({ id: "Case_number" }),
     },
     {
       accessorKey: "Insurance_area",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Insurance_area"/>
-           
+            <FormattedMessage id="Insurance_area" />
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
+      id: formatMessage({ id: "Insurance_area" }),
+      meta:"string"
+      
     },
+
     {
       accessorKey: "Quarter",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Quarter"/>
-           
+            <FormattedMessage id="Quarter" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
+      id: formatMessage({ id: "Quarter" }),
     },
     {
       accessorKey: "ID_Prescriber",
-      header:({ column }) => {
-
-       
+      header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="ID_Prescriber"/>
-           
+            <FormattedMessage id="ID_Prescriber" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
 
     {
       accessorKey: "Physician_specialty_group",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Physician_specialty_group"/>
-           
+            <FormattedMessage id="Physician_specialty_group" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Is_accident",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Is_accident"/>
-           
+            <FormattedMessage id="Is_accident" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Treatment_type",
+      id: formatMessage({ id: "Treatment_type" }),
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Treatment_type"/>
-           
+            <FormattedMessage id="Treatment_type" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Points",
-      header: ({ column }) => {
 
-       
+      header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Points"/>
-           
+            <FormattedMessage id="Points" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Total_costs",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Total_costs"/>
-           
+            <FormattedMessage id="Total_costs" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
 
       cell: ({ row }) => showCostInTwoDigit(row.getValue("Total_costs")),
@@ -351,18 +339,16 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     {
       accessorKey: "Calculated_costs",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Calculated_costs"/>
-           
+            <FormattedMessage id="Calculated_costs" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
 
       cell: ({ row }) => showCostInTwoDigit(row.getValue("Calculated_costs")),
@@ -370,18 +356,16 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     {
       accessorKey: "Non_budget_costs",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Non_budget_costs"/>
-           
+            <FormattedMessage id="Non_budget_costs" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
 
       cell: ({ row }) => showCostInTwoDigit(row.getValue("Non_budget_costs")),
@@ -389,18 +373,16 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     {
       accessorKey: "Dialysis_costs",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Dialysis_costs"/>
-           
+            <FormattedMessage id="Dialysis_costs" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
 
       cell: ({ row }) => showCostInTwoDigit(row.getValue("Dialysis_costs")),
@@ -408,88 +390,78 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     {
       accessorKey: "Start_Treatment",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Start_Treatment"/>
-           
+            <FormattedMessage id="Start_Treatment" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
       cell: ({ row }) => FormatDate(row.getValue("Start_Treatment")),
     },
     {
       accessorKey: "End_Treatment",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="End_Treatment"/>
-           
+            <FormattedMessage id="End_Treatment" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
       cell: ({ row }) => FormatDate(row.getValue("End_Treatment")),
     },
     {
       accessorKey: "Insurance_stats_5",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Insurance_stats_5"/>
-           
+            <FormattedMessage id="Insurance_stats_5" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Distance",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Distance"/>
-           
+            <FormattedMessage id="Distance" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Insurance_stats_2",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Insurance_stats_2"/>
-           
+            <FormattedMessage id="Insurance_stats_2" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
   ];
@@ -503,7 +475,6 @@ export const MedicalServiceDiagsColumns = (): ColumnDef<
     {
       accessorKey: "Number_ICD",
       header: formatMessage({ id: "Number_ICD" }),
-      
     },
     {
       accessorKey: "ICD",
@@ -550,71 +521,63 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
   return [
     {
       accessorKey: "Issue_date",
-      header:  ({ column }) => {
-
-       
+      header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Issue_date"/>
-           
+            <FormattedMessage id="Issue_date" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
       cell: ({ row }) => FormatDate(row.getValue("Issue_date")),
     },
     {
       accessorKey: "ID_Prescriber",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Issue_date"/>
-           
+            <FormattedMessage id="Issue_date" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Group_prescriber",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Issue_date"/>
-           
+            <FormattedMessage id="Issue_date" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
     {
       accessorKey: "Kv_area_prescriber",
       header: ({ column }) => {
-
-       
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage  id ="Issue_date"/>
-           
+            <FormattedMessage id="Issue_date" />
+
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-        )
+        );
       },
     },
   ];
@@ -682,13 +645,13 @@ export const MedicationPositionsColumns = (): ColumnDef<
 // Work Inability
 
 export const WorkInabilityPaymentsColumns = (): ColumnDef<
-MappedWorkInabilityT["payments"][0]["diagnosis"][0]
+  MappedWorkInabilityT["payments"][0]["diagnosis"][0]
 >[] => {
   const { formatMessage } = useIntl();
   return [
     {
       accessorKey: "Main_ICD",
-      header:  formatMessage({ id: "Main_ICD" }) ,
+      header: formatMessage({ id: "Main_ICD" }),
     },
     {
       accessorKey: "Case_ID",
@@ -1082,7 +1045,6 @@ export const RehabColumns = (): ColumnDef<RehabT>[] => {
       accessorKey: "Start_rehab",
       header: formatMessage({ id: "Start_rehab" }),
       cell: ({ row }) => FormatDate(row.getValue("Start_rehab")),
-
     },
   ];
 };
@@ -1144,7 +1106,6 @@ export const RehabPaymentColumns = (): ColumnDef<RehabT["payment"]>[] => {
       accessorKey: "Payment_amount",
       header: formatMessage({ id: "Payment_amount" }),
       cell: ({ row }) => showCostInTwoDigit(row.getValue("Payment_amount")),
-
     },
   ];
 };
