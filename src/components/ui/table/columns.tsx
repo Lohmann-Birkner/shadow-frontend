@@ -30,6 +30,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "../tooltip";
+import PrescriberTable from "./prescriber-table";
 
 // Insured
 
@@ -263,6 +264,22 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </Button>
+                );
+            },
+            cell: ({ row }) => {
+                const data = {
+                    prescriber_group_id: 1234,
+                    physician_ident: 34566,
+                    description: "Harum quaerat doloribus maxime? Esse. text",
+                    address_id: 234234,
+                    data_source_sgn: "Lorem ipsum dolor sit amet",
+                    physician_spec_description: "onsectetur adipisicing elit. ",
+                };
+                return (
+                    <PrescriberTable
+                        prescriberId={row.original.ID_Prescriber}
+                        data={data}
+                    />
                 );
             },
         },

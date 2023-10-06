@@ -169,8 +169,13 @@
     "Make_sure_to_delete": "Mit dieser Aktion wird Ihre Aufgabe gelöscht.",
     "Cancel": "Absagen",
     "No_results": "Keine Ergebinisse",
-    "Select_a_catalog":"Katalog Auswählen",
-    "Columns":"Spalten",
-    "Search_all_columns":"Alle Spalten suchen"
-
+    "Select_a_catalog": "Katalog Auswählen",
+    "Columns": "Spalten",
+    "Search_all_columns": "Alle Spalten suchen",
+    "prescriber_group_id": "Verschreibergruppen ID",
+    "physician_ident": "Ärztekennung",
+    "description": "Beschreibung",
+    "address_id": "Adresse ID",
+    "data_source_sgn": "Datenquellen Signatur",
+    "physician_spec_description": "Ärzte Spezialisierung"
 }

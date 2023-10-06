@@ -47,6 +47,7 @@ export type MedicalServiceT = {
     Insurance_stats_5: string;
     Distance: number;
     Insurance_stats_2: string;
+    Prescriber: PrescriberT;
     diags: {
         Number_ICD: number;
         ICD: string;
@@ -229,4 +230,13 @@ export type RehabT = {
         Primary_diagnosis: string;
         Secondary_diagnosis: string;
     }[];
+};
+
+export type PrescriberT = {
+    prescriber_group_id: number;
+    physician_ident: number;
+    description: string;
+    address_id: number;
+    data_source_sgn: string;
+    physician_spec_description: string;
 };
