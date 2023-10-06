@@ -80,98 +80,100 @@ export function MadaidTable({
             [rowId]: !prevExpandedRows[rowId],
         }));
     };
-
-
-  return (
-    <>
-      <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto ">
-        <div>
-          <Input
-            placeholder={formatMessage({
-              id: "Search_all_columns",
-            })}
-            className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
-            onChange={(event) => setGlobalFilter(event.target.value)}
-          />
-        </div>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
+    return (
+      <>
+        <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto">
+          <div>
+            <Input
+              placeholder={formatMessage({
+                id: "Search_all_columns",
+              })}
+              className="p-2 font-lg shadow border border-block max-w-sm rounded-md m-2 h-2/3"
+              onChange={(event) => setGlobalFilter(event.target.value)}
+            />
+          </div>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className="bg-slate-100 text-slate-950 "
+                      className="bg-slate-100 text-slate-950"
                       data-column-index={header.index}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      {header.isPlaceholder ? null : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                     </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <>
-                  <TableRow
-                    key={row.id}
-                    className="cursor-pointer"
-                    data-state={expandedRows[row.id] && "selected"}
-                    onClick={() => toggleRowExpansion(row.id)}
-                  >
-                  
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14 pl-6" key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  {expandedRows[row.id] && (
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <React.Fragment key={row.id}>
                     <TableRow
-                      className="hover:bg-neutral-100 bg-neutral-100"
-                      key={`expanded-${row.id}`}
+                      key={row.id}
+                      className="cursor-pointer"
+                      data-state={expandedRows[row.id] && "selected"}
+                      onClick={() => toggleRowExpansion(row.id)}
                     >
-                      <TableCell colSpan={columns.length}>
-                        {/* Add your expanded content here */}
-                        <>
-                          {row.original.positions.length > 0 ? (
-                            <div className="px-10 bg-neutral-100 mb-3  ">
-                              <TableCaption className="my-4 font-semibold text-slate-950">
-                                Positions:
-                              </TableCaption>
-                              <div className="flex flex-col space-y-5">
-                                <DataTable
-                                  data={row.original.positions}
-                                  columns={MedaidPositionsColumns()}
-                                  pagination={false}
-                                />
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell className="h-14 pl-6" key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                    {expandedRows[row.id] && (
+                      <TableRow
+                        className="hover:bg-neutral-100 bg-neutral-100"
+                        key={`expanded-${row.id}`}
+                      >
+                        <TableCell colSpan={columns.length}>
+                          {/* Add your expanded content here */}
+                          <>
+                            {row.original.positions.length > 0 ? (
+                              <div className="px-10 bg-neutral-100 mb-3">
+                                <TableCaption className="my-4 font-semibold text-slate-950">
+                                  Positions:
+                                </TableCaption>
+                                <div className="flex flex-col space-y-5">
+                                  <DataTable
+                                    data={row.original.positions}
+                                    columns={MedaidPositionsColumns()}
+                                    pagination={false}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          ) : (
-
-                            <TableRow>
+                            ) : (
+                              <TableRow>
                                 <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center">
-                                    <FormattedMessage id="No_results" />
+                                  colSpan={columns.length}
+                                  className="h-24 text-center"
+                                >
+                                  <FormattedMessage id="No_results" />
                                 </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
-            {pagination && <DataTablePagination table={table} />}
-        </>
+                              </TableRow>
+                            )}
+                          </>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </React.Fragment>
+                ))
+              ) : null /* Handle no rows case */}
+            </TableBody>
+          </Table>
+        </div>
+        {pagination && <DataTablePagination table={table} />}
+      </>
     );
-}
+
+
+  }

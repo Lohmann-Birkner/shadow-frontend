@@ -94,56 +94,54 @@ export function MedicationTable({
         }));
     };
 
-  return (
-    <>
-      <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-scroll  ">
-        <div className="flex">
-          <div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="m-2">
-                  <FormattedMessage id="Columns" />
-
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        <FormattedMessage id={column.id} />
-                      </DropdownMenuCheckboxItem>
-                    );
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
+    return (
+      <>
+        <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-scroll">
+          <div className="flex">
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="m-2">
+                    <FormattedMessage id="Columns" />
+                    <ChevronDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => {
+                      return (
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className="capitalize"
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(value) =>
+                            column.toggleVisibility(!!value)
+                          }
+                        >
+                          <FormattedMessage id={column.id} />
+                        </DropdownMenuCheckboxItem>
+                      );
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div>
+              <Input
+                placeholder={formatMessage({
+                  id: "Search_all_columns",
+                })}
+                className="p-2 font-lg shadow border border-block max-w-sm rounded-md m-2 h-2/3"
+                onChange={(event) => setGlobalFilter(event.target.value)}
+              />
+            </div>
           </div>
-          <div>
-            <Input
-              placeholder={formatMessage({
-                id: "Search_all_columns",
-              })}
-              className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
-              onChange={(event) => setGlobalFilter(event.target.value)}
-            />
-          </div>
-        </div>
-        <Table className="h-full w-full  overflow-scroll">
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
+          <Table className="h-full w-full overflow-scroll">
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
                       className="bg-slate-100 text-slate-950 pl-2"
@@ -155,33 +153,36 @@ export function MedicationTable({
                             header.getContext()
                           )}
                     </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <>
-                  <TableRow
-                    key={row.id}
-                    className="cursor-pointer"
-                    data-state={expandedRows[row.id] && "selected"}
-                    onClick={() => toggleRowExpansion(row.id)}
-                  >
-                   
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14 pl-6" key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
-            {pagination && <DataTablePagination table={table} />}
-        </>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <React.Fragment key={row.id}>
+                    <TableRow
+                      key={row.id}
+                      className="cursor-pointer"
+                      data-state={expandedRows[row.id] && "selected"}
+                      onClick={() => toggleRowExpansion(row.id)}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell className="h-14 pl-6" key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </React.Fragment>
+                ))
+              ) : null /* Handle no rows case */}
+            </TableBody>
+          </Table>
+        </div>
+        {pagination && <DataTablePagination table={table} />}
+      </>
     );
 }
