@@ -30,8 +30,6 @@ import { MedicalServiceT } from "../../../../types";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuTrigger,
     DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
@@ -147,15 +145,6 @@ export function MedicalServiceTable({
                         </DropdownMenu>
                     </div>
                     <div>
-                        {/* <DebouncedInput
-                            value={globalFilter ?? ""}
-                            onChange={(value) => setGlobalFilter(String(value))}
-                            className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
-                            placeholder={formatMessage({
-                                id: "Search_all_columns",
-                            })}
-                            autoFocus
-                        /> */}
                         <Input
                             placeholder={formatMessage({
                                 id: "Search_all_columns",
