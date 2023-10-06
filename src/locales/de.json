@@ -77,7 +77,7 @@
     "ID_Insured": "ID Versicherter",
     "Case_number": "Fallnummer",
     "Admission_date": "Aufnahmedatum",
-    "Reason_for_admission": "Aufnahmegrund",
+    "Reason_admission": "Aufnahmegrund",
     "Admission_time": "Aufnahmezeit",
     "Admission_weight_infant": "Aufnahme Gewicht Kleinkind",
     "Reason_discharge": "Entlassungsgrund",
@@ -169,8 +169,17 @@
     "Make_sure_to_delete": "Mit dieser Aktion wird Ihre Aufgabe gelöscht.",
     "Cancel": "Absagen",
     "No_results": "Keine Ergebinisse",
-    "Select_a_catalog": "Katalog Auswählen",
-    "Columns": "Spalten",
+
+    "Select_a_catalog":"Katalog Auswählen",
+    "Columns":"Spalten",
+   
+    "Procedures":"Verfahren",
+    "Billings":"Rechnungen",
+    "Payment":"Zahlung"
+
+
+  
+    
     "Search_all_columns": "Alle Spalten suchen",
     "prescriber_group_id": "Verschreibergruppen ID",
     "physician_ident": "Ärztekennung",
@@ -178,4 +187,5 @@
     "address_id": "Adresse ID",
     "data_source_sgn": "Datenquellen Signatur",
     "physician_spec_description": "Ärzte Spezialisierung"
+
 }

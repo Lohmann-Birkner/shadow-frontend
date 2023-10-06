@@ -79,7 +79,7 @@
     "ID_Insured": "ID Insured",
     "Case_number": "Case number",
     "Admission_date": "Admission date",
-    "Reason_for_admission": "Reason for admission",
+    "Reason_admission": "Reason for admission",
     "Admission_time": "Admission time",
     "Admission_weight_infant": "Admission weight infant",
     "Reason_discharge": "Reason discharge",
@@ -172,13 +172,23 @@
     "Make_sure_to_delete": "This action will delete your task.",
     "Cancel": "Cancel",
     "No_results": "No results",
-    "Select_a_catalog": "Select a Catalog",
-    "Columns": "Columns",
-    "Search_all_columns": "Search all columns",
+
+    "Select_a_catalog":"Select a Catalog",
+    "Columns":"Columns",
+    "Search_all_columns":"Search all columns",
+    "Procedures":"Procedures",
+    "Billings":"Billings",
+    "Payment":"Payment"
+
+    
+
+
+
     "prescriber_group_id": "Prescriber group ID",
     "physician_ident": "Physician ident",
     "description": "Description",
     "address_id": "Address ID",
     "data_source_sgn": "Data source signature",
     "physician_spec_description": "Physician spec description"
+
 }

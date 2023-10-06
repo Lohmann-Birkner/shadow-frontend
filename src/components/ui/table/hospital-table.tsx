@@ -5,6 +5,10 @@ import {
   useReactTable,
   getPaginationRowModel,
   VisibilityState,
+  SortingState,
+  getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -34,7 +38,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -50,6 +56,14 @@ export function HospitalTable({
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
+
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [tab, setTab] = useState("Diagnosis");
+  const { formatMessage } = useIntl();
   const table = useReactTable({
     data,
     columns,
@@ -61,8 +75,15 @@ export function HospitalTable({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     state: {
       columnVisibility,
+      sorting,
+      columnFilters,
+      globalFilter,
     },
   });
 
@@ -76,44 +97,58 @@ export function HospitalTable({
 
   return (
     <>
-      <div className="rounded-md h-full overflow-y-auto ">
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="m-2">
-                <FormattedMessage id="Columns" />
+      <div className="rounded-md h-full overflow-y-auto border-2">
+        <div className="flex">
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="m-2">
+                  <FormattedMessage id="Columns" />
 
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize "
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      <FormattedMessage id={column.id} />
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize "
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        <FormattedMessage id={column.id} />
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div>
+            <Input
+              placeholder={formatMessage({
+                id: "Search_all_columns",
+              })}
+              className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
+              onChange={(event) => setGlobalFilter(event.target.value)}
+            />
+          </div>
         </div>
         <Table>
-          <TableHeader className=" text-slate-950 bg-slate-100">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className=" text-slate-950 bg-slate-100 h-20"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -136,15 +171,8 @@ export function HospitalTable({
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
-                    {/* <TableCell>
-                                            <button>
-                                                {expandedRows[row.id]
-                                                    ? "Collapse"
-                                                    : "Expand"}
-                                            </button>
-                                        </TableCell> */}
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14" key={cell.id}>
+                      <TableCell className="h-14 pl-6" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -158,57 +186,72 @@ export function HospitalTable({
                       key={`expanded-${row.id}`}
                     >
                       <TableCell colSpan={columns.length}>
-                        {/* Add your expanded content here */}
-                        <div className="xl:flex">
+                        <Tabs value={tab}
+                        onValueChange={setTab}
+                        >
+                          <TabsList className=" font-semibold text-slate-950 bg-neutral-100 rounded-md">
+                            <TabsTrigger
+                              value="Diagnosis"
+                              className="bg-neutral-100 "
+                            >
+                              <FormattedMessage id="Diagnosis" />
+                            </TabsTrigger>
+                            <TabsTrigger
+                              value="Billings"
+                              className="bg-neutral-100"
+                            >
+                              <FormattedMessage id="Billings" />
+                            </TabsTrigger>
+                            <TabsTrigger
+                              value="Procedures"
+                              className="bg-neutral-100"
+                            >
+                              <FormattedMessage id="Procedures" />
+                            </TabsTrigger>
+                          </TabsList>
+                          {/* Add your expanded content here */}
                           {row.original.diagnosis.length > 0 ? (
-                            <div className=" px-5 bg-neutral-100 w-1/2 mb-3  ">
-                              <TableCaption className="my-2 font-semibold text-slate-950">
-                                <FormattedMessage id="Diagnosis" />
-                              </TableCaption>
-
+                            <TabsContent value="Diagnosis" className="border-0">
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={HospitalDiagnosisColumns()}
                                 pagination={false}
                               />
-                            </div>
+                            </TabsContent>
                           ) : (
-                            <TableRow>
-                              <TableCell
-                                colSpan={columns.length}
-                                className="h-14 text-center"
-                              >
-                                <FormattedMessage id="No_results" />
-                              </TableCell>
-                            </TableRow>
+                            <TabsContent value="Diagnosis" className="border-0">
+                              <TableRow>
+                                <TableCell
+                                  colSpan={columns.length}
+                                  className="h-14 text-center"
+                                >
+                                  <FormattedMessage id="No_results" />
+                                </TableCell>
+                              </TableRow>
+                            </TabsContent>
                           )}
                           {row.original.billing.length > 0 && (
-                            <div className=" px-5 bg-neutral-100 w-1/2 mb-3  ">
-                              <TableCaption className="my-2 font-semibold text-slate-950">
-                                Billings:
-                              </TableCaption>
-
+                            <TabsContent value="Billings" className="border-0">
                               <DataTable
                                 data={row.original.billing}
                                 columns={HospitalBillingColumns()}
                                 pagination={false}
                               />
-                            </div>
+                            </TabsContent>
                           )}
                           {row.original.procedure.length > 0 && (
-                            <div className=" px-5 bg-neutral-100 w-1/2 mb-3   ">
-                              <TableCaption className="my-2 font-semibold text-slate-950">
-                                Procedure:
-                              </TableCaption>
-
+                            <TabsContent
+                              value="Procedures"
+                              className="border-0"
+                            >
                               <DataTable
                                 data={row.original.procedure}
                                 columns={HospitalProcedureColumns()}
                                 pagination={false}
-                              />
-                            </div>
+                              />{" "}
+                            </TabsContent>
                           )}
-                        </div>
+                        </Tabs>
                       </TableCell>
                     </TableRow>
                   )}
