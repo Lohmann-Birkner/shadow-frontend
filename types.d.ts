@@ -47,7 +47,7 @@ export type MedicalServiceT = {
     Insurance_stats_5: string;
     Distance: number;
     Insurance_stats_2: string;
-    Prescriber: PrescriberT;
+    Prescriber_information: PrescriberT;
     diags: {
         Number_ICD: number;
         ICD: string;
@@ -67,6 +67,7 @@ export type MedicationT = {
     ID_Prescriber: number;
     Group_prescriber: number;
     KV_area_Prescriber: number;
+    Prescriber_information: PrescriberT;
     positions: {
         Date_Prescription: date;
         Pharmaceutical_registration_number: number;
@@ -100,6 +101,7 @@ export type WorkInabilityT = {
         End_EEL: string;
         Total_days_EEL: number;
         Net_amount_EEL: number;
+        Prescriber_information: PrescriberT;
         diagnosis: {
             Date_diagnosis: string;
             Date_healing: string;
@@ -127,6 +129,7 @@ export type MappedWorkInabilityT = {
         End_benefits: string;
         Total_days_benefits: number;
         ID_Prescriber: number;
+        Prescriber_information: PrescriberT;
         Core_ID_prescriber: number;
         Physician_Specialty_Group: string;
         Payment_area: string;
@@ -135,6 +138,7 @@ export type MappedWorkInabilityT = {
         End_EEL: string;
         Total_days_EEL: number;
         Net_amount_EEL: number;
+
         diagnosis: {
             Date_diagnosis: string;
             Date_healing: string;
@@ -158,6 +162,7 @@ export type MedaidT = {
     ID_prescriber: number;
     Date_prescription: string;
     Group_prescriber: number;
+    Prescriber_information: PrescriberT;
     positions: {
         Occupation_group: number;
         Start_service: string;

@@ -267,18 +267,10 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
                 );
             },
             cell: ({ row }) => {
-                const data = {
-                    prescriber_group_id: 1234,
-                    physician_ident: 34566,
-                    description: "Harum quaerat doloribus maxime? Esse. text",
-                    address_id: 234234,
-                    data_source_sgn: "Lorem ipsum dolor sit amet",
-                    physician_spec_description: "onsectetur adipisicing elit. ",
-                };
                 return (
                     <PrescriberTable
                         prescriberId={row.original.ID_Prescriber}
-                        data={data}
+                        data={row.original.Prescriber_information}
                     />
                 );
             },
@@ -594,6 +586,14 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
                     </Button>
                 );
             },
+            cell: ({ row }) => {
+                return (
+                    <PrescriberTable
+                        prescriberId={row.original.ID_Prescriber}
+                        data={row.original.Prescriber_information}
+                    />
+                );
+            },
         },
         {
             accessorKey: "Group_prescriber",
@@ -631,7 +631,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
 };
 
 export const MedicationPositionsColumns = (): ColumnDef<
-    MedicationT["positions"]
+    MedicationT["positions"][0]
 >[] => {
     const { formatMessage } = useIntl();
     return [
@@ -644,7 +644,6 @@ export const MedicationPositionsColumns = (): ColumnDef<
             accessorKey: "Pharmaceutical_registration_number",
             header: formatMessage({ id: "Pharmaceutical_registration_number" }),
             cell: ({ row }) => {
-                //@ts-ignore
                 const pznText = row.original.pzn_text;
 
                 const pznTextTooltip = (
@@ -738,7 +737,7 @@ export const MedicationPositionsColumns = (): ColumnDef<
 // Work Inability
 
 export const WorkInabilityPaymentsColumns = (): ColumnDef<
-    MappedWorkInabilityT["payments"][0]["diagnosis"][0]
+    MappedWorkInabilityT["payments"][0]
 >[] => {
     const { formatMessage } = useIntl();
     return [
@@ -767,6 +766,14 @@ export const WorkInabilityPaymentsColumns = (): ColumnDef<
         {
             accessorKey: "ID_Prescriber",
             header: formatMessage({ id: "ID_Prescriber" }),
+            cell: ({ row }) => {
+                return (
+                    <PrescriberTable
+                        prescriberId={row.original.ID_Prescriber}
+                        data={row.original.Prescriber_information}
+                    />
+                );
+            },
         },
         {
             accessorKey: "Core_ID_prescriber",
@@ -892,6 +899,14 @@ export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
         {
             accessorKey: "ID_prescriber",
             header: formatMessage({ id: "ID_prescriber" }),
+            cell: ({ row }) => {
+                return (
+                    <PrescriberTable
+                        prescriberId={row.original.ID_prescriber}
+                        data={row.original.Prescriber_information}
+                    />
+                );
+            },
         },
         {
             accessorKey: "Date_prescription",

@@ -15,7 +15,7 @@ interface Props {
 }
 
 function PrescriberTable({ data, prescriberId }: Props) {
-    return data ? (
+    return data && Object.keys(data).length ? (
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger className="flex items-center">
@@ -30,30 +30,35 @@ function PrescriberTable({ data, prescriberId }: Props) {
                             </span>{" "}
                             <p>{data.prescriber_group_id}</p>
                         </div>
+
                         <div className="flex">
                             <span className="w-52 text-foreground/70">
                                 <FormattedMessage id="physician_ident" />
                             </span>{" "}
                             <p>{data.physician_ident}</p>
                         </div>
+
                         <div className="flex">
                             <span className="w-52 text-foreground/70">
                                 <FormattedMessage id="description" />
                             </span>{" "}
                             <p>{data.description}</p>
                         </div>
+
                         <div className="flex">
                             <span className="w-52 text-foreground/70">
                                 <FormattedMessage id="address_id" />
                             </span>{" "}
                             <p>{data.address_id}</p>
                         </div>
+
                         <div className="flex">
                             <span className="w-52 text-foreground/70">
                                 <FormattedMessage id="data_source_sgn" />
                             </span>{" "}
                             <p>{data.data_source_sgn}</p>
                         </div>
+
                         <div className="flex">
                             <span className="w-52 text-foreground/70">
                                 <FormattedMessage id="physician_spec_description" />

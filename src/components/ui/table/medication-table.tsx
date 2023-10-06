@@ -25,14 +25,12 @@ import { MedicationT } from "../../../../types";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuTrigger,
     DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 interface CollapsibleDataTableProps {
     columns: ColumnDef<any, any>[];
@@ -45,7 +43,6 @@ export function MedicationTable({
     columns,
     data,
     pagination,
-    className,
 }: CollapsibleDataTableProps) {
     const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>(
         {}
@@ -53,7 +50,6 @@ export function MedicationTable({
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
     const [sorting, setSorting] = React.useState<SortingState>([]);
-    console.log("data", data);
 
     const table = useReactTable({
         data,
