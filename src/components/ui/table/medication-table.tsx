@@ -1,4 +1,5 @@
 import {
+
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -9,15 +10,16 @@ import {
   getSortedRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+
 } from "@tanstack/react-table";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
@@ -25,31 +27,31 @@ import { DataTable } from "./data-table";
 import { MedicationPositionsColumns } from "./columns";
 import { MedicationT } from "../../../../types";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-  DropdownMenuCheckboxItem,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+    DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 
+
 interface CollapsibleDataTableProps {
-  columns: ColumnDef<any, any>[];
-  data: MedicationT[];
-  pagination: boolean;
-  className: string;
+    columns: ColumnDef<any, any>[];
+    data: MedicationT[];
+    pagination: boolean;
+    className: string;
 }
 
 export function MedicationTable({
-  columns,
-  data,
-  pagination,
-  className,
+    columns,
+    data,
+    pagination,
 }: CollapsibleDataTableProps) {
+
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -83,13 +85,14 @@ export function MedicationTable({
     },
   });
 
-  // Function to toggle the expanded state of a row
-  const toggleRowExpansion = (rowId: string) => {
-    setExpandedRows((prevExpandedRows) => ({
-      ...prevExpandedRows,
-      [rowId]: !prevExpandedRows[rowId],
-    }));
-  };
+
+    // Function to toggle the expanded state of a row
+    const toggleRowExpansion = (rowId: string) => {
+        setExpandedRows((prevExpandedRows) => ({
+            ...prevExpandedRows,
+            [rowId]: !prevExpandedRows[rowId],
+        }));
+    };
 
   return (
     <>
@@ -173,54 +176,12 @@ export function MedicationTable({
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
+
                         )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  {expandedRows[row.id] && (
-                    <TableRow
-                      className="hover:bg-neutral-100 bg-neutral-100 "
-                      key={`expanded-${row.id}`}
-                    >
-                      <TableCell colSpan={columns.length}>
-                        {/* Add your expanded content here */}
-                        <>
-                          {row.original.positions.length > 0 ? (
-                            <div className="px-10 bg-neutral-100 w-9/10 mb-3  ">
-                              <TableCaption className="my-2 font-semibold text-slate-950">
-                                Positions:
-                              </TableCaption>
-                              <div className="flex flex-col space-y-5 overflow-scroll">
-                                <DataTable
-                                  data={row.original.positions}
-                                  columns={MedicationPositionsColumns()}
-                                  pagination={false}
-                                />
-                              </div>
-                            </div>
-                          ) : (
-                            "No data"
-                          )}
-                        </>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  <FormattedMessage id="No_results" />
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      {pagination && <DataTablePagination table={table} />}
-    </>
-  );
+                    </TableBody>
+                </Table>
+            </div>
+            {pagination && <DataTablePagination table={table} />}
+        </>
+    );
 }

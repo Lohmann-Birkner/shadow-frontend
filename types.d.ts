@@ -47,6 +47,7 @@ export type MedicalServiceT = {
     Insurance_stats_5: string;
     Distance: number;
     Insurance_stats_2: string;
+    Prescriber_information: PrescriberT;
     diags: {
         Number_ICD: number;
         ICD: string;
@@ -66,6 +67,7 @@ export type MedicationT = {
     ID_Prescriber: number;
     Group_prescriber: number;
     KV_area_Prescriber: number;
+    Prescriber_information: PrescriberT;
     positions: {
         Date_Prescription: date;
         Pharmaceutical_registration_number: number;
@@ -78,6 +80,8 @@ export type MedicationT = {
         Surcharge: number;
         Care_provider_type: string;
         Medical_Aid_position_number: string;
+        Substance_code_text: string;
+        pzn_text: string;
     }[];
 };
 
@@ -97,6 +101,7 @@ export type WorkInabilityT = {
         End_EEL: string;
         Total_days_EEL: number;
         Net_amount_EEL: number;
+        Prescriber_information: PrescriberT;
         diagnosis: {
             Date_diagnosis: string;
             Date_healing: string;
@@ -116,9 +121,7 @@ export type WorkInabilityT = {
     }[];
 };
 
-
 export type MappedWorkInabilityT = {
-    
     payments: {
         Main_ICD: string;
         Case_ID: number;
@@ -126,6 +129,7 @@ export type MappedWorkInabilityT = {
         End_benefits: string;
         Total_days_benefits: number;
         ID_Prescriber: number;
+        Prescriber_information: PrescriberT;
         Core_ID_prescriber: number;
         Physician_Specialty_Group: string;
         Payment_area: string;
@@ -134,6 +138,7 @@ export type MappedWorkInabilityT = {
         End_EEL: string;
         Total_days_EEL: number;
         Net_amount_EEL: number;
+
         diagnosis: {
             Date_diagnosis: string;
             Date_healing: string;
@@ -157,6 +162,7 @@ export type MedaidT = {
     ID_prescriber: number;
     Date_prescription: string;
     Group_prescriber: number;
+    Prescriber_information: PrescriberT;
     positions: {
         Occupation_group: number;
         Start_service: string;
@@ -175,12 +181,13 @@ export type HospitalT = {
     ID_Insured: number;
     Case_number: string;
     Admission_date: string;
+
     Reason_admission: string;
     
+
     Admission_weight_infant: number;
     Reason_discharge: string;
     Date_discharge: string;
-    
     Delivery_date: string;
     Number_of_ventilation_days: number;
     Cost_total: number;
@@ -231,4 +238,13 @@ export type RehabT = {
         Primary_diagnosis: string;
         Secondary_diagnosis: string;
     }[];
+};
+
+export type PrescriberT = {
+    prescriber_group_id: number;
+    physician_ident: number;
+    description: string;
+    address_id: number;
+    data_source_sgn: string;
+    physician_spec_description: string;
 };

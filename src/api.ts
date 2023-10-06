@@ -9,6 +9,7 @@ import {
     MedaidT,
     HospitalT,
     RehabT,
+    PrescriberT,
 } from "../types";
 
 export const getAllPatients = async () => {

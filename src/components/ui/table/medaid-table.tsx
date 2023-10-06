@@ -1,4 +1,5 @@
 import {
+
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -8,15 +9,16 @@ import {
   getSortedRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+
 } from "@tanstack/react-table";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from "./table";
 import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
@@ -29,16 +31,17 @@ import { Input } from "@/components/ui/input";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface CollapsibleDataTableProps {
-  columns: ColumnDef<any, any>[];
-  data: MedaidT[];
-  pagination: boolean;
+    columns: ColumnDef<any, any>[];
+    data: MedaidT[];
+    pagination: boolean;
 }
 
 export function MadaidTable({
-  columns,
-  data,
-  pagination,
+    columns,
+    data,
+    pagination,
 }: CollapsibleDataTableProps) {
+
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -69,13 +72,15 @@ export function MadaidTable({
     },
   });
 
-  // Function to toggle the expanded state of a row
-  const toggleRowExpansion = (rowId: string) => {
-    setExpandedRows((prevExpandedRows) => ({
-      ...prevExpandedRows,
-      [rowId]: !prevExpandedRows[rowId],
-    }));
-  };
+
+    // Function to toggle the expanded state of a row
+    const toggleRowExpansion = (rowId: string) => {
+        setExpandedRows((prevExpandedRows) => ({
+            ...prevExpandedRows,
+            [rowId]: !prevExpandedRows[rowId],
+        }));
+    };
+
 
   return (
     <>
@@ -154,35 +159,19 @@ export function MadaidTable({
                               </div>
                             </div>
                           ) : (
+
                             <TableRow>
-                              <TableCell
-                                colSpan={columns.length}
-                                className="h-14 text-center"
-                              >
-                                <FormattedMessage id="No_results" />
-                              </TableCell>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center">
+                                    <FormattedMessage id="No_results" />
+                                </TableCell>
                             </TableRow>
-                          )}
-                        </>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  <FormattedMessage id="No_results" />
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      {pagination && <DataTablePagination table={table} />}
-    </>
-  );
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
+            {pagination && <DataTablePagination table={table} />}
+        </>
+    );
 }

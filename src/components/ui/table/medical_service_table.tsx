@@ -60,6 +60,8 @@ export function MedicalServiceTable({
     const [globalFilter, setGlobalFilter] = React.useState("");
     const { formatMessage } = useIntl();
 
+    console.log("data", data);
+
     const table = useReactTable({
         data,
         columns,
