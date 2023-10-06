@@ -41,13 +41,10 @@ import { MadaidTable } from "@/components/ui/table/medaid-table";
 import { HospitalTable } from "@/components/ui/table/hospital-table";
 import { RehabTable } from "@/components/ui/table/rehab-table";
 
-const mockDocumentation =
-    "reprehenderit deserunt animi. Voluptatem, eligendi necessitatibus assumenda itaque non iure eveniet minus fugit error deserunt, et praesentium, ducimus dolorum minima! Harum, esse quos";
-
 export default function Page() {
     const [tab, setTab] = useState("medical_service");
     const { query } = useRouter();
-    const [documentation, setDocumentation] = useState(mockDocumentation);
+    const [documentation, setDocumentation] = useState("");
 
     const { data } = useQuery(
         "insured",
