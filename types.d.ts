@@ -78,6 +78,8 @@ export type MedicationT = {
         Surcharge: number;
         Care_provider_type: string;
         Medical_Aid_position_number: string;
+        Substance_code_text: string;
+        pzn_text: string;
     }[];
 };
 
@@ -116,9 +118,7 @@ export type WorkInabilityT = {
     }[];
 };
 
-
 export type MappedWorkInabilityT = {
-    
     payments: {
         Main_ICD: string;
         Case_ID: number;
@@ -176,11 +176,9 @@ export type HospitalT = {
     Case_number: string;
     Admission_date: string;
     Reason_for_admission: string;
-    
     Admission_weight_infant: number;
     Reason_discharge: string;
     Date_discharge: string;
-    
     Delivery_date: string;
     Number_of_ventilation_days: number;
     Cost_total: number;
