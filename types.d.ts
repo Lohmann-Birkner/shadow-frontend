@@ -175,7 +175,7 @@ export type HospitalT = {
     ID_Insured: number;
     Case_number: string;
     Admission_date: string;
-    Reason_for_admission: string;
+    Reason_admission: string;
     
     Admission_weight_infant: number;
     Reason_discharge: string;

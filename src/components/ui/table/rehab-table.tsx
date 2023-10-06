@@ -4,6 +4,10 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
+  SortingState,
+  getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -26,7 +30,9 @@ import {
 } from "./columns";
 
 import { RehabT } from "../../../../types";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -41,6 +47,14 @@ export function RehabTable({
 }: CollapsibleDataTableProps) {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
 
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+
+  const { formatMessage } = useIntl();
+
   const table = useReactTable({
     data,
     columns,
@@ -51,6 +65,15 @@ export function RehabTable({
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+      columnFilters,
+      globalFilter,
+    },
   });
 
   // Function to toggle the expanded state of a row
@@ -64,6 +87,15 @@ export function RehabTable({
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
+        <div>
+          <Input
+            placeholder={formatMessage({
+              id: "Search_all_columns",
+            })}
+            className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
+            onChange={(event) => setGlobalFilter(event.target.value)}
+          />
+        </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -96,15 +128,8 @@ export function RehabTable({
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
-                    {/* <TableCell>
-                                            <button>
-                                                {expandedRows[row.id]
-                                                    ? "Collapse"
-                                                    : "Expand"}
-                                            </button>
-                                        </TableCell> */}
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14" key={cell.id}>
+                      <TableCell className="h-14 pl-6" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -118,45 +143,56 @@ export function RehabTable({
                       key={`expanded-${row.id}`}
                     >
                       <TableCell colSpan={columns.length}>
-                        {/* Add your expanded content here */}
-                        <div className="lg:flex">
-                          {row.original.payment.length > 0 ? (
-                            <div className=" px-10 bg-neutral-100 w-3/4 mb-3  ">
-                              <TableCaption className="my-2 font-semibold text-slate-950">
-                                Payment:
-                              </TableCaption>
+                        <Tabs>
+                          <TabsList className=" font-semibold text-slate-950 bg-neutral-100 rounded-md">
+                            <TabsTrigger
+                              value="Diagnosis"
+                              className="bg-neutral-100 "
+                            >
+                              <FormattedMessage id="Diagnosis" />
+                            </TabsTrigger>
+                            <TabsTrigger
+                              value="Payment"
+                              className="bg-neutral-100"
+                            >
+                              <FormattedMessage id="Payment" />
+                            </TabsTrigger>
+                          </TabsList>
+                          {/* Add your expanded content here */}
 
+                          {row.original.payment.length > 0 ? (
+                            <TabsContent value="Diagnosis" className="border-0">
                               <DataTable
                                 data={row.original.payment}
                                 columns={RehabPaymentColumns()}
                                 pagination={false}
                               />
-                            </div>
+                            </TabsContent>
                           ) : (
-                            <TableRow>
-                              <TableCell
-                                colSpan={columns.length}
-                                className="h-24 text-center"
-                              >
-                                <FormattedMessage id="No_results" />
-                              </TableCell>
-                            </TableRow>
+                            <TabsContent value="Diagnosis" className="border-0">
+                              <TableRow>
+                                <TableCell
+                                  colSpan={columns.length}
+                                  className="h-24 text-center"
+                                >
+                                  <FormattedMessage id="No_results" />
+                                </TableCell>
+                              </TableRow>
+                            </TabsContent>
                           )}
                           {row.original.diagnosis.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-3/4 mb-3  ">
-                              <TableCaption className="my-2 font-semibold text-slate-950">
-                              <FormattedMessage id="Diagnosis" />
-:
-                              </TableCaption>
+                            <TabsContent value="Payment" className="border-0">
+                           
 
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={RehabDiagnosisColumns()}
                                 pagination={false}
                               />
-                            </div>
+                            </TabsContent>
+                            
                           )}
-                        </div>
+                        </Tabs>
                       </TableCell>
                     </TableRow>
                   )}

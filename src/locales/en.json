@@ -79,7 +79,7 @@
     "ID_Insured": "ID Insured",
     "Case_number": "Case number",
     "Admission_date": "Admission date",
-    "Reason_for_admission": "Reason for admission",
+    "Reason_admission": "Reason for admission",
     "Admission_time": "Admission time",
     "Admission_weight_infant": "Admission weight infant",
     "Reason_discharge": "Reason discharge",
@@ -174,7 +174,11 @@
     "No_results": "No results",
     "Select_a_catalog":"Select a Catalog",
     "Columns":"Columns",
-    "Search_all_columns":"Search all columns"
+    "Search_all_columns":"Search all columns",
+    "Procedures":"Procedures",
+    "Billings":"Billings",
+    "Payment":"Payment"
+
     
 
 

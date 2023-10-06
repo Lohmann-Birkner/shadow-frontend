@@ -56,7 +56,7 @@ export function DataTable<TData, TValue>({
                                 {headerGroup.headers.map((header) => {
                                     return (
                                         <TableHead 
-                                        className="text-center "
+                                        className="text-left"
                                         key={header.id}>
                                             {header.isPlaceholder
                                                 ? null

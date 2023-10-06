@@ -77,7 +77,7 @@
     "ID_Insured": "ID Versicherter",
     "Case_number": "Fallnummer",
     "Admission_date": "Aufnahmedatum",
-    "Reason_for_admission": "Aufnahmegrund",
+    "Reason_admission": "Aufnahmegrund",
     "Admission_time": "Aufnahmezeit",
     "Admission_weight_infant": "Aufnahme Gewicht Kleinkind",
     "Reason_discharge": "Entlassungsgrund",
@@ -171,6 +171,10 @@
     "No_results": "Keine Ergebinisse",
     "Select_a_catalog":"Katalog Auswählen",
     "Columns":"Spalten",
-    "Search_all_columns":"Alle Spalten suchen"
+    "Search_all_columns":"Alle Spalten suchen",
+    "Procedures":"Verfahren",
+    "Billings":"Rechnungen",
+    "Payment":"Zahlung"
+
 
 }

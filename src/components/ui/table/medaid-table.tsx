@@ -4,7 +4,10 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
-  VisibilityState,
+  SortingState,
+  getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -20,17 +23,10 @@ import React, { useState } from "react";
 import { DataTable } from "./data-table";
 import { MedaidPositionsColumns } from "./columns";
 import { MedaidT } from "../../../../types";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-  DropdownMenuCheckboxItem,
-} from "@/components/ui/dropdown-menu";
+
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { FormattedMessage } from "react-intl";
+import { Input } from "@/components/ui/input";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -44,8 +40,13 @@ export function MadaidTable({
   pagination,
 }: CollapsibleDataTableProps) {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  const { formatMessage } = useIntl();
 
   const table = useReactTable({
     data,
@@ -57,9 +58,14 @@ export function MadaidTable({
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
-      columnVisibility,
+      sorting,
+      columnFilters,
+      globalFilter,
     },
   });
 
@@ -74,34 +80,15 @@ export function MadaidTable({
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto ">
-        {/* <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="m-2">
-                Columns <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize "
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div> */}
+        <div>
+          <Input
+            placeholder={formatMessage({
+              id: "Search_all_columns",
+            })}
+            className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
+            onChange={(event) => setGlobalFilter(event.target.value)}
+          />
+        </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -111,6 +98,7 @@ export function MadaidTable({
                     <TableHead
                       key={header.id}
                       className="bg-slate-100 text-slate-950 "
+                      data-column-index={header.index}
                     >
                       {header.isPlaceholder
                         ? null
@@ -134,15 +122,9 @@ export function MadaidTable({
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
-                    {/* <TableCell>
-                                            <button>
-                                                {expandedRows[row.id]
-                                                    ? "Collapse"
-                                                    : "Expand"}
-                                            </button>
-                                        </TableCell> */}
+                  
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14" key={cell.id}>
+                      <TableCell className="h-14 pl-6" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

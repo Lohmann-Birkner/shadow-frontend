@@ -7,6 +7,8 @@ import {
   VisibilityState,
   SortingState,
   getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -33,6 +35,7 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Input } from "@/components/ui/input";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -47,11 +50,15 @@ export function MedicationTable({
   pagination,
   className,
 }: CollapsibleDataTableProps) {
-
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  const { formatMessage } = useIntl();
 
   const table = useReactTable({
     data,
@@ -66,9 +73,13 @@ export function MedicationTable({
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnVisibility,
-      sorting
+      sorting,
+      columnFilters,
+      globalFilter,
     },
   });
 
@@ -83,35 +94,46 @@ export function MedicationTable({
   return (
     <>
       <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-scroll  ">
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="m-2">
-                <FormattedMessage id="Columns" />
+        <div className="flex">
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="m-2">
+                  <FormattedMessage id="Columns" />
 
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      <FormattedMessage id={column.id} />
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        <FormattedMessage id={column.id} />
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div>
+            <Input
+              placeholder={formatMessage({
+                id: "Search_all_columns",
+              })}
+              className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
+              onChange={(event) => setGlobalFilter(event.target.value)}
+            />
+          </div>
         </div>
         <Table className="h-full w-full  overflow-scroll">
           <TableHeader>
@@ -121,7 +143,7 @@ export function MedicationTable({
                   return (
                     <TableHead
                       key={header.id}
-                      className="bg-slate-100 text-slate-950"
+                      className="bg-slate-100 text-slate-950 pl-2"
                     >
                       {header.isPlaceholder
                         ? null
@@ -145,15 +167,9 @@ export function MedicationTable({
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
-                    {/* <TableCell>
-                                            <button>
-                                                {expandedRows[row.id]
-                                                    ? "Collapse"
-                                                    : "Expand"}
-                                            </button>
-                                        </TableCell> */}
+                   
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14" key={cell.id}>
+                      <TableCell className="h-14 pl-6" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
