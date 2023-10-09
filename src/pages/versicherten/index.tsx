@@ -164,42 +164,19 @@ export default function Home({ patients }: Props) {
                             </div>
                         </div>
                         {sortedItems && (
+                            <div className="w-full">
                             <DataTable
                                 onRowClick={onRowClick}
                                 selectedItem={selectedItem}
                                 columns={PatientColumns()}
                                 data={sortedItems}
                                 pagination
-                            />
+                                className="w-full"
+                            /></div>
                         )}
                     </CardContent>
                 </Card>
             </section>
-            {/* <section>
-                <Card className="bg-slate-50">
-                    <CardHeader>
-                        <CardTitle className="text-lg">Lorem ipsum</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        dolor sit amet consectetur adipisicing elit. Nulla illum
-                        dolore vero ratione velit, reprehenderit deleniti, nisi
-                        sequi, dolores optio minus quae cumque similique unde
-                        veniam impedit distinctio ducimus delectus fuga nihil
-                        molestiae minima provident alias! Rerum ad, repudiandae
-                        asperiores ut assumenda non accusantium reiciendis sunt
-                        eveniet.
-                        <Separator className="my-4" />
-                        Delectus ad consectetur dolore! Temporibus nesciunt
-                        consequatur quidem facere itaque recusandae assumenda
-                        vel beatae minus optio, nobis molestiae ipsam voluptatem
-                        nam odio, accusamus velit voluptatum animi tempora
-                        soluta est iusto ad. Deleniti nostrum numquam voluptatem
-                        nulla atque sunt totam ipsum exercitationem aliquid
-                        consequatur voluptatibus possimus, quasi delectus fugit?
-                        Tempore, consequatur!
-                    </CardContent>
-                </Card>
-            </section> */}
         </main>
     );
 }

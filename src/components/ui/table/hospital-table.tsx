@@ -211,15 +211,16 @@ export function HospitalTable({
                           </TabsList>
                           {/* Add your expanded content here */}
                           {row.original.diagnosis.length > 0 ? (
-                            <TabsContent value="Diagnosis" className="border-0">
+                            <TabsContent value="Diagnosis" className="text-center border-0 w-fit">
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={HospitalDiagnosisColumns()}
                                 pagination={false}
+                                className="w-1/3"
                               />
                             </TabsContent>
                           ) : (
-                            <TabsContent value="Diagnosis" className="border-0">
+                            <TabsContent value="Diagnosis" className="text-center border-0 w-fit">
                               <TableRow>
                                 <TableCell
                                   colSpan={columns.length}
@@ -231,7 +232,7 @@ export function HospitalTable({
                             </TabsContent>
                           )}
                           {row.original.billing.length > 0 && (
-                            <TabsContent value="Billings" className="border-0">
+                            <TabsContent value="Billings" className="text-center border-0 w-fit">
                               <DataTable
                                 data={row.original.billing}
                                 columns={HospitalBillingColumns()}
@@ -242,7 +243,7 @@ export function HospitalTable({
                           {row.original.procedure.length > 0 && (
                             <TabsContent
                               value="Procedures"
-                              className="border-0"
+                              className="border-0 w-fit text-center "
                             >
                               <DataTable
                                 data={row.original.procedure}

@@ -40,6 +40,8 @@ import { WorkInabilityTable } from "@/components/ui/table/work-inability-table";
 import { MadaidTable } from "@/components/ui/table/medaid-table";
 import { HospitalTable } from "@/components/ui/table/hospital-table";
 import { RehabTable } from "@/components/ui/table/rehab-table";
+import { FormatDate } from "@/lib/format-date";
+import { FormatGender} from "@/lib/utils";
 
 export default function Page() {
     const [tab, setTab] = useState("medical_service");
@@ -135,13 +137,13 @@ export default function Page() {
                             <CardTitle className="mb-1 text-lg">
                                 <FormattedMessage id="Date_of_birth" />:{" "}
                                 <span className="font-light">
-                                    {data?.Date_of_birth}
+                                    {FormatDate(data?.Date_of_birth)}
                                 </span>
                             </CardTitle>
                             <CardTitle className="mb-1 text-lg">
                                 <FormattedMessage id="Gender" />:{" "}
                                 <span className="font-light">
-                                    {data?.Gender}
+                                    {FormatGender(data?.Gender)}
                                 </span>
                             </CardTitle>
                             <CardTitle className="text-lg">

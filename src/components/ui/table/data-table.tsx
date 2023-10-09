@@ -24,6 +24,7 @@ interface DataTableProps<TData, TValue> {
     selectedItem?: any;
     onRowClick?: (item: any) => void;
     pagination: boolean;
+    className?:string
 }
 
 export function DataTable<TData, TValue>({
@@ -33,14 +34,17 @@ export function DataTable<TData, TValue>({
     selectedItem,
     onRowClick,
     pagination,
+    className
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
+        
         data,
         columns,
         initialState: {
             pagination: {
                 pageSize: 12,
             },
+            
         },
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
@@ -48,7 +52,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className="rounded-md border-2 w-fit ">
+            <div className="rounded-md border-2">
                 <Table>
                     <TableHeader className="border-b w-fit">
                         {table.getHeaderGroups().map((headerGroup) => (
