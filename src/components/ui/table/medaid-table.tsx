@@ -139,11 +139,11 @@ export function MadaidTable({
                           {/* Add your expanded content here */}
                           <>
                             {row.original.positions.length > 0 ? (
-                              <div className="px-10 bg-neutral-100 mb-3">
+                              <div className="px-10 bg-neutral-100 mb-3 ">
                                 <TableCaption className="my-4 font-semibold text-slate-950">
                                   Positions:
                                 </TableCaption>
-                                <div className="flex flex-col space-y-5">
+                                <div className="flex flex-col space-y-5 text-center ">
                                   <DataTable
                                     data={row.original.positions}
                                     columns={MedaidPositionsColumns()}

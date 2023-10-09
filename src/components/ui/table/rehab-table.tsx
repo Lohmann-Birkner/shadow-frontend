@@ -161,7 +161,7 @@ export function RehabTable({
                           {/* Add your expanded content here */}
 
                           {row.original.payment.length > 0 ? (
-                            <TabsContent value="Diagnosis" className="border-0">
+                            <TabsContent value="Diagnosis" className="border-0 w-fit text-center ">
                               <DataTable
                                 data={row.original.payment}
                                 columns={RehabPaymentColumns()}
@@ -169,7 +169,7 @@ export function RehabTable({
                               />
                             </TabsContent>
                           ) : (
-                            <TabsContent value="Diagnosis" className="border-0">
+                            <TabsContent value="Diagnosis" className="border-0 w-fit">
                               <TableRow>
                                 <TableCell
                                   colSpan={columns.length}
@@ -181,7 +181,7 @@ export function RehabTable({
                             </TabsContent>
                           )}
                           {row.original.diagnosis.length > 0 && (
-                            <TabsContent value="Payment" className="border-0">
+                            <TabsContent value="Payment" className="border-0 w-fit text-center ">
                            
 
                               <DataTable
