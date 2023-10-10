@@ -189,7 +189,7 @@ export type HospitalT = {
     Reason_discharge: string;
     Date_discharge: string;
     Delivery_date: string;
-    Number_of_ventilation_days: number;
+    Number_ventilation_days: number;
     Cost_total: number;
     ID_Hospital: number;
     Department_Admission: string;
@@ -197,12 +197,15 @@ export type HospitalT = {
     ICD: string;
     DRG: string;
     Occupancy_days: number;
+    ICD_Text:string;
+    DRG_Text:string;
     diagnosis: {
         ICD_Number: string;
         Localization_diagnosis: string;
         ID_type_diagnosis: string;
         Type_diagnosis: string;
         Kind_diagnosis: string;
+        ICD_Text: string;
     }[];
     billing: {
         Type_fee: string;
@@ -210,12 +213,14 @@ export type HospitalT = {
         End_billing: string;
         Number_billings: number;
         Total_amount_billed: number;
+        Fee_Text: string;
     }[];
     procedure: {
         ID_operation: string;
         Date_operation: string;
         Localization_Operation: string;
         Category_115_SGB: number;
+        OPS_Text: string;
     }[];
 };
 

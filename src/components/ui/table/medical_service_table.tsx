@@ -59,8 +59,6 @@ export function MedicalServiceTable({
   const [globalFilter, setGlobalFilter] = React.useState("");
   const { formatMessage } = useIntl();
 
-  console.log("data", data);
-
   const table = useReactTable({
     data,
     columns,
@@ -91,6 +89,8 @@ export function MedicalServiceTable({
       [rowId]: !prevExpandedRows[rowId],
     }));
   };
+  
+  // how to drag and drop the columns
   let columnBeingDragged: number;
 
   const onDragStart = (e: React.DragEvent<HTMLElement>): void => {

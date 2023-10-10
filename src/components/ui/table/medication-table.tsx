@@ -86,6 +86,23 @@ export function MedicationTable({
     }));
   };
 
+  // how to drag and drop the columns
+  let columnBeingDragged: number;
+
+  const onDragStart = (e: React.DragEvent<HTMLElement>): void => {
+    columnBeingDragged = Number(e.currentTarget.dataset.columnIndex);
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLElement>): void => {
+    e.preventDefault();
+    const newPosition = Number(e.currentTarget.dataset.columnIndex);
+    const currentCols = table.getVisibleLeafColumns().map((c) => c.id);
+    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+
+    currentCols.splice(newPosition, 0, colToBeMoved[0]);
+    table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
+  };
+
   return (
     <>
       <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-scroll  ">
@@ -140,7 +157,16 @@ export function MedicationTable({
                 return (
                   <TableHead
                     key={header.id}
-                    className="bg-slate-100 text-slate-950"
+                    className="bg-slate-100 text-slate-950 hover:cursor-grab h-14"
+                    draggable={
+                      !table.getState().columnSizingInfo.isResizingColumn
+                    }
+                    data-column-index={header.index}
+                    onDragStart={onDragStart}
+                    onDragOver={(e): void => {
+                      e.preventDefault();
+                    }}
+                    onDrop={onDrop}
                   >
                     {header.isPlaceholder
                       ? null
