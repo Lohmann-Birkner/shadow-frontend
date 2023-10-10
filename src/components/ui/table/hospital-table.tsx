@@ -94,6 +94,22 @@ export function HospitalTable({
       [rowId]: !prevExpandedRows[rowId],
     }));
   };
+  // how to drag and drop the columns
+  let columnBeingDragged: number;
+
+  const onDragStart = (e: React.DragEvent<HTMLElement>): void => {
+    columnBeingDragged = Number(e.currentTarget.dataset.columnIndex);
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLElement>): void => {
+    e.preventDefault();
+    const newPosition = Number(e.currentTarget.dataset.columnIndex);
+    const currentCols = table.getVisibleLeafColumns().map((c) => c.id);
+    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+
+    currentCols.splice(newPosition, 0, colToBeMoved[0]);
+    table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
+  };
 
   return (
     <>
@@ -147,7 +163,16 @@ export function HospitalTable({
                   return (
                     <TableHead
                       key={header.id}
-                      className=" text-slate-950 bg-slate-100 h-20"
+                      className=" text-slate-950 bg-slate-100 h-20 hover:cursor-grab"
+                      draggable={
+                        !table.getState().columnSizingInfo.isResizingColumn
+                      }
+                      data-column-index={header.index}
+                      onDragStart={onDragStart}
+                      onDragOver={(e): void => {
+                        e.preventDefault();
+                      }}
+                      onDrop={onDrop}
                     >
                       {header.isPlaceholder
                         ? null
@@ -186,9 +211,7 @@ export function HospitalTable({
                       key={`expanded-${row.id}`}
                     >
                       <TableCell colSpan={columns.length}>
-                        <Tabs value={tab}
-                        onValueChange={setTab}
-                        >
+                        <Tabs value={tab} onValueChange={setTab}>
                           <TabsList className=" font-semibold text-slate-950 bg-neutral-100 rounded-md">
                             <TabsTrigger
                               value="Diagnosis"
@@ -211,7 +234,10 @@ export function HospitalTable({
                           </TabsList>
                           {/* Add your expanded content here */}
                           {row.original.diagnosis.length > 0 ? (
-                            <TabsContent value="Diagnosis" className="text-center border-0 w-fit">
+                            <TabsContent
+                              value="Diagnosis"
+                              className="pl-6 border-0 w-fit"
+                            >
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={HospitalDiagnosisColumns()}
@@ -220,11 +246,14 @@ export function HospitalTable({
                               />
                             </TabsContent>
                           ) : (
-                            <TabsContent value="Diagnosis" className="text-center border-0 w-fit">
+                            <TabsContent
+                              value="Diagnosis"
+                              className="pl-6 border-0 w-fit"
+                            >
                               <TableRow>
                                 <TableCell
                                   colSpan={columns.length}
-                                  className="h-14 text-center"
+                                  className="h-14 pl-6"
                                 >
                                   <FormattedMessage id="No_results" />
                                 </TableCell>
@@ -232,7 +261,10 @@ export function HospitalTable({
                             </TabsContent>
                           )}
                           {row.original.billing.length > 0 && (
-                            <TabsContent value="Billings" className="text-center border-0 w-fit">
+                            <TabsContent
+                              value="Billings"
+                              className="pl-6 border-0 w-fit"
+                            >
                               <DataTable
                                 data={row.original.billing}
                                 columns={HospitalBillingColumns()}
@@ -243,7 +275,7 @@ export function HospitalTable({
                           {row.original.procedure.length > 0 && (
                             <TabsContent
                               value="Procedures"
-                              className="border-0 w-fit text-center "
+                              className="border-0 pl-6 w-fit "
                             >
                               <DataTable
                                 data={row.original.procedure}

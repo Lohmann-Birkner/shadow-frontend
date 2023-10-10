@@ -83,7 +83,22 @@ export function RehabTable({
       [rowId]: !prevExpandedRows[rowId],
     }));
   };
+  // how to drag and drop the columns
+  let columnBeingDragged: number;
 
+  const onDragStart = (e: React.DragEvent<HTMLElement>): void => {
+    columnBeingDragged = Number(e.currentTarget.dataset.columnIndex);
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLElement>): void => {
+    e.preventDefault();
+    const newPosition = Number(e.currentTarget.dataset.columnIndex);
+    const currentCols = table.getVisibleLeafColumns().map((c) => c.id);
+    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+
+    currentCols.splice(newPosition, 0, colToBeMoved[0]);
+    table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
+  };
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
@@ -103,8 +118,17 @@ export function RehabTable({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="bg-slate-100 text-slate-950 "
+                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-14"
                       key={header.id}
+                      draggable={
+                        !table.getState().columnSizingInfo.isResizingColumn
+                      }
+                      data-column-index={header.index}
+                      onDragStart={onDragStart}
+                      onDragOver={(e): void => {
+                        e.preventDefault();
+                      }}
+                      onDrop={onDrop}
                     >
                       {header.isPlaceholder
                         ? null
@@ -161,7 +185,10 @@ export function RehabTable({
                           {/* Add your expanded content here */}
 
                           {row.original.payment.length > 0 ? (
-                            <TabsContent value="Diagnosis" className="border-0 w-fit text-center ">
+                            <TabsContent
+                              value="Diagnosis"
+                              className="border-0 w-fit text-center "
+                            >
                               <DataTable
                                 data={row.original.payment}
                                 columns={RehabPaymentColumns()}
@@ -169,7 +196,10 @@ export function RehabTable({
                               />
                             </TabsContent>
                           ) : (
-                            <TabsContent value="Diagnosis" className="border-0 w-fit">
+                            <TabsContent
+                              value="Diagnosis"
+                              className="border-0 w-fit"
+                            >
                               <TableRow>
                                 <TableCell
                                   colSpan={columns.length}
@@ -181,16 +211,16 @@ export function RehabTable({
                             </TabsContent>
                           )}
                           {row.original.diagnosis.length > 0 && (
-                            <TabsContent value="Payment" className="border-0 w-fit text-center ">
-                           
-
+                            <TabsContent
+                              value="Payment"
+                              className="border-0 w-fit text-center "
+                            >
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={RehabDiagnosisColumns()}
                                 pagination={false}
                               />
                             </TabsContent>
-                            
                           )}
                         </Tabs>
                       </TableCell>

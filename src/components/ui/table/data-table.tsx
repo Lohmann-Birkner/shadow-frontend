@@ -4,6 +4,7 @@ import {
     getCoreRowModel,
     useReactTable,
     getPaginationRowModel,
+    ColumnSizingColumnDef
 } from "@tanstack/react-table";
 import {
     Table,
@@ -48,13 +49,17 @@ export function DataTable<TData, TValue>({
         },
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        defaultColumn: {
+           
+            maxSize: 100,
+        }
     });
 
     return (
         <>
             <div className="rounded-md border-2">
                 <Table>
-                    <TableHeader className="border-b w-fit">
+                    <TableHeader className="border-b">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {

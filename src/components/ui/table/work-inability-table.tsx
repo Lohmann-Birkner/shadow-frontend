@@ -190,7 +190,7 @@ export function WorkInabilityTable({
         </Table>
       </div>
 
-      {/* {pagination && <DataTablePagination table={table} />} */}
+      {pagination && <DataTablePagination table={table} />}
     </>
   );
 }
