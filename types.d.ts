@@ -174,6 +174,9 @@ export type MedaidT = {
         Group_ID_medical_aid: string;
         Pharmaceutical_registration_number: number;
         Diagnosis: string;
+        ICD_Text:string;
+        PZN_Text:string;
+        medaid_text:string;
     }[];
 };
 

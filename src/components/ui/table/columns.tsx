@@ -42,9 +42,10 @@ export const PatientColumns = (): ColumnDef<PatientT>[] => {
       header: formatMessage({ id: "Last_name" }),
     },
     {
-      accessorKey: "Insurance_area",
-      header: formatMessage({ id: "Firstname" }),
+      accessorKey: "first_name",
+      header: formatMessage({ id: "first_name" }),
     },
+
     {
       accessorKey: "Date_of_birth",
       header: formatMessage({ id: "Date_of_birth" }),
@@ -962,6 +963,27 @@ export const MedaidPositionsColumns = (): ColumnDef<MedaidT["positions"]>[] => {
     {
       accessorKey: "Number_medical_aid",
       header: formatMessage({ id: "Number_medical_aid" }),
+      cell: ({ row }) => {
+        const medaid_text = row.original.medaid_text;
+
+        const pznTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {row.getValue("Number_medical_aid")}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>{medaid_text as string}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+
+        return medaid_text ? (
+          pznTextTooltip
+        ) : (
+          <div>{row.getValue("Number_medical_aid")}</div>
+        );
+      },
     },
     {
       accessorKey: "Group_medical_aid",
@@ -974,10 +996,53 @@ export const MedaidPositionsColumns = (): ColumnDef<MedaidT["positions"]>[] => {
     {
       accessorKey: "Pharmaceutical_registration_number",
       header: formatMessage({ id: "Pharmaceutical_registration_number" }),
+      cell: ({ row }) => {
+        const PZN_Text = row.original.PZN_Text;
+
+        const pznTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {row.getValue("Pharmaceutical_registration_number")}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>{PZN_Text as string}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+
+        return PZN_Text ? (
+          pznTextTooltip
+        ) : (
+          <div>{row.getValue("Pharmaceutical_registration_number")}</div>
+        );
+      },
     },
     {
       accessorKey: "Diagnosis",
       header: formatMessage({ id: "Diagnosis" }),
+      
+      cell: ({ row }) => {
+        const ICDText = row.original.ICD_Text;
+
+        const pznTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {row.getValue("Diagnosis")}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>{ICDText as string}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+
+        return ICDText ? (
+          pznTextTooltip
+        ) : (
+          <div>{row.getValue("Diagnosis")}</div>
+        );
+      },
     },
   ];
 };
@@ -1278,6 +1343,11 @@ export const HospitalDiagnosisColumns = (): ColumnDef<
     {
       accessorKey: "ICD_Text",
       header: formatMessage({ id: "ICD_Text" }),
+      cell: (ICD_Text) => (
+        <div className="w-[400px]">
+          {ICD_Text.getValue() as React.ReactNode}
+        </div>
+      ),
     },
     {
       accessorKey: "Localization_diagnosis",
@@ -1309,6 +1379,11 @@ export const HospitalBillingColumns = (): ColumnDef<HospitalT["billing"]>[] => {
     {
       accessorKey: "Fee_Text",
       header: formatMessage({ id: "Fee_Text" }),
+      cell: (Fee_Text) => (
+        <div className="w-[400px]">
+          {Fee_Text.getValue() as React.ReactNode}
+        </div>
+      ),
     },
     {
       accessorKey: "Start_billing",

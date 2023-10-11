@@ -183,5 +183,7 @@
   "description": "Beschreibung",
   "address_id": "Adresse ID",
   "data_source_sgn": "Datenquellen Signatur",
-  "physician_spec_description": "Ärzte Spezialisierung"
+  "physician_spec_description": "Ärzte Spezialisierung",
+  "first_name":"Vorname"
+
 }

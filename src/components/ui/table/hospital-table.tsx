@@ -260,7 +260,7 @@ export function HospitalTable({
                               </TableRow>
                             </TabsContent>
                           )}
-                          {row.original.billing.length > 0 && (
+                          {row.original.billing.length > 0 ? (
                             <TabsContent
                               value="Billings"
                               className="pl-6 border-0 w-fit"
@@ -271,8 +271,22 @@ export function HospitalTable({
                                 pagination={false}
                               />
                             </TabsContent>
+                          ) : (
+                            <TabsContent
+                              value="Billings"
+                              className="pl-6 border-0 w-fit"
+                            >
+                              <TableRow>
+                                <TableCell
+                                  colSpan={columns.length}
+                                  className="h-14 pl-6"
+                                >
+                                  <FormattedMessage id="No_results" />
+                                </TableCell>
+                              </TableRow>
+                            </TabsContent>
                           )}
-                          {row.original.procedure.length > 0 && (
+                          {row.original.procedure.length > 0 ? (
                             <TabsContent
                               value="Procedures"
                               className="border-0 pl-6 w-fit "
@@ -282,6 +296,21 @@ export function HospitalTable({
                                 columns={HospitalProcedureColumns()}
                                 pagination={false}
                               />{" "}
+                            </TabsContent>
+                          ) : (
+                            <TabsContent
+                              value="Procedures"
+                              className="pl-6 border-0 w-fit"
+                            >
+                              <TableRow>
+                                <TableCell
+                                  colSpan={columns.length}
+                                  className="h-14 pl-6"
+                                >
+                                 
+                                  <FormattedMessage id="No_results" />
+                                </TableCell>
+                              </TableRow>
                             </TabsContent>
                           )}
                         </Tabs>
@@ -296,6 +325,7 @@ export function HospitalTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
+                  aaaa
                   <FormattedMessage id="No_results" />
                 </TableCell>
               </TableRow>
