@@ -158,26 +158,28 @@ export type MappedWorkInabilityT = {
     }[];
 };
 
+export type Position = {
+    Occupation_group: number;
+    Start_service: string;
+    End_service: string;
+    Net_amount: number;
+    Count: number;
+    Number_medical_aid: string;
+    Group_medical_aid: string;
+    Group_ID_medical_aid: string;
+    Pharmaceutical_registration_number: number;
+    Diagnosis: string;
+    ICD_Text:string;
+    PZN_Text:string;
+    medaid_text:string;
+};
+
 export type MedaidT = {
     ID_prescriber: number;
     Date_prescription: string;
     Group_prescriber: number;
     Prescriber_information: PrescriberT;
-    positions: {
-        Occupation_group: number;
-        Start_service: string;
-        End_service: string;
-        Net_amount: number;
-        Count: number;
-        Number_medical_aid: string;
-        Group_medical_aid: string;
-        Group_ID_medical_aid: string;
-        Pharmaceutical_registration_number: number;
-        Diagnosis: string;
-        ICD_Text:string;
-        PZN_Text:string;
-        medaid_text:string;
-    }[];
+    positions: Position[];
 };
 
 export type HospitalT = {

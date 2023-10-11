@@ -9,6 +9,7 @@ import {
   TaskT,
   WorkInabilityT,
   MappedWorkInabilityT,
+  Position,
 } from "../../../../types";
 import {
   ArrowDown,
@@ -934,7 +935,7 @@ export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
   ];
 };
 
-export const MedaidPositionsColumns = (): ColumnDef<MedaidT["positions"]>[] => {
+export const MedaidPositionsColumns = (): ColumnDef<Position>[] => {
   const { formatMessage } = useIntl();
   return [
     {
