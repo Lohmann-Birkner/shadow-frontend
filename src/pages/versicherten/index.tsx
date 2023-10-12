@@ -28,8 +28,8 @@ interface Props {
 
 export default function Home({ patients }: Props) {
   const [selectedItem, setSelectedItem] = useState<PatientT | null>(null);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [sortBy, setSortBy] = useState("last_name");
+   const [isFlipped, setIsFlipped] = useState(false);
+   const [sortBy, setSortBy] = useState("last_name");
   const [searchParameters, setSearchParameters] = useState<searchInputs | null>(
     null
   );
@@ -44,9 +44,11 @@ export default function Home({ patients }: Props) {
     queryKey: ["patients", searchParameters],
     queryFn: () => getPatientByQuery(searchParameters!),
     initialData: patients,
-    //enabled: Boolean(searchParameters),
+    enabled: Boolean(searchParameters),
+    refetchOnWindowFocus:false
+
+    
   });
-  console.log(searchParameters);
 
     const sortedItems = useMemo(() => {
         if (data) {
@@ -161,13 +163,13 @@ export default function Home({ patients }: Props) {
                 </DropdownMenu>
               </div>
             </div>
-            {data && (
+            {sortedItems && (
               <div className="w-full">
                 <DataTable
                   onRowClick={onRowClick}
                   selectedItem={selectedItem}
                   columns={PatientColumns()}
-                  data={data}
+                  data={sortedItems}
                   pagination
                   className="w-full"
                 />
