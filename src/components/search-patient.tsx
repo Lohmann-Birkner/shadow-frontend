@@ -64,7 +64,7 @@ export default function SearchPatient({
     if (form.formState.isSubmitSuccessful) {
       form.reset({ searchQuery: "", catalog: seletedCatalog });
     }
-  }, [form, form.formState, form.reset, seletedCatalog]);
+  }, [form, form.formState, form.reset]);
   
 
   return (
