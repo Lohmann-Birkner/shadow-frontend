@@ -52,6 +52,7 @@ export function RehabTable({
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [tab, setTab] = useState("Diagnosis");
 
   const { formatMessage } = useIntl();
 
@@ -167,7 +168,7 @@ export function RehabTable({
                       key={`expanded-${row.id}`}
                     >
                       <TableCell colSpan={columns.length}>
-                        <Tabs>
+                        <Tabs value={tab} onValueChange={setTab}>
                           <TabsList className=" font-semibold text-slate-950 bg-neutral-100 rounded-md">
                             <TabsTrigger
                               value="Diagnosis"

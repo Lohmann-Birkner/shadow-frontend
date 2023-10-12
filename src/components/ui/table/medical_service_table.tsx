@@ -212,7 +212,7 @@ export function MedicalServiceTable({
                       row.original.ops.length > 0 ? (
                         <>
                           {row.original.diags.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3 text-center  ">
+                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  ">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>

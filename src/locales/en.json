@@ -130,6 +130,7 @@
   "Reason_for_leaving": "Reason for leaving",
   "Last_name": "Lastname",
   "Firstname": "Firstname",
+  "first_name":"Firstname",
   "signout": "Sign out",
   "signin": "Sign in",
 
