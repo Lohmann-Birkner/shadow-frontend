@@ -28,8 +28,8 @@ interface Props {
 
 export default function Home({ patients }: Props) {
   const [selectedItem, setSelectedItem] = useState<PatientT | null>(null);
-   const [isFlipped, setIsFlipped] = useState(false);
-   const [sortBy, setSortBy] = useState("last_name");
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [sortBy, setSortBy] = useState("last_name");
   const [searchParameters, setSearchParameters] = useState<searchInputs | null>(
     null
   );
@@ -45,55 +45,53 @@ export default function Home({ patients }: Props) {
     queryFn: () => getPatientByQuery(searchParameters!),
     initialData: patients,
     enabled: Boolean(searchParameters),
-    refetchOnWindowFocus:false
-
-    
+    refetchOnWindowFocus: false,
   });
 
-    const sortedItems = useMemo(() => {
-        if (data) {
-            let sortedData;
+  const sortedItems = useMemo(() => {
+    if (data) {
+      let sortedData;
 
-            switch (sortBy) {
-                case "Date_of_birth":
-                case "Entry_date":
-                case "Discharge_date":
-                    sortedData = [...data].sort((a, b) => {
-                        const dateA = new Date(a[sortBy]);
-                        const dateB = new Date(b[sortBy]);
-                        if (dateA < dateB) {
-                            return 1;
-                        } else if (dateA > dateB) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    });
-                    break;
-                default:
-                    sortedData = [...data].sort((a, b) => {
-                        const valueA = String(a[sortBy as keyof PatientT]);
-                        const valueB = String(b[sortBy as keyof PatientT]);
+      switch (sortBy) {
+        case "Date_of_birth":
+        case "Entry_date":
+        case "Discharge_date":
+          sortedData = [...data].sort((a, b) => {
+            const dateA = new Date(a[sortBy]);
+            const dateB = new Date(b[sortBy]);
+            if (dateA < dateB) {
+              return 1;
+            } else if (dateA > dateB) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        default:
+          sortedData = [...data].sort((a, b) => {
+            const valueA = String(a[sortBy as keyof PatientT]);
+            const valueB = String(b[sortBy as keyof PatientT]);
 
-                        // Add a null/undefined check
-                        if (valueA === null || valueB === null) {
-                            return 0; // Handle the case where the value is null or undefined
-                        }
-
-                        return valueA.localeCompare(valueB);
-                    });
+            // Add a null/undefined check
+            if (valueA === null || valueB === null) {
+              return 0; // Handle the case where the value is null or undefined
             }
 
-            // Reverse the sorted data if isFlipped is true
-            if (isFlipped) {
-                sortedData.reverse();
-            }
+            return valueA.localeCompare(valueB);
+          });
+      }
 
-            return sortedData;
-        }
+      // Reverse the sorted data if isFlipped is true
+      if (isFlipped) {
+        sortedData.reverse();
+      }
 
-        return data;
-    }, [data, sortBy, isFlipped]);
+      return sortedData;
+    }
+
+    return data;
+  }, [data, sortBy, isFlipped]);
 
   const headerValue = () => {
     // Find the corresponding header value
@@ -103,7 +101,7 @@ export default function Home({ patients }: Props) {
     const headerValue = column ? column.header : "";
     return headerValue;
   };
-  console.log("222222");
+
   const onRowClick = (insured: PatientT) => {
     setSelectedItem(insured);
     push(`/versicherten/${insured.ins_id}`);

@@ -722,33 +722,92 @@ export const MedicationPositionsColumns = (): ColumnDef<
 export const WorkInabilityPaymentsColumns = (): ColumnDef<
   MappedWorkInabilityT["payments"][0]
 >[] => {
-  const { formatMessage } = useIntl();
   return [
     {
       accessorKey: "Main_ICD",
-      header: formatMessage({ id: "Main_ICD" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Main_ICD" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "Case_ID",
-      header: formatMessage({ id: "Case_ID" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Case_ID" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "Start_benefits",
-      header: formatMessage({ id: "Start_benefits" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Start_benefits" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => FormatDate(row.getValue("Start_benefits")),
     },
     {
       accessorKey: "End_benefits",
-      header: formatMessage({ id: "End_benefits" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="End_benefits" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => FormatDate(row.getValue("End_benefits")),
     },
     {
       accessorKey: "Total_days_benefits",
-      header: formatMessage({ id: "Total_days_benefits" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Total_days_benefits" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "ID_Prescriber",
-      header: formatMessage({ id: "ID_Prescriber" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="ID_Prescriber" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => {
         return (
           <PrescriberTable
@@ -760,37 +819,117 @@ export const WorkInabilityPaymentsColumns = (): ColumnDef<
     },
     {
       accessorKey: "Core_ID_prescriber",
-      header: formatMessage({ id: "Core_ID_prescriber" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Core_ID_prescriber" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "Physician_Specialty_Group",
-      header: formatMessage({ id: "Physician_Specialty_Group" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Physician_Specialty_Group" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "Payment_area",
-      header: formatMessage({ id: "Payment_area" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Payment_area" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "Type_EEL",
-      header: formatMessage({ id: "Type_EEL" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Type_EEL" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "Start_EEL",
-      header: formatMessage({ id: "Start_EEL" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Start_EEL" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => FormatDate(row.getValue("Start_EEL")),
     },
     {
       accessorKey: "End_EEL",
-      header: formatMessage({ id: "End_EEL" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="End_EEL" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => FormatDate(row.getValue("End_EEL")),
     },
     {
       accessorKey: "Total_days_EEL",
-      header: formatMessage({ id: "Total_days_EEL" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Total_days_EEL" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "Net_amount_EEL",
-      header: formatMessage({ id: "Net_amount_EEL" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <FormattedMessage id="Net_amount_EEL" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
   ];
 };
@@ -1022,7 +1161,7 @@ export const MedaidPositionsColumns = (): ColumnDef<Position>[] => {
     {
       accessorKey: "Diagnosis",
       header: formatMessage({ id: "Diagnosis" }),
-      
+
       cell: ({ row }) => {
         const ICDText = row.original.ICD_Text;
 

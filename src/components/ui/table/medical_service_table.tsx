@@ -114,7 +114,7 @@ export function MedicalServiceTable({
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="m-2 shadow h-2/3">
+                <Button variant="outline" className="m-2 shadow">
                   <FormattedMessage id="Columns" />
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>

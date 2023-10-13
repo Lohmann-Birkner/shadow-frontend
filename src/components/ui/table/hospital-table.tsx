@@ -118,7 +118,7 @@ export function HospitalTable({
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="m-2">
+                <Button variant="outline" className="m-2 shadow">
                   <FormattedMessage id="Columns" />
 
                   <ChevronDown className="ml-2 h-4 w-4" />
