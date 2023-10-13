@@ -57,9 +57,9 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className="rounded-md border-2">
+            <div className="rounded-md border-2 overflow-scroll ">
                 <Table>
-                    <TableHeader className="border-b">
+                    <TableHeader className="border-b ">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
