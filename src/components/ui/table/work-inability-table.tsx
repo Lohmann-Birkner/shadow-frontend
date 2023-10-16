@@ -186,12 +186,14 @@ export function WorkInabilityTable({
                 <>
                   <TableRow
                     key={row.id}
-                    className="cursor-pointer"
+                    className="cursor-pointer "
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell 
+                      className="pl-6"
+                      key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
