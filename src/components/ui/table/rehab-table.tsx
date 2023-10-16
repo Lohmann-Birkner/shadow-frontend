@@ -188,11 +188,11 @@ export function RehabTable({
                           {row.original.payment.length > 0 ? (
                             <TabsContent
                               value="Diagnosis"
-                              className="border-0 w-fit text-center "
+                              className="border-0 w-fit pl-6 "
                             >
                               <DataTable
-                                data={row.original.payment}
-                                columns={RehabPaymentColumns()}
+                                data={row.original.diagnosis}
+                                columns={RehabDiagnosisColumns()}
                                 pagination={false}
                               />
                             </TabsContent>
@@ -217,8 +217,8 @@ export function RehabTable({
                               className="border-0 w-fit text-center "
                             >
                               <DataTable
-                                data={row.original.diagnosis}
-                                columns={RehabDiagnosisColumns()}
+                                data={row.original.payment}
+                                columns={RehabPaymentColumns()}
                                 pagination={false}
                               />
                             </TabsContent>

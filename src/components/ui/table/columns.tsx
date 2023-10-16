@@ -8,7 +8,6 @@ import {
   RehabT,
   TaskT,
   WorkInabilityT,
-  MappedWorkInabilityT,
   Position,
 } from "../../../../types";
 import {
@@ -719,8 +718,8 @@ export const MedicationPositionsColumns = (): ColumnDef<
 
 // Work Inability
 
-export const WorkInabilityPaymentsColumns = (): ColumnDef<
-  MappedWorkInabilityT["payments"][0]
+export const WorkInabilityColumns = (): ColumnDef<
+WorkInabilityT
 >[] => {
   return [
     {
@@ -734,6 +733,27 @@ export const WorkInabilityPaymentsColumns = (): ColumnDef<
             <FormattedMessage id="Main_ICD" />
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const Main_ICD_Text = row.original.Main_ICD_Text;
+
+        const pznTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {row.getValue("Main_ICD")}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+
+        return Main_ICD_Text ? (
+          pznTextTooltip
+        ) : (
+          <div>{row.getValue("Main_ICD")}</div>
         );
       },
     },
@@ -752,34 +772,34 @@ export const WorkInabilityPaymentsColumns = (): ColumnDef<
       },
     },
     {
-      accessorKey: "Start_benefits",
+      accessorKey: "Start_work_inability",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage id="Start_benefits" />
+            <FormattedMessage id="Start_work_inability" />
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
-      cell: ({ row }) => FormatDate(row.getValue("Start_benefits")),
+      cell: ({ row }) => FormatDate(row.getValue("Start_work_inability")),
     },
     {
-      accessorKey: "End_benefits",
+      accessorKey: "End_work_inability",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage id="End_benefits" />
+            <FormattedMessage id="End_work_inability" />
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
-      cell: ({ row }) => FormatDate(row.getValue("End_benefits")),
+      cell: ({ row }) => FormatDate(row.getValue("End_work_inability")),
     },
     {
       accessorKey: "Total_days_benefits",
@@ -935,7 +955,7 @@ export const WorkInabilityPaymentsColumns = (): ColumnDef<
 };
 
 export const WorkInabilityDiagnosisColumns =
-  (): ColumnDef<WorkInabilityT>[] => {
+  (): ColumnDef<WorkInabilityT["diagnosis"][0]>[] => {
     const { formatMessage } = useIntl();
     return [
       {
@@ -951,6 +971,27 @@ export const WorkInabilityDiagnosisColumns =
       {
         accessorKey: "Primary_diagnosis",
         header: formatMessage({ id: "Primary_diagnosis" }),
+        cell: ({ row }) => {
+          const Main_ICD_Text = row.original.Main_ICD_Text
+  
+          const pznTextTooltip = (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="flex items-center">
+                  {row.getValue("Primary_diagnosis")}
+                  <Info className="w-4 h-4 ml-1" />
+                </TooltipTrigger>
+                <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          );
+  
+          return Main_ICD_Text ? (
+            pznTextTooltip
+          ) : (
+            <div>{row.getValue("Primary_diagnosis")}</div>
+          );
+        },
       },
       {
         accessorKey: "Secondary_diagnosis",
@@ -1014,7 +1055,6 @@ export const WorkInabilityDiagnosisColumns =
 // Medaid
 
 export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
-  const { formatMessage } = useIntl();
   return [
     {
       accessorKey: "ID_prescriber",
@@ -1396,7 +1436,9 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
     {
       accessorKey: "ICD",
       cell: ({ row }) => {
-        return (
+        const ICDText = row.original.ICD_Text;
+
+        const ICDTextTooltip = (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="flex items-center">
@@ -1409,6 +1451,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
             </Tooltip>
           </TooltipProvider>
         );
+        return ICDText ? ICDTextTooltip : <div>{row.getValue("ICD")}</div>;
       },
       header: ({ column }) => {
         return (
@@ -1426,19 +1469,22 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
     {
       accessorKey: "DRG",
       cell: ({ row }) => {
-        return (
+        const DRGText = row.original.ICD_Text;
+
+        const DRGTextTooltip = (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="flex items-center">
-                {row.original.DRG}
+                {row.original.ICD}
                 <Info className="w-4 h-4 ml-1" />
               </TooltipTrigger>
               <TooltipContent>
-                <p className="w-52">{row.original.DRG_Text}</p>
+                <p>{row.original.ICD_Text}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         );
+        return DRGText ? DRGTextTooltip : <div>{row.getValue("ICD")}</div>;
       },
       header: ({ column }) => {
         return (
@@ -1583,7 +1629,6 @@ export const HospitalProcedureColumns = (): ColumnDef<
 // Rehab
 
 export const RehabColumns = (): ColumnDef<RehabT>[] => {
-  const { formatMessage } = useIntl();
   return [
     {
       accessorKey: "Hospital_indicator",
@@ -1631,6 +1676,10 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
       header: formatMessage({ id: "Main_diagnosis" }),
     },
     {
+      accessorKey: "ICD_Main_Text",
+      header: formatMessage({ id: "ICD_Main_Text" }),
+    },
+    {
       accessorKey: "Localization_diagnosis",
       header: formatMessage({ id: "Localization_diagnosis" }),
     },
@@ -1641,6 +1690,9 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
     {
       accessorKey: "Primary_diagnosis",
       header: formatMessage({ id: "Primary_diagnosis" }),
+    }, {
+      accessorKey: "ICD_Primary_Text",
+      header: formatMessage({ id: "ICD_Primary_Text" }),
     },
     {
       accessorKey: "Secondary_diagnosis",
@@ -1656,9 +1708,14 @@ export const RehabPaymentColumns = (): ColumnDef<RehabT["payment"]>[] => {
       accessorKey: "End_rehab",
       header: formatMessage({ id: "End_rehab" }),
     },
+
     {
       accessorKey: "Main_diagnosis",
       header: formatMessage({ id: "Main_diagnosis" }),
+    },
+    {
+      accessorKey: "ICD_Text",
+      header: formatMessage({ id: "ICD_Text" }),
     },
     {
       accessorKey: "Discharge_reason",
