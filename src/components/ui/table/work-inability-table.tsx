@@ -23,7 +23,7 @@ import { DataTablePagination } from "./data-table-pagination";
 import React, { useState } from "react";
 import { DataTable } from "./data-table";
 import { WorkInabilityDiagnosisColumns } from "./columns";
-import { WorkInabilityT, MappedWorkInabilityT } from "../../../../types";
+import { WorkInabilityT } from "../../../../types";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   DropdownMenu,
@@ -39,7 +39,7 @@ import { Input } from "@/components/ui/input";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
-  data: MappedWorkInabilityT["payments"];
+  data: WorkInabilityT[];
   pagination: boolean;
 }
 
