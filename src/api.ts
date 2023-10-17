@@ -10,6 +10,7 @@ import {
     HospitalT,
     RehabT,
     PrescriberT,
+    DocumentationT
 } from "../types";
 
 export const getAllPatients = async () => {
@@ -67,3 +68,8 @@ export const getPatientRehab = async (id: string) => {
 
     return response.data as RehabT[];
 };
+
+export const getDocumentById =async (id:string) => {
+    const response = await axios.get(`${API_URL_BASE}/documentation/${id}`);
+    return response.data as DocumentationT;
+}

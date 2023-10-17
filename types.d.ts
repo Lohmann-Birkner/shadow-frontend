@@ -100,7 +100,7 @@ export type WorkInabilityT = {
   End_EEL: string;
   Total_days_EEL: number;
   Net_amount_EEL: number;
-  Main_ICD_Text:string;
+  Main_ICD_Text: string;
   Prescriber_information: PrescriberT;
   diagnosis: {
     Date_diagnosis: string;
@@ -264,4 +264,10 @@ export type PrescriberT = {
   address_id: number;
   data_source_sgn: string;
   physician_spec_description: string;
+};
+
+export type DocumentationT = {
+  insured_id: number;
+  user_id: number;
+  doc_text: string;
 };

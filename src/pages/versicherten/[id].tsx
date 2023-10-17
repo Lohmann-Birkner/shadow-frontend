@@ -80,15 +80,7 @@ export default function Page() {
     }
   );
 
-  // const mappedWorkInability = (data: WorkInabilityT[]) => {
-  //     const mappedData = data.flatMap((icd) => {
-  //         const Main_ICD = icd.Main_ICD;
-  //         return icd.payments.map((payment) => {
-  //             return { ...payment, Main_ICD };
-  //         });
-  //     });
-  //     return mappedData;
-  // };
+  
 
   const medaid = useQuery(
     ["medaid", tab],
