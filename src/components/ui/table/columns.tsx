@@ -1469,22 +1469,22 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
     {
       accessorKey: "DRG",
       cell: ({ row }) => {
-        const DRGText = row.original.ICD_Text;
+        const DRGText = row.original.DRG_Text;
 
         const DRGTextTooltip = (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="flex items-center">
-                {row.original.ICD}
+                {row.original.DRG}
                 <Info className="w-4 h-4 ml-1" />
               </TooltipTrigger>
               <TooltipContent>
-                <p>{row.original.ICD_Text}</p>
+                <p>{row.original.DRG_Text}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         );
-        return DRGText ? DRGTextTooltip : <div>{row.getValue("ICD")}</div>;
+        return DRGText ? DRGTextTooltip : <div>{row.getValue("DRG")}</div>;
       },
       header: ({ column }) => {
         return (
@@ -1555,22 +1555,35 @@ export const HospitalDiagnosisColumns = (): ColumnDef<
   ];
 };
 
-export const HospitalBillingColumns = (): ColumnDef<HospitalT["billing"]>[] => {
+export const HospitalBillingColumns = (): ColumnDef<HospitalT["billing"][0]>[] => {
   const { formatMessage } = useIntl();
   return [
     {
       accessorKey: "Type_fee",
       header: formatMessage({ id: "Type_fee" }),
+      cell: ({ row }) => {
+        const Fee_Text = row.original.Fee_Text;
+
+        const feeTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {row.getValue("Type_fee")}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>{Fee_Text as string}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+
+        return Fee_Text ? (
+          feeTextTooltip
+        ) : (
+          <div>{row.getValue("Type_fee")}</div>
+        );
+      },
     },
-    {
-      accessorKey: "Fee_Text",
-      header: formatMessage({ id: "Fee_Text" }),
-      cell: (Fee_Text) => (
-        <div className="w-[400px]">
-          {Fee_Text.getValue() as React.ReactNode}
-        </div>
-      ),
-    },
+   
     {
       accessorKey: "Start_billing",
       header: formatMessage({ id: "Start_billing" }),
@@ -1588,6 +1601,7 @@ export const HospitalBillingColumns = (): ColumnDef<HospitalT["billing"]>[] => {
     {
       accessorKey: "Total_amount_billed",
       header: formatMessage({ id: "Total_amount_billed" }),
+      cell: ({ row }) => showCostInTwoDigit(row.getValue("Total_amount_billed")),
     },
   ];
 };
