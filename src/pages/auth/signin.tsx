@@ -16,42 +16,47 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
-    email: z.string().email({ message: "Ungültige Email" }),
-    password: z.string().min(1, { message: "Passwort ist erforderlich" }),
+    username: z.string({ required_error: "Username ist erforderlich" }),
+    password: z.string({ required_error: "Passwort ist erforderlich" }),
 });
 
 const SignIn: NextPage = () => {
     const [loginError, setLoginError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
         },
     });
 
-    // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsLoading(true);
         const res = await signIn("credentials", {
-            email: values.email,
+            username: values.username,
             password: values.password,
             redirect: false,
         });
-        if (res?.status === 401) {
-            setLoginError("Email oder Passwort sind falsch");
+        if (res?.status !== 200) {
+            setLoginError("Username oder Passwort sind falsch");
+            setIsLoading(false);
         }
         if (res?.ok) {
             router.push("/");
         }
     }
 
+    const labelStyle = "after:content-['*'] after:text-red-500 after:ml-0.5";
+
     return (
         <main className="flex h-screen justify-center items-center">
-            <Card className="w-80">
+            <Card className="w-80 shadow-md">
                 <CardHeader>
                     <CardTitle>Anmelden</CardTitle>
                 </CardHeader>
@@ -62,12 +67,17 @@ const SignIn: NextPage = () => {
                             onSubmit={form.handleSubmit(onSubmit)}>
                             <FormField
                                 control={form.control}
-                                name="email"
+                                name="username"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Email</FormLabel>
+                                        <FormLabel className={labelStyle}>
+                                            Username
+                                        </FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input
+                                                disabled={isLoading}
+                                                {...field}
+                                            />
                                         </FormControl>
 
                                         <FormMessage />
@@ -79,16 +89,28 @@ const SignIn: NextPage = () => {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem className="mt-3">
-                                        <FormLabel>Passwort</FormLabel>
+                                        <FormLabel className={labelStyle}>
+                                            Passwort
+                                        </FormLabel>
                                         <FormControl>
-                                            <Input type="password" {...field} />
+                                            <Input
+                                                disabled={isLoading}
+                                                type="password"
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
 
-                            <Button className="mt-8" type="submit">
+                            <Button
+                                disabled={isLoading}
+                                className="mt-8"
+                                type="submit">
+                                {isLoading && (
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                )}
                                 Senden
                             </Button>
                             {loginError && (
