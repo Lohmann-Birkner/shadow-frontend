@@ -1,5 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
+import { getUser } from "@/api";
+import { setCookie, getCookie } from "cookies-next";
 
 export const authOptions = {
     // Configure one or more authentication providers
@@ -13,22 +15,28 @@ export const authOptions = {
 
             credentials: {},
             async authorize(credentials) {
-                const { email, password } = credentials as {
-                    email: string;
+                const { username, password } = credentials as {
+                    username: string;
                     password: string;
                 };
+
+                let response;
+                try {
+                    response = await getUser({ username, password });
+                } catch (error) {
+                    console.log("error", error);
+                }
+
                 // perform you login logic
                 // find out user from db
-                if (email !== "user@mail.com" || password !== "1234") {
-                    throw new Error("invalid credentials");
+                if (response?.status !== 200) {
+                    throw new Error("Error in Login");
                 }
 
                 // if everything is fine
                 return {
-                    id: "1234",
-                    name: "John Doe",
-                    email: "user@mail.com",
-                    role: "admin",
+                    id: response.data.Authorization,
+                    name: response.data.Authorization,
                 };
             },
         }),
