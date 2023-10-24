@@ -2,6 +2,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { getUser } from "@/api";
 
+let authorizationToken = "";
+
 export const authOptions = {
     // Configure one or more authentication providers
     providers: [
@@ -22,26 +24,33 @@ export const authOptions = {
                 let response;
                 try {
                     response = await getUser({ username, password });
+                    authorizationToken = response.data.Authorization;
                 } catch (error) {
                     console.log("error", error);
                 }
 
-                // perform you login logic
-                // find out user from db
                 if (response?.status !== 200) {
                     throw new Error("Error in Login");
                 }
 
                 // if everything is fine
                 return {
-                    id: response.data.Authorization,
-                    name: response.data.Authorization,
+                    id: "test id",
+                    name: "test name",
                 };
             },
         }),
     ],
     pages: {
         signIn: "/auth/signin",
+    },
+    callbacks: {
+        async session({ session }: any) {
+            // Send properties to the client, like an access_token from a provider.
+            session.authorizationToken = authorizationToken;
+
+            return session;
+        },
     },
 };
 export default NextAuth(authOptions);
