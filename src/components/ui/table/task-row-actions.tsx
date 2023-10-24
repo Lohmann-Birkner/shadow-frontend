@@ -28,7 +28,7 @@ import { Row } from "@tanstack/react-table";
 import { MoreHorizontal, Trash2, Pencil } from "lucide-react";
 import { Priorities, Statuses } from "./columns";
 import { useState } from "react";
-import { TaskT } from "../../../../types";
+import { TaskT,TaskRelatedToUserT } from "../../../../types";
 import TaskDialog from "@/components/forms/task-dialog";
 import { FormattedMessage } from "react-intl";
 
@@ -39,9 +39,9 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = row.original as TaskT;
+  const task = row.original as TaskRelatedToUserT;
   const [priority, setPriority] = useState(task.priority);
-  const [status, setStatus] = useState(task.done.toString());
+  const [status, setStatus] = useState(task.done);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<"edit" | "delete">("edit");
 
@@ -76,8 +76,17 @@ export function DataTableRowActions<TData>({
   );
 
   const dialogEditTask = (
-    <TaskDialog open={isDialogOpen} setOpen={setIsDialogOpen} task={task} />
+    <TaskDialog 
+    open={isDialogOpen} 
+    setOpen={setIsDialogOpen} 
+    task={task} 
+    
+    
+    />
   );
+  const handleClickForStatus=()=>{
+
+  }
 
   return (
     <>
@@ -95,7 +104,7 @@ export function DataTableRowActions<TData>({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
+              <DropdownMenuRadioGroup value={status.toString()} onValueChange={()=>setStatus(!status)}>
                 {Statuses().map((status) => (
                   <DropdownMenuRadioItem
                     key={status.label}

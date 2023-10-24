@@ -24,6 +24,25 @@ export type TaskT = {
   priority: low | medium | high;
 };
 
+export type TaskRelatedToUserT = {
+  todo_id: string;
+  todo_date: string;
+  todo_title: string;
+  todo_content: string;
+  todo_deadline: string;
+  todo_creator_id: string;
+  archived: boolean;
+  done: boolean;
+  priority: low | medium | high;
+  related_patient_id: string;
+};
+
+export type TaskForFormT = {
+  todo_title: string;
+  todo_content: string;
+  todo_deadline:date|string;
+};
+
 export type searchInputs = {
   catalog: string;
   searchQuery: string;
@@ -122,49 +141,6 @@ export type WorkInabilityT = {
   }[];
 };
 
-// export type MappedWorkInabilityT = {
-//   Main_ICD: string;
-//   Case_ID: number;
-//   Start_benefits: string;
-//   End_benefits: string;
-//   Total_days_benefits: number;
-//   ID_Prescriber: number;
-//   Prescriber_information: PrescriberT;
-//   Core_ID_prescriber: number;
-//   Physician_Specialty_Group: string;
-//   Payment_area: string;
-//   Type_EEL: string;
-//   Start_EEL: string;
-//   End_EEL: string;
-//   Total_days_EEL: number;
-//   Net_amount_EEL: number;
-//   diagnosis: {
-//     Date_diagnosis: string;
-//     Date_healing: string;
-//     Primary_diagnosis: string;
-//     Secondary_diagnosis: string;
-//     Type_diagnosis: string;
-//     Localization_diagnosis: string;
-//     Severity_diagnosis: string;
-//     Certainty_diagnosis: string;
-//     Work_accident: string;
-//     Physician_number: string;
-//     Start_AU: string;
-//     End_AU: string;
-//     Start_application_AU: string;
-//     End_application_AU: string;
-//   }[];
-
-//   Prescriber_Information: {
-//     prescriber_group_id: number;
-//     physician_ident: number;
-//     description: string;
-//     address_id: number;
-//     data_source_sgn: string;
-//     physician_spec_description: string;
-//   }[];
-// };
-
 export type Position = {
   Occupation_group: number;
   Start_service: string;
@@ -210,6 +186,8 @@ export type HospitalT = {
   Occupancy_days: number;
   ICD_Text: string;
   DRG_Text: string;
+  Reason_admission_text: string;
+  Reason_discharge_text;
   diagnosis: {
     ICD_Number: string;
     Localization_diagnosis: string;

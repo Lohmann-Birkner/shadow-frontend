@@ -44,6 +44,7 @@ const SignIn: NextPage = () => {
         if (res?.status === 401) {
             setLoginError("Email oder Passwort sind falsch");
         }
+        
         if (res?.ok) {
             router.push("/");
         }

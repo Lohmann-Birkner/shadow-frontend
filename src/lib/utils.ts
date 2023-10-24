@@ -50,3 +50,11 @@ export function FormatGender(data: string) {
     }
   
 }
+
+export function FormatDeadline(date:Date){
+  let event = new Date(date);
+
+  let result = JSON.stringify(event);
+  result = result.slice(1,11);
+  return result;
+}
