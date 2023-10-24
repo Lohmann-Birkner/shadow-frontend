@@ -98,7 +98,7 @@ const SignIn: NextPage = () => {
     const labelStyle = "after:content-['*'] after:text-red-500 after:ml-0.5";
 
     return (
-        <main className="flex h-screen justify-center items-center">
+        <main className="flex h-screen pt-12 justify-center items-center">
             <Card className="w-80 shadow-md">
                 <CardHeader>
                     <CardTitle>
