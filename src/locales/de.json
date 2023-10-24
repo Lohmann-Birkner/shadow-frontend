@@ -188,7 +188,7 @@
     "not_registered": "Nicht registriert?",
     "username_required": "Nutzername ist erforderlich",
     "password_required": "Passwort ist erforderlich",
-    "email control": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "email_control": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
     "password_control": "Muss mindestens eine Zahl und einen Groß- und Kleinbuchstaben enthalten, mindestens 8 Zeichen",
     "first_name_required": "Vorname ist erforderlich",
     "last_name_required": "Nachname name ist erforderlich",

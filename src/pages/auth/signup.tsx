@@ -81,7 +81,7 @@ const SignIn: NextPage = () => {
             first_name: "",
             last_name: "",
         },
-        mode: "onChange",
+        mode: "onTouched",
     });
 
     const mutation = useMutation({
