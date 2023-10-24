@@ -13,38 +13,64 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
 import { Loader2, CheckCircle } from "lucide-react";
 import { useMutation } from "react-query";
 import { signup } from "@/api";
-
-const formSchema = z
-    .object({
-        email: z.string({ required_error: "Username ist erforderlich" }).email({
-            message: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-        }),
-        password: z
-            .string({ required_error: "Passwort ist erforderlich" })
-            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
-                message:
-                    "Muss mindestens eine Zahl und einen Groß- und Kleinbuchstaben enthalten und ein Kleinbuchstabe, und mindestens 8 Zeichen",
-            }),
-
-        password2: z.string({ required_error: "Passwort ist erforderlich" }),
-        first_name: z.string({ required_error: "Vorname ist erforderlich" }),
-        last_name: z.string({ required_error: "Nachname ist erforderlich" }),
-    })
-    .refine((schema) => schema.password === schema.password2, {
-        message: "Die Passwörter stimmen nicht überein",
-        path: ["password2"],
-    });
+import { useIntl, FormattedMessage } from "react-intl";
 
 const SignIn: NextPage = () => {
-    const [loginError, setLoginError] = useState("");
+    const { formatMessage } = useIntl();
 
-    const router = useRouter();
+    const formSchema = z
+        .object({
+            email: z
+                .string()
+                .min(1, {
+                    message: formatMessage({
+                        id: "username_required",
+                    }),
+                })
+                .email({
+                    message: formatMessage({
+                        id: "email_control",
+                    }),
+                }),
+            password: z
+                .string()
+                .min(1, {
+                    message: formatMessage({
+                        id: "password_required",
+                    }),
+                })
+                .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
+                    message: formatMessage({
+                        id: "password_control",
+                    }),
+                }),
+
+            password2: z.string().min(1, {
+                message: formatMessage({
+                    id: "password_required",
+                }),
+            }),
+            first_name: z.string().min(1, {
+                message: formatMessage({
+                    id: "first_name_required",
+                }),
+            }),
+            last_name: z.string().min(1, {
+                message: formatMessage({
+                    id: "last_name_required",
+                }),
+            }),
+        })
+        .refine((schema) => schema.password === schema.password2, {
+            message: formatMessage({
+                id: "passwords_mismatch",
+            }),
+            path: ["password2"],
+        });
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -76,7 +102,9 @@ const SignIn: NextPage = () => {
             <Card className="w-80 shadow-md">
                 <CardHeader>
                     <CardTitle>
-                        {mutation.isSuccess ? "Success!" : "Signin"}
+                        <FormattedMessage
+                            id={mutation.isSuccess ? "success" : "register"}
+                        />{" "}
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -84,12 +112,12 @@ const SignIn: NextPage = () => {
                         <>
                             <div className="flex justify-between items-center mt-2">
                                 <p className="font-medium text-lg">
-                                    New user was created
+                                    <FormattedMessage id={"user_created"} />{" "}
                                 </p>
                                 <CheckCircle className="ml-2 text-green-500" />
                             </div>
                             <Button onClick={() => signIn()} className="mt-5">
-                                Signin
+                                <FormattedMessage id={"signin"} />{" "}
                             </Button>
                         </>
                     ) : (
@@ -122,7 +150,9 @@ const SignIn: NextPage = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className={labelStyle}>
-                                                Passwort
+                                                <FormattedMessage
+                                                    id={"password"}
+                                                />{" "}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
@@ -141,7 +171,9 @@ const SignIn: NextPage = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className={labelStyle}>
-                                                Passwort bestätigen
+                                                <FormattedMessage
+                                                    id={"confirm_password"}
+                                                />
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
@@ -160,7 +192,9 @@ const SignIn: NextPage = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className={labelStyle}>
-                                                Vorname
+                                                <FormattedMessage
+                                                    id={"first_name"}
+                                                />
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
@@ -178,7 +212,9 @@ const SignIn: NextPage = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className={labelStyle}>
-                                                Nachname
+                                                <FormattedMessage
+                                                    id={"Last_name"}
+                                                />
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
@@ -195,13 +231,8 @@ const SignIn: NextPage = () => {
                                         {isLoading && (
                                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                         )}
-                                        Senden
+                                        <FormattedMessage id={"send"} />
                                     </Button>
-                                    {loginError && (
-                                        <p className="text-red-500 mt-3">
-                                            {loginError}
-                                        </p>
-                                    )}
                                 </div>
                             </form>
                         </Form>

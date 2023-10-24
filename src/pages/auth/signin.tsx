@@ -18,16 +18,27 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-
-const formSchema = z.object({
-    username: z.string({ required_error: "Username ist erforderlich" }),
-    password: z.string({ required_error: "Passwort ist erforderlich" }),
-});
+import { FormattedMessage, useIntl } from "react-intl";
 
 const SignIn: NextPage = () => {
     const [loginError, setLoginError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+
+    const { formatMessage } = useIntl();
+
+    const formSchema = z.object({
+        username: z.string().min(1, {
+            message: formatMessage({
+                id: "username_required",
+            }),
+        }),
+        password: z.string().min(1, {
+            message: formatMessage({
+                id: "password_required",
+            }),
+        }),
+    });
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -52,6 +63,7 @@ const SignIn: NextPage = () => {
             router.push("/");
         }
     }
+    console.log(form.formState.errors);
 
     const labelStyle = "after:content-['*'] after:text-red-500 after:ml-0.5";
 
@@ -59,7 +71,9 @@ const SignIn: NextPage = () => {
         <main className="flex flex-col h-screen justify-center items-center">
             <Card className="w-80 shadow-md">
                 <CardHeader>
-                    <CardTitle>Anmelden</CardTitle>
+                    <CardTitle>
+                        <FormattedMessage id="signin" />
+                    </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
@@ -72,7 +86,7 @@ const SignIn: NextPage = () => {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className={labelStyle}>
-                                            Username
+                                            <FormattedMessage id="username" />
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -80,7 +94,6 @@ const SignIn: NextPage = () => {
                                                 {...field}
                                             />
                                         </FormControl>
-
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -91,7 +104,7 @@ const SignIn: NextPage = () => {
                                 render={({ field }) => (
                                     <FormItem className="mt-3">
                                         <FormLabel className={labelStyle}>
-                                            Passwort
+                                            <FormattedMessage id="password" />
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -112,7 +125,7 @@ const SignIn: NextPage = () => {
                                 {isLoading && (
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                 )}
-                                Senden
+                                <FormattedMessage id="send" />
                             </Button>
                             {loginError && (
                                 <p className="text-red-500 mt-3">
@@ -124,9 +137,9 @@ const SignIn: NextPage = () => {
                 </CardContent>
             </Card>
             <p className="mt-3">
-                Nicht registriert?{" "}
+                <FormattedMessage id="not_registered" />{" "}
                 <Link className="font-semibold" href={"/auth/signup"}>
-                    Signup
+                    <FormattedMessage id="register" />
                 </Link>
             </p>
         </main>
