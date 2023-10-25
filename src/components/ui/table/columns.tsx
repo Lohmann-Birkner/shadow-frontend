@@ -116,7 +116,7 @@ export const Statuses = () => {
   ];
 };
 
-//test to deploy
+
 export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
   const { formatMessage } = useIntl();
 
@@ -189,7 +189,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: formatMessage({ id: "Deadline" }),
       cell: ({ row }) => FormatDate(row.getValue("todo_deadline")),
     },
-    {
+    {//here are the 3 points in the aufgabe list(the end of the row)
       id: "actions",
       cell: ({ row }) => <DataTableRowActions row={row} />,
     },
@@ -1378,7 +1378,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
         );
       },
     },
-    
+
     {
       accessorKey: "Date_discharge",
       header: ({ column }) => {

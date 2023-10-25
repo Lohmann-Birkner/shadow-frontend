@@ -41,7 +41,7 @@ const formSchema = z.object({
 });
 
 interface Props {
-  task?: TaskRelatedToUserT | null;
+  task?: TaskRelatedToUserT;
   open: boolean;
   setOpen: (open: boolean) => void;
   refetch?: Function;
@@ -49,6 +49,7 @@ interface Props {
 
 function TaskDialog({ task, open, setOpen, refetch }: Props) {
   const queryClient = useQueryClient();
+
   let defaultDeadline; // Default value for deadline
   if (task) {
     // Parse the date string and create a Date object
@@ -68,10 +69,9 @@ function TaskDialog({ task, open, setOpen, refetch }: Props) {
   const { isLoading, mutate } = useMutation({
     mutationFn: (formData: TaskForFormT) =>
       updateTaskByTaskId(formData, task?.todo_id!),
-    onSuccess: async() => {
-        console.log("!!!!!")
-      refetch && refetch();
-      console.log("aaaaaa")
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["tasksRelatedToUser"]);
     },
   });
 

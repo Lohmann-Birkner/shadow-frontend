@@ -86,9 +86,23 @@ export const updateTaskByTaskId = async (
   formData: TaskForFormT,
   todo_id: string
 ) => {
-    console.log(11111)
-    console.log(formData)
-    console.log(22222)
+  console.log(11111);
+  console.log(formData);
+  console.log(22222);
 
   return await axios.put(`${API_URL_BASE}/todos/${todo_id}`, formData);
+};
+
+export const deleteTaskbyTaskId = async (taskId: string) => {
+  const response = await axios.delete(`${API_URL_BASE}/todos/${taskId}`);
+
+  return response.status;
+};
+
+export const updateTaskStatusAndPriority = async (
+  id: string,
+  statusAndPriority: { done: boolean; priority: string }
+) => {
+
+    return await axios.put(`${API_URL_BASE}/todos/${id}`, statusAndPriority);
 };
