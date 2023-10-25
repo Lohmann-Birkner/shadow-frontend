@@ -1,18 +1,18 @@
 import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ArrowDownUp, ArrowUpDown, Search, Plus } from "lucide-react";
@@ -26,11 +26,12 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getTaskRelatedToUserById, updateTaskByTaskId } from "@/api";
 
 interface Props {
-  userId: number;
-  data: TaskRelatedToUserT;
+    userId: number;
+    data: TaskRelatedToUserT;
 }
 
 function Aufgaben() {
+
   const [searchInput, setSearchInput] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
   const [sortBy, setSortBy] = useState("date");
@@ -46,12 +47,14 @@ function Aufgaben() {
   const tasks = taskRelatedToUser.data as TaskRelatedToUserT[];
   const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
-  const headerValue = () => {
-    // Find the corresponding header value
-    const column = columns.find((column) => column.accessorKey === sortBy);
-    const headerValue = column ? column.header : "";
-    return headerValue;
-  };
+
+    const headerValue = () => {
+        // Find the corresponding header value
+        const column = columns.find((column) => column.accessorKey === sortBy);
+        const headerValue = column ? column.header : "";
+        return headerValue;
+    };
+
 
 //   const onRowClick = (task: TaskT) => {
 //     setSelectedTask(task);
@@ -69,58 +72,72 @@ function Aufgaben() {
             const dateB = b.todo_date.split("-").reverse().join("-");
             return new Date(dateB).getTime() - new Date(dateA).getTime();
 
-          case "todo_deadline":
-            // sort by deadline, oldest first
-            const date1 = a.todo_deadline.split("-").reverse().join("-");
-            const date2 = b.todo_deadline.split("-").reverse().join("-");
-            return new Date(date2).getTime() - new Date(date1).getTime();
 
-          case "done":
-            // Sort by done tasks
-            return a.done === b.done ? 0 : a.done ? 1 : -1;
+                    case "todo_deadline":
+                        // sort by deadline, oldest first
+                        const date1 = a.todo_deadline
+                            .split("-")
+                            .reverse()
+                            .join("-");
+                        const date2 = b.todo_deadline
+                            .split("-")
+                            .reverse()
+                            .join("-");
+                        return (
+                            new Date(date2).getTime() -
+                            new Date(date1).getTime()
+                        );
 
-          case "priority":
-            // Sort by priority, highest first
-            const priorityOrder: any = {
-              low: 0,
-              medium: 1,
-              high: 2,
-            };
-            return priorityOrder[b.priority] - priorityOrder[a.priority];
+                    case "done":
+                        // Sort by done tasks
+                        return a.done === b.done ? 0 : a.done ? 1 : -1;
 
-          case "todo_title":
-          case "todo_content":
-            // Sort by title and content alphabetically
-            return a[sortBy].localeCompare(b[sortBy]);
+                    case "priority":
+                        // Sort by priority, highest first
+                        const priorityOrder: any = {
+                            low: 0,
+                            medium: 1,
+                            high: 2,
+                        };
+                        return (
+                            priorityOrder[b.priority] -
+                            priorityOrder[a.priority]
+                        );
 
-          default:
-            return 0;
-        }
-      });
+                    case "todo_title":
+                    case "todo_content":
+                        // Sort by title and content alphabetically
+                        return a[sortBy].localeCompare(b[sortBy]);
 
-      // Filter by searchInput
-      const words = searchInput.trim().toLowerCase().split(/\s+/);
+                    default:
+                        return 0;
+                }
+            });
 
-      const filteredItems = words.reduce((results, word) => {
-        return results.filter(
-          (item) =>
-            item.todo_title.toLowerCase().includes(word) ||
-            item.todo_content.toLowerCase().includes(word) ||
-            item.todo_date.toLowerCase().includes(word) ||
-            item.todo_deadline.toLowerCase().includes(word)
-        );
-      }, sorted);
+            // Filter by searchInput
+            const words = searchInput.trim().toLowerCase().split(/\s+/);
 
-      // Control the flip button
-      const flipped = isFlipped ? filteredItems.reverse() : filteredItems;
+            const filteredItems = words.reduce((results, word) => {
+                return results.filter(
+                    (item) =>
+                        item.todo_title.toLowerCase().includes(word) ||
+                        item.todo_content.toLowerCase().includes(word) ||
+                        item.todo_date.toLowerCase().includes(word) ||
+                        item.todo_deadline.toLowerCase().includes(word)
+                );
+            }, sorted);
 
-      return flipped;
-    } else return null;
-  }, [tasks, sortBy, searchInput, isFlipped]);
+            // Control the flip button
+            const flipped = isFlipped ? filteredItems.reverse() : filteredItems;
 
-  const rowOnClick = (task: TaskT) => {
-    setIsDialogOpen(true);
-  };
+            return flipped;
+        } else return null;
+    }, [tasks, sortBy, searchInput, isFlipped]);
+
+    const rowOnClick = (task: TaskT) => {
+        setIsDialogOpen(true);
+    };
+
 
   return (
     <main className="grid grid-cols-1 h-full mt-12 md:mt-16 lg:ml-24 md:px-5">
@@ -203,6 +220,7 @@ function Aufgaben() {
       />
     </main>
   );
+
 }
 
 export default Aufgaben;
