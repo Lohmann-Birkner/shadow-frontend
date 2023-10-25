@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL_BASE } from "./constants";
 import {
+
   PatientT,
   searchInputs,
   MedicalServiceT,
@@ -13,6 +14,7 @@ import {
   DocumentationT,
   TaskRelatedToUserT,
   TaskForFormT,
+
 } from "../types";
 
 export const getAllPatients = async () => {
@@ -72,6 +74,7 @@ export const getPatientRehab = async (id: string) => {
 };
 
 export const getDocumentById = async (id: string) => {
+
   const response = await axios.get(`${API_URL_BASE}/documentation/${id}`);
   return response.data as DocumentationT;
 };
@@ -105,4 +108,33 @@ export const updateTaskStatusAndPriority = async (
 ) => {
 
     return await axios.put(`${API_URL_BASE}/todos/${id}`, statusAndPriority);
+
+   
+};
+
+export const getUser = async (data: { username: string; password: string }) => {
+    const response = await axios.post(
+        `https://thinkhealthapi.org:2053/auth/login`,
+        data
+    );
+
+    console.log("response", response);
+
+    return response;
+};
+
+export const signup = async (data: {
+    email: string;
+    password: string;
+    password2: string;
+    first_name: string;
+    last_name: string;
+}) => {
+    const response = await axios.post(
+        `https://thinkhealthapi.org:2053/auth/signup`,
+        data
+    );
+
+    return response;
+
 };

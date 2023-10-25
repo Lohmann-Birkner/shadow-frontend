@@ -1,5 +1,8 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
+import { getUser } from "@/api";
+
+let authorizationToken: string;
 
 export const authOptions = {
     // Configure one or more authentication providers
@@ -13,28 +16,45 @@ export const authOptions = {
 
             credentials: {},
             async authorize(credentials) {
-                const { email, password } = credentials as {
-                    email: string;
+                const { username, password } = credentials as {
+                    username: string;
                     password: string;
                 };
-                // perform you login logic
-                // find out user from db
-                if (email !== "user@mail.com" || password !== "1234") {
-                    throw new Error("invalid credentials");
+
+                let response;
+                try {
+                    response = await getUser({ username, password });
+                    authorizationToken = response.data.Authorization;
+                    console.log("response.data", response.data);
+                } catch (error) {
+                    console.log("error", error);
+                }
+
+                if (response?.status !== 200) {
+                    throw new Error("Error in Login");
                 }
 
                 // if everything is fine
                 return {
-                    id: "1234",
-                    name: "John Doe",
-                    email: "user@mail.com",
-                    role: "admin",
+                    id: "test id",
+                    name: "test name",
                 };
             },
         }),
     ],
+
     pages: {
         signIn: "/auth/signin",
+    },
+    callbacks: {
+        async session({ session }: any) {
+            // Send properties to the client, like an access_token from a provider.
+            console.log("session before", session);
+
+            session.authorizationToken = authorizationToken;
+            console.log("session after", session);
+            return session;
+        },
     },
 };
 export default NextAuth(authOptions);
