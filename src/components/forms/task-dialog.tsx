@@ -21,68 +21,91 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { TaskT } from "../../../types";
+import { TaskForFormT, TaskRelatedToUserT, TaskT } from "../../../types";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { cn } from "@/lib/utils";
+import { FormatDeadline, cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { Button } from "../ui/button";
 import { CalendarIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
-
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { updateTaskByTaskId } from "@/api";
 
 // Define a form schema
 const formSchema = z.object({
-    title: z.string().min(1, { message: "Title ist erforderlich." }),
-    content: z.string().min(1, { message: "Inhalt ist erforderlich." }),
-    deadline: z.date(),
+    todo_title: z.string().min(1, { message: "Title ist erforderlich." }),
+    todo_content: z.string().min(1, { message: "Inhalt ist erforderlich." }),
+    todo_deadline: z.date(),
 });
 
 interface Props {
-    task?: TaskT | null;
-    open: boolean;
-    setOpen: (open: boolean) => void;
+
+  task?: TaskRelatedToUserT;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  refetch?: Function;
 }
 
-function TaskDialog({ task, open, setOpen }: Props) {
-    let defaultDeadline; // Default value for deadline
-    if (task) {
-        // Parse the date string and create a Date object
-        const [day, month, year] = task.deadline.split("-");
-        defaultDeadline = new Date(`${year}-${month}-${day}`);
-    }
+function TaskDialog({ task, open, setOpen, refetch }: Props) {
+  const queryClient = useQueryClient();
+
+  let defaultDeadline; // Default value for deadline
+  if (task) {
+    // Parse the date string and create a Date object
+    const [year, month, day] = task.todo_deadline.split("-");
+    defaultDeadline = new Date(`${year}-${month}-${day}`);
+  }
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: task ? task.title : "",
-            content: task ? task.content : "",
-            deadline: defaultDeadline,
+            todo_title: task ? task.todo_title : "",
+            todo_content: task ? task.todo_content : "",
+            todo_deadline: defaultDeadline,
+        },
+    });
+    const { isLoading, mutate } = useMutation({
+        mutationFn: (formData: TaskForFormT) =>
+            updateTaskByTaskId(formData, task?.todo_id!),
+        onSuccess: async () => {
+            queryClient.invalidateQueries({ queryKey: ["tasksRelatedToUser"] });
         },
     });
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+
+    function onSubmit(values: TaskForFormT) {
+        console.log("here on submit");
+        console.log(values.todo_deadline);
+        const newDeadline = FormatDeadline(values.todo_deadline);
+        const newValues = { ...values, todo_deadline: newDeadline };
+        mutate(newValues);
         setOpen(false);
     }
+
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle className="text-2xl">
-                        {task ? <FormattedMessage id="Task_edit" />:  <FormattedMessage id="Add_task"/>}
+                        {task ? (
+                            <FormattedMessage id="Task_edit" />
+                        ) : (
+                            <FormattedMessage id="Add_task" />
+                        )}
                     </AlertDialogTitle>
                 </AlertDialogHeader>
 
                 <Form {...form}>
                     <form
                         className="mt-4"
-                        onSubmit={form.handleSubmit(onSubmit)}>
+                        onSubmit={form.handleSubmit((data) => onSubmit(data))}>
                         <FormField
                             control={form.control}
-                            name="title"
+                            name="todo_title"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
@@ -96,10 +119,12 @@ function TaskDialog({ task, open, setOpen }: Props) {
                         />
                         <FormField
                             control={form.control}
-                            name="content"
+                            name="todo_content"
                             render={({ field }) => (
                                 <FormItem className="mt-3">
-                                    <FormLabel><FormattedMessage id="Content" /></FormLabel>
+                                    <FormLabel>
+                                        <FormattedMessage id="Content" />
+                                    </FormLabel>
                                     <FormControl>
                                         <Textarea {...field} />
                                     </FormControl>
@@ -109,10 +134,12 @@ function TaskDialog({ task, open, setOpen }: Props) {
                         />
                         <FormField
                             control={form.control}
-                            name="deadline"
+                            name="todo_deadline"
                             render={({ field }) => (
                                 <FormItem className="flex flex-col mt-3">
-                                    <FormLabel><FormattedMessage id="Deadline" /></FormLabel>
+                                    <FormLabel>
+                                        <FormattedMessage id="Deadline" />
+                                    </FormLabel>
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <FormControl>
@@ -155,7 +182,11 @@ function TaskDialog({ task, open, setOpen }: Props) {
                         <AlertDialogFooter className="mt-8">
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <Button type="submit">
-                                {task ?  <FormattedMessage id="Update" /> :  <FormattedMessage id="Add" />}
+                                {task ? (
+                                    <FormattedMessage id="Update" />
+                                ) : (
+                                    <FormattedMessage id="Add" />
+                                )}
                             </Button>
                         </AlertDialogFooter>
                     </form>
