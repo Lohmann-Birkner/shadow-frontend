@@ -2,7 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { getUser } from "@/api";
 
-let authorizationToken = "";
+let authorizationToken: string;
 
 export const authOptions = {
     // Configure one or more authentication providers
@@ -25,6 +25,7 @@ export const authOptions = {
                 try {
                     response = await getUser({ username, password });
                     authorizationToken = response.data.Authorization;
+                    console.log("response.data", response.data);
                 } catch (error) {
                     console.log("error", error);
                 }
@@ -41,14 +42,17 @@ export const authOptions = {
             },
         }),
     ],
+
     pages: {
         signIn: "/auth/signin",
     },
     callbacks: {
         async session({ session }: any) {
             // Send properties to the client, like an access_token from a provider.
-            session.authorizationToken = authorizationToken;
+            console.log("session before", session);
 
+            session.authorizationToken = authorizationToken;
+            console.log("session after", session);
             return session;
         },
     },
