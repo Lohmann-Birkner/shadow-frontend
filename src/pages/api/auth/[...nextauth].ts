@@ -1,7 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { getUser } from "@/api";
-import { setCookie } from "nookies";
 
 let authorizationToken: string;
 
