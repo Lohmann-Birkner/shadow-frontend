@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import { getUser } from "@/api";
 
 let authorizationToken: string;
-
+console.log("i am here")
 export const authOptions = {
     // Configure one or more authentication providers
     providers: [
@@ -42,6 +42,7 @@ export const authOptions = {
             },
         }),
     ],
+     secret:process.env.NEXTAUTH_SECRET,
 
     pages: {
         signIn: "/auth/signin",

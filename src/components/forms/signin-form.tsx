@@ -54,6 +54,8 @@ export default function SigninForm({ setIsSignin }: Props) {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true);
+        console.log("check signin")
+        
         const res = await signIn("credentials", {
             username: values.username,
             password: values.password,

@@ -36,7 +36,7 @@ export default function App({
             messages={messages}
             locale={locale || defaultLocale || ""}
             defaultLocale={defaultLocale}>
-            <SessionProvider session={session}>
+            <SessionProvider session={session} >
                 <QueryClientProvider client={queryClient}>
                     <Navbar />
                     <div className="hidden lg:flex mt-12 w-24 flex-col fixed inset-y-0">

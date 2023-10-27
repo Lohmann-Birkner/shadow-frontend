@@ -45,3 +45,5 @@ firebase/*
 
 /src/firebase/*
 .firebase/*
+.env.local
+.env
