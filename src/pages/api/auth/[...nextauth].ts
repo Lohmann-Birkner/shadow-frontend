@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { getUser } from "@/api";
+import { setCookie } from "nookies";
 
 let authorizationToken: string;
 
@@ -36,8 +37,8 @@ export const authOptions = {
 
                 // if everything is fine
                 return {
-                    id: "test id",
-                    name: "test name",
+                    id: response.data.user_id,
+                    name: response.data.Authorization,
                 };
             },
         }),
@@ -49,7 +50,6 @@ export const authOptions = {
     callbacks: {
         async session({ session }: any) {
             // Send properties to the client, like an access_token from a provider.
-            console.log("session before", session);
 
             session.authorizationToken = authorizationToken;
             console.log("session after", session);
