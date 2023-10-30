@@ -1,7 +1,6 @@
 import axios from "axios";
 import { API_URL_BASE } from "./constants";
 import {
-
   PatientT,
   searchInputs,
   MedicalServiceT,
@@ -14,7 +13,6 @@ import {
   DocumentationT,
   TaskRelatedToUserT,
   TaskForFormT,
-
 } from "../types";
 
 export const getAllPatients = async () => {
@@ -73,10 +71,24 @@ export const getPatientRehab = async (id: string) => {
   return response.data as RehabT[];
 };
 
-export const getDocumentById = async (id: string) => {
-
-  const response = await axios.get(`${API_URL_BASE}/documentation/${id}`);
+export const getDocumentById = async (patient_id: string) => {
+  const response = await axios.get(
+    `${API_URL_BASE}/documentation/${patient_id}`
+  );
   return response.data as DocumentationT;
+};
+
+export const addDocument = async (
+  patient_id: number | undefined,
+  data: string
+) => {
+  const response = await axios.post(
+    `${API_URL_BASE}/documentation/${patient_id}`,
+    data
+  );
+  console.log("response", response);
+
+  return response;
 };
 
 export const getTaskRelatedToUserById = async () => {
@@ -106,35 +118,42 @@ export const updateTaskStatusAndPriority = async (
   id: string,
   statusAndPriority: { done: boolean; priority: string }
 ) => {
+  return await axios.put(`${API_URL_BASE}/todos/${id}`, statusAndPriority);
+};
 
-    return await axios.put(`${API_URL_BASE}/todos/${id}`, statusAndPriority);
+export const addTask = async (data: {
+  todo_title: string;
+  
+  todo_content: string;
+  todo_deadline: string;
+}) => {
+  console.log("add tasks");
 
-   
+  return await axios.post(`${API_URL_BASE}/todos`, data);
 };
 
 export const getUser = async (data: { username: string; password: string }) => {
-    const response = await axios.post(
-        `https://thinkhealthapi.org:2053/auth/login`,
-        data
-    );
+  const response = await axios.post(
+    `https://thinkhealthapi.org:2053/auth/login`,
+    data
+  );
 
-    console.log("response", response);
+  console.log("response", response);
 
-    return response;
+  return response;
 };
 
 export const signup = async (data: {
-    email: string;
-    password: string;
-    password2: string;
-    first_name: string;
-    last_name: string;
+  email: string;
+  password: string;
+  password2: string;
+  first_name: string;
+  last_name: string;
 }) => {
-    const response = await axios.post(
-        `https://thinkhealthapi.org:2053/auth/signup`,
-        data
-    );
+  const response = await axios.post(
+    `https://thinkhealthapi.org:2053/auth/signup`,
+    data
+  );
 
-    return response;
-
+  return response;
 };

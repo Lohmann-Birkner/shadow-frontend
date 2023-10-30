@@ -25,6 +25,7 @@ import {
 import { TaskT, WorkInabilityT } from "../../../types";
 import Documentation from "@/components/documentation";
 import {
+  getDocumentById,
   getPatientById,
   getPatientHospital,
   getPatientMedaid,
@@ -46,11 +47,17 @@ import { FormatGender } from "@/lib/utils";
 export default function Page() {
   const [tab, setTab] = useState("medical_service");
   const { query } = useRouter();
-  const [documentation, setDocumentation] = useState("");
+  // const [documentation, setDocumentation] = useState("");
 
   const { data } = useQuery(
     "insured",
     () => getPatientById(query.id as string),
+    {
+      enabled: !!query.id,
+    }
+  );
+  const documentation = useQuery("documentation", () =>
+    getDocumentById(query.id as string),
     {
       enabled: !!query.id,
     }
@@ -79,8 +86,6 @@ export default function Page() {
       enabled: !!query.id && tab === "work_inability",
     }
   );
-
-  
 
   const medaid = useQuery(
     ["medaid", tab],
@@ -143,7 +148,9 @@ export default function Page() {
             </CardContent>
           )}
         </Card>
-        <Documentation data={documentation} setData={setDocumentation} />
+        
+          <Documentation data={documentation.data?.doc_text} patient_id={documentation.data?.insured_id}/>
+      
       </section>
       <section className="lg:ml-4 pb-5">
         <Tabs
@@ -174,9 +181,9 @@ export default function Page() {
             <TabsTrigger value="rehab">
               <FormattedMessage id="Rehabilitation" />
             </TabsTrigger>
-            <TabsTrigger value="tasks">
+            {/* <TabsTrigger value="tasks">
               <FormattedMessage id="Tasks" />
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
 
           <TabsContent
@@ -297,7 +304,7 @@ export default function Page() {
               </div>
             )}
           </TabsContent>
-          <TabsContent className="p-5" value="tasks">
+          {/* <TabsContent className="p-5" value="tasks">
             {tasks && (
               <DataTable
                 pagination
@@ -307,7 +314,7 @@ export default function Page() {
                 )}
               />
             )}
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
       </section>{" "}
     </main>

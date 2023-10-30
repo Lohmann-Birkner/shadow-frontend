@@ -45,3 +45,4 @@ firebase/*
 
 /src/firebase/*
 .firebase/*
+/functions
