@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import { getUser } from "@/api";
 
 let authorizationToken: string;
-console.log("i am here")
+
 export const authOptions = {
     // Configure one or more authentication providers
     providers: [
@@ -42,7 +42,6 @@ export const authOptions = {
             },
         }),
     ],
-     secret:process.env.NEXTAUTH_SECRET,
 
     pages: {
         signIn: "/auth/signin",
@@ -50,12 +49,10 @@ export const authOptions = {
     callbacks: {
         async session({ session }: any) {
             // Send properties to the client, like an access_token from a provider.
-            console.log("session before", session);
-
             session.authorizationToken = authorizationToken;
-            console.log("session after", session);
             return session;
         },
     },
 };
+
 export default NextAuth(authOptions);

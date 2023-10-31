@@ -13,13 +13,13 @@ import {
 import { DataTable } from "@/components/ui/table/data-table";
 import { PatientColumns } from "@/components/ui/table/columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
 import { useQuery } from "react-query";
 import { getAllPatients, getPatientByQuery } from "@/api";
 import SearchPatient from "@/components/search-patient";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -188,7 +188,17 @@ export default function Home({ patients }: Props) {
     );
 }
 
-export async function getStaticProps() {
+export const getServerSideProps = (async (context) => {
+    const session = await getSession(context);
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/auth/signin",
+                permanent: false,
+            },
+        };
+    }
     const patients = await getAllPatients();
-    return { props: { patients }, revalidate: 60 * 3 };
-}
+    return { props: { patients } };
+}) satisfies GetServerSideProps;

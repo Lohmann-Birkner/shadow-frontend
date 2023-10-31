@@ -7,13 +7,16 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-// import {onRequest} from "firebase-functions/v2/https";
-// import * as logger from "firebase-functions/logger";
+import { onRequest } from "firebase-functions/v2/https";
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.secret = onRequest(
+    { secrets: ["NEXTAUTH_SECRET"] },
+    (request, response) => {
+        response.status(200).send(
+            JSON.stringify({
+                NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+                NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+            })
+        );
+    }
+);
