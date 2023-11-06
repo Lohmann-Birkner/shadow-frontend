@@ -80,15 +80,9 @@ export const getDocumentById = async (patient_id: string) => {
 
 export const addDocument = async (
   patient_id: number | undefined,
-  data: string
+  data: { doc_text: string }|undefined
 ) => {
-  const response = await axios.post(
-    `${API_URL_BASE}/documentation/${patient_id}`,
-    data
-  );
-  console.log("response", response);
-
-  return response;
+  return await axios.post(`${API_URL_BASE}/documentation/${patient_id}`, data);
 };
 
 export const getTaskRelatedToUserById = async () => {
@@ -123,7 +117,7 @@ export const updateTaskStatusAndPriority = async (
 
 export const addTask = async (data: {
   todo_title: string;
-  
+
   todo_content: string;
   todo_deadline: string;
 }) => {

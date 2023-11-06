@@ -12,29 +12,66 @@ import { Pencil } from "lucide-react";
 import { Button } from "./ui/button";
 import { FormattedMessage } from "react-intl";
 import { addDocument } from "@/api";
+import { useMutation, useQueryClient } from "react-query";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+const FormSchema = z.object({
+  DocumentationText: z.string(),
+});
 
 interface Props {
   data: string | undefined;
-  patient_id: number| undefined;
+  patient_id: number | undefined;
+  refetch:()=>void;
 }
 
-function Documentation({ data, patient_id }: Props) {
+function Documentation({ data, patient_id,refetch }: Props) {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [docuInput, setDocuInput] = useState(data);
+  const queryClient = useQueryClient();
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  
-  const addDocumentation = () => {
-    if (textareaRef.current) {
-      const textareaValue = textareaRef.current.value;
-      console.log(textareaValue)
 
-      if (!textareaValue) {
-        return;
-      }
-      addDocument(patient_id, textareaValue);
-      setIsEditMode(false);
-    }
-  };
+  const textareaValue = textareaRef.current?.value as string;
+
+  console.log(data)
+  console.log(typeof data);
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      DocumentationText: docuInput,
+    },
+  });
+
+  // console.log(patient_id)
+  // console.log(textareaValue)
+  const addNewDokument = useMutation({
+    mutationFn: (formData: { doc_text: string }) =>
+      addDocument(patient_id as number, formData),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["documentation"] });
+    },
+  });
+
+  function onSubmit(docu: string) {
+    console.log(111111111111);
+    addNewDokument.mutate({ doc_text: docu });
+    console.group(docu);
+    setIsEditMode(false);
+    refetch()
+    
+  }
   return (
     <>
       <Card className="mt-5">
@@ -54,23 +91,29 @@ function Documentation({ data, patient_id }: Props) {
         </CardHeader>
         <CardContent>
           {isEditMode ? (
-            <>
-              <Textarea
-                className="h-60"
-                autoFocus={true}
-                defaultValue={data}
-                ref={textareaRef}
-              />
-              <div className="flex w-full">
-                <Button
-                  className="mt-5 ml-auto hover:bg-slate-200"
-                  variant={"secondary"}
-                  onClick={addDocumentation}
-                >
-                  <FormattedMessage id="Save" />
-                </Button>
-              </div>
-            </>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit((data) =>
+                  onSubmit(data.DocumentationText)
+                )}
+                className="space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="DocumentationText"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea className="h-60" {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Submit</Button>
+              </form>
+            </Form>
           ) : data ? (
             data
           ) : (
