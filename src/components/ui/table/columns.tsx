@@ -444,7 +444,7 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage id="Insurance_stats_5" />
+            <FormattedMessage id="Insurance_status_5th_digit" />
 
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
@@ -474,7 +474,7 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            <FormattedMessage id="Insurance_stats_2" />
+            <FormattedMessage id="Insurance_status_2nd_digit" />
 
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
