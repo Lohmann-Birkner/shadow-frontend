@@ -53,16 +53,24 @@ function Aufgaben() {
     return headerValue;
   };
 
-  //   const onRowClick = (task: TaskT) => {
-  //     setSelectedTask(task);
-  //     setIsDialogOpen(true);
-  //   };
+
 
   const filteredItems = useMemo(() => {
     if (tasks) {
-      // console.log(tasks)
       const sorted = tasks?.sort((a, b) => {
         switch (sortBy) {
+          case "related_patient_id":
+            
+              const valueA = String(a[sortBy as keyof TaskRelatedToUserT]);
+              const valueB = String(b[sortBy as keyof TaskRelatedToUserT]);
+
+              // Add a null/undefined check
+              if (valueA === null || valueB === null) {
+                  return 0; // Handle the case where the value is null or undefined
+              }
+
+              return valueA.localeCompare(valueB);
+          
           case "todo_date":
             // Sort by date, newest first
             const dateA = new Date(a.todo_date);
@@ -210,6 +218,7 @@ function Aufgaben() {
           </CardContent>
         </Card>
       </section>
+      {/* here the pop up window is only for adding todo */}
       <TaskDialog
         open={isDialogOpen}
         setOpen={setIsDialogOpen}

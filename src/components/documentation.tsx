@@ -11,8 +11,8 @@ import { Textarea } from "./ui/textarea";
 import { Pencil } from "lucide-react";
 import { Button } from "./ui/button";
 import { FormattedMessage } from "react-intl";
-import { addDocument } from "@/api";
-import { useMutation, useQueryClient } from "react-query";
+import { addDocument, getDocumentById } from "@/api";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   Form,
   FormControl,
@@ -31,46 +31,41 @@ const FormSchema = z.object({
 });
 
 interface Props {
-  data: string | undefined;
-  patient_id: number | undefined;
-  refetch:()=>void;
+  queryId: string | string[] | undefined;
 }
 
-function Documentation({ data, patient_id,refetch }: Props) {
+function Documentation({ queryId }: Props) {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [docuInput, setDocuInput] = useState(data);
   const queryClient = useQueryClient();
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const textareaValue = textareaRef.current?.value as string;
-
-  console.log(data)
-  console.log(typeof data);
+  const { data } = useQuery(
+    ["documentation", queryId],
+    () => {
+      const res = getDocumentById(queryId as string);
+      res.then((data) => form.setValue("DocumentationText", data?.doc_text));
+      return res;
+    },
+    {
+      enabled: !!queryId,
+    }
+  );
+  console.log(data);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      DocumentationText: docuInput,
-    },
   });
-
-  // console.log(patient_id)
-  // console.log(textareaValue)
   const addNewDokument = useMutation({
     mutationFn: (formData: { doc_text: string }) =>
-      addDocument(patient_id as number, formData),
+      addDocument(data?.insured_id as number, formData),
     onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["documentation"] });
+      queryClient.invalidateQueries({ queryKey: ["documentation", queryId] });
     },
   });
 
   function onSubmit(docu: string) {
-    console.log(111111111111);
     addNewDokument.mutate({ doc_text: docu });
-    console.group(docu);
     setIsEditMode(false);
-    refetch()
-    
   }
   return (
     <>
@@ -111,11 +106,12 @@ function Documentation({ data, patient_id,refetch }: Props) {
                     </FormItem>
                   )}
                 />
+
                 <Button type="submit">Submit</Button>
               </form>
             </Form>
-          ) : data ? (
-            data
+          ) : data?.doc_text ? (
+            data.doc_text
           ) : (
             "Keine Documentation"
           )}

@@ -123,7 +123,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
   return [
     {
       accessorKey: "related_patient_id",
-      header: formatMessage({ id: "Insured_person_number" }),
+      header: formatMessage({ id: "Membership_number" }),
     },
     {
       accessorKey: "todo_date",

@@ -38,11 +38,11 @@ export function FormatGender(data: string) {
   const { locale } = useIntl();
     if (locale === "en") {
         switch(data){
-          case "W":
-            return "F";
+          case "Weiblich":
+            return "Female";
             break;
-          case "M":
-            return "M";
+          case "Männlich":
+            return "Male";
             break;
         }
     } else {

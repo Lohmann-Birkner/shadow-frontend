@@ -44,6 +44,7 @@ import {
 // Define a form schema
 const formSchema = z.object({
   todo_title: z.string().min(1, { message: "Title ist erforderlich." }),
+  related_patient_id: z.string().optional(),
   todo_content: z.string().min(1, { message: "Inhalt ist erforderlich." }),
   todo_deadline: z.date(),
   priority: z.string({
@@ -96,15 +97,12 @@ function TaskDialog({ task, open, setOpen, refetch }: Props) {
       console.log(values.todo_deadline);
       const newDeadline = FormatDeadline(values.todo_deadline);
       console.log(newDeadline);
-
       const newValues = { ...values, todo_deadline: newDeadline };
       mutate(newValues);
       setOpen(false);
-      console.log(newDeadline);
     } else {
       const newDeadline = FormatDeadline(values.todo_deadline);
       const newValues = { ...values, todo_deadline: newDeadline };
-      console.log(values);
       addNewTask.mutate(newValues);
       setOpen(false);
       form.reset();
@@ -150,6 +148,25 @@ function TaskDialog({ task, open, setOpen, refetch }: Props) {
                 </FormItem>
               )}
             />
+            {!task && (
+              <FormField
+                control={form.control}
+                name="related_patient_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      <FormattedMessage id="Membership_number" />
+                    </FormLabel>
+                    <FormControl>
+                      <Input className="md:h-9" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             <FormField
               control={form.control}
               name="todo_content"

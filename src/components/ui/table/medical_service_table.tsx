@@ -37,6 +37,7 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
+import { Filter } from "../Filter";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -175,6 +176,11 @@ export function MedicalServiceTable({
                             header.column.columnDef.header,
                             header.getContext()
                           )}
+                          {header.column.getCanFilter() ? (
+                          <div>
+                            <Filter column={header.column} table={table} />
+                          </div>
+                        ) : null}
                     </TableHead>
                   );
                 })}
@@ -262,3 +268,4 @@ export function MedicalServiceTable({
     </>
   );
 }
+

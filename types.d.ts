@@ -15,7 +15,7 @@ export type PatientT = {
 
 export type TaskT = {
   id: string;
-  insuranceNumber: string;
+  related_patient_id: string;
   title: string;
   content: string;
   done: boolean;
