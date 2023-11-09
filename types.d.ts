@@ -15,7 +15,7 @@ export type PatientT = {
 
 export type TaskT = {
   id: string;
-  insuranceNumber: string;
+  related_patient_id: string;
   title: string;
   content: string;
   done: boolean;
@@ -41,6 +41,7 @@ export type TaskForFormT = {
   todo_title: string;
   todo_content: string;
   todo_deadline:date|string;
+  priority: string|undefined;
 };
 
 export type searchInputs = {

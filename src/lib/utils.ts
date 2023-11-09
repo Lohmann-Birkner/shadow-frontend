@@ -38,11 +38,11 @@ export function FormatGender(data: string) {
   const { locale } = useIntl();
     if (locale === "en") {
         switch(data){
-          case "W":
-            return "F";
+          case "Weiblich":
+            return "Female";
             break;
-          case "M":
-            return "M";
+          case "Männlich":
+            return "Male";
             break;
         }
     } else {
@@ -52,9 +52,12 @@ export function FormatGender(data: string) {
 }
 
 export function FormatDeadline(date:Date){
-  let event = new Date(date);
+  let formatDate = new Date(date);
 
-  let result = JSON.stringify(event);
-  result = result.slice(1,11);
+  let result = [
+    formatDate.getFullYear(),
+    ('0' + (formatDate.getMonth() + 1)).slice(-2),
+    ('0' + formatDate.getDate()).slice(-2)
+  ].join('-');
   return result;
 }

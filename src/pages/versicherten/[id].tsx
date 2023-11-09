@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/ui/table/data-table";
-import tasksData from "../../../mock_tasks.json";
 import {
   HospitalColumns,
   MedaidColumns,
@@ -22,7 +21,6 @@ import {
   TasksColumns,
   WorkInabilityColumns,
 } from "@/components/ui/table/columns";
-import { TaskT, WorkInabilityT } from "../../../types";
 import Documentation from "@/components/documentation";
 import {
   getDocumentById,
@@ -52,20 +50,11 @@ import { Button } from "@/components/ui/button";
 
 export default function Page() {
   const [tab, setTab] = useState("medical_service");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const { query } = useRouter();
-  // const [documentation, setDocumentation] = useState("");
-
   const { data } = useQuery(
     "insured",
     () => getPatientById(query.id as string),
-    {
-      enabled: !!query.id,
-    }
-  );
-  const documentation = useQuery(
-    "documentation",
-    () => getDocumentById(query.id as string),
     {
       enabled: !!query.id,
     }
@@ -118,225 +107,257 @@ export default function Page() {
       enabled: !!query.id && tab === "rehab",
     }
   );
-  const tasks = tasksData as TaskT[];
+  // const tasks = tasksData as TaskT[];
   const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
   return data ? (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
-      <main className="mt-16 lg:flex lg:justify-start lg:grid-cols-[25%_75%] lg:ml-24 px-5 2xl:px-8 2xl:gap-1 h-screen rounded-md border-rose-300">
-        <div>
-          <CollapsibleTrigger asChild>
-            <Button variant="ghost" size="sm" className="w-9 p-0 border-2 mb-2">
-              {isOpen ? (
-                <ChevronsLeft className="h-4 w-4" />
-              ) : (
-                <ChevronsRight className="h-4 w-4" />
-              )}
-            </Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-2 w-[350px]">
-            <section className="flex flex-col pb-5">
-              <Card>
-                {data && (
-                  <CardContent className="px-4 py-5">
-                    <CardTitle className="mb-1 text-lg">
-                      <FormattedMessage id="Insured_person_number" />:{" "}
+    <>
+      <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        className="space-y-2 border-2"
+      >
+        <main className="mt-16 lg:flex lg:justify-start lg:grid-cols-[25%_75%] lg:ml-24 px-5 2xl:px-8 2xl:gap-1 h-screen rounded-md">
+          <div>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-9 p-0 border-2 mb-2"
+              >
+                {isOpen ? (
+                  <ChevronsLeft className="h-4 w-4" />
+                ) : (
+                  <ChevronsRight className="h-4 w-4" />
+                )}
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-2 w-[350px]">
+              <section className="flex flex-col pb-5">
+                <Card>
+                  {data && (
+                    <CardContent className="px-4 py-5">
+                      <CardTitle className="mb-1 text-lg">
+                        <FormattedMessage id="Membership_number" />:{" "}
+                        <span className="font-light">
+                          {data?.Membership_number}
+                        </span>
+                      </CardTitle>
+                      <CardTitle className="mb-1 text-lg">
+                        <FormattedMessage id="Name" />:{" "}
+                        <span className="font-light">
+                          {`${data?.last_name} ${data?.first_name}`}
+                        </span>
+                      </CardTitle>
+                      <CardTitle className="mb-1 text-lg">
+                        <FormattedMessage id="Date_of_birth" />:{" "}
+                        <span className="font-light">
+                          {FormatDate(data?.Date_of_birth)}
+                        </span>
+                      </CardTitle>
+                      <CardTitle className="mb-1 text-lg">
+                        <FormattedMessage id="Gender" />:{" "}
+                        <span className="font-light">
+                          {FormatGender(data?.Gender)}
+                        </span>
+                      </CardTitle>
+                      <CardTitle className="text-lg">
+                        <FormattedMessage id="ZIP_code" />:{" "}
+                        <span className="font-light">{data?.ZIP_code}</span>
+                      </CardTitle>
+                    </CardContent>
+                  )}
+                </Card>
+
+                <Documentation queryId={query.id} />
+              </section>
+            </CollapsibleContent>
+          </div>
+          <section
+            className={cn(
+              "lg:ml-4 pb-5 lg:w-4/5 border-3",
+              !isOpen && "w-full lg:w-11/12"
+            )}
+          >
+            <Tabs
+              value={tab}
+              onValueChange={setTab}
+              className="pb-5 flex flex-col "
+            >
+              {!isOpen && (
+                <div className="border-b-2 text-center  ">
+                  {" "}
+                  <CardContent className="px-1 py-1 flex ">
+                    <CardTitle className="mb-1 text-lg pl-0 pr-4">
+                      <FormattedMessage id="Membership_number" />:{" "}
                       <span className="font-light">
-                        {data?.Insured_person_number}
+                        {data?.Membership_number}
                       </span>
                     </CardTitle>
-                    <CardTitle className="mb-1 text-lg">
+                    <CardTitle className="mb-1 text-lg px-4">
                       <FormattedMessage id="Name" />:{" "}
                       <span className="font-light">
                         {`${data?.last_name} ${data?.first_name}`}
                       </span>
                     </CardTitle>
-                    <CardTitle className="mb-1 text-lg">
+                    <CardTitle className="mb-1 text-lg px-4">
                       <FormattedMessage id="Date_of_birth" />:{" "}
                       <span className="font-light">
                         {FormatDate(data?.Date_of_birth)}
                       </span>
-                    </CardTitle>
-                    <CardTitle className="mb-1 text-lg">
-                      <FormattedMessage id="Gender" />:{" "}
-                      <span className="font-light">
-                        {FormatGender(data?.Gender)}
-                      </span>
-                    </CardTitle>
-                    <CardTitle className="text-lg">
-                      <FormattedMessage id="ZIP_code" />:{" "}
-                      <span className="font-light">{data?.ZIP_code}</span>
-                    </CardTitle>
+                    </CardTitle>{" "}
                   </CardContent>
+                </div>
+              )}
+              <TabsList className="flex-wrap  flex  lg:justify-start">
+                <TabsTrigger 
+                value="medical_service">
+                  <FormattedMessage id="Doctor_Data" />
+                </TabsTrigger>
+
+                <TabsTrigger value="medication">
+                  
+                  <FormattedMessage id="Medication" />
+                </TabsTrigger>
+
+                <TabsTrigger value="work_inability">
+                  <FormattedMessage id="work_inability" />
+                </TabsTrigger>
+
+                <TabsTrigger value="therapeutic_and_aid_supplies">
+                  <FormattedMessage id="Therapeutic_and_aid_supplies" />
+                </TabsTrigger>
+                <TabsTrigger value="hospital">
+                  <FormattedMessage id="Hospital" />
+                </TabsTrigger>
+
+                <TabsTrigger value="rehab">
+                  <FormattedMessage id="Rehabilitation" />
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent
+                className="p-0 border-3 h-[45rem] max-h-[45rem]  "
+                value="medical_service"
+              >
+                {medicalService.data ? (
+                  <MedicalServiceTable
+                    data={medicalService.data}
+                    columns={MedicalServiceColumns()}
+                    pagination
+                  />
+                ) : (
+                  <div className="w-full flex justify-center items-center">
+                    <Loader2 className="h-16 w-16 m-5 animate-spin " />
+                  </div>
                 )}
-              </Card>
-
-              <Documentation
-                data={documentation.data?.doc_text}
-                patient_id={documentation.data?.insured_id}
-                refetch={documentation.refetch}
-              />
-            </section>
-          </CollapsibleContent>
-        </div>
-        <section
-          className={cn(
-            "lg:ml-4 pb-5 lg:w-4/5",
-            !isOpen && "w-full lg:w-11/12"
-          )}
-        >
-          <Tabs
-            value={tab}
-            onValueChange={setTab}
-            className="pb-5 flex flex-col "
-          >
-            <TabsList className="flex-wrap  flex  ">
-              <TabsTrigger value="medical_service">
-                <FormattedMessage id="Doctor_Data" />
-              </TabsTrigger>
-
-              <TabsTrigger value="medication">
-                <FormattedMessage id="Medication" />
-              </TabsTrigger>
-
-              <TabsTrigger value="work_inability">
-                <FormattedMessage id="work_inability" />
-              </TabsTrigger>
-
-              <TabsTrigger value="therapeutic_and_aid_supplies">
-                <FormattedMessage id="Therapeutic_and_aid_supplies" />
-              </TabsTrigger>
-              <TabsTrigger value="hospital">
-                <FormattedMessage id="Hospital" />
-              </TabsTrigger>
-
-              <TabsTrigger value="rehab">
-                <FormattedMessage id="Rehabilitation" />
-              </TabsTrigger>
-              {/* <TabsTrigger value="tasks">
-              <FormattedMessage id="Tasks" />
-            </TabsTrigger> */}
-            </TabsList>
-
-            <TabsContent
-              className="p-0 border-0 h-[45rem] max-h-[45rem] "
-              value="medical_service"
-            >
-              {medicalService.data ? (
-                <MedicalServiceTable
-                  data={medicalService.data}
-                  columns={MedicalServiceColumns()}
-                  pagination
-                />
-              ) : (
-                <div className="w-full flex justify-center items-center">
-                  <Loader2 className="h-16 w-16 m-5 animate-spin " />
-                </div>
-              )}
-            </TabsContent>
-            <TabsContent className="p-0 h-[45rem] border-0" value="medication">
-              {medication.data ? (
-                <MedicationTable
-                  data={medication.data}
-                  columns={MedicationColumns()}
-                  pagination
-                  className="border-red-100 overflow-x-auto"
-                />
-              ) : (
-                <div className="w-full flex justify-center items-center">
-                  <Loader2 className="h-16 w-16 m-5 animate-spin" />
-                </div>
-              )}
-            </TabsContent>
-            <TabsContent
-              className="p-0 h-[45rem] border-0"
-              value="work_inability"
-            >
-              {workInability.data ? (
-                workInability.data.length > 0 ? (
-                  <div className=" p-4 ">
-                    <WorkInabilityTable
-                      data={workInability.data} // Pass the current item to the table
-                      columns={WorkInabilityColumns()}
+              </TabsContent>
+              <TabsContent
+                className="p-0 h-[45rem] border-0"
+                value="medication"
+              >
+                {medication.data ? (
+                  <MedicationTable
+                    data={medication.data}
+                    columns={MedicationColumns()}
+                    pagination
+                    className="overflow-x-auto"
+                  />
+                ) : (
+                  <div className="w-full flex justify-center items-center">
+                    <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                  </div>
+                )}
+              </TabsContent>
+              <TabsContent
+                className="p-0 h-[45rem] border-0"
+                value="work_inability"
+              >
+                {workInability.data ? (
+                  workInability.data.length > 0 ? (
+                    <div className=" p-4 ">
+                      <WorkInabilityTable
+                        data={workInability.data} // Pass the current item to the table
+                        columns={WorkInabilityColumns()}
+                        pagination
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center">
+                      <FormattedMessage id="No_results" />
+                    </div>
+                  )
+                ) : (
+                  <div className="w-full flex justify-center items-center">
+                    <Loader2 className="h-16 w-16 m-5 animate-spin" />
+                  </div>
+                )}
+              </TabsContent>
+              <TabsContent
+                className="p-0 h-[45rem] border-0"
+                value="therapeutic_and_aid_supplies"
+              >
+                {medaid.data ? (
+                  medaid.data.length > 0 ? (
+                    <MadaidTable
+                      data={medaid.data}
+                      columns={MedaidColumns()}
                       pagination
                     />
-                  </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center">
+                      <FormattedMessage id="No_results" />
+                    </div>
+                  )
                 ) : (
                   <div className="w-full flex justify-center items-center">
-                    <FormattedMessage id="No_results" />
+                    <Loader2 className="h-16 w-16 m-5 animate-spin" />
                   </div>
-                )
-              ) : (
-                <div className="w-full flex justify-center items-center">
-                  <Loader2 className="h-16 w-16 m-5 animate-spin" />
-                </div>
-              )}
-            </TabsContent>
-            <TabsContent
-              className="p-0 h-[45rem] border-0"
-              value="therapeutic_and_aid_supplies"
-            >
-              {medaid.data ? (
-                medaid.data.length > 0 ? (
-                  <MadaidTable
-                    data={medaid.data}
-                    columns={MedaidColumns()}
-                    pagination
-                  />
+                )}
+              </TabsContent>
+              <TabsContent
+                className="p-0 h-[45rem] border-0 rounded-md"
+                value="hospital"
+              >
+                {hospital.data ? (
+                  hospital.data.length > 0 ? (
+                    <HospitalTable
+                      data={hospital.data}
+                      columns={HospitalColumns()}
+                      pagination
+                    />
+                  ) : (
+                    <div className="w-full flex justify-center items-center">
+                      <FormattedMessage id="No_results" />
+                    </div>
+                  )
                 ) : (
                   <div className="w-full flex justify-center items-center">
-                    <FormattedMessage id="No_results" />
+                    <Loader2 className="h-16 w-16 m-5 animate-spin" />
                   </div>
-                )
-              ) : (
-                <div className="w-full flex justify-center items-center">
-                  <Loader2 className="h-16 w-16 m-5 animate-spin" />
-                </div>
-              )}
-            </TabsContent>
-            <TabsContent
-              className="p-0 h-[45rem] border-0 rounded-md"
-              value="hospital"
-            >
-              {hospital.data ? (
-                hospital.data.length > 0 ? (
-                  <HospitalTable
-                    data={hospital.data}
-                    columns={HospitalColumns()}
-                    pagination
-                  />
-                ) : (
-                  <div className="w-full flex justify-center items-center">
-                    <FormattedMessage id="No_results" />
-                  </div>
-                )
-              ) : (
-                <div className="w-full flex justify-center items-center">
-                  <Loader2 className="h-16 w-16 m-5 animate-spin" />
-                </div>
-              )}
-            </TabsContent>
+                )}
+              </TabsContent>
 
-            <TabsContent className="p-0 h-[45rem] border-0" value="rehab">
-              {rehab.data ? (
-                rehab.data.length > 0 ? (
-                  <RehabTable
-                    data={rehab.data}
-                    columns={RehabColumns()}
-                    pagination
-                  />
+              <TabsContent className="p-0 h-[45rem] border-0" value="rehab">
+                {rehab.data ? (
+                  rehab.data.length > 0 ? (
+                    <RehabTable
+                      data={rehab.data}
+                      columns={RehabColumns()}
+                      pagination
+                    />
+                  ) : (
+                    <div className="w-full flex justify-center items-center">
+                      <FormattedMessage id="No_results" />
+                    </div>
+                  )
                 ) : (
                   <div className="w-full flex justify-center items-center">
-                    <FormattedMessage id="No_results" />
+                    <Loader2 className="h-16 w-16 m-5 animate-spin" />
                   </div>
-                )
-              ) : (
-                <div className="w-full flex justify-center items-center">
-                  <Loader2 className="h-16 w-16 m-5 animate-spin" />
-                </div>
-              )}
-            </TabsContent>
-            {/* <TabsContent className="p-5" value="tasks">
+                )}
+              </TabsContent>
+              {/* <TabsContent className="p-5" value="tasks">
             {tasks && (
               <DataTable
                 pagination
@@ -347,10 +368,11 @@ export default function Page() {
               />
             )}
           </TabsContent> */}
-          </Tabs>
-        </section>
-      </main>{" "}
-    </Collapsible>
+            </Tabs>
+          </section>
+        </main>{" "}
+      </Collapsible>
+    </>
   ) : (
     <div className="w-screen h-screen flex justify-center items-center">
       <Loader2 className="h-24 w-24 animate-spin" />

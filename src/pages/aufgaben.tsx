@@ -1,18 +1,18 @@
 import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ArrowDownUp, ArrowUpDown, Search, Plus } from "lucide-react";
@@ -26,12 +26,11 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getTaskRelatedToUserById, updateTaskByTaskId } from "@/api";
 
 interface Props {
-    userId: number;
-    data: TaskRelatedToUserT;
+  userId: number;
+  data: TaskRelatedToUserT;
 }
 
 function Aufgaben() {
-
   const [searchInput, setSearchInput] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
   const [sortBy, setSortBy] = useState("date");
@@ -47,97 +46,104 @@ function Aufgaben() {
   const tasks = taskRelatedToUser.data as TaskRelatedToUserT[];
   const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
+  const headerValue = () => {
+    // Find the corresponding header value
+    const column = columns.find((column) => column.accessorKey === sortBy);
+    const headerValue = column ? column.header : "";
+    return headerValue;
+  };
 
-    const headerValue = () => {
-        // Find the corresponding header value
-        const column = columns.find((column) => column.accessorKey === sortBy);
-        const headerValue = column ? column.header : "";
-        return headerValue;
-    };
 
-
-//   const onRowClick = (task: TaskT) => {
-//     setSelectedTask(task);
-//     setIsDialogOpen(true);
-//   };
 
   const filteredItems = useMemo(() => {
     if (tasks) {
-        console.log(tasks)
       const sorted = tasks?.sort((a, b) => {
         switch (sortBy) {
+          case "related_patient_id":
+            
+              const valueA = String(a[sortBy as keyof TaskRelatedToUserT]);
+              const valueB = String(b[sortBy as keyof TaskRelatedToUserT]);
+
+              // Add a null/undefined check
+              if (valueA === null || valueB === null) {
+                  return 0; // Handle the case where the value is null or undefined
+              }
+
+              return valueA.localeCompare(valueB);
+          
           case "todo_date":
             // Sort by date, newest first
-            const dateA = a.todo_date.split("-").reverse().join("-");
-            const dateB = b.todo_date.split("-").reverse().join("-");
-            return new Date(dateB).getTime() - new Date(dateA).getTime();
+            const dateA = new Date(a.todo_date);
+            const dateB = new Date(b.todo_date);
+            if (dateA < dateB) {
+              return 1;
+            } else if (dateA > dateB) {
+              return -1;
+            } else {
+              return 0;
+            };
+            break;
+
+          case "todo_deadline":
+            // sort by deadline, oldest first
+            const date1 = new Date(a.todo_deadline);
+            const date2 = new Date(b.todo_deadline);
+            if (date1 < date2) {
+              return 1;
+            } else if (date1 > date2) {
+              return -1;
+            } else {
+              return 0;
+            };
+            break;
 
 
-                    case "todo_deadline":
-                        // sort by deadline, oldest first
-                        const date1 = a.todo_deadline
-                            .split("-")
-                            .reverse()
-                            .join("-");
-                        const date2 = b.todo_deadline
-                            .split("-")
-                            .reverse()
-                            .join("-");
-                        return (
-                            new Date(date2).getTime() -
-                            new Date(date1).getTime()
-                        );
+          case "done":
+            // Sort by done tasks
+            return a.done === b.done ? 0 : a.done ? 1 : -1;
 
-                    case "done":
-                        // Sort by done tasks
-                        return a.done === b.done ? 0 : a.done ? 1 : -1;
+          case "priority":
+            // Sort by priority, highest first
+            const priorityOrder: any = {
+              low: 0,
+              medium: 1,
+              high: 2,
+            };
+            return priorityOrder[b.priority] - priorityOrder[a.priority];
 
-                    case "priority":
-                        // Sort by priority, highest first
-                        const priorityOrder: any = {
-                            low: 0,
-                            medium: 1,
-                            high: 2,
-                        };
-                        return (
-                            priorityOrder[b.priority] -
-                            priorityOrder[a.priority]
-                        );
+          case "todo_title":
+          case "todo_content":
+            // Sort by title and content alphabetically
+            return a[sortBy].localeCompare(b[sortBy]);
 
-                    case "todo_title":
-                    case "todo_content":
-                        // Sort by title and content alphabetically
-                        return a[sortBy].localeCompare(b[sortBy]);
+          default:
+            return 0;
+        }
+      });
 
-                    default:
-                        return 0;
-                }
-            });
+      // Filter by searchInput
+      const words = searchInput.trim().toLowerCase().split(/\s+/);
 
-            // Filter by searchInput
-            const words = searchInput.trim().toLowerCase().split(/\s+/);
+      const filteredItems = words.reduce((results, word) => {
+        return results.filter(
+          (item) =>
+            item.todo_title.toLowerCase().includes(word) ||
+            item.todo_content.toLowerCase().includes(word) ||
+            item.todo_date.toLowerCase().includes(word) ||
+            item.todo_deadline.toLowerCase().includes(word)
+        );
+      }, sorted);
 
-            const filteredItems = words.reduce((results, word) => {
-                return results.filter(
-                    (item) =>
-                        item.todo_title.toLowerCase().includes(word) ||
-                        item.todo_content.toLowerCase().includes(word) ||
-                        item.todo_date.toLowerCase().includes(word) ||
-                        item.todo_deadline.toLowerCase().includes(word)
-                );
-            }, sorted);
+      // Control the flip button
+      const flipped = isFlipped ? filteredItems.reverse() : filteredItems;
 
-            // Control the flip button
-            const flipped = isFlipped ? filteredItems.reverse() : filteredItems;
+      return flipped;
+    } else return null;
+  }, [tasks, sortBy, searchInput, isFlipped]);
 
-            return flipped;
-        } else return null;
-    }, [tasks, sortBy, searchInput, isFlipped]);
-
-    const rowOnClick = (task: TaskT) => {
-        setIsDialogOpen(true);
-    };
-
+  const rowOnClick = (task: TaskT) => {
+    setIsDialogOpen(true);
+  };
 
   return (
     <main className="grid grid-cols-1 h-full mt-12 md:mt-16 lg:ml-24 md:px-5">
@@ -212,15 +218,14 @@ function Aufgaben() {
           </CardContent>
         </Card>
       </section>
+      {/* here the pop up window is only for adding todo */}
       <TaskDialog
-      
         open={isDialogOpen}
         setOpen={setIsDialogOpen}
         refetch={taskRelatedToUser.refetch}
       />
     </main>
   );
-
 }
 
 export default Aufgaben;

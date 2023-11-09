@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,16 +29,27 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { FormatDeadline, cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { Button } from "../ui/button";
-import { CalendarIcon } from "lucide-react";
-import { FormattedMessage } from "react-intl";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { addTask, updateTaskByTaskId } from "@/api";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
 
 // Define a form schema
 const formSchema = z.object({
   todo_title: z.string().min(1, { message: "Title ist erforderlich." }),
+  related_patient_id: z.string().optional(),
   todo_content: z.string().min(1, { message: "Inhalt ist erforderlich." }),
   todo_deadline: z.date(),
+  priority: z.string({
+    required_error: "Please select.",
+  }),
 });
 
 interface Props {
@@ -63,6 +75,7 @@ function TaskDialog({ task, open, setOpen, refetch }: Props) {
       todo_title: task ? task.todo_title : "",
       todo_content: task ? task.todo_content : "",
       todo_deadline: defaultDeadline,
+      priority: "low",
     },
   });
   const { isLoading, mutate } = useMutation({
@@ -72,30 +85,36 @@ function TaskDialog({ task, open, setOpen, refetch }: Props) {
       queryClient.invalidateQueries({ queryKey: ["tasksRelatedToUser"] });
     },
   });
-const addNewTask=useMutation({
-    mutationFn:(FormData:TaskForFormT)=>
-    addTask(FormData),
+  const addNewTask = useMutation({
+    mutationFn: (FormData: TaskForFormT) => addTask(FormData),
     onSuccess: async () => {
-        queryClient.invalidateQueries({ queryKey: ["tasksRelatedToUser"] });
-      },
-})
+      queryClient.invalidateQueries({ queryKey: ["tasksRelatedToUser"] });
+    },
+  });
   function onSubmit(values: TaskForFormT) {
     if (task) {
       console.log("here on submit");
       console.log(values.todo_deadline);
       const newDeadline = FormatDeadline(values.todo_deadline);
+      console.log(newDeadline);
       const newValues = { ...values, todo_deadline: newDeadline };
       mutate(newValues);
       setOpen(false);
     } else {
       const newDeadline = FormatDeadline(values.todo_deadline);
       const newValues = { ...values, todo_deadline: newDeadline };
-      console.log(values);
       addNewTask.mutate(newValues);
       setOpen(false);
-      
+      form.reset();
     }
   }
+  const { formatMessage } = useIntl();
+
+  const priorities = [
+    { label: formatMessage({ id: "Priority_high" }), value: "high" },
+    { label: formatMessage({ id: "Priority_medium" }), value: "medium" },
+    { label: formatMessage({ id: "Priority_low" }), value: "low" },
+  ] as const;
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -112,7 +131,7 @@ const addNewTask=useMutation({
 
         <Form {...form}>
           <form
-            className="mt-4"
+            className="mt-4 "
             onSubmit={form.handleSubmit((data) => onSubmit(data))}
           >
             <FormField
@@ -129,6 +148,25 @@ const addNewTask=useMutation({
                 </FormItem>
               )}
             />
+            {!task && (
+              <FormField
+                control={form.control}
+                name="related_patient_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      <FormattedMessage id="Membership_number" />
+                    </FormLabel>
+                    <FormControl>
+                      <Input className="md:h-9" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             <FormField
               control={form.control}
               name="todo_content"
@@ -144,6 +182,68 @@ const addNewTask=useMutation({
                 </FormItem>
               )}
             />
+            {!task ? (
+              <FormField
+                control={form.control}
+                name="priority"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col mt-3">
+                    <FormLabel>
+                      <FormattedMessage id="Priority" />
+                    </FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-[200px] justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? priorities.find(
+                                  (el) => el.value === field.value
+                                )?.label
+                              : "Select One"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandGroup>
+                            {priorities.map((el) => (
+                              <CommandItem
+                                value={el.label}
+                                key={el.value}
+                                onSelect={() => {
+                                  form.setValue("priority", el.value);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    el.value == field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {el.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : null}
+
             <FormField
               control={form.control}
               name="todo_deadline"
