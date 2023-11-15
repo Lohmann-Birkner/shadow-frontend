@@ -58,6 +58,7 @@ export function MedicalServiceTable({
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { formatMessage } = useIntl();
 
   const table = useReactTable({
@@ -146,7 +147,7 @@ export function MedicalServiceTable({
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div>
+          <div className="flex">
             <Input
               placeholder={formatMessage({
                 id: "Search_all_columns",
@@ -154,6 +155,14 @@ export function MedicalServiceTable({
               className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
               onChange={(event) => setGlobalFilter(event.target.value)}
             />
+            <Button
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              variant="outline"
+              className="m-2 shadow w-48"
+              
+            >
+              <FormattedMessage id="filter_open" />
+            </Button>
           </div>
         </div>
         <Table className="h-fit max-h-[45rem]">
@@ -163,7 +172,7 @@ export function MedicalServiceTable({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-20"
+                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-16 pt-2"
                       key={header.id}
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn
@@ -175,17 +184,19 @@ export function MedicalServiceTable({
                       }}
                       onDrop={onDrop}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                      {header.column.getCanFilter() ? (
-                        <div>
-                          <Filter column={header.column} table={table} />
-                        </div>
-                      ) : null}
+                      <div className="h-9">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </div>
+                      {header.column.getCanFilter()
+                        ? isFilterOpen && (
+                            <Filter column={header.column} table={table} />
+                          )
+                        : null}
                     </TableHead>
                   );
                 })}
@@ -223,7 +234,10 @@ export function MedicalServiceTable({
                       row.original.ops.length > 0 ? (
                         <>
                           {row.original.diags.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  " key={row.id}>
+                            <div
+                              className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  "
+                              key={row.id}
+                            >
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>
@@ -238,7 +252,10 @@ export function MedicalServiceTable({
                           )}
 
                           {row.original.ops.length > 0 && (
-                            <div className="mb-5 px-10 bg-neutral-100 w-1/2" key={row.id}>
+                            <div
+                              className="mb-5 px-10 bg-neutral-100 w-1/2"
+                              key={row.id}
+                            >
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Operations:
                               </TableCaption>

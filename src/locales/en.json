@@ -197,5 +197,7 @@
     "passwords_mismatch": "The passwords do not match",
     "user_created": "New user was created.",
     "success": "Success!",
-    "confirm_password": "Confirm password"
+    "confirm_password": "Confirm password",
+    "filter_open":"Filter open"
+    
 }
