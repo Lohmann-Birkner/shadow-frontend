@@ -210,16 +210,19 @@ export function HospitalTable({
                       className="hover:bg-neutral-100 bg-neutral-100"
                       key={`expanded-${row.id}`}
                     >
-                      <TableCell colSpan={columns.length}>
+                      <TableCell colSpan={columns.length} key={row.id}>
                         <Tabs value={tab} onValueChange={setTab}>
                           <TabsList className=" font-semibold text-slate-950 bg-neutral-100 rounded-md">
                             <TabsTrigger
+                            key="Diagnosis"
                               value="Diagnosis"
                               className="bg-neutral-100 "
                             >
                               <FormattedMessage id="Diagnosis" />
                             </TabsTrigger>
                             <TabsTrigger
+                            key="Billings"
+
                               value="Billings"
                               className="bg-neutral-100"
                             >
@@ -227,6 +230,8 @@ export function HospitalTable({
                             </TabsTrigger>
                             <TabsTrigger
                               value="Procedures"
+                              key="Procedures"
+
                               className="bg-neutral-100"
                             >
                               <FormattedMessage id="Procedures" />
@@ -325,7 +330,7 @@ export function HospitalTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  aaaa
+                  
                   <FormattedMessage id="No_results" />
                 </TableCell>
               </TableRow>

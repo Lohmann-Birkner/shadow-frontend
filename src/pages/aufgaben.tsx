@@ -130,7 +130,8 @@ function Aufgaben() {
             item.todo_title.toLowerCase().includes(word) ||
             item.todo_content.toLowerCase().includes(word) ||
             item.todo_date.toLowerCase().includes(word) ||
-            item.todo_deadline.toLowerCase().includes(word)
+            item.todo_deadline.toLowerCase().includes(word)||
+            item.related_patient_id.toLowerCase().includes(word)
         );
       }, sorted);
 

@@ -82,7 +82,6 @@ export function MedicalServiceTable({
       globalFilter,
     },
   });
-
   // Function to toggle the expanded state of a row
   const toggleRowExpansion = (rowId: string) => {
     setExpandedRows((prevExpandedRows) => ({
@@ -90,7 +89,7 @@ export function MedicalServiceTable({
       [rowId]: !prevExpandedRows[rowId],
     }));
   };
-  
+
   // how to drag and drop the columns
   let columnBeingDragged: number;
 
@@ -107,7 +106,13 @@ export function MedicalServiceTable({
     currentCols.splice(newPosition, 0, colToBeMoved[0]);
     table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
   };
+  const [searchInput, setSearchInput] = useState("");
 
+  const words = searchInput.trim().toLowerCase().split(/\s+/);
+
+  const filteredItems = words.reduce((result, word) => {
+    return data.filter((item) => item.Insurance_area.toString().includes(word));
+  }, data);
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
@@ -176,11 +181,11 @@ export function MedicalServiceTable({
                             header.column.columnDef.header,
                             header.getContext()
                           )}
-                          {header.column.getCanFilter() ? (
-                          <div>
-                            <Filter column={header.column} table={table} />
-                          </div>
-                        ) : null}
+                      {header.column.getCanFilter() ? (
+                        <div>
+                          <Filter column={header.column} table={table} />
+                        </div>
+                      ) : null}
                     </TableHead>
                   );
                 })}
@@ -211,14 +216,14 @@ export function MedicalServiceTable({
                     className="hover:bg-neutral-100 bg-neutral-100"
                     key={`expanded-${row.id}`}
                   >
-                    <TableCell colSpan={columns.length}>
+                    <TableCell colSpan={columns.length} key={row.id}>
                       {/* Add your expanded content here */}
 
                       {row.original.diags.length > 0 ||
                       row.original.ops.length > 0 ? (
                         <>
                           {row.original.diags.length > 0 && (
-                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  ">
+                            <div className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  " key={row.id}>
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>
@@ -233,7 +238,7 @@ export function MedicalServiceTable({
                           )}
 
                           {row.original.ops.length > 0 && (
-                            <div className="mb-5 px-10 bg-neutral-100 w-1/2">
+                            <div className="mb-5 px-10 bg-neutral-100 w-1/2" key={row.id}>
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Operations:
                               </TableCaption>
@@ -268,4 +273,3 @@ export function MedicalServiceTable({
     </>
   );
 }
-

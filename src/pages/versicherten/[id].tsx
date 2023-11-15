@@ -49,7 +49,6 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function Page() {
-  const [tab, setTab] = useState("medical_service");
   const [isOpen, setIsOpen] = useState(true);
   const { query } = useRouter();
   const { data } = useQuery(
@@ -59,7 +58,8 @@ export default function Page() {
       enabled: !!query.id,
     }
   );
-
+  const [tab, setTab] = useState("medical_service");
+  console.log(data);
   const medicalService = useQuery(
     ["medical_service", tab],
     () => getPatientMedicalService(query.id as string),
@@ -210,13 +210,11 @@ export default function Page() {
                 </div>
               )}
               <TabsList className="flex-wrap  flex  lg:justify-start">
-                <TabsTrigger 
-                value="medical_service">
+                <TabsTrigger value="medical_service">
                   <FormattedMessage id="Doctor_Data" />
                 </TabsTrigger>
 
                 <TabsTrigger value="medication">
-                  
                   <FormattedMessage id="Medication" />
                 </TabsTrigger>
 
