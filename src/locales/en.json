@@ -171,7 +171,7 @@
 
     "Select_a_catalog": "Select a Catalog",
     "Columns": "Columns",
-    "Search_all_columns": "Search all columns",
+    "Search_all_columns": "Filter all columns",
     "Procedures": "Procedures",
     "Billings": "Billings",
     "Payment": "Payment",
@@ -198,6 +198,8 @@
     "user_created": "New user was created.",
     "success": "Success!",
     "confirm_password": "Confirm password",
-    "filter_open":"Filter open"
+    "filter_open":"Filter open",
+    "filter":"Filter"
+
     
 }

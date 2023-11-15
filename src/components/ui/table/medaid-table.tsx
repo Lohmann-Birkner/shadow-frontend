@@ -25,6 +25,8 @@ import { MedaidPositionsColumns } from "./columns";
 import { MedaidT } from "../../../../types";
 import { Input } from "@/components/ui/input";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Button } from "@/components/ui/button";
+import { Filter } from "../Filter";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -44,6 +46,8 @@ export function MadaidTable({
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const { formatMessage } = useIntl();
 
   const table = useReactTable({
@@ -95,7 +99,7 @@ export function MadaidTable({
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto">
-        <div>
+        <div className="flex">
           <Input
             placeholder={formatMessage({
               id: "Search_all_columns",
@@ -103,6 +107,14 @@ export function MadaidTable({
             className="p-2 font-lg shadow border border-block max-w-sm rounded-md m-2 h-2/3"
             onChange={(event) => setGlobalFilter(event.target.value)}
           />
+          <Button
+            key="filterButton"
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            variant="outline"
+            className="m-2 shadow w-48"
+          >
+            <FormattedMessage id="filter_open" />
+          </Button>
         </div>
         <Table>
           <TableHeader>
@@ -122,12 +134,19 @@ export function MadaidTable({
                     }}
                     onDrop={onDrop}
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                    <div className="h-9">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </div>
+                    {header.column.getCanFilter()
+                      ? isFilterOpen && (
+                          <Filter column={header.column} table={table} />
+                        )
+                      : null}
                   </TableHead>
                 ))}
               </TableRow>

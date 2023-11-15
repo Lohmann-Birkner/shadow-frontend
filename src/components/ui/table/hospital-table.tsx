@@ -41,6 +41,7 @@ import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Filter } from "../Filter";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -61,6 +62,7 @@ export function HospitalTable({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [tab, setTab] = useState("Diagnosis");
   const { formatMessage } = useIntl();
@@ -145,14 +147,22 @@ export function HospitalTable({
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div>
+          <div className="flex">
             <Input
               placeholder={formatMessage({
                 id: "Search_all_columns",
               })}
               className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
               onChange={(event) => setGlobalFilter(event.target.value)}
-            />
+            />{" "}
+            <Button
+              key="filterButton"
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              variant="outline"
+              className="m-2 shadow w-48"
+            >
+              <FormattedMessage id="filter_open" />
+            </Button>
           </div>
         </div>
         <Table>
@@ -174,12 +184,19 @@ export function HospitalTable({
                       }}
                       onDrop={onDrop}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      <div className="h-9">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </div>
+                      {header.column.getCanFilter()
+                        ? isFilterOpen && (
+                            <Filter column={header.column} table={table} />
+                          )
+                        : null}
                     </TableHead>
                   );
                 })}
@@ -214,15 +231,14 @@ export function HospitalTable({
                         <Tabs value={tab} onValueChange={setTab}>
                           <TabsList className=" font-semibold text-slate-950 bg-neutral-100 rounded-md">
                             <TabsTrigger
-                            key="Diagnosis"
+                              key="Diagnosis"
                               value="Diagnosis"
                               className="bg-neutral-100 "
                             >
                               <FormattedMessage id="Diagnosis" />
                             </TabsTrigger>
                             <TabsTrigger
-                            key="Billings"
-
+                              key="Billings"
                               value="Billings"
                               className="bg-neutral-100"
                             >
@@ -231,7 +247,6 @@ export function HospitalTable({
                             <TabsTrigger
                               value="Procedures"
                               key="Procedures"
-
                               className="bg-neutral-100"
                             >
                               <FormattedMessage id="Procedures" />
@@ -312,7 +327,6 @@ export function HospitalTable({
                                   colSpan={columns.length}
                                   className="h-14 pl-6"
                                 >
-                                 
                                   <FormattedMessage id="No_results" />
                                 </TableCell>
                               </TableRow>
@@ -330,7 +344,6 @@ export function HospitalTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  
                   <FormattedMessage id="No_results" />
                 </TableCell>
               </TableRow>

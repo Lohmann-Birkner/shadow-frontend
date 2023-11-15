@@ -107,13 +107,7 @@ export function MedicalServiceTable({
     currentCols.splice(newPosition, 0, colToBeMoved[0]);
     table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
   };
-  const [searchInput, setSearchInput] = useState("");
 
-  const words = searchInput.trim().toLowerCase().split(/\s+/);
-
-  const filteredItems = words.reduce((result, word) => {
-    return data.filter((item) => item.Insurance_area.toString().includes(word));
-  }, data);
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
@@ -149,6 +143,7 @@ export function MedicalServiceTable({
           </div>
           <div className="flex">
             <Input
+              key="filterInput"
               placeholder={formatMessage({
                 id: "Search_all_columns",
               })}
@@ -156,17 +151,17 @@ export function MedicalServiceTable({
               onChange={(event) => setGlobalFilter(event.target.value)}
             />
             <Button
+              key="filterButton"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               variant="outline"
               className="m-2 shadow w-48"
-              
             >
               <FormattedMessage id="filter_open" />
             </Button>
           </div>
         </div>
         <Table className="h-fit max-h-[45rem]">
-          <TableHeader>
+          <TableHeader key="tableHeader">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -204,7 +199,7 @@ export function MedicalServiceTable({
             ))}
           </TableHeader>
 
-          <TableBody>
+          <TableBody >
             {table.getRowModel().rows.map((row) => (
               <>
                 <TableRow
@@ -238,10 +233,13 @@ export function MedicalServiceTable({
                               className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  "
                               key={row.id}
                             >
-                              <TableCaption className="my-2 font-semibold text-slate-950">
+                              <TableCaption
+                                className="my-2 font-semibold text-slate-950"
+                                
+                              >
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>
-                              <div className="w-fit">
+                              <div className="w-fit" key="data">
                                 <DataTable
                                   data={row.original.diags}
                                   columns={MedicalServiceDiagsColumns()}
@@ -256,7 +254,10 @@ export function MedicalServiceTable({
                               className="mb-5 px-10 bg-neutral-100 w-1/2"
                               key={row.id}
                             >
-                              <TableCaption className="my-2 font-semibold text-slate-950">
+                              <TableCaption
+                                className="my-2 font-semibold text-slate-950"
+                               
+                              >
                                 Operations:
                               </TableCaption>
 
@@ -264,15 +265,17 @@ export function MedicalServiceTable({
                                 data={row.original.ops}
                                 columns={MedicalServiceOpsColumns()}
                                 pagination={false}
+                                
                               />
                             </div>
                           )}
                         </>
                       ) : (
-                        <TableRow>
+                        <TableRow key={row.id}>
                           <TableCell
                             colSpan={columns.length}
                             className="h-14 text-center"
+                            key={row.id}
                           >
                             <FormattedMessage id="No_results" />{" "}
                           </TableCell>

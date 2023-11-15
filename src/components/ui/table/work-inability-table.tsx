@@ -36,6 +36,7 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Filter } from "../Filter";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -57,6 +58,7 @@ export function WorkInabilityTable({
     []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -139,7 +141,7 @@ export function WorkInabilityTable({
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div>
+          <div className="flex">
             <Input
               placeholder={formatMessage({
                 id: "Search_all_columns",
@@ -147,6 +149,14 @@ export function WorkInabilityTable({
               className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
               onChange={(event) => setGlobalFilter(event.target.value)}
             />
+            <Button
+              key="filterButton"
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              variant="outline"
+              className="m-2 shadow w-48"
+            >
+              <FormattedMessage id="filter_open" />
+            </Button>
           </div>
         </div>
         <Table>
@@ -168,12 +178,19 @@ export function WorkInabilityTable({
                       }}
                       onDrop={onDrop}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      <div className="h-9">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </div>
+                      {header.column.getCanFilter()
+                        ? isFilterOpen && (
+                            <Filter column={header.column} table={table} />
+                          )
+                        : null}
                     </TableHead>
                   );
                 })}
@@ -191,9 +208,7 @@ export function WorkInabilityTable({
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell 
-                      className="pl-6"
-                      key={cell.id}>
+                      <TableCell className="pl-6" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

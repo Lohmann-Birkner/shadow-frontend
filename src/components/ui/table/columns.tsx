@@ -38,15 +38,19 @@ import {
   TooltipTrigger,
 } from "../tooltip";
 import PrescriberTable from "./prescriber-table";
-import { Select } from "@radix-ui/react-select";
 
-const abc: FilterFn<any> = (row, columnId: string, filterValue: number[]) => {
+//this function is built to filter the columns with data type number,
+//so that the column can be filtered according to a range and also an exact number
+
+const mulitiFunctionFilter: FilterFn<any> = (
+  row,
+  columnId: string,
+  filterValue: number[]
+) => {
   let [min, max] = filterValue;
   const value = row.getValue<number>(columnId);
   if (filterValue.toString().includes(",")) {
     if (filterValue.toString() == ",") return true;
-
-    console.log(min, max);
     return value >= (min ?? 0) && value <= (max ?? Infinity);
   } else {
     const search = String(filterValue).toLowerCase();
@@ -275,11 +279,13 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       },
       id: "Quarter",
       // accessorFn: (originalRow) => originalRow.Quarter.toString(),
-      filterFn: abc,
+      filterFn: mulitiFunctionFilter,
     },
     {
       accessorKey: "ID_Prescriber",
       id: "ID_Prescriber",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -350,6 +356,7 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     },
     {
       accessorKey: "Points",
+      id: "Points",
 
       header: ({ column }) => {
         return (
@@ -363,9 +370,12 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
           </Button>
         );
       },
+      filterFn: mulitiFunctionFilter,
     },
     {
       accessorKey: "Total_costs",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -383,6 +393,8 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     },
     {
       accessorKey: "Calculated_costs",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -400,6 +412,8 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     },
     {
       accessorKey: "Non_budget_costs",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -417,6 +431,8 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     },
     {
       accessorKey: "Dialysis_costs",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -481,6 +497,8 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
     },
     {
       accessorKey: "Distance",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -587,6 +605,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
     },
     {
       accessorKey: "ID_Prescriber",
+      id: "ID_Prescriber",
       header: ({ column }) => {
         return (
           <Button
@@ -599,6 +618,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
           </Button>
         );
       },
+      filterFn: mulitiFunctionFilter,
       cell: ({ row }) => {
         return (
           <PrescriberTable
@@ -610,6 +630,8 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
     },
     {
       accessorKey: "Group_prescriber",
+      id: "Group_prescriber",
+
       header: ({ column }) => {
         return (
           <Button
@@ -622,9 +644,13 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
           </Button>
         );
       },
+      filterFn: mulitiFunctionFilter,
     },
     {
       accessorKey: "KV_area_Prescriber",
+      id: "KV_area_Prescriber",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -830,6 +856,8 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
     },
     {
       accessorKey: "Total_days_benefits",
+      id: "Total_days_benefits",
+      filterFn: mulitiFunctionFilter,
       header: ({ column }) => {
         return (
           <Button
@@ -844,6 +872,10 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
     },
     {
       accessorKey: "ID_Prescriber",
+      id: "ID_Prescriber",
+
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -865,7 +897,9 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       },
     },
     {
+      filterFn: mulitiFunctionFilter,
       accessorKey: "Core_ID_prescriber",
+      id: "Core_ID_prescriber",
       header: ({ column }) => {
         return (
           <Button
@@ -951,7 +985,9 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       cell: ({ row }) => FormatDate(row.getValue("End_EEL")),
     },
     {
+      filterFn: mulitiFunctionFilter,
       accessorKey: "Total_days_EEL",
+      id: "Total_days_EEL",
       header: ({ column }) => {
         return (
           <Button
@@ -965,7 +1001,9 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       },
     },
     {
+      filterFn: mulitiFunctionFilter,
       accessorKey: "Net_amount_EEL",
+      id: "Net_amount_EEL",
       header: ({ column }) => {
         return (
           <Button
@@ -1086,6 +1124,8 @@ export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
   return [
     {
       accessorKey: "ID_prescriber",
+      id: "ID_prescriber",
+      filterFn: mulitiFunctionFilter,
 
       header: ({ column }) => {
         return (
@@ -1261,6 +1301,8 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
   return [
     {
       accessorKey: "ID_Insured",
+      id: "ID_Insured",
+      filterFn: mulitiFunctionFilter,
 
       header: ({ column }) => {
         return (
@@ -1351,6 +1393,9 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
 
     {
       accessorKey: "Admission_weight_infant",
+      id: "Admission_weight_infant",
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -1442,6 +1487,8 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
     },
     {
       accessorKey: "Number_ventilation_days",
+      id: "Number_ventilation_days",
+      filterFn: mulitiFunctionFilter,
       header: ({ column }) => {
         return (
           <Button
@@ -1457,6 +1504,10 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
     },
     {
       accessorKey: "Cost_total",
+      id: "Cost_total",
+
+      filterFn: mulitiFunctionFilter,
+
       header: ({ column }) => {
         return (
           <Button
@@ -1583,7 +1634,9 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       },
     },
     {
+      filterFn: mulitiFunctionFilter,
       accessorKey: "Occupancy_days",
+      id: "Occupancy_days",
       header: ({ column }) => {
         return (
           <Button

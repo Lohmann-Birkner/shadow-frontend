@@ -8,6 +8,7 @@ import {
   SortingState,
   getSortedRowModel,
   ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -35,6 +36,7 @@ import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
+import { Filter } from "../Filter";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -57,6 +59,7 @@ export function MedicationTable({
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { formatMessage } = useIntl();
 
   const table = useReactTable({
@@ -72,9 +75,14 @@ export function MedicationTable({
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnVisibility,
       sorting,
+      columnFilters,
+
+      globalFilter,
     },
   });
 
@@ -108,136 +116,154 @@ export function MedicationTable({
       <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-scroll  ">
         <div className="flex">
           <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="m-2 shadow">
-                <FormattedMessage id="Columns" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="m-2 shadow">
+                  <FormattedMessage id="Columns" />
 
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        <FormattedMessage id={column.id} />
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="flex">
+            <Input
+              placeholder={formatMessage({
+                id: "Search_all_columns",
+              })}
+              className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
+              onChange={(event) => setGlobalFilter(event.target.value)}
+            />
+            <Button
+              key="filterButton"
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              variant="outline"
+              className="m-2 shadow w-48"
+            >
+              <FormattedMessage id="filter_open" />
+            </Button>
+          </div>
+        </div>
+
+        <Table className="h-full w-full  overflow-scroll">
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
                   return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
+                    <TableHead
+                      key={header.id}
+                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-14"
+                      draggable={
+                        !table.getState().columnSizingInfo.isResizingColumn
                       }
+                      data-column-index={header.index}
+                      onDragStart={onDragStart}
+                      onDragOver={(e): void => {
+                        e.preventDefault();
+                      }}
+                      onDrop={onDrop}
                     >
-                      <FormattedMessage id={column.id} />
-                    </DropdownMenuCheckboxItem>
+                      <div className="h-9">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}{" "}
+                      </div>
+                      {header.column.getCanFilter()
+                        ? isFilterOpen && (
+                            <Filter column={header.column} table={table} />
+                          )
+                        : null}
+                    </TableHead>
                   );
                 })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          </div>
-        
-        <div>
-          <Input
-            placeholder={formatMessage({
-              id: "Search_all_columns",
-            })}
-            className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
-            onChange={(event) => setGlobalFilter(event.target.value)}
-          />
-        </div>
-      </div>
-
-      <Table className="h-full w-full  overflow-scroll">
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead
-                    key={header.id}
-                    className="bg-slate-100 text-slate-950 hover:cursor-grab h-14"
-                    draggable={
-                      !table.getState().columnSizingInfo.isResizingColumn
-                    }
-                    data-column-index={header.index}
-                    onDragStart={onDragStart}
-                    onDragOver={(e): void => {
-                      e.preventDefault();
-                    }}
-                    onDrop={onDrop}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <>
-                <TableRow
-                  key={row.id}
-                  className="cursor-pointer"
-                  data-state={expandedRows[row.id] && "selected"}
-                  onClick={() => toggleRowExpansion(row.id)}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell className="h-14 pl-6" key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-                {expandedRows[row.id] && (
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <>
                   <TableRow
-                    className="hover:bg-neutral-100 bg-neutral-100 "
-                    key={`expanded-${row.id}`}
+                    key={row.id}
+                    className="cursor-pointer"
+                    data-state={expandedRows[row.id] && "selected"}
+                    onClick={() => toggleRowExpansion(row.id)}
                   >
-                    <TableCell colSpan={columns.length}>
-                      {/* Add your expanded content here */}
-                      <>
-                        {row.original.positions.length > 0 ? (
-                          <div className="px-10 bg-neutral-100 w-9/10 mb-3  ">
-                            <TableCaption className="my-2 font-semibold text-slate-950">
-                              Positions:
-                            </TableCaption>
-                            <div className="flex flex-col space-y-5 overflow-scroll">
-                              <DataTable
-                                data={row.original.positions}
-                                columns={MedicationPositionsColumns()}
-                                pagination={false}
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          "No data"
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell className="h-14 pl-6" key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
                         )}
-                      </>
-                    </TableCell>
+                      </TableCell>
+                    ))}
                   </TableRow>
-                )}
-              </>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                <FormattedMessage id="No_results" />
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+                  {expandedRows[row.id] && (
+                    <TableRow
+                      className="hover:bg-neutral-100 bg-neutral-100 "
+                      key={`expanded-${row.id}`}
+                    >
+                      <TableCell colSpan={columns.length}>
+                        {/* Add your expanded content here */}
+                        <>
+                          {row.original.positions.length > 0 ? (
+                            <div className="px-10 bg-neutral-100 w-9/10 mb-3  ">
+                              <TableCaption className="my-2 font-semibold text-slate-950">
+                                Positions:
+                              </TableCaption>
+                              <div className="flex flex-col space-y-5 overflow-scroll">
+                                <DataTable
+                                  data={row.original.positions}
+                                  columns={MedicationPositionsColumns()}
+                                  pagination={false}
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            "No data"
+                          )}
+                        </>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  <FormattedMessage id="No_results" />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
       {pagination && <DataTablePagination table={table} />}
     </>
