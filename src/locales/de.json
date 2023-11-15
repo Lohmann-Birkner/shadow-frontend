@@ -195,5 +195,6 @@
     "passwords_mismatch": "Die Passwörter stimmen nicht überein",
     "user_created": "Neuer Benutzer wurde erstellt.",
     "success": "Erfolg!",
-    "confirm_password": "Passwort bestätigen"
+    "confirm_password": "Passwort bestätigen",
+    "filter_open":"Filter öffnen"
 }

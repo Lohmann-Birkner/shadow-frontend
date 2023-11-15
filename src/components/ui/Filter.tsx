@@ -22,7 +22,7 @@ export function Filter({
   const columnFilterValue = column.getFilterValue();
   return typeof firstValue === "number" ? (
     <>
-      <div className="flex space-x-2 mt-2">
+      <div className="flex space-x-2 mt-2 ">
         <input
           type="number"
           //value={(columnFilterValue as [number, number])?.[0] ?? ""}
@@ -48,24 +48,29 @@ export function Filter({
           className="w-20 border shadow rounded h-7"
         />
       </div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-2">
         <input
           placeholder="Search..."
           // value={(columnFilterValue as string) ?? ""}
           onChange={(event) => column.setFilterValue(event.target.value)}
-          className="max-w-sm"
+          className="max-w-sm w-27 border shadow rounded h-7"
         />
       </div>
     </>
-  ) : columnsInTable === "Start_Treatment" ? (
-    <input type="date" className="w-48 mb-2 mr-2" onChange={(e) => column.setFilterValue(e.target.value)} />
+  ) : columnsInTable === "Start_Treatment" ||
+    columnsInTable === "End_Treatment" ? (
+    <input
+      type="date"
+      className="max-w-sm w-27 border shadow rounded h-7 mt-2"
+      onChange={(e) => column.setFilterValue(e.target.value)}
+    />
   ) : (
     <input
       type="text"
       value={(columnFilterValue ?? "") as string}
       onChange={(e) => column.setFilterValue(e.target.value)}
       placeholder={`Search...`}
-      className="w-36 border shadow rounded h-7 mt-2"
+      className="w-36 border shadow rounded h-7 mt-2 "
     />
   );
 }
