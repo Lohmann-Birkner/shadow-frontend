@@ -51,7 +51,7 @@ export function Filter({
           placeholder={formatMessage({
             id: "filter",
           })}
-          value={(columnFilterValue as string) ?? ""}
+          // value={(columnFilterValue as string) ?? ""}
           onChange={(event) => column.setFilterValue(event.target.value)}
           className="max-w-sm w-27 border shadow rounded h-7"
         />
