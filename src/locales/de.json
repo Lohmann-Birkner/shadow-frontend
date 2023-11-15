@@ -173,7 +173,7 @@
     "Billings": "Rechnungen",
     "Payment": "Zahlung",
 
-    "Search_all_columns": "Alle Spalten suchen",
+    "Search_all_columns": "Alle Spalten filtern",
     "prescriber_group_id": "Verschreibergruppen ID",
     "physician_ident": "Ärztekennung",
     "description": "Beschreibung",
@@ -196,5 +196,6 @@
     "user_created": "Neuer Benutzer wurde erstellt.",
     "success": "Erfolg!",
     "confirm_password": "Passwort bestätigen",
-    "filter_open":"Filter öffnen"
+    "filter_open":"Filter öffnen",
+    "filter":"Filtern"
 }

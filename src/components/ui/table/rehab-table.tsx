@@ -33,6 +33,8 @@ import { RehabT } from "../../../../types";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Filter } from "../Filter";
+import { Button } from "@/components/ui/button";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -46,6 +48,7 @@ export function RehabTable({
   pagination,
 }: CollapsibleDataTableProps) {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -103,7 +106,7 @@ export function RehabTable({
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
-        <div>
+        <div className="flex">
           <Input
             placeholder={formatMessage({
               id: "Search_all_columns",
@@ -111,6 +114,14 @@ export function RehabTable({
             className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
             onChange={(event) => setGlobalFilter(event.target.value)}
           />
+          <Button
+            key="filterButton"
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            variant="outline"
+            className="m-2 shadow w-48"
+          >
+            <FormattedMessage id="filter_open" />
+          </Button>
         </div>
         <Table>
           <TableHeader>
@@ -131,12 +142,19 @@ export function RehabTable({
                       }}
                       onDrop={onDrop}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      <div className="h-9">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </div>
+                      {header.column.getCanFilter()
+                        ? isFilterOpen && (
+                            <Filter column={header.column} table={table} />
+                          )
+                        : null}
                     </TableHead>
                   );
                 })}

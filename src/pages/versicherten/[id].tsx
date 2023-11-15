@@ -273,13 +273,11 @@ export default function Page() {
               >
                 {workInability.data ? (
                   workInability.data.length > 0 ? (
-                    <div className=" p-4 ">
-                      <WorkInabilityTable
-                        data={workInability.data} // Pass the current item to the table
-                        columns={WorkInabilityColumns()}
-                        pagination
-                      />
-                    </div>
+                    <WorkInabilityTable
+                      data={workInability.data} // Pass the current item to the table
+                      columns={WorkInabilityColumns()}
+                      pagination
+                    />
                   ) : (
                     <div className="w-full flex justify-center items-center">
                       <FormattedMessage id="No_results" />
