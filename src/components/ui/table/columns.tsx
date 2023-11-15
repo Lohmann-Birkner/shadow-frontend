@@ -1,4 +1,9 @@
-import { ColumnDef, flexRender } from "@tanstack/react-table";
+import {
+  ColumnDef,
+  FilterFn,
+  filterFns,
+  flexRender,
+} from "@tanstack/react-table";
 import {
   HospitalT,
   MedaidT,
@@ -18,6 +23,7 @@ import {
   Circle,
   CheckCircle,
   Info,
+  Columns,
 } from "lucide-react";
 import { DataTableRowActions } from "./task-row-actions";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -32,6 +38,23 @@ import {
   TooltipTrigger,
 } from "../tooltip";
 import PrescriberTable from "./prescriber-table";
+import { Select } from "@radix-ui/react-select";
+
+const abc: FilterFn<any> = (row, columnId: string, filterValue: number[]) => {
+  let [min, max] = filterValue;
+  const value = row.getValue<number>(columnId);
+  if (filterValue.toString().includes(",")) {
+    if (filterValue.toString() == ",") return true;
+
+    console.log(min, max);
+    return value >= (min ?? 0) && value <= (max ?? Infinity);
+  } else {
+    const search = String(filterValue).toLowerCase();
+    // Convert to String
+    const value = String(row.getValue<string>(columnId));
+    return value?.toLowerCase().includes(search);
+  }
+};
 
 // Insured
 
@@ -116,7 +139,6 @@ export const Statuses = () => {
   ];
 };
 
-
 export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
   const { formatMessage } = useIntl();
 
@@ -189,7 +211,8 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: formatMessage({ id: "Deadline" }),
       cell: ({ row }) => FormatDate(row.getValue("todo_deadline")),
     },
-    {//here are the 3 points in the aufgabe list(the end of the row)
+    {
+      //here are the 3 points in the aufgabe list(the end of the row)
       id: "actions",
       cell: ({ row }) => <DataTableRowActions row={row} />,
     },
@@ -215,7 +238,7 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
           </Button>
         );
       },
-      id: formatMessage({ id: "Case_number" }),
+      id: "Case_number",
     },
     {
       accessorKey: "Insurance_area",
@@ -230,8 +253,10 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
           </Button>
         );
       },
-      id: formatMessage({ id: "Insurance_area" }),
-      meta: "string",
+      id: "Insurance_area",
+      // meta: "string",
+
+      accessorFn: (originalRow) => originalRow.Insurance_area.toString(),
     },
 
     {
@@ -248,10 +273,13 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
           </Button>
         );
       },
-      id: formatMessage({ id: "Quarter" }),
+      id: "Quarter",
+      // accessorFn: (originalRow) => originalRow.Quarter.toString(),
+      filterFn: abc,
     },
     {
       accessorKey: "ID_Prescriber",
+      id: "ID_Prescriber",
       header: ({ column }) => {
         return (
           <Button
@@ -1578,6 +1606,14 @@ export const HospitalDiagnosisColumns = (): ColumnDef<
   const { formatMessage } = useIntl();
   return [
     {
+      accessorKey: "ID_type_diagnosis",
+      header: formatMessage({ id: "ID_type_diagnosis" }),
+    },
+    {
+      accessorKey: "Type_diagnosis",
+      header: formatMessage({ id: "Type_diagnosis" }),
+    },
+    {
       accessorKey: "ICD_Number",
       header: formatMessage({ id: "ICD_Number" }),
     },
@@ -1595,14 +1631,6 @@ export const HospitalDiagnosisColumns = (): ColumnDef<
       header: formatMessage({ id: "Localization_diagnosis" }),
     },
 
-    {
-      accessorKey: "ID_type_diagnosis",
-      header: formatMessage({ id: "ID_type_diagnosis" }),
-    },
-    {
-      accessorKey: "Type_diagnosis",
-      header: formatMessage({ id: "Type_diagnosis" }),
-    },
     {
       accessorKey: "Kind_diagnosis",
       header: formatMessage({ id: "Kind_diagnosis" }),

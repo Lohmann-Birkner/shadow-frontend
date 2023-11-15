@@ -249,4 +249,5 @@ export type DocumentationT = {
   insured_id: number;
   user_id: number;
   doc_text: string;
+  created_at:string
 };

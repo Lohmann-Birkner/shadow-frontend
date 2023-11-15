@@ -75,13 +75,6 @@ function Documentation({ queryId }: Props) {
             <CardTitle className="text-lg">
               <FormattedMessage id="Dokument" />
             </CardTitle>
-            <Button
-              className={cn(isEditMode && "bg-accent")}
-              onClick={() => setIsEditMode(!isEditMode)}
-              variant={"ghost"}
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
           </div>
         </CardHeader>
         <CardContent>
@@ -110,8 +103,6 @@ function Documentation({ queryId }: Props) {
                 <Button type="submit">Submit</Button>
               </form>
             </Form>
-          ) : data?.doc_text ? (
-            data.doc_text
           ) : (
             "Keine Documentation"
           )}
