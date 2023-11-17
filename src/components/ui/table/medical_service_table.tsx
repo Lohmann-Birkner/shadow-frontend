@@ -38,6 +38,21 @@ import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Filter } from "../Filter";
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -150,56 +165,66 @@ export function MedicalServiceTable({
               className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
               onChange={(event) => setGlobalFilter(event.target.value)}
             />
-            <Button
+            {/* <Button
               key="filterButton"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               variant="outline"
               className="m-2 shadow w-48"
             >
               <FormattedMessage id="filter_open" />
-            </Button>
+            </Button> */}
           </div>
         </div>
         <Table className="h-fit max-h-[45rem]">
-          <TableHeader key="tableHeader">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className=" w-full">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead
-                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-16 pt-2"
-                      key={header.id}
-                      draggable={
-                        !table.getState().columnSizingInfo.isResizingColumn
-                      }
-                      data-column-index={header.index}
-                      onDragStart={onDragStart}
-                      onDragOver={(e): void => {
-                        e.preventDefault();
-                      }}
-                      onDrop={onDrop}
-                    >
-                      <div className="h-9">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </div>
-                      {header.column.getCanFilter()
-                        ? isFilterOpen && (
+                    <>
+                      <TableHead
+                        className="bg-slate-100 text-slate-950 hover:cursor-grab h-16 pt-4"
+                        key={header.id}
+                        draggable={
+                          !table.getState().columnSizingInfo.isResizingColumn
+                        }
+                        data-column-index={header.index}
+                        onDragStart={onDragStart}
+                        onDragOver={(e): void => {
+                          e.preventDefault();
+                        }}
+                        onDrop={onDrop}
+                      >
+                        <ContextMenu>
+                          <ContextMenuTrigger
+                            key={header.id}
+                            className=" border-0 flex border-black bg-slate-100"
+                          >
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                            {/* {header.column.getCanFilter()
+                          ? isFilterOpen && (
+                              <Filter column={header.column} table={table} />
+                            )
+                          : null} */}{" "}
+                          </ContextMenuTrigger>
+                          <ContextMenuContent className="h-28 w-60 ">
                             <Filter column={header.column} table={table} />
-                          )
-                        : null}
-                    </TableHead>
+                          </ContextMenuContent>
+                        </ContextMenu>
+                      </TableHead>
+                    </>
                   );
                 })}
               </TableRow>
             ))}
           </TableHeader>
 
-          <TableBody >
+          <TableBody>
             {table.getRowModel().rows.map((row) => (
               <>
                 <TableRow
@@ -233,10 +258,7 @@ export function MedicalServiceTable({
                               className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  "
                               key={row.id}
                             >
-                              <TableCaption
-                                className="my-2 font-semibold text-slate-950"
-                                
-                              >
+                              <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>
                               <div className="w-fit" key="data">
@@ -254,10 +276,7 @@ export function MedicalServiceTable({
                               className="mb-5 px-10 bg-neutral-100 w-1/2"
                               key={row.id}
                             >
-                              <TableCaption
-                                className="my-2 font-semibold text-slate-950"
-                               
-                              >
+                              <TableCaption className="my-2 font-semibold text-slate-950">
                                 Operations:
                               </TableCaption>
 
@@ -265,7 +284,6 @@ export function MedicalServiceTable({
                                 data={row.original.ops}
                                 columns={MedicalServiceOpsColumns()}
                                 pagination={false}
-                                
                               />
                             </div>
                           )}

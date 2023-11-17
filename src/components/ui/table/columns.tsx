@@ -1303,6 +1303,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "ID_Insured",
       id: "ID_Insured",
       filterFn: mulitiFunctionFilter,
+          
 
       header: ({ column }) => {
         return (
