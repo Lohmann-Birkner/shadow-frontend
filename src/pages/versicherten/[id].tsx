@@ -31,6 +31,7 @@ import {
   getPatientMedication,
   getPatientRehab,
   getPatientWorkInability,
+  getTaskRelatedToUserById,
 } from "@/api";
 import { Loader2, ChevronsRight, ChevronsLeft } from "lucide-react";
 import { MedicalServiceTable } from "@/components/ui/table/medical_service_table";
@@ -47,6 +48,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
+import { getSession, useSession } from "next-auth/react";
+import { TaskRelatedToUserT } from "../../../types";
+import AufgabeRelatedToPatient from "@/components/ui/table/aufgabeRelatedToPatient";
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(true);
@@ -59,7 +63,6 @@ export default function Page() {
     }
   );
   const [tab, setTab] = useState("medical_service");
-  console.log(data);
   const medicalService = useQuery(
     ["medical_service", tab],
     () => getPatientMedicalService(query.id as string),
@@ -109,6 +112,12 @@ export default function Page() {
   );
   // const tasks = tasksData as TaskT[];
   const columns = TasksColumns() as { header: string; accessorKey: string }[];
+  const taskRelatedToUser = useQuery({
+    queryKey: ["tasksRelatedToUser"],
+    queryFn: () => getTaskRelatedToUserById(),
+    enabled: true,
+  });
+  const tasks = taskRelatedToUser.data as TaskRelatedToUserT[];
 
   return data ? (
     <>
@@ -210,6 +219,9 @@ export default function Page() {
                 </div>
               )}
               <TabsList className="flex-wrap  flex  lg:justify-start">
+                <TabsTrigger value="task">
+                  <FormattedMessage id="Task" />
+                </TabsTrigger>
                 <TabsTrigger value="medical_service">
                   <FormattedMessage id="Doctor_Data" />
                 </TabsTrigger>
@@ -233,7 +245,15 @@ export default function Page() {
                   <FormattedMessage id="Rehabilitation" />
                 </TabsTrigger>
               </TabsList>
-
+              <TabsContent value="task">
+                {tasks && (
+                  <AufgabeRelatedToPatient
+                    data={tasks}
+                    columns={TasksColumns()}
+                    pagination
+                  />
+                )}
+              </TabsContent>
               <TabsContent
                 className="p-0 border-3 h-[45rem] max-h-[45rem]  "
                 value="medical_service"

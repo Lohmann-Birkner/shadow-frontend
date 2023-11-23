@@ -197,5 +197,6 @@
     "success": "Erfolg!",
     "confirm_password": "Passwort bestätigen",
     "filter_open":"Filter öffnen",
-    "filter":"Filtern"
+    "filter":"Filtern",
+    "ins_id":"Versichertennummer"
 }

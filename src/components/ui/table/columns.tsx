@@ -66,6 +66,10 @@ export const PatientColumns = (): ColumnDef<PatientT>[] => {
   const { formatMessage, locale } = useIntl();
   return [
     {
+      accessorKey: "ins_id",
+      header: formatMessage({ id: "ins_id" }),
+    },
+    {
       accessorKey: "last_name",
       header: formatMessage({ id: "Last_name" }),
     },

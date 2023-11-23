@@ -95,9 +95,7 @@ export const updateTaskByTaskId = async (
   formData: TaskForFormT,
   todo_id: string
 ) => {
-  console.log(11111);
-  console.log(formData);
-  console.log(22222);
+ 
 
   return await axios.put(`${API_URL_BASE}/todos/${todo_id}`, formData);
 };
@@ -132,7 +130,7 @@ export const getUser = async (data: { username: string; password: string }) => {
     data
   );
 
-  console.log("response", response);
+  // console.log("response", response);
 
   return response;
 };

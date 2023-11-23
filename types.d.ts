@@ -250,4 +250,4 @@ export type DocumentationT = {
   user_id: number;
   doc_text: string;
   created_at:string
-};
+}[];
