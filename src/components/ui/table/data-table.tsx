@@ -54,7 +54,6 @@ export function DataTable<TData, TValue>({
             maxSize: 100,
         }
     });
-
     return (
         <>
             <div className="rounded-md border-2 overflow-scroll ">

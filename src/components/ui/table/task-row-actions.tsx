@@ -42,7 +42,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  console.log("row"+row)
+ 
   const task = row.original as TaskRelatedToUserT;
   const [priority, setPriority] = useState(task.priority);
   const [status, setStatus] = useState(task.done);
@@ -78,6 +78,7 @@ export function DataTableRowActions<TData>({
   const onActionClick = (dialogType: "edit" | "delete") => {
     setDialogType(dialogType);
     setIsDialogOpen(true);
+    console.log(isDialogOpen)
   };
 
   const dialogDeleteTask = (
