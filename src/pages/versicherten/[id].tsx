@@ -111,7 +111,9 @@ export default function Page() {
     }
   );
   // const tasks = tasksData as TaskT[];
-  const columns = TasksColumns() as { header: string; accessorKey: string }[];
+  const columns = TasksColumns();
+  const columnsRelatedToPatient = TasksColumns().slice(1);
+
   const taskRelatedToUser = useQuery({
     queryKey: ["tasksRelatedToUser"],
     queryFn: () => getTaskRelatedToUserById(),
@@ -245,11 +247,14 @@ export default function Page() {
                   <FormattedMessage id="Rehabilitation" />
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="task">
+              <TabsContent
+                value="task"
+                className="p-0 border-3 h-[45rem] max-h-[45rem]  "
+              >
                 {tasks && (
                   <AufgabeRelatedToPatient
                     data={tasks}
-                    columns={TasksColumns()}
+                    columns={columnsRelatedToPatient}
                     pagination
                   />
                 )}

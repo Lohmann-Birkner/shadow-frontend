@@ -45,6 +45,8 @@ import {
   TableRow,
 } from "./table";
 import { TaskRelatedToUserT } from "../../../../types";
+import { DataTablePagination } from "./data-table-pagination";
+import { prioritySort } from "@/lib/utils";
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: TaskRelatedToUserT[];
@@ -57,6 +59,11 @@ export default function AufgabeRelatedToPatient({
   pagination,
 }: CollapsibleDataTableProps) {
   const { formatMessage } = useIntl();
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [globalFilter, setGlobalFilter] = React.useState("");
   const table = useReactTable({
     data,
     columns,
@@ -67,17 +74,102 @@ export default function AufgabeRelatedToPatient({
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+      columnFilters,
+      globalFilter,
+    },
+    sortingFns: {
+        myCustomSorting: prioritySort,
+      },
   });
-  return (
-    <div>
-      <DataTable data={data} columns={TasksColumns()} pagination />
 
-      {/* here the pop up window is only for adding todo */}
-      {/* <TaskDialog
-        open={isDialogOpen}
-        setOpen={setIsDialogOpen}
-        refetch={taskRelatedToUser.refetch}
-      /> */}
-    </div>
+  // how to drag and drop the columns
+  let columnBeingDragged: number;
+
+  const onDragStart = (e: React.DragEvent<HTMLElement>): void => {
+    columnBeingDragged = Number(e.currentTarget.dataset.columnIndex);
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLElement>): void => {
+    e.preventDefault();
+    const newPosition = Number(e.currentTarget.dataset.columnIndex);
+    const currentCols = table.getVisibleLeafColumns().map((c) => c.id);
+    const colToBeMoved = currentCols.splice(columnBeingDragged, 1);
+
+    currentCols.splice(newPosition, 0, colToBeMoved[0]);
+    table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
+  };
+  return (
+    <>
+      <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto">
+        <Input
+          placeholder={formatMessage({
+            id: "Search_all_columns",
+          })}
+          className="p-2 font-lg shadow border border-block max-w-sm rounded-md m-2 h-2/3"
+          onChange={(event) => setGlobalFilter(event.target.value)}
+        />
+        {/* <DataTable data={data} columns={columnsRelatedToPatient} pagination /> */}
+
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    className="bg-slate-100 text-slate-950 hover:cursor-grab h-14"
+                    data-column-index={header.index}
+                    draggable={
+                      !table.getState().columnSizingInfo.isResizingColumn
+                    }
+                    onDragStart={onDragStart}
+                    onDragOver={(e): void => {
+                      e.preventDefault();
+                    }}
+                    onDrop={onDrop}
+                  >
+                    <div className="h-9">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </div>
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {
+              table.getRowModel().rows?.length
+                ? table.getRowModel().rows.map((row) => (
+                    <React.Fragment key={row.id}>
+                      <TableRow key={row.id} className="cursor-pointer">
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell className="h-14 pl-6" key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </React.Fragment>
+                  ))
+                : null /* Handle no rows case */
+            }
+          </TableBody>
+        </Table>
+      </div>
+      {pagination && <DataTablePagination table={table} />}
+    </>
   );
 }

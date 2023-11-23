@@ -1,6 +1,7 @@
 import {
   ColumnDef,
   FilterFn,
+  SortingFn,
   filterFns,
   flexRender,
 } from "@tanstack/react-table";
@@ -28,7 +29,7 @@ import {
 import { DataTableRowActions } from "./task-row-actions";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { showCostInTwoDigit, formatDateForHospital } from "@/lib/utils";
+import { showCostInTwoDigit, formatDateForHospital, prioritySort } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { FormatDate } from "@/lib/format-date";
 import {
@@ -157,21 +158,64 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
     },
     {
       accessorKey: "todo_date",
-      header: formatMessage({ id: "Date" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {formatMessage({ id: "Date" })}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => FormatDate(row.getValue("todo_date")),
     },
 
     {
       accessorKey: "todo_title",
-      header: formatMessage({ id: "Title" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {formatMessage({ id: "Title" })}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => {
         return <div className="w-fit">{row.getValue("todo_title")}</div>;
       },
     },
-    { accessorKey: "todo_content", header: formatMessage({ id: "Content" }) },
+    {
+      accessorKey: "todo_content",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {formatMessage({ id: "Content" })}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+    },
     {
       accessorKey: "done",
-      header: formatMessage({ id: "Done" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {formatMessage({ id: "Done" })}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => {
         const status = Statuses().find(
           (status) => status.value === row.getValue("done")
@@ -194,7 +238,19 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
 
     {
       accessorKey: "priority",
-      header: formatMessage({ id: "Priority" }),
+      sortingFn:prioritySort,
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {formatMessage({ id: "Priority" })}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+       
       cell: ({ row }) => {
         const priority = Priorities().find(
           (priority) => priority.value === row.getValue("priority")
@@ -216,7 +272,18 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
     },
     {
       accessorKey: "todo_deadline",
-      header: formatMessage({ id: "Deadline" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {formatMessage({ id: "Deadline" })}
+
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
       cell: ({ row }) => FormatDate(row.getValue("todo_deadline")),
     },
     {
@@ -1307,7 +1374,6 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "ID_Insured",
       id: "ID_Insured",
       filterFn: mulitiFunctionFilter,
-          
 
       header: ({ column }) => {
         return (
