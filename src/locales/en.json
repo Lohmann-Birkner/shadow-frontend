@@ -200,6 +200,10 @@
     "confirm_password": "Confirm password",
     "filter_open":"Filter open",
     "filter":"Filter",
-    "ins_id":"Insurance Number"
+    "ins_id":"Insurance Number",
+    "search":"Search",
+    "until":"until"
+
+
     
 }

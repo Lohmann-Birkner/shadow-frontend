@@ -29,6 +29,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 const FormSchema = z.object({
   membershipNumber: z.string(),
@@ -47,9 +48,7 @@ export function SeachPatientMultipleCatalog() {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      membershipNumber: "",
-    },
+   
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -65,10 +64,7 @@ export function SeachPatientMultipleCatalog() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-2/3  flex "
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3  flex ">
         <Collapsible
           open={isOpen}
           onOpenChange={setIsOpen}
@@ -77,7 +73,7 @@ export function SeachPatientMultipleCatalog() {
           {" "}
           <div className="flex">
             <FormLabel className="pt-2 mr-4 w-[150px]">
-              Membership Number
+              <FormattedMessage id="ins_id" />
             </FormLabel>
             <FormField
               control={form.control}
@@ -87,7 +83,7 @@ export function SeachPatientMultipleCatalog() {
                   <FormControl>
                     <>
                       <Input
-                        placeholder="shadcn"
+                        
                         {...field}
                         className="w-[220px] mb-2 mr-2"
                       />{" "}
@@ -105,7 +101,9 @@ export function SeachPatientMultipleCatalog() {
           </div>{" "}
           <CollapsibleContent>
             <div className="flex">
-              <FormLabel className="pt-2 mr-4 w-[150px]">Vorname</FormLabel>
+              <FormLabel className="pt-2 mr-4 w-[150px]">
+                <FormattedMessage id="Firstname" />
+              </FormLabel>
               <FormField
                 control={form.control}
                 name="firstname"
@@ -113,7 +111,7 @@ export function SeachPatientMultipleCatalog() {
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="shadcn"
+                        
                         {...field}
                         className="w-[220px] mb-2 mr-2"
                       />
@@ -123,7 +121,10 @@ export function SeachPatientMultipleCatalog() {
               />
             </div>
             <div className="flex">
-              <FormLabel className="pt-2 mr-4 w-[150px]">Nachname</FormLabel>
+              <FormLabel className="pt-2 mr-4 w-[150px]">
+                {" "}
+                <FormattedMessage id="Last_name" />
+              </FormLabel>
               <FormField
                 control={form.control}
                 name="lastname"
@@ -131,7 +132,7 @@ export function SeachPatientMultipleCatalog() {
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="shadcn"
+                        
                         {...field}
                         className="w-[220px] mb-2 mr-2"
                       />
@@ -142,7 +143,7 @@ export function SeachPatientMultipleCatalog() {
             </div>
             <div className="flex w-fit pb-2 mr-4 ">
               <FormLabel className="w-[150px] pt-2 mr-4">
-                Date of birth
+                <FormattedMessage id="Date_of_birth" />
               </FormLabel>
               <FormField
                 control={form.control}
@@ -151,7 +152,7 @@ export function SeachPatientMultipleCatalog() {
                   <FormItem className="flex flex-col">
                     <Popover>
                       <PopoverTrigger asChild>
-                        <FormControl >
+                        <FormControl>
                           <Button
                             variant={"outline"}
                             className={cn(
@@ -225,7 +226,10 @@ export function SeachPatientMultipleCatalog() {
               />
             </div>
             <div className="flex">
-              <FormLabel className="pt-2 mr-4 w-[150px]">Geschlecht</FormLabel>
+              <FormLabel className="pt-2 mr-4 w-[150px]">
+                {" "}
+                <FormattedMessage id="Gender" />
+              </FormLabel>
               <FormField
                 control={form.control}
                 name="gender"
@@ -233,7 +237,7 @@ export function SeachPatientMultipleCatalog() {
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="shadcn"
+                        
                         {...field}
                         className="w-[220px] mb-2 mr-2"
                       />
@@ -251,7 +255,7 @@ export function SeachPatientMultipleCatalog() {
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="shadcn"
+                        
                         {...field}
                         className="w-[220px] mb-2 mr-2"
                       />
@@ -262,7 +266,8 @@ export function SeachPatientMultipleCatalog() {
             </div>
             <div className="flex w-fit pb-2 mr-4 ">
               <FormLabel className="w-[150px] pt-2 mr-4">
-                Eintrittsdatum
+              <FormattedMessage id="Entry_date" />
+
               </FormLabel>
               <FormField
                 control={form.control}
@@ -271,7 +276,7 @@ export function SeachPatientMultipleCatalog() {
                   <FormItem className="flex flex-col">
                     <Popover>
                       <PopoverTrigger asChild>
-                        <FormControl >
+                        <FormControl>
                           <Button
                             variant={"outline"}
                             className={cn(
@@ -346,7 +351,10 @@ export function SeachPatientMultipleCatalog() {
             </div>
           </CollapsibleContent>
         </Collapsible>
-        <Button type="submit" className="border-2">Suchen</Button>
+        <Button type="submit" className="border-2">
+        <FormattedMessage id="search" />
+
+        </Button>
       </form>
     </Form>
   );

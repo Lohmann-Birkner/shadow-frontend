@@ -32,6 +32,7 @@ import {
   getPatientRehab,
   getPatientWorkInability,
   getTaskRelatedToUserById,
+  getTaskRelatedToPatient,
 } from "@/api";
 import { Loader2, ChevronsRight, ChevronsLeft } from "lucide-react";
 import { MedicalServiceTable } from "@/components/ui/table/medical_service_table";
@@ -62,7 +63,7 @@ export default function Page() {
       enabled: !!query.id,
     }
   );
-  const [tab, setTab] = useState("medical_service");
+  const [tab, setTab] = useState("task");
   const medicalService = useQuery(
     ["medical_service", tab],
     () => getPatientMedicalService(query.id as string),
@@ -114,12 +115,12 @@ export default function Page() {
   const columns = TasksColumns();
   const columnsRelatedToPatient = TasksColumns().slice(1);
 
-  const taskRelatedToUser = useQuery({
+  const taskRelatedToPatient = useQuery({
     queryKey: ["tasksRelatedToUser"],
-    queryFn: () => getTaskRelatedToUserById(),
+    queryFn: () => getTaskRelatedToUserById(query.id as string),
     enabled: true,
   });
-  const tasks = taskRelatedToUser.data as TaskRelatedToUserT[];
+  const tasks = taskRelatedToPatient.data as TaskRelatedToUserT[];
 
   return data ? (
     <>
@@ -251,13 +252,11 @@ export default function Page() {
                 value="task"
                 className="p-0 border-3 h-[45rem] max-h-[45rem]  "
               >
-                {tasks && (
-                  <AufgabeRelatedToPatient
+                 <AufgabeRelatedToPatient
                     data={tasks}
                     columns={columnsRelatedToPatient}
                     pagination
                   />
-                )}
               </TabsContent>
               <TabsContent
                 className="p-0 border-3 h-[45rem] max-h-[45rem]  "

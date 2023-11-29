@@ -64,6 +64,8 @@ export default function AufgabeRelatedToPatient({
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const table = useReactTable({
     data,
     columns,
@@ -84,8 +86,8 @@ export default function AufgabeRelatedToPatient({
       globalFilter,
     },
     sortingFns: {
-        myCustomSorting: prioritySort,
-      },
+      myCustomSorting: prioritySort,
+    },
   });
 
   // how to drag and drop the columns
@@ -107,15 +109,20 @@ export default function AufgabeRelatedToPatient({
   return (
     <>
       <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto">
-        <Input
-          placeholder={formatMessage({
-            id: "Search_all_columns",
-          })}
-          className="p-2 font-lg shadow border border-block max-w-sm rounded-md m-2 h-2/3"
-          onChange={(event) => setGlobalFilter(event.target.value)}
-        />
-        {/* <DataTable data={data} columns={columnsRelatedToPatient} pagination /> */}
-
+        <div className="flex">
+          <Input
+            placeholder={formatMessage({
+              id: "Search_all_columns",
+            })}
+            className="p-2 font-lg shadow border border-block max-w-sm rounded-md m-2 h-2/3"
+            onChange={(event) => setGlobalFilter(event.target.value)}
+          />
+          {/* <DataTable data={data} columns={columnsRelatedToPatient} pagination /> */}
+          <Button onClick={() => setIsDialogOpen(true)} variant={"outline"} className="p-2 m-2">
+            <Plus className="h-4 w-4 mr-1" />
+            <FormattedMessage id="Add_task" />
+          </Button>
+        </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -147,7 +154,7 @@ export default function AufgabeRelatedToPatient({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+         {data&& <TableBody>
             {
               table.getRowModel().rows?.length
                 ? table.getRowModel().rows.map((row) => (
@@ -166,10 +173,12 @@ export default function AufgabeRelatedToPatient({
                   ))
                 : null /* Handle no rows case */
             }
-          </TableBody>
+          </TableBody>}
         </Table>
       </div>
-      {pagination && <DataTablePagination table={table} />}
+      {/* here the pop up window is only for adding todo */}
+      <TaskDialog open={isDialogOpen} setOpen={setIsDialogOpen} />
+      {data&&pagination && <DataTablePagination table={table} />}
     </>
   );
 }
