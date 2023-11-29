@@ -44,6 +44,7 @@ function Aufgaben() {
     enabled: true,
   });
   const tasks = taskRelatedToUser.data as TaskRelatedToUserT[];
+  console.log(tasks)
   const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
   const headerValue = () => {

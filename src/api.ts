@@ -80,13 +80,27 @@ export const getDocumentById = async (patient_id: string) => {
 
 export const addDocument = async (
   patient_id: number | undefined,
-  data: { doc_text: string }|undefined
+  data: { doc_text: string } | undefined
 ) => {
   return await axios.post(`${API_URL_BASE}/documentation/${patient_id}`, data);
 };
 
-export const getTaskRelatedToUserById = async () => {
-  const response = await axios.get(`${API_URL_BASE}/todos/overview`);
+export const getTaskRelatedToUserById = async (related_patient_id?: string) => {
+  if (related_patient_id) {
+    const response = await axios.get(
+      `${API_URL_BASE}/todos/${related_patient_id}`
+    );
+    return response.data as TaskRelatedToUserT[];
+  } else {
+    const response = await axios.get(`${API_URL_BASE}/todos/overview`);
+    return response.data as TaskRelatedToUserT[];
+  }
+};
+
+export const getTaskRelatedToPatient = async (related_patient_id: string) => {
+  const response = await axios.get(
+    `${API_URL_BASE}/todos/${related_patient_id}`
+  );
 
   return response.data as TaskRelatedToUserT[];
 };
@@ -95,8 +109,6 @@ export const updateTaskByTaskId = async (
   formData: TaskForFormT,
   todo_id: string
 ) => {
- 
-
   return await axios.put(`${API_URL_BASE}/todos/${todo_id}`, formData);
 };
 

@@ -20,6 +20,7 @@ import { useQuery } from "react-query";
 import { getAllPatients, getPatientByQuery } from "@/api";
 import SearchPatient from "@/components/search-patient";
 import { useSession } from "next-auth/react";
+import { SeachPatientMultipleCatalog } from "@/components/searchPatientMultipleCatalog";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -123,10 +124,11 @@ export default function Home({ patients }: Props) {
                     </CardHeader>
                     <CardContent className="px-4 md:px-6">
                         <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
-                            <SearchPatient
+                            {/* <SearchPatient
                                 setSearchParameters={setSearchParameters}
                                 isLoading={isFetching}
-                            />
+                            /> */}
+                            <SeachPatientMultipleCatalog/>
                             <div className="flex gap-3">
                                 <Button
                                     onClick={() => setIsFlipped(!isFlipped)}
