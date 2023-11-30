@@ -11,7 +11,7 @@ import { Textarea } from "./ui/textarea";
 import { MoreHorizontal, Pencil, PlusSquare, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { FormattedMessage } from "react-intl";
-import { addDocument, getDocumentById } from "@/api";
+import { addDocument, deleteDocument, getDocumentById } from "@/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   Form,
@@ -55,8 +55,7 @@ import { Input } from "./ui/input";
 import DocumentationEdit from "./documentationEdit";
 
 const FormSchema = z.object({
-  DocumentationText: z.string(),
-  createdTime: z.string(),
+  doc_text: z.string(),
 });
 
 interface Props {
@@ -66,6 +65,7 @@ interface Props {
 function Documentation({ queryId }: Props) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [doc_id, setDoc_id] = useState<number>();
   const [dialogType, setDialogType] = useState<"edit" | "add">("edit");
   const queryClient = useQueryClient();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -81,25 +81,18 @@ function Documentation({ queryId }: Props) {
       enabled: !!queryId,
     }
   );
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
-  // const addNewDokument = useMutation({
-  //   mutationFn: (formData: { doc_text: string }) =>
-  //     addDocument(data?.insured_id as number, formData),
-  //   onSuccess: async () => {
-  //     queryClient.invalidateQueries({ queryKey: ["documentation", queryId] });
-  //   },
-  // });
+
   const onActionClick = (dialogType: "edit" | "add") => {
     setDialogType(dialogType);
     setIsEditMode(true);
   };
 
-  function onSubmit() {
-    //   addNewDokument.mutate({ doc_text: docu });
-    //   setIsEditMode(false);
-  }
+  const { mutate: deleteDocu } = useMutation({
+    mutationFn: () => deleteDocument(doc_id as number),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["documentation"]);
+    },
+  });
 
   const dialogDeleteDocu = (
     <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -116,7 +109,10 @@ function Documentation({ queryId }: Props) {
           <AlertDialogCancel>
             <FormattedMessage id="Cancel" />
           </AlertDialogCancel>
-          <AlertDialogAction className="bg-destructive hover:bg-destructive/90">
+          <AlertDialogAction
+            className="bg-destructive hover:bg-destructive/90"
+            onClick={() => deleteDocu()}
+          >
             <FormattedMessage id="Aktion_delete" />
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -188,13 +184,19 @@ function Documentation({ queryId }: Props) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-6 border-1 ">
                           <DropdownMenuItem
-                            onClick={() => onActionClick("edit")}
+                            onClick={() => {
+                              onActionClick("edit");
+                              setDoc_id(el.id);
+                            }}
                             className="flex justify-between"
                           >
                             <Pencil className="w-4 h-4 m-1" />
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={() => setIsDialogOpen(true)}
+                            onClick={() => {
+                              setIsDialogOpen(true);
+                              setDoc_id(el.id);
+                            }}
                             className="flex justify-between"
                           >
                             <Trash2 className="w-4 h-4 m-1" />
@@ -218,6 +220,8 @@ function Documentation({ queryId }: Props) {
         setOpen={setIsEditMode}
         data={data}
         dialogType={dialogType}
+        setIsEditMode={setIsEditMode}
+        doc_id={doc_id}
       />
     </>
   );
