@@ -19,9 +19,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { FormatDeadline, cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, ChevronsUpDown } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import {
   Collapsible,
@@ -29,39 +29,91 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { searchInputs } from "../../types";
 
+interface Props {
+  setSearchParameters: (searchContent: searchInputs | null) => void;
+  isLoading: boolean;
+}
 const FormSchema = z.object({
-  membershipNumber: z.string(),
-  lastname: z.string(),
-  firstname: z.string(),
-  gender: z.string(),
-  postNumber: z.string(),
-  dateOfBirthStart: z.date(),
-  dateOfBirthEnd: z.date(),
-  entryDateStart: z.date(),
-  entryDateEnd: z.date(),
+  ins_id: z.string().optional(),
+  lastname: z.string().optional(),
+  firstname: z.string().optional(),
+  gender: z.string().optional(),
+  postNumber: z.string().optional(),
+  dateOfBirthStart: z.date().optional(),
+  dateOfBirthEnd: z.date().optional(),
+  entryDateStart: z.date().optional(),
+  entryDateEnd: z.date().optional(),
 });
 
-export function SeachPatientMultipleCatalog() {
+export function SeachPatientMultipleCatalog({
+  setSearchParameters,
+  isLoading,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const { formatMessage } = useIntl();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-   
+    defaultValues: {
+      ins_id: "",
+      lastname: "",
+      firstname: "",
+      gender: "",
+      postNumber: "",
+      dateOfBirthStart: undefined,
+      dateOfBirthEnd: undefined,
+      entryDateStart: undefined,
+      entryDateEnd: undefined,
+    },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
+  const genders = [
+    { label: formatMessage({ id: "female" }), value: "W" },
+    { label: formatMessage({ id: "male" }), value: "M" },
+  ] as const;
 
+  function onSubmit(values: z.infer<typeof FormSchema>) {
+    console.log(values.dateOfBirthStart);
+    let formatedDateofBirthEnd;
+    let formatedDateofBirthStart;
+    let formatedEntryDateStart;
+    let formatedEntryDateEnd;
+    // Do something with the form values.
+    // format the date to yyyy-mm-dd, from date to string
+    if (values.dateOfBirthEnd) {
+      formatedDateofBirthEnd = FormatDeadline(values.dateOfBirthEnd);
+    }
+    if (values.dateOfBirthStart) {
+      formatedDateofBirthStart = FormatDeadline(values.dateOfBirthStart);
+    }
+    if (values.entryDateStart) {
+      formatedEntryDateStart = FormatDeadline(values.entryDateStart);
+    }
+    if (values.entryDateEnd) {
+      formatedEntryDateEnd = FormatDeadline(values.entryDateEnd);
+    }
+
+    const newValues = {
+      ...values,
+      dateOfBirthStart: formatedDateofBirthStart,
+      dateOfBirthEnd: formatedDateofBirthEnd,
+      entryDateStart: formatedEntryDateStart,
+      entryDateEnd: formatedEntryDateEnd,
+    } as searchInputs;
+    console.log(typeof newValues.dateOfBirthStart);
+    setSearchParameters(newValues);
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3  flex ">
@@ -77,16 +129,12 @@ export function SeachPatientMultipleCatalog() {
             </FormLabel>
             <FormField
               control={form.control}
-              name="membershipNumber"
+              name="ins_id"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <>
-                      <Input
-                        
-                        {...field}
-                        className="w-[220px] mb-2 mr-2"
-                      />{" "}
+                      <Input {...field} className="w-[220px] mb-2 mr-2" />{" "}
                     </>
                   </FormControl>
                 </FormItem>
@@ -110,11 +158,7 @@ export function SeachPatientMultipleCatalog() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        
-                        {...field}
-                        className="w-[220px] mb-2 mr-2"
-                      />
+                      <Input {...field} className="w-[220px] mb-2 mr-2" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -131,11 +175,7 @@ export function SeachPatientMultipleCatalog() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        
-                        {...field}
-                        className="w-[220px] mb-2 mr-2"
-                      />
+                      <Input {...field} className="w-[220px] mb-2 mr-2" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -163,7 +203,10 @@ export function SeachPatientMultipleCatalog() {
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>
+                                {" "}
+                                <FormattedMessage id="date_picker" />
+                              </span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -171,12 +214,12 @@ export function SeachPatientMultipleCatalog() {
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
+                          captionLayout="dropdown"
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
+                          fromYear={1900}
+                          toYear={Number(new Date().getFullYear())}
                           initialFocus
                         />
                       </PopoverContent>
@@ -184,7 +227,9 @@ export function SeachPatientMultipleCatalog() {
                   </FormItem>
                 )}
               />
-              <p className="mx-4">Bis</p>
+              <p className="mx-4">
+                <FormattedMessage id="until" />
+              </p>
               <FormField
                 control={form.control}
                 name="dateOfBirthEnd"
@@ -203,7 +248,10 @@ export function SeachPatientMultipleCatalog() {
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>
+                                {" "}
+                                <FormattedMessage id="date_picker" />
+                              </span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -211,12 +259,12 @@ export function SeachPatientMultipleCatalog() {
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
+                          captionLayout="dropdown"
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
+                          fromYear={1900}
+                          toYear={Number(new Date().getFullYear())}
                           initialFocus
                         />
                       </PopoverContent>
@@ -234,17 +282,67 @@ export function SeachPatientMultipleCatalog() {
                 control={form.control}
                 name="gender"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        
-                        {...field}
-                        className="w-[220px] mb-2 mr-2"
-                      />
-                    </FormControl>
+                  <FormItem className="flex flex-col">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl className="w-[220px] mb-2 mr-2">
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-[220px] justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? genders.find(
+                                  (gender) => gender.value === field.value
+                                )?.label
+                              : formatMessage({ id: "select_gender" })}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandGroup>
+                            {genders.map((gender) => (
+                              <CommandItem
+                                value={gender.label}
+                                key={gender.value}
+                                onSelect={() => {
+                                  form.setValue("gender", gender.value);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    gender.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {gender.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
                   </FormItem>
                 )}
               />
+              {/* <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input {...field} className="w-[220px] mb-2 mr-2" />
+                    </FormControl>
+                  </FormItem>
+                )} */}
+              {/* /> */}
             </div>
             <div className="flex">
               <FormLabel className="pt-2 mr-4 w-[150px]">PLZ</FormLabel>
@@ -254,11 +352,7 @@ export function SeachPatientMultipleCatalog() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        
-                        {...field}
-                        className="w-[220px] mb-2 mr-2"
-                      />
+                      <Input {...field} className="w-[220px] mb-2 mr-2" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -266,8 +360,7 @@ export function SeachPatientMultipleCatalog() {
             </div>
             <div className="flex w-fit pb-2 mr-4 ">
               <FormLabel className="w-[150px] pt-2 mr-4">
-              <FormattedMessage id="Entry_date" />
-
+                <FormattedMessage id="Entry_date" />
               </FormLabel>
               <FormField
                 control={form.control}
@@ -287,7 +380,10 @@ export function SeachPatientMultipleCatalog() {
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>
+                                {" "}
+                                <FormattedMessage id="date_picker" />
+                              </span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -295,12 +391,12 @@ export function SeachPatientMultipleCatalog() {
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
+                          captionLayout="dropdown"
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
+                          fromYear={1900}
+                          toYear={Number(new Date().getFullYear())}
                           initialFocus
                         />
                       </PopoverContent>
@@ -308,7 +404,9 @@ export function SeachPatientMultipleCatalog() {
                   </FormItem>
                 )}
               />
-              <p className="mx-4">Bis</p>
+              <p className="mx-4">
+                <FormattedMessage id="until" />
+              </p>
               <FormField
                 control={form.control}
                 name="entryDateEnd"
@@ -327,7 +425,10 @@ export function SeachPatientMultipleCatalog() {
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>
+                                {" "}
+                                <FormattedMessage id="date_picker" />
+                              </span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -335,12 +436,12 @@ export function SeachPatientMultipleCatalog() {
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
+                          captionLayout="dropdown"
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
+                          fromYear={1900}
+                          toYear={Number(new Date().getFullYear())}
                           initialFocus
                         />
                       </PopoverContent>
@@ -351,10 +452,14 @@ export function SeachPatientMultipleCatalog() {
             </div>
           </CollapsibleContent>
         </Collapsible>
-        <Button type="submit" className="border-2">
-        <FormattedMessage id="search" />
-
+        <Button disabled={isLoading} type="submit">
+          {" "}
+          {/* <FormattedMessage id="search" /> */}
+          {isLoading && <Loader2 className="mx-2 h-4 w-4 animate-spin" />}
+          {isLoading ? "Loading..." : "Search"}
         </Button>
+        <Button className="mx-2"
+        onClick={() => form.reset()}>Reset</Button>
       </form>
     </Form>
   );

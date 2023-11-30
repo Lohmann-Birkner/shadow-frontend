@@ -202,7 +202,12 @@
     "filter":"Filter",
     "ins_id":"Insurance Number",
     "search":"Search",
-    "until":"until"
+    "until":"until",
+    "date_picker":"Pick a date",
+    "female":"Female",
+    "male":"Male",
+    "select_gender":"Select gender"
+
 
 
     

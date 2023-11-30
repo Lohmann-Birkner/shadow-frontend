@@ -45,8 +45,15 @@ export type TaskForFormT = {
 };
 
 export type searchInputs = {
-  catalog: string;
-  searchQuery: string;
+  ins_id?: string|undefined,
+  lastname?: string|undefined,
+  firstname?: string|undefined,
+  gender?: string|undefined,
+  postNumber?: string|undefined,
+  dateOfBirthStart?: date|string|undefined,
+  dateOfBirthEnd?: date|string|undefined,
+  entryDateStart?: date|string|undefined
+  entryDateEnd?: date|string|undefined,
 };
 
 export type MedicalServiceT = {
