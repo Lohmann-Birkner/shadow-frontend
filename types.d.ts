@@ -253,8 +253,10 @@ export type PrescriberT = {
 };
 
 export type DocumentationT = {
+  id:number;
   insured_id: number;
   user_id: number;
   doc_text: string;
-  created_at:string
+  created_at:string,
+  user_name:string
 }[];

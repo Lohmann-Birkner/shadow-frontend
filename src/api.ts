@@ -42,10 +42,11 @@ export const getAllPatients = async () => {
 //     Entry_date gte ${searchInputs.entryDateStart};
 //     Entry_date ste ${searchInputs.entryDateEnd}`
 //   );
+
 export const getPatientSearchResult = async (searchInputs: searchInputs) => {
-  const aaa= formSearchQuery(searchInputs)
-  const res = await axios.get(`${API_URL_BASE}/insured?q=${aaa}`);
-  console.log(`${API_URL_BASE}/insured?q=${aaa}`)
+  const searchQuery = formSearchQuery(searchInputs);
+  const res = await axios.get(`${API_URL_BASE}/insured?q=${searchQuery}`);
+  console.log(`${API_URL_BASE}/insured?q=${searchQuery}`);
   return res.data as PatientT[];
 };
 
@@ -91,20 +92,31 @@ export const getPatientRehab = async (id: string) => {
   return response.data as RehabT[];
 };
 
-export const getDocumentById = async (patient_id: string) => {
-  const response = await axios.get(
-    `${API_URL_BASE}/documentation/${patient_id}`
-  );
+export const getDocumentById = async (ins_id: string) => {
+  const response = await axios.get(`${API_URL_BASE}/documentation/${ins_id}`);
   return response.data as DocumentationT;
 };
 
 export const addDocument = async (
-  patient_id: number | undefined,
+  ins_id: undefined | string | string[],
   data: { doc_text: string } | undefined
 ) => {
-  return await axios.post(`${API_URL_BASE}/documentation/${patient_id}`, data);
+  console.log(data);
+  return await axios.post(`${API_URL_BASE}/documentation/${ins_id}`, data);
 };
 
+export const deleteDocument = async (doc_id: number | undefined) => {
+  const response = await axios.delete(
+    `${API_URL_BASE}/documentation/${doc_id}`
+  );
+  console.log(doc_id);
+  return response.status;
+};
+
+export const updateDocument = async (doc_id: number | undefined,formData: { doc_text: string }) => {
+  console.log(formData,doc_id)
+  return await axios.put(`${API_URL_BASE}/documentation/${doc_id}`, formData);
+};
 //get the todos/tasks not only for the general tasks also for the the tasks only related to one patient
 export const getTaskRelatedToUserById = async (related_patient_id?: string) => {
   if (related_patient_id) {

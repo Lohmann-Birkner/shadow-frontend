@@ -150,9 +150,9 @@ export default function Page() {
                   {data && (
                     <CardContent className="px-4 py-5">
                       <CardTitle className="mb-1 text-lg">
-                        <FormattedMessage id="Membership_number" />:{" "}
+                        <FormattedMessage id="ins_id" />:{" "}
                         <span className="font-light">
-                          {data?.Membership_number}
+                          {data?.ins_id}
                         </span>
                       </CardTitle>
                       <CardTitle className="mb-1 text-lg">

@@ -26,32 +26,69 @@ import { Input } from "./ui/input";
 import { FormattedMessage } from "react-intl";
 import { Button } from "./ui/button";
 import { DocumentationT } from "../../types";
+import { QueryClient, useMutation, useQueryClient } from "react-query";
+import { addDocument, updateDocument } from "@/api";
+import { useRouter } from "next/router";
 
 interface Props {
   data?: DocumentationT;
   open: boolean;
   setOpen: (open: boolean) => void;
-  dialogType:string
+  dialogType: string;
+  setIsEditMode: (open: boolean) => void;
+  doc_id:number|undefined
 }
 const FormSchema = z.object({
-  DocumentationText: z.string(),
-  createdTime: z.string(),
+  doc_text: z.string(),
 });
 
-export default function DocumentationEdit({ open, setOpen, data,dialogType }: Props) {
+export default function DocumentationEdit({
+  open,
+  setOpen,
+  data,
+  dialogType,
+  setIsEditMode,
+  doc_id
+}: Props) {
+  const { query } = useRouter();
+console.log(doc_id)
+  const queryClient = useQueryClient();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-  function onSubmit() {
-    //   addNewDokument.mutate({ doc_text: docu });
-    //   setIsEditMode(false);
+  const addNewDokument = useMutation({
+    mutationFn: (formData: { doc_text: string }) =>
+      addDocument(query.id, formData),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["documentation", query.id] });
+    },
+  });
+  
+  const updateDocumentation=useMutation({
+    mutationFn: (formData: { doc_text: string }) =>
+      updateDocument(doc_id,formData),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["documentation"] });
+    },
+  })
+  function onSubmit(values: z.infer<typeof FormSchema>) {
+    if (data) {
+      updateDocumentation.mutate(values)
+      setIsEditMode(false);
+    } else {
+      addNewDokument.mutate(values);
+      setIsEditMode(false);
+      form.reset()
+    }
   }
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-2xl">
-            {dialogType==="edit" ? (
+            {dialogType === "edit" ? (
               <FormattedMessage id="Task_edit" />
             ) : (
               <FormattedMessage id="Add_task" />
@@ -60,10 +97,13 @@ export default function DocumentationEdit({ open, setOpen, data,dialogType }: Pr
         </AlertDialogHeader>
 
         <Form {...form}>
-          <form className="mt-4 " onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            className="mt-4 "
+            onSubmit={form.handleSubmit((data) => onSubmit(data))}
+          >
             <FormField
               control={form.control}
-              name="DocumentationText"
+              name="doc_text"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -77,7 +117,7 @@ export default function DocumentationEdit({ open, setOpen, data,dialogType }: Pr
             <AlertDialogFooter className="mt-8">
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <Button type="submit">
-                {dialogType==="edit" ? (
+                {dialogType === "edit" ? (
                   <FormattedMessage id="Update" />
                 ) : (
                   <FormattedMessage id="Add" />
@@ -89,4 +129,7 @@ export default function DocumentationEdit({ open, setOpen, data,dialogType }: Pr
       </AlertDialogContent>
     </AlertDialog>
   );
+}
+function setIsEditMode(arg0: boolean) {
+  throw new Error("Function not implemented.");
 }
