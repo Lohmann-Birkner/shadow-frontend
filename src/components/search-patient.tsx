@@ -52,7 +52,6 @@ export default function SearchPatient({
   const { formatMessage } = useIntl();
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setSearchParameters(data);
   }
 
   const PatientColumnsTyped = PatientColumns() as {

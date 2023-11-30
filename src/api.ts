@@ -14,6 +14,7 @@ import {
   TaskRelatedToUserT,
   TaskForFormT,
 } from "../types";
+import { formSearchQuery } from "./lib/utils";
 
 export const getAllPatients = async () => {
   const response = await axios.get(`${API_URL_BASE}/somepatients`);
@@ -21,12 +22,31 @@ export const getAllPatients = async () => {
   return response.data as PatientT[];
 };
 
-export const getPatientByQuery = async (searchInputs: searchInputs) => {
-  const response = await axios.get(
-    `${API_URL_BASE}/insured?q=${searchInputs.catalog};${searchInputs.searchQuery}`
-  );
+// export const getPatientByQuery = async (searchInputs: searchInputs) => {
+//   const response = await axios.get(
+//     `${API_URL_BASE}/insured?q=${searchInputs.catalog};${searchInputs.searchQuery}`
+//   );
 
-  return response.data as PatientT[];
+//   return response.data as PatientT[];
+// };
+
+// export const getPatientSearchResult = async (searchInputs: searchInputs) => {
+//   const response = await axios.get(
+//     `${API_URL_BASE}/insured?q=ins_id eq ${searchInputs.ins_id};
+//     first_name eq ${searchInputs.firstname};
+//     last_name eq ${searchInputs.lastname};
+//     Gender eq ${searchInputs.gender};
+//     Date_of_birth gte ${searchInputs.dateOfBirthStart};
+//     Date_of_birth ste ${searchInputs.dateOfBirthEnd};
+//     ZIP_code eq ${searchInputs.postNumber};
+//     Entry_date gte ${searchInputs.entryDateStart};
+//     Entry_date ste ${searchInputs.entryDateEnd}`
+//   );
+export const getPatientSearchResult = async (searchInputs: searchInputs) => {
+  const aaa= formSearchQuery(searchInputs)
+  const res = await axios.get(`${API_URL_BASE}/insured?q=${aaa}`);
+  console.log(`${API_URL_BASE}/insured?q=${aaa}`)
+  return res.data as PatientT[];
 };
 
 export const getPatientById = async (id: string) => {
@@ -85,6 +105,7 @@ export const addDocument = async (
   return await axios.post(`${API_URL_BASE}/documentation/${patient_id}`, data);
 };
 
+//get the todos/tasks not only for the general tasks also for the the tasks only related to one patient
 export const getTaskRelatedToUserById = async (related_patient_id?: string) => {
   if (related_patient_id) {
     const response = await axios.get(

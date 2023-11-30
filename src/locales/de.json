@@ -200,5 +200,12 @@
     "filter":"Filtern",
     "ins_id":"Versichertennummer",
     "search":"Suchen",
-    "until":"bis"
+    "until":"bis",
+    "date_picker":"Datum auswählen",
+    "female":"Weiblich",
+    "male":"Männlich",
+    "select_gender":"Geschlecht auswählen"
+
+
+
 }
