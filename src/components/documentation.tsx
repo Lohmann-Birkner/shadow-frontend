@@ -168,7 +168,7 @@ function Documentation({ queryId }: Props) {
               >
                 <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">
+                  <p className="text-sm font-medium leading-none w-fit">
                     {el.doc_text}
                   </p>
                   <div className="flex justify-between ">

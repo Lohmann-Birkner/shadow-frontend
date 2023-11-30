@@ -73,10 +73,11 @@ console.log(doc_id)
     },
   })
   function onSubmit(values: z.infer<typeof FormSchema>) {
-    if (data) {
+    if (dialogType==="edit") {
       updateDocumentation.mutate(values)
       setIsEditMode(false);
     } else {
+      console.log("new add")
       addNewDokument.mutate(values);
       setIsEditMode(false);
       form.reset()
