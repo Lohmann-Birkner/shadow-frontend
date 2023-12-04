@@ -41,6 +41,8 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 
+
+//Add task dialog
 // Define a form schema
 const formSchema = z.object({
   todo_title: z.string().min(1, { message: "Title ist erforderlich." }),
@@ -57,9 +59,10 @@ interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   refetch?: Function;
+  queryId?:string
 }
 
-function TaskDialog({ task, open, setOpen, refetch }: Props) {
+function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
   const queryClient = useQueryClient();
 
   let defaultDeadline; // Default value for deadline
@@ -76,6 +79,7 @@ function TaskDialog({ task, open, setOpen, refetch }: Props) {
       todo_content: task ? task.todo_content : "",
       todo_deadline: defaultDeadline,
       priority: "low",
+      related_patient_id:queryId
     },
   });
   const { isLoading, mutate } = useMutation({

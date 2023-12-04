@@ -47,6 +47,7 @@ import {
 import { TaskRelatedToUserT } from "../../../../types";
 import { DataTablePagination } from "./data-table-pagination";
 import { prioritySort } from "@/lib/utils";
+import { useRouter } from "next/router";
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: TaskRelatedToUserT[];
@@ -58,6 +59,9 @@ export default function AufgabeRelatedToPatient({
   data,
   pagination,
 }: CollapsibleDataTableProps) {
+  const { query } = useRouter();
+const aaa=query.id as string;
+  console.log(typeof aaa);
   const { formatMessage } = useIntl();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -118,7 +122,11 @@ export default function AufgabeRelatedToPatient({
             onChange={(event) => setGlobalFilter(event.target.value)}
           />
           {/* <DataTable data={data} columns={columnsRelatedToPatient} pagination /> */}
-          <Button onClick={() => setIsDialogOpen(true)} variant={"outline"} className="p-2 m-2">
+          <Button
+            onClick={() => setIsDialogOpen(true)}
+            variant={"outline"}
+            className="p-2 m-2"
+          >
             <Plus className="h-4 w-4 mr-1" />
             <FormattedMessage id="Add_task" />
           </Button>
@@ -154,31 +162,37 @@ export default function AufgabeRelatedToPatient({
               </TableRow>
             ))}
           </TableHeader>
-         {data&& <TableBody>
-            {
-              table.getRowModel().rows?.length
-                ? table.getRowModel().rows.map((row) => (
-                    <React.Fragment key={row.id}>
-                      <TableRow key={row.id} className="cursor-pointer">
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell className="h-14 pl-6" key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    </React.Fragment>
-                  ))
-                : null /* Handle no rows case */
-            }
-          </TableBody>}
+          {data?.length > 0 && (
+            <TableBody>
+              {
+                table.getRowModel().rows?.length
+                  ? table.getRowModel().rows.map((row) => (
+                      <React.Fragment key={row.id}>
+                        <TableRow key={row.id} className="cursor-pointer">
+                          {row.getVisibleCells().map((cell) => (
+                            <TableCell className="h-14 pl-6" key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </React.Fragment>
+                    ))
+                  : null /* Handle no rows case */
+              }
+            </TableBody>
+          )}
         </Table>
       </div>
       {/* here the pop up window is only for adding todo */}
-      <TaskDialog open={isDialogOpen} setOpen={setIsDialogOpen} />
-      {data&&pagination && <DataTablePagination table={table} />}
+      <TaskDialog
+        open={isDialogOpen}
+        setOpen={setIsDialogOpen}
+       queryId={aaa}
+      />
+      {data && pagination && <DataTablePagination table={table} />}
     </>
   );
 }

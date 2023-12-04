@@ -53,7 +53,6 @@ function Aufgaben() {
     const headerValue = column ? column.header : "";
     return headerValue;
   };
-console.log(columns)
 
   const filteredItems = useMemo(() => {
     if (tasks) {
