@@ -29,7 +29,11 @@ import {
 import { DataTableRowActions } from "./task-row-actions";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { showCostInTwoDigit, formatDateForHospital, prioritySort } from "@/lib/utils";
+import {
+  showCostInTwoDigit,
+  formatDateForHospital,
+  prioritySort,
+} from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { FormatDate } from "@/lib/format-date";
 import {
@@ -154,7 +158,17 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
   return [
     {
       accessorKey: "related_patient_id",
-      header: formatMessage({ id: "Membership_number" }),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {formatMessage({ id: "Membership_number" })}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
     {
       accessorKey: "todo_date",
@@ -238,7 +252,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
 
     {
       accessorKey: "priority",
-      sortingFn:prioritySort,
+      sortingFn: prioritySort,
       header: ({ column }) => {
         return (
           <Button
@@ -250,7 +264,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
           </Button>
         );
       },
-       
+
       cell: ({ row }) => {
         const priority = Priorities().find(
           (priority) => priority.value === row.getValue("priority")
