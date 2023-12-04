@@ -25,6 +25,7 @@ import { FormattedMessage } from "react-intl";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getTaskRelatedToUserById, updateTaskByTaskId } from "@/api";
 
+
 interface Props {
   userId: number;
   data: TaskRelatedToUserT;
@@ -44,7 +45,6 @@ function Aufgaben() {
     enabled: true,
   });
   const tasks = taskRelatedToUser.data as TaskRelatedToUserT[];
-  console.log(tasks)
   const columns = TasksColumns() as { header: string; accessorKey: string }[];
 
   const headerValue = () => {
@@ -53,7 +53,7 @@ function Aufgaben() {
     const headerValue = column ? column.header : "";
     return headerValue;
   };
-
+console.log(columns)
 
   const filteredItems = useMemo(() => {
     if (tasks) {
@@ -164,7 +164,7 @@ function Aufgaben() {
                 icon={<Search className="mx-2 h-4 w-4" />}
               />
               <div className="flex gap-3 flex-wrap">
-                <Button
+                {/* <Button
                   onClick={() => setIsFlipped(!isFlipped)}
                   variant="outline"
                   className="h-9 md:h-8"
@@ -199,7 +199,7 @@ function Aufgaben() {
                         ))}
                     </DropdownMenuRadioGroup>
                   </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
                 <Button
                   onClick={() => setIsDialogOpen(true)}
                   variant={"outline"}
