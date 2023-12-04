@@ -120,11 +120,14 @@ export const updateDocument = async (doc_id: number | undefined,formData: { doc_
 //get the todos/tasks not only for the general tasks also for the the tasks only related to one patient
 export const getTaskRelatedToUserById = async (related_patient_id?: string) => {
   if (related_patient_id) {
+    console.log(related_patient_id)
     const response = await axios.get(
       `${API_URL_BASE}/todos/${related_patient_id}`
     );
     return response.data as TaskRelatedToUserT[];
   } else {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa"+related_patient_id)
+
     const response = await axios.get(`${API_URL_BASE}/todos/overview`);
     return response.data as TaskRelatedToUserT[];
   }

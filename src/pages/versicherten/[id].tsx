@@ -114,12 +114,11 @@ export default function Page() {
   // const tasks = tasksData as TaskT[];
   const columns = TasksColumns();
   const columnsRelatedToPatient = TasksColumns().slice(1);
-
-  const taskRelatedToPatient = useQuery({
-    queryKey: ["tasksRelatedToUser"],
-    queryFn: () => getTaskRelatedToUserById(query.id as string),
-    enabled: true,
-  });
+  const taskRelatedToPatient = useQuery(
+    ["tasksRelatedToUser", tab,query.id],
+    () => getTaskRelatedToUserById(query.id as string),
+    { enabled: true }
+  );
   const tasks = taskRelatedToPatient.data as TaskRelatedToUserT[];
 
   return data ? (
@@ -151,9 +150,7 @@ export default function Page() {
                     <CardContent className="px-4 py-5">
                       <CardTitle className="mb-1 text-lg">
                         <FormattedMessage id="ins_id" />:{" "}
-                        <span className="font-light">
-                          {data?.ins_id}
-                        </span>
+                        <span className="font-light">{data?.ins_id}</span>
                       </CardTitle>
                       <CardTitle className="mb-1 text-lg">
                         <FormattedMessage id="Name" />:{" "}
@@ -252,11 +249,11 @@ export default function Page() {
                 value="task"
                 className="p-0 border-3 h-[45rem] max-h-[45rem]  "
               >
-                 <AufgabeRelatedToPatient
-                    data={tasks}
-                    columns={columnsRelatedToPatient}
-                    pagination
-                  />
+                <AufgabeRelatedToPatient
+                  data={tasks}
+                  columns={columnsRelatedToPatient}
+                  pagination
+                />
               </TabsContent>
               <TabsContent
                 className="p-0 border-3 h-[45rem] max-h-[45rem]  "

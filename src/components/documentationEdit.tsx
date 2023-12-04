@@ -51,9 +51,7 @@ export default function DocumentationEdit({
   doc_id
 }: Props) {
   const { query } = useRouter();
-console.log(doc_id)
   const queryClient = useQueryClient();
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
