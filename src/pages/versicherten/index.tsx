@@ -126,10 +126,7 @@ export default function Home({ patients }: Props) {
           </CardHeader>
           <CardContent className="px-4 md:px-6">
             <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
-              {/* <SearchPatient
-                                setSearchParameters={setSearchParameters}
-                                isLoading={isFetching}
-                            /> */}
+             
               <SeachPatientMultipleCatalog
                 setSearchParameters={setSearchParameters}
                 isLoading={isFetching}
