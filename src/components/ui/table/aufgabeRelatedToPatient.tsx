@@ -138,7 +138,8 @@ const aaa=query.id as string;
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="bg-slate-100 text-slate-950 hover:cursor-grab h-14"
+                    className="bg-slate-100 text-slate-950
+                     hover:cursor-grab h-20 pt-4"
                     data-column-index={header.index}
                     draggable={
                       !table.getState().columnSizingInfo.isResizingColumn

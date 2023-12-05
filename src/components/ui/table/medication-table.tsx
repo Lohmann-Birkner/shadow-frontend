@@ -113,7 +113,7 @@ export function MedicationTable({
 
   return (
     <>
-      <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-scroll  ">
+      <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-auto  ">
         <div className="flex">
           <div>
             <DropdownMenu>
@@ -173,7 +173,8 @@ export function MedicationTable({
                   return (
                     <TableHead
                       key={header.id}
-                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-14"
+                      className="bg-slate-100 text-slate-950 
+                      hover:cursor-grab h-20 pt-4"
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn
                       }
@@ -235,7 +236,7 @@ export function MedicationTable({
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 Positions:
                               </TableCaption>
-                              <div className="flex flex-col space-y-5 overflow-scroll">
+                              <div className="flex flex-col space-y-5 overflow-auto">
                                 <DataTable
                                   data={row.original.positions}
                                   columns={MedicationPositionsColumns()}

@@ -166,7 +166,8 @@ export function WorkInabilityTable({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="bg-slate-100 text-slate-950 hover:cursor-grab h-20"
+                      className="bg-slate-100 text-slate-950 
+                      hover:cursor-grab h-20 pt-4"
                       key={header.id}
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn

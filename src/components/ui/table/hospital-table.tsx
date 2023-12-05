@@ -173,7 +173,8 @@ export function HospitalTable({
                   return (
                     <TableHead
                       key={header.id}
-                      className=" text-slate-950 bg-slate-100 h-20 hover:cursor-grab"
+                      className=" text-slate-950 bg-slate-100 
+                      h-20 hover:cursor-grab pt-4"
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn
                       }

@@ -1052,7 +1052,14 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
           </Button>
         );
       },
-      cell: ({ row }) => FormatDate(row.getValue("Start_EEL")),
+      cell: ({ row }) => {
+        const check_date_healing = row.getValue("Start_EEL");
+        if (check_date_healing === "1900-01-01") {
+          return;
+        } else {
+          return FormatDate(row.getValue("Start_EEL"));
+        }
+      },
     },
     {
       accessorKey: "End_EEL",
@@ -1067,7 +1074,14 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
           </Button>
         );
       },
-      cell: ({ row }) => FormatDate(row.getValue("End_EEL")),
+      cell: ({ row }) => {
+        const check_date_healing = row.getValue("End_EEL");
+        if (check_date_healing === "1900-01-01") {
+          return;
+        } else {
+          return FormatDate(row.getValue("End_EEL"));
+        }
+      },
     },
     {
       filterFn: mulitiFunctionFilter,
@@ -1117,19 +1131,35 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
     {
       accessorKey: "Date_healing",
       header: formatMessage({ id: "Date_healing" }),
-      cell: ({ row }) => FormatDate(row.getValue("Date_healing")),
+      cell: ({ row }) => {
+        const check_date_healing = row.getValue("Date_healing");
+        if (check_date_healing === "1900-01-01") {
+          return;
+        } else {
+          return FormatDate(row.getValue("Date_healing"));
+        }
+      },
     },
     {
       accessorKey: "Primary_diagnosis",
       header: formatMessage({ id: "Primary_diagnosis" }),
+      cell: ({ row }) => FormatDate(row.getValue("Primary_diagnosis")),
+    },
+    {
+      accessorKey: "Main_ICD_Text",
+      header: formatMessage({ id: "ICD_Text" }),
       cell: ({ row }) => {
         const Main_ICD_Text = row.original.Main_ICD_Text;
+        const Main_ICD_Text_Short = row.original.Main_ICD_Text.slice(
+          0,
+          10
+        ).concat("...");
 
         const pznTextTooltip = (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="flex items-center">
-                {row.getValue("Primary_diagnosis")}
+                {Main_ICD_Text_Short}
                 <Info className="w-4 h-4 ml-1" />
               </TooltipTrigger>
               <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
@@ -1140,7 +1170,7 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
         return Main_ICD_Text ? (
           pznTextTooltip
         ) : (
-          <div>{row.getValue("Primary_diagnosis")}</div>
+          <div>{row.getValue("Main_ICD_Text")}</div>
         );
       },
     },
@@ -1931,7 +1961,29 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
     },
     {
       accessorKey: "ICD_Primary_Text",
-      header: formatMessage({ id: "ICD_Primary_Text" }),
+      header: formatMessage({ id: "ICD_Text" }),
+      cell: ({ row }) => {
+        const Main_ICD_Text = row.getValue("ICD_Primary_Text") as string;
+        const Main_ICD_Text_Short = Main_ICD_Text.slice(0, 10).concat("...");
+
+        const pznTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {Main_ICD_Text_Short}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+
+        return Main_ICD_Text ? (
+          pznTextTooltip
+        ) : (
+          <div>{row.getValue("ICD_Primary_Text")}</div>
+        );
+      },
     },
     {
       accessorKey: "Secondary_diagnosis",
@@ -1946,6 +1998,14 @@ export const RehabPaymentColumns = (): ColumnDef<RehabT["payment"]>[] => {
     {
       accessorKey: "End_rehab",
       header: formatMessage({ id: "End_rehab" }),
+      cell: ({ row }) => {
+        const check_date_healing = row.getValue("End_rehab");
+        if (check_date_healing === "1900-01-01") {
+          return;
+        } else {
+          return FormatDate(row.getValue("End_rehab"));
+        }
+      },
     },
 
     {

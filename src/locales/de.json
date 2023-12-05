@@ -39,8 +39,8 @@
     "Localization_procedure": "Lokalisation Prozedur",
     "Main_ICD": "Hauptdiagnose",
     "Case_ID": "Fall ID",
-    "Start_work_inability": "Start benefits",
-    "End_work_inability": "End benefits",
+    "Start_work_inability": "Beginndatum der Arbeitsunfähigkeit",
+    "End_work_inability": "Enddatum der Arbeitsunfähigkeit",
     "Total_days_benefits": "Anzahl Tage Leistungen",
     "ID_Prescriber": "ID Verordner",
     "Core_ID_prescriber": "Stamm ID Verordner",
@@ -70,7 +70,7 @@
     "Group_medical_aid": "Hilfsmittelgruppe",
     "Group_ID_medical_aid": "Hilfsmittelgruppe ID",
     "Diagnosis": "Diagnose",
-    "ID_Insured": "ID Versicherter",
+    "ID_Insured": "Versichertennummer",
     "Case_number": "Fallnummer",
     "Admission_date": "Aufnahmedatum",
     "Reason_admission": "Aufnahmegrund",
@@ -169,9 +169,9 @@
     "Select_a_catalog": "Katalog Auswählen",
     "Columns": "Spalten",
 
-    "Procedures": "Verfahren",
-    "Billings": "Rechnungen",
-    "Payment": "Zahlung",
+    "Procedures": "Prozeduren",
+    "Billings": "Zahlungen",
+    "Payment": "Zahlungen",
 
     "Search_all_columns": "Alle Spalten filtern",
     "prescriber_group_id": "Verschreibergruppen ID",
@@ -204,7 +204,13 @@
     "date_picker":"Datum auswählen",
     "female":"Weiblich",
     "male":"Männlich",
-    "select_gender":"Geschlecht auswählen"
+    "select_gender":"Geschlecht auswählen",
+    "ICD_Text":"ICD-Text",
+    "OPS_Text":"OPS-Text",
+    "Documentation_add":"Dokumentation hinzufügen",
+    "Documentation_edit":"Dokumentation bearbeiten",
+    "ICD_Main_Text":"ICD Haupttext"
+
 
 
 

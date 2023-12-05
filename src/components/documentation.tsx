@@ -65,8 +65,9 @@ interface Props {
 function Documentation({ queryId }: Props) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [doc_id, setDoc_id] = useState<number>();
-  const [dialogType, setDialogType] = useState<"edit" | "add">("edit");
+  const [doc_id, setDoc_id] = useState<number>(0);
+  const [index, setIndex] = useState<number|undefined>();
+  const [dialogType, setDialogType] = useState<"edit" | "add" | undefined>();
   const queryClient = useQueryClient();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -128,7 +129,14 @@ function Documentation({ queryId }: Props) {
             <CardTitle className="text-lg">
               <FormattedMessage id="Dokument" />
             </CardTitle>
-            <Button onClick={() => onActionClick("add")} variant={"ghost"}>
+            <Button
+              onClick={() => {
+                onActionClick("add");
+                setDoc_id(0);
+                setIndex(undefined)
+              }}
+              variant={"ghost"}
+            >
               {" "}
               <PlusSquare className="h-5 w-5" />
             </Button>
@@ -168,12 +176,13 @@ function Documentation({ queryId }: Props) {
               >
                 <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none w-fit">
+                  <p className="leading-none w-11/12">
                     {el.doc_text}
                   </p>
                   <div className="flex justify-between ">
                     <p className="text-sm text-muted-foreground p-1 w-full">
-                      {el.created_at.slice(0, 10)}
+                      {`${el.created_at.split("T")[0]} 
+                        ${el.created_at.split("T")[1].slice(0, 8)}`}
                     </p>
                     <div className="self-end ">
                       <DropdownMenu>
@@ -187,6 +196,7 @@ function Documentation({ queryId }: Props) {
                             onClick={() => {
                               onActionClick("edit");
                               setDoc_id(el.id);
+                              setIndex(index);
                             }}
                             className="flex justify-between"
                           >
@@ -196,6 +206,7 @@ function Documentation({ queryId }: Props) {
                             onClick={() => {
                               setIsDialogOpen(true);
                               setDoc_id(el.id);
+                              setIndex(index);
                             }}
                             className="flex justify-between"
                           >
@@ -208,21 +219,31 @@ function Documentation({ queryId }: Props) {
                   </div>
                 </div>
 
+                
                 {/* {dialogType === "edit" ? dialogEditTask : dialogDeleteTask} */}
               </div>
             ))}
+            
           </ScrollArea>
         </CardContent>
       </Card>
-
       <DocumentationEdit
+                  open={isEditMode}
+                  setOpen={setIsEditMode}
+                  data={data}
+                  dialogType={dialogType}
+                  setIsEditMode={setIsEditMode}
+                  doc_id={doc_id}
+                  index={index}
+                />
+      {/* <DocumentationEdit
         open={isEditMode}
         setOpen={setIsEditMode}
         data={data}
         dialogType={dialogType}
         setIsEditMode={setIsEditMode}
         doc_id={doc_id}
-      />
+      /> */}
     </>
   );
 }
