@@ -17,10 +17,9 @@ export function Filter({
     .flatRows[0]?.getValue(column.id);
 
   const columnsInTable = column.id;
-  const columnFilterValue = column.getFilterValue();
   return typeof firstValue === "number" ? (
     <>
-      <div className="flex space-x-2 mt-2 ml-2 ">
+      <div className="flex space-x-2 ml-2 py-2">
         <input
           type="number"
           //value={(columnFilterValue as [number, number])?.[0] ?? ""}
@@ -46,7 +45,7 @@ export function Filter({
           className="w-20 border shadow rounded h-7"
         />
       </div>
-      <div className="flex items-center py-2 ml-2">
+      <div className="flex items-center pb-2 ml-2">
         <input
           placeholder={formatMessage({
             id: "filter",
@@ -66,20 +65,24 @@ export function Filter({
     columnsInTable === "End_EEL" ||
     columnsInTable === "Start_rehab" ||
     columnsInTable === "Date_prescription" ? (
-    <input
-      type="date"
-      className="max-w-sm w-27 border shadow rounded h-7 mt-2"
-      onChange={(e) => column.setFilterValue(e.target.value)}
-    />
+    <div className="flex space-x-2 ml-2 py-2">
+      <input
+        type="date"
+        className="max-w-sm w-27 border shadow rounded h-7 py-2 mb-2 ml-2"
+        onChange={(e) => column.setFilterValue(e.target.value)}
+      />
+    </div>
   ) : (
-    <input
-      type="text"
-      //value={(columnFilterValue ?? "") as string}
-      onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={formatMessage({
-        id: "filter",
-      })}
-      className="w-36 border shadow rounded h-7 mt-2 ml-2"
-    />
+    <div className="flex space-x-2 ml-2 py-2">
+      <input
+        type="text"
+        //value={(columnFilterValue ?? "") as string}
+        onChange={(e) => column.setFilterValue(e.target.value)}
+        placeholder={formatMessage({
+          id: "filter",
+        })}
+        className="w-36 border shadow rounded h-7 py-2 ml-2"
+      />
+    </div>
   );
 }

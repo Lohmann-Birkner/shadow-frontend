@@ -459,7 +459,9 @@ export function SeachPatientMultipleCatalog({
           {isLoading ? "Loading..." : "Search"}
         </Button>
         <Button className="mx-2"
-        onClick={() => form.reset()}>Reset</Button>
+        onClick={() => form.reset({
+          ins_id:""
+        })}>Reset</Button>
       </form>
     </Form>
   );

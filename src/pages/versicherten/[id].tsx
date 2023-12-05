@@ -115,7 +115,7 @@ export default function Page() {
   const columns = TasksColumns();
   const columnsRelatedToPatient = TasksColumns().slice(1);
   const taskRelatedToPatient = useQuery(
-    ["tasksRelatedToUser", tab,query.id],
+    ["tasksRelatedToUser", tab, query.id],
     () => getTaskRelatedToUserById(query.id as string),
     { enabled: true }
   );
@@ -155,7 +155,13 @@ export default function Page() {
                       <CardTitle className="mb-1 text-lg">
                         <FormattedMessage id="Name" />:{" "}
                         <span className="font-light">
-                          {`${data?.last_name} ${data?.first_name}`}
+                          {`${data?.last_name}`}
+                        </span>
+                      </CardTitle>
+                      <CardTitle className="mb-1 text-lg">
+                        <FormattedMessage id="first_name" />:{" "}
+                        <span className="font-light">
+                          {`${data?.first_name}`}
                         </span>
                       </CardTitle>
                       <CardTitle className="mb-1 text-lg">
@@ -198,15 +204,19 @@ export default function Page() {
                   {" "}
                   <CardContent className="px-1 py-1 flex ">
                     <CardTitle className="mb-1 text-lg pl-0 pr-4">
-                      <FormattedMessage id="Membership_number" />:{" "}
-                      <span className="font-light">
-                        {data?.Membership_number}
-                      </span>
+                      <FormattedMessage id="ins_id" />:{" "}
+                      <span className="font-light">{data?.ins_id}</span>
                     </CardTitle>
                     <CardTitle className="mb-1 text-lg px-4">
                       <FormattedMessage id="Name" />:{" "}
                       <span className="font-light">
-                        {`${data?.last_name} ${data?.first_name}`}
+                        {`${data?.last_name} `}
+                      </span>
+                    </CardTitle>
+                    <CardTitle className="mb-1 text-lg px-4">
+                      <FormattedMessage id="first_name" />:{" "}
+                      <span className="font-light">
+                        {` ${data?.first_name}`}
                       </span>
                     </CardTitle>
                     <CardTitle className="mb-1 text-lg px-4">

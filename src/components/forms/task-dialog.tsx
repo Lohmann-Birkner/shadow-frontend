@@ -159,7 +159,7 @@ function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      <FormattedMessage id="Membership_number" />
+                      <FormattedMessage id="ins_id" />
                     </FormLabel>
                     <FormControl>
                       <Input className="md:h-9" {...field} />
@@ -175,12 +175,12 @@ function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
               control={form.control}
               name="todo_content"
               render={({ field }) => (
-                <FormItem className="mt-3">
+                <FormItem className="mt-3 ">
                   <FormLabel>
                     <FormattedMessage id="Content" />
                   </FormLabel>
                   <FormControl>
-                    <Textarea {...field} />
+                    <Textarea className="h-64" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -267,7 +267,7 @@ function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
                           )}
                         >
                           {field.value ? (
-                            format(field.value, "dd-MM-yyyy")
+                            format(field.value, "dd.MM.yyyy")
                           ) : (
                             <span>
                               <FormattedMessage id="Date_pick" />

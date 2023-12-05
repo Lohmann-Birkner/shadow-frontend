@@ -165,14 +165,14 @@ export function MedicalServiceTable({
               className="p-2 font-lg shadow border border-block  max-w-sm rounded-md m-2 h-2/3"
               onChange={(event) => setGlobalFilter(event.target.value)}
             />
-            {/* <Button
+            <Button
               key="filterButton"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               variant="outline"
               className="m-2 shadow w-48"
             >
               <FormattedMessage id="filter_open" />
-            </Button> */}
+            </Button>
           </div>
         </div>
         <Table className="h-fit max-h-[45rem]">
@@ -183,7 +183,8 @@ export function MedicalServiceTable({
                   return (
                     <>
                       <TableHead
-                        className="bg-slate-100 text-slate-950 hover:cursor-grab h-16 pt-4"
+                        className="bg-slate-100 text-slate-950 
+                        hover:cursor-grab h-20 pt-4"
                         key={header.id}
                         draggable={
                           !table.getState().columnSizingInfo.isResizingColumn
@@ -195,29 +196,21 @@ export function MedicalServiceTable({
                         }}
                         onDrop={onDrop}
                       >
-                        <ContextMenu>
-                          <ContextMenuTrigger
-                            key={header.id}
-                            className=" border-0 flex border-black bg-slate-100"
-                          >
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                            {/* {header.column.getCanFilter()
+                         <div className="h-9">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </div>
+                        {header.column.getCanFilter()
                           ? isFilterOpen && (
                               <Filter column={header.column} table={table} />
                             )
-                          : null} */}{" "}
-                          </ContextMenuTrigger>
-                          <ContextMenuContent className="h-28 w-60 ">
-                            <Filter column={header.column} table={table} />
-                          </ContextMenuContent>
-                        </ContextMenu>
+                          : null}
                       </TableHead>
-                    </>
+                    </> 
                   );
                 })}
               </TableRow>

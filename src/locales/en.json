@@ -72,7 +72,7 @@
     "Group_medical_aid": "Medical Aid Group",
     "Group_ID_medical_aid": "Medical Aid Group ID",
     "Diagnosis": "Diagnosis",
-    "ID_Insured": "ID Insured",
+    "ID_Insured": "Insurance Number",
     "Case_number": "Case number",
     "Admission_date": "Admission date",
     "Reason_admission": "Reason for admission",
@@ -174,7 +174,7 @@
     "Search_all_columns": "Filter all columns",
     "Procedures": "Procedures",
     "Billings": "Billings",
-    "Payment": "Payment",
+    "Payment": "Payments",
 
     "prescriber_group_id": "Prescriber group ID",
     "physician_ident": "Physician ident",
@@ -206,7 +206,16 @@
     "date_picker":"Pick a date",
     "female":"Female",
     "male":"Male",
-    "select_gender":"Select gender"
+    "select_gender":"Select gender",
+    "ICD_Text":"ICD-Text",
+    "OPS_Text":"OPS-Text",
+    "Documentation_add":"Add documentation",
+    "Documentation_edit":"Edit documentation",
+    "ICD_Main_Text":"ICD main text"
+
+
+
+
 
 
 
