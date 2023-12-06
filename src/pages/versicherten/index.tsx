@@ -115,16 +115,16 @@ export default function Home({ patients }: Props) {
 
   return (
     <main
-      className={`grid grid-cols-1 mt-12 md:mt-16 space-y-4 md:space-y-0 mb-5 lg:ml-24 md:px-5 2xl:px-16 2xl:gap-8  ${inter.className}`}
+      className={`grid grid-cols-1 mt-12 md:mt-16 space-y-4 md:space-y-0 mb-5 lg:ml-24 md:px-5 2xl:px-16 2xl:gap-8 ${inter.className}`}
     >
-      <section className="lg:mr-5 lg:mb-0">
-        <Card>
+      <section className="lg:mr-5 lg:mb-0 ">
+        <Card className="border-0 shadow-none">
           <CardHeader>
             <CardTitle>
-              <FormattedMessage id="Insured_person" />
+              <FormattedMessage id="Insured_person"/>
             </CardTitle>
           </CardHeader>
-          <CardContent className="px-4 md:px-6">
+          <CardContent className="px-4 md:px-6 h-full">
             <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
              
               <SeachPatientMultipleCatalog
@@ -176,7 +176,7 @@ export default function Home({ patients }: Props) {
                   columns={PatientColumns()}
                   data={sortedItems}
                   pagination
-                  className="w-full"
+                  className="w-full border-4"
                 />
               </div>
             )}
