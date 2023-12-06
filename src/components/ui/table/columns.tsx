@@ -1598,7 +1598,14 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
           </Button>
         );
       },
-      cell: ({ row }) => FormatDate(row.getValue("Delivery_date")),
+      cell: ({ row }) => {
+        const check_date_healing = row.getValue("Delivery_date");
+        if (check_date_healing === "9999-12-31") {
+          return;
+        } else {
+          return FormatDate(row.getValue("Delivery_date"))
+        }
+      },
     },
     {
       accessorKey: "Number_ventilation_days",
