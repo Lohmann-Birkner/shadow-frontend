@@ -28,13 +28,15 @@ function Navbar() {
               <Separator orientation="vertical" />
               <div>User ID:{data.user.user_id}</div>
               <Separator orientation="vertical" />
-              <div>Source</div>
+              <div><FormattedMessage id="Last_name" />:{data.user.lastname}</div>
+              <Separator orientation="vertical" />
+              <div><FormattedMessage id="Firstname" />:{data.user.firstname}</div>
               <Separator orientation="vertical" />
             </div>{" "}
             {/*            
             <label>
               {" "}
-              <FormattedMessage id="last_name" />
+              
             </label>
             <li>{data.user.email}</li>
             <label>
