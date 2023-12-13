@@ -7,6 +7,7 @@ import {
   ColumnSizingColumnDef,
   SortingState,
   getSortedRowModel,
+  VisibilityState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -19,6 +20,7 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -40,42 +42,95 @@ export function DataTable<TData, TValue>({
   className,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({
+      Secondary_diagnosis: false,
+      Type_diagnosis: false,
+      Localization_diagnosis: false,
+      Severity_diagnosis: false,
+    });
+  const onClickOpenColumns = () => {
+    setColumnVisibility({
+      Secondary_diagnosis: !columnVisibility.Secondary_diagnosis,
+      Type_diagnosis: !columnVisibility.Type_diagnosis,
+      Localization_diagnosis: !columnVisibility.Localization_diagnosis,
+      Severity_diagnosis: !columnVisibility.Severity_diagnosis,
+    });
+  };
   const table = useReactTable({
     data,
     columns,
+    onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+      columnVisibility,
     },
     initialState: {
       pagination: {
         pageSize: 16,
+        
       },
     },
+    enableColumnResizing:
+      columns[0].header !== "Versichertennummer" &&
+      columns[0].header !== "Insurance Number" &&
+      true,
+    columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    defaultColumn: {
-      maxSize: 100,
-    },
   });
+
+  let checkIfcolumnNeedToBeShown =
+    columns[0].header == "Datum Diagnose" ||
+    columns[0].header == "Date diagnosis";
+  
   return (
     <>
-      <div className="rounded-md border-2 overflow-auto ">
-        <Table className="">
-          <TableHeader className="border-b ">
+      {checkIfcolumnNeedToBeShown && (
+        <Button onClick={onClickOpenColumns}>expand</Button>
+      )}
+
+      <div className="rounded-md border-2 overflow-auto">
+        <Table
+          // style={{
+          //   width: table.getTotalSize(),
+          // }}
+          className={`w-fit border-collapse ${
+            columns[0].header !== "Versichertennummer" &&
+            columns[0].header !== "Insurance Number"
+              ? `w-${table.getTotalSize()}`
+              : ""
+          }`}
+        >
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead className="text-left" key={header.id}>
+                    <TableHead
+                      className="text-left border-r-1 border-b-2 hover:border-r-2"
+                      key={header.id}
+                      style={{ position: "relative", width: header.getSize() }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
                             header.getContext()
                           )}
+                      {columns[0].header !== "Versichertennummer" &&
+                        columns[0].header !== "Insurance Number" &&
+                        header.column.getCanResize() && (
+                          <div
+                            onMouseDown={header.getResizeHandler()}
+                            onTouchStart={header.getResizeHandler()}
+                            className={`absolute top-0 right-0 h-full w-0.5 bg-opacity-10 bg-black cursor-col-resize select-none touch-none ${
+                              header.column.getIsResizing() ? "opacity-100" : ""
+                            }`}
+                          ></div>
+                        )}
                     </TableHead>
                   );
                 })}
@@ -91,13 +146,19 @@ export function DataTable<TData, TValue>({
                   onClick={() => {
                     onRowClick && onRowClick(row.original);
                   }}
+
                   // data-state={
                   //     row.original === selectedItem &&
                   //     "selected"
                   // }
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      id={cell.id}
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                      
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

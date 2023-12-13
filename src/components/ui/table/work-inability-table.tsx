@@ -110,7 +110,10 @@ export function WorkInabilityTable({
 
   return (
     <>
-      <div className="rounded-md max-h-[45rem] border-2 h-[40rem] overflow-y-auto">
+      <div
+        className="rounded-md max-h-[45rem] border-2 overflow-y-auto"
+        style={{ height: "75vh" }}
+      >
         <div className="flex">
           <div>
             <DropdownMenu>

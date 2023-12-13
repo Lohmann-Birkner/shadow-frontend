@@ -38,21 +38,7 @@ import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Filter } from "../Filter";
-import {
-  ContextMenu,
-  ContextMenuCheckboxItem,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
+
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -79,12 +65,15 @@ export function MedicalServiceTable({
   const table = useReactTable({
     data,
     columns,
+    enableColumnResizing: true,
+    columnResizeMode: "onChange",
+    getCoreRowModel: getCoreRowModel(),
     initialState: {
       pagination: {
         pageSize: 12,
       },
     },
-    getCoreRowModel: getCoreRowModel(),
+
     getPaginationRowModel: getPaginationRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
@@ -125,8 +114,8 @@ export function MedicalServiceTable({
 
   return (
     <>
-      <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
-        <div className="flex  ">
+      <div className="max-h-[48rem] border-2 rounded-md overflow-y-auto" style={{height:"75vh"}}>
+        <div className="flex">
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -175,7 +164,10 @@ export function MedicalServiceTable({
             </Button>
           </div>
         </div>
-        <Table className="h-fit max-h-[45rem]">
+        <Table
+          className="h-fit max-h-[45rem] border-collapse w-full"
+          style={{ width: table.getTotalSize() }}
+        >
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className=" w-full">
@@ -183,9 +175,9 @@ export function MedicalServiceTable({
                   return (
                     <>
                       <TableHead
-                        className="bg-slate-100 text-slate-950 
-                        hover:cursor-grab h-20 pt-4"
+                        className=" text-slate-950 bg-slate-100 relative h-20 pt-4 border-r-1 hover:border-r-2"
                         key={header.id}
+                        colSpan={header.colSpan}
                         draggable={
                           !table.getState().columnSizingInfo.isResizingColumn
                         }
@@ -195,22 +187,42 @@ export function MedicalServiceTable({
                           e.preventDefault();
                         }}
                         onDrop={onDrop}
+                        style={{
+                          position: "relative",
+                          width: header.getSize(),
+                        }}
                       >
-                         <div className="h-9">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
                               header.column.columnDef.header,
                               header.getContext()
                             )}
-                      </div>
+                        {header.column.getCanResize() && (
+                          <div
+                            onMouseDown={header.getResizeHandler()}
+                            onTouchStart={header.getResizeHandler()}
+                            className={`absolute top-0 right-0 h-full w-0.5 bg-opacity-10 bg-black cursor-col-resize select-none touch-none ${
+                              header.column.getIsResizing() ? "opacity-100" : ""
+                            }`}
+                            // style={{
+                            //   transform: header.column.getIsResizing()
+                            //     ? `translateX(${
+                            //         table.getState().columnSizingInfo
+                            //           .deltaOffset
+                            //       }px)`
+                            //     : "",
+                            // }}
+                          ></div>
+                        )}
+
                         {header.column.getCanFilter()
                           ? isFilterOpen && (
                               <Filter column={header.column} table={table} />
                             )
                           : null}
                       </TableHead>
-                    </> 
+                    </>
                   );
                 })}
               </TableRow>
@@ -227,7 +239,11 @@ export function MedicalServiceTable({
                   onClick={() => toggleRowExpansion(row.id)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="h-14 text-center" key={cell.id}>
+                    <TableCell
+                      className="h-14 text-center"
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -248,25 +264,24 @@ export function MedicalServiceTable({
                         <>
                           {row.original.diags.length > 0 && (
                             <div
-                              className=" px-10 bg-neutral-100 w-1/2 mb-3 pl-10  "
+                              className=" px-10 bg-neutral-100 mb-3 pl-10 w-fit"
                               key={row.id}
                             >
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>
-                              <div className="w-fit" key="data">
-                                <DataTable
-                                  data={row.original.diags}
-                                  columns={MedicalServiceDiagsColumns()}
-                                  pagination={false}
-                                />
-                              </div>
+
+                              <DataTable
+                                data={row.original.diags}
+                                columns={MedicalServiceDiagsColumns()}
+                                pagination={false}
+                              />
                             </div>
                           )}
 
                           {row.original.ops.length > 0 && (
                             <div
-                              className="mb-5 px-10 bg-neutral-100 w-1/2"
+                              className="mb-5 px-10 bg-neutral-100"
                               key={row.id}
                             >
                               <TableCaption className="my-2 font-semibold text-slate-950">

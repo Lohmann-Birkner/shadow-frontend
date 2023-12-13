@@ -43,6 +43,7 @@ import {
   TooltipTrigger,
 } from "../tooltip";
 import PrescriberTable from "./prescriber-table";
+import stringWidth from "string-width";
 
 //this function is built to filter the columns with data type number,
 //so that the column can be filtered according to a range and also an exact number
@@ -68,7 +69,7 @@ const mulitiFunctionFilter: FilterFn<any> = (
 // Insured
 
 export const PatientColumns = (): ColumnDef<PatientT>[] => {
-  const { formatMessage, locale } = useIntl();
+  const { formatMessage } = useIntl();
   return [
     {
       accessorKey: "ins_id",
@@ -1148,31 +1149,49 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
     {
       accessorKey: "Main_ICD_Text",
       header: formatMessage({ id: "ICD_Text" }),
-      cell: ({ row }) => {
+
+      cell: ({ row,column }) => {
         const Main_ICD_Text = row.original.Main_ICD_Text;
         const Main_ICD_Text_Short = row.original.Main_ICD_Text.slice(
           0,
           10
         ).concat("...");
-
-        const pznTextTooltip = (
+        const aaa=stringWidth(Main_ICD_Text)
+        const bbb=Main_ICD_Text.length;
+        const ccc=document.querySelector("[id='0_Main_ICD_Text']");
+        console.log(ccc)
+        const text = (
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger className="flex items-center">
-                {Main_ICD_Text_Short}
-                <Info className="w-4 h-4 ml-1" />
-              </TooltipTrigger>
+              <div className="resize-x text-ellipsis overflow-hidden whitespace-nowrap">
+                {Main_ICD_Text}
+              </div>
+              {
+                <TooltipTrigger>
+                  <Info className="w-4 h-4 ml-1" />
+                </TooltipTrigger>
+              }
               <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         );
+        return text;
 
-        return Main_ICD_Text ? (
-          pznTextTooltip
-        ) : (
-          <div>{row.getValue("Main_ICD_Text")}</div>
-        );
+        // const pznTextTooltip = (
+        //   <TooltipProvider>
+        //     <Tooltip>
+        //       <TooltipTrigger className="flex items-center w-[100px]   ">
+        //         {Main_ICD_Text}
+        //         {/* <Info className="w-4 h-4 ml-1" /> */}
+        //       </TooltipTrigger>
+        //       <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
+        //     </Tooltip>
+        //   </TooltipProvider>
+        // );
+
+        // return pznTextTooltip
       },
+      size: 50,
     },
     {
       accessorKey: "Secondary_diagnosis",
@@ -1603,7 +1622,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
         if (check_date_healing === "9999-12-31") {
           return;
         } else {
-          return FormatDate(row.getValue("Delivery_date"))
+          return FormatDate(row.getValue("Delivery_date"));
         }
       },
     },

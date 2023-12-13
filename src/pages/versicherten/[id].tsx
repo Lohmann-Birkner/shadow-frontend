@@ -126,10 +126,10 @@ export default function Page() {
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
-        className="space-y-2 border-2"
+        className="space-y-2"
       >
-        <main className="mt-16 lg:flex lg:justify-start lg:grid-cols-[25%_75%] lg:ml-24 px-5 2xl:px-8 2xl:gap-1 h-screen rounded-md">
-          <div>
+        <main className="mt-16 lg:flex lg:justify-start lg:grid-cols-[25%_75%] lg:ml-24 px-5 2xl:px-8 2xl:gap-1 h-full rounded-md">
+       
             <CollapsibleTrigger asChild>
               <Button
                 variant="ghost"
@@ -143,8 +143,8 @@ export default function Page() {
                 )}
               </Button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-2 w-[350px]">
-              <section className="flex flex-col pb-5">
+            <CollapsibleContent className="space-y-2 w-[350px] ">
+              <section className="flex flex-col pb-5 ">
                 <Card>
                   {data && (
                     <CardContent className="px-4 py-5">
@@ -184,10 +184,9 @@ export default function Page() {
                   )}
                 </Card>
 
-                <Documentation queryId={query.id} />
+                <Documentation queryId={query.id} patientData={data} />
               </section>
             </CollapsibleContent>
-          </div>
           <section
             className={cn(
               "lg:ml-4 pb-5 lg:w-4/5 border-3",
@@ -257,16 +256,17 @@ export default function Page() {
               </TabsList>
               <TabsContent
                 value="task"
-                className="p-0 border-3 h-[45rem] max-h-[45rem]  "
+                className="p-0 border-3"
               >
                 <AufgabeRelatedToPatient
                   data={tasks}
                   columns={columnsRelatedToPatient}
                   pagination
+                  patientData={data}
                 />
               </TabsContent>
               <TabsContent
-                className="p-0 border-3 h-[45rem] max-h-[45rem]  "
+                className="p-0 border-0"
                 value="medical_service"
               >
                 {medicalService.data ? (
@@ -282,7 +282,7 @@ export default function Page() {
                 )}
               </TabsContent>
               <TabsContent
-                className="p-0 h-[45rem] border-0"
+                className="p-0 border-0"
                 value="medication"
               >
                 {medication.data ? (
@@ -290,7 +290,7 @@ export default function Page() {
                     data={medication.data}
                     columns={MedicationColumns()}
                     pagination
-                    className="overflow-x-auto"
+                    
                   />
                 ) : (
                   <div className="w-full flex justify-center items-center">
@@ -299,7 +299,7 @@ export default function Page() {
                 )}
               </TabsContent>
               <TabsContent
-                className="p-0 h-[45rem] border-0"
+                className="p-0 border-0"
                 value="work_inability"
               >
                 {workInability.data ? (
@@ -321,7 +321,7 @@ export default function Page() {
                 )}
               </TabsContent>
               <TabsContent
-                className="p-0 h-[45rem] border-0"
+                className="p-0 h-[55rem] border-0"
                 value="therapeutic_and_aid_supplies"
               >
                 {medaid.data ? (
@@ -343,7 +343,7 @@ export default function Page() {
                 )}
               </TabsContent>
               <TabsContent
-                className="p-0 h-[45rem] border-0 rounded-md"
+                className="p-0 h-[48rem] border-0 rounded-md"
                 value="hospital"
               >
                 {hospital.data ? (
@@ -365,7 +365,7 @@ export default function Page() {
                 )}
               </TabsContent>
 
-              <TabsContent className="p-0 h-[45rem] border-0" value="rehab">
+              <TabsContent className="p-0 h-[55rem] border-0" value="rehab">
                 {rehab.data ? (
                   rehab.data.length > 0 ? (
                     <RehabTable
@@ -384,17 +384,6 @@ export default function Page() {
                   </div>
                 )}
               </TabsContent>
-              {/* <TabsContent className="p-5" value="tasks">
-            {tasks && (
-              <DataTable
-                pagination
-                data={tasks.slice(0, 4)}
-                columns={columns.filter(
-                  (column) => column.accessorKey !== "insuranceNumber"
-                )}
-              />
-            )}
-          </TabsContent> */}
             </Tabs>
           </section>
         </main>{" "}

@@ -22,11 +22,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { TaskForFormT, TaskRelatedToUserT, TaskT } from "../../../types";
+import {
+  PatientT,
+  TaskForFormT,
+  TaskRelatedToUserT,
+  TaskT,
+} from "../../../types";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { FormatDeadline, cn } from "@/lib/utils";
+import { FormatDeadline, FormatGender, cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { Button } from "../ui/button";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
@@ -40,7 +45,15 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { FormatDate } from "@/lib/format-date";
+import { Separator } from "../ui/separator";
 
 //Add task dialog
 // Define a form schema
@@ -59,10 +72,18 @@ interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   refetch?: Function;
-  queryId?:string
+  queryId?: string;
+  patientData?: PatientT;
 }
 
-function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
+function TaskDialog({
+  task,
+  open,
+  setOpen,
+  refetch,
+  queryId,
+  patientData,
+}: Props) {
   const queryClient = useQueryClient();
 
   let defaultDeadline; // Default value for deadline
@@ -79,7 +100,7 @@ function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
       todo_content: task ? task.todo_content : "",
       todo_deadline: defaultDeadline,
       priority: "low",
-      related_patient_id:queryId
+      related_patient_id: queryId,
     },
   });
   const { isLoading, mutate } = useMutation({
@@ -122,9 +143,54 @@ function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle className="text-2xl">
+      <AlertDialogContent className="max-w-3xl h-fit flex flex-col">
+        {patientData && (
+          <div className="w-full flex pr-6">
+            <div className="">
+              <div className="font-medium flex">
+                <FormattedMessage id="ins_id" />:
+                <span className="font-light">{patientData?.ins_id}</span>
+              </div>{" "}
+              <div className="font-medium flex">
+                <FormattedMessage id="Date_of_birth" />:{" "}
+                <span className="font-light">
+                  {" "}
+                  {FormatDate(patientData?.Date_of_birth)}
+                </span>
+              </div>
+              
+            </div>
+            <div className="pl-4">
+              {" "}
+              <div className="font-medium flex">
+                {" "}
+                <FormattedMessage id="first_name" />:{" "}
+                <span className="font-light">{`${patientData?.first_name}`}</span>
+                
+              </div>
+              <div className="font-medium flex">
+                {" "}
+                <FormattedMessage id="Name" />:{"      "}
+                <span className="font-light">
+                  {`    ${patientData?.last_name}`}
+                </span>
+              </div>
+            </div>
+
+            {/* <CardTitle className="mb-1 text-lg">
+                <FormattedMessage id="Gender" />:{" "}
+                <span className="font-light">
+                  {FormatGender(patientData?.Gender)}
+                </span>
+              </CardTitle>
+              <CardTitle className="text-lg">
+                <FormattedMessage id="ZIP_code" />:{" "}
+                <span className="font-light">{patientData?.ZIP_code}</span>
+              </CardTitle> */}
+          </div>
+        )}
+        <AlertDialogHeader className="space-y-0">
+          <AlertDialogTitle className="text-xl ">
             {task ? (
               <FormattedMessage id="Task_edit" />
             ) : (
@@ -135,7 +201,7 @@ function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
 
         <Form {...form}>
           <form
-            className="mt-4 "
+            className="mt-0 h-full "
             onSubmit={form.handleSubmit((data) => onSubmit(data))}
           >
             <FormField
@@ -180,12 +246,13 @@ function TaskDialog({ task, open, setOpen, refetch,queryId }: Props) {
                     <FormattedMessage id="Content" />
                   </FormLabel>
                   <FormControl>
-                    <Textarea className="h-64" {...field} />
+                    <Textarea className="xl:h-full lg:h-32" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+          
             {!task ? (
               <FormField
                 control={form.control}

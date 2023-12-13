@@ -19,7 +19,7 @@ import { FormattedMessage } from "react-intl";
 import { useQuery } from "react-query";
 import { getAllPatients, getPatientSearchResult } from "@/api";
 import SearchPatient from "@/components/search-patient";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { SeachPatientMultipleCatalog } from "@/components/searchPatientMultipleCatalog";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -52,7 +52,7 @@ export default function Home({ patients }: Props) {
 
   const session = useSession();
 
-  // console.log("session data", session);
+ console.log("session data", session.data);
 
   const sortedItems = useMemo(() => {
     if (data) {
@@ -115,7 +115,7 @@ export default function Home({ patients }: Props) {
 
   return (
     <main
-      className={`grid grid-cols-1 mt-12 md:mt-16 space-y-4 md:space-y-0 mb-5 lg:ml-24 md:px-5 2xl:px-16 2xl:gap-8 ${inter.className}`}
+      className={`grid grid-cols-1 border-slate-950 mt-8 md:mt-16 space-y-4 md:space-y-0 mb-5 lg:ml-24 md:px-5 2xl:px-5 2xl:gap-8 ${inter.className}`}
     >
       <section className="lg:mr-5 lg:mb-0 ">
         <Card className="border-0 shadow-none">
@@ -124,7 +124,7 @@ export default function Home({ patients }: Props) {
               <FormattedMessage id="Insured_person"/>
             </CardTitle>
           </CardHeader>
-          <CardContent className="px-4 md:px-6 h-full">
+          <CardContent className="px-1 md:px-6 h-full">
             <div className="mt-5 mb-4 flex w-full justify-between flex-wrap space-y-4 md:space-y-0">
              
               <SeachPatientMultipleCatalog
@@ -169,14 +169,14 @@ export default function Home({ patients }: Props) {
               </div>
             </div>
             {sortedItems && (
-              <div className="w-full">
+              <div className="">
                 <DataTable
                   onRowClick={onRowClick}
                   selectedItem={selectedItem}
                   columns={PatientColumns()}
                   data={sortedItems}
                   pagination
-                  className="w-full border-4"
+                  className="w-full"
                 />
               </div>
             )}
@@ -187,7 +187,27 @@ export default function Home({ patients }: Props) {
   );
 }
 
-export async function getStaticProps() {
-  const patients = await getAllPatients();
-  return { props: { patients }, revalidate: 60 * 3 };
+// export async function getStaticProps() {
+ 
+ 
+//   const patients = await getAllPatients();
+//   return { props: { patients }, revalidate: 60 * 3 };
+// }
+export async function getServerSideProps(context:any) {
+  const session = await getSession(context)
+  try {
+    const patients = await getAllPatients(session?.user?.name)
+    return {
+      props : {
+        patients
+      }
+    }
+  } catch(error) {
+    console.log('error: ', error)
+    return {
+      props : {
+        error: true
+      }
+    }
+  }  
 }

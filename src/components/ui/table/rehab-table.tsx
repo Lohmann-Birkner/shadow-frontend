@@ -105,7 +105,10 @@ export function RehabTable({
   };
   return (
     <>
-      <div className="max-h-[45rem] border-2 rounded-md h-[40rem] overflow-y-auto  ">
+      <div
+        className="max-h-[45rem] border-2 rounded-md overflow-y-auto"
+        style={{ height: "75vh" }}
+      >
         <div className="flex">
           <Input
             placeholder={formatMessage({

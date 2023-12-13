@@ -36,7 +36,7 @@ export function formatDateForHospital(date: any) {
   return result;
 }
 
-export function FormatGender(data: string) {
+export function FormatGender(data: string|undefined) {
   const { locale } = useIntl();
   if (locale === "en") {
     switch (data) {

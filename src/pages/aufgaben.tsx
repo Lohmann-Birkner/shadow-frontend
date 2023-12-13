@@ -146,7 +146,7 @@ function Aufgaben() {
   };
 
   return (
-    <main className="grid grid-cols-1 h-full mt-12 md:mt-16 lg:ml-24 md:px-5">
+    <main className="grid grid-cols-1 mt-12 md:mt-16 lg:ml-24 md:px-5">
       <section className="mb-5">
         <Card className="border-none shadow-none">
           <CardHeader>

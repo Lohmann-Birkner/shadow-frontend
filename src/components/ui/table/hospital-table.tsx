@@ -42,6 +42,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Filter } from "../Filter";
+import { useSession } from "next-auth/react";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -66,6 +67,9 @@ export function HospitalTable({
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [tab, setTab] = useState("Diagnosis");
   const { formatMessage } = useIntl();
+
+
+
   const table = useReactTable({
     data,
     columns,
@@ -115,7 +119,7 @@ export function HospitalTable({
 
   return (
     <>
-      <div className="rounded-md h-full overflow-y-auto border-2">
+      <div className="rounded-md  overflow-y-auto border-2" style={{height:"75vh"}}>
         <div className="flex">
           <div>
             <DropdownMenu>

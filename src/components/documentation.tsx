@@ -53,6 +53,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "./ui/input";
 import DocumentationEdit from "./documentationEdit";
+import { PatientT } from "../../types";
 
 const FormSchema = z.object({
   doc_text: z.string(),
@@ -60,13 +61,14 @@ const FormSchema = z.object({
 
 interface Props {
   queryId: string | string[] | undefined;
+  patientData: PatientT | undefined;
 }
 
-function Documentation({ queryId }: Props) {
+function Documentation({ queryId, patientData }: Props) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [doc_id, setDoc_id] = useState<number>(0);
-  const [index, setIndex] = useState<number|undefined>();
+  const [index, setIndex] = useState<number | undefined>();
   const [dialogType, setDialogType] = useState<"edit" | "add" | undefined>();
   const queryClient = useQueryClient();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -91,7 +93,7 @@ function Documentation({ queryId }: Props) {
   const { mutate: deleteDocu } = useMutation({
     mutationFn: () => deleteDocument(doc_id as number),
     onSuccess: () => {
-      queryClient.invalidateQueries(["documentation"]);
+      queryClient.invalidateQueries(["documentation",queryId]);
     },
   });
 
@@ -123,7 +125,7 @@ function Documentation({ queryId }: Props) {
 
   return (
     <>
-      <Card className="mt-5">
+      <Card className="mt-5 rounded-md" style={{height:"49vh"}}>
         <CardHeader className="pt-6">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg">
@@ -133,7 +135,7 @@ function Documentation({ queryId }: Props) {
               onClick={() => {
                 onActionClick("add");
                 setDoc_id(0);
-                setIndex(undefined)
+                setIndex(undefined);
               }}
               variant={"ghost"}
             >
@@ -142,33 +144,8 @@ function Documentation({ queryId }: Props) {
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
-          {/* /* {isEditMode ? (
-            <Form {...form}>
-              <form
-                // onSubmit={form.handleSubmit((data) =>
-                //   onSubmit(data.DocumentationText))}
-                className="space-y-6"
-              >
-                <FormField
-                  control={form.control}
-                  name="DocumentationText"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Textarea className="h-60" {...field} />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button type="submit">Submit</Button>
-              </form>
-            // </Form> */}
-
-          <ScrollArea className="h-72 rounded-md ">
+        <CardContent >
+          <ScrollArea className="rounded-md overflow-auto pb-5" style={{height:"37vh"}}>
             {data?.map((el, index) => (
               <div
                 key={index}
@@ -176,9 +153,7 @@ function Documentation({ queryId }: Props) {
               >
                 <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
                 <div className="space-y-1">
-                  <p className="leading-none w-11/12">
-                    {el.doc_text}
-                  </p>
+                  <p className="leading-none w-11/12">{el.doc_text}</p>
                   <div className="flex justify-between ">
                     <p className="text-sm text-muted-foreground p-1 w-full">
                       {`${el.created_at.split("T")[0]} 
@@ -219,31 +194,22 @@ function Documentation({ queryId }: Props) {
                   </div>
                 </div>
 
-                
                 {/* {dialogType === "edit" ? dialogEditTask : dialogDeleteTask} */}
               </div>
             ))}
-            
           </ScrollArea>
         </CardContent>
       </Card>
       <DocumentationEdit
-                  open={isEditMode}
-                  setOpen={setIsEditMode}
-                  data={data}
-                  dialogType={dialogType}
-                  setIsEditMode={setIsEditMode}
-                  doc_id={doc_id}
-                  index={index}
-                />
-      {/* <DocumentationEdit
         open={isEditMode}
         setOpen={setIsEditMode}
         data={data}
         dialogType={dialogType}
         setIsEditMode={setIsEditMode}
         doc_id={doc_id}
-      /> */}
+        index={index}
+        patientData={patientData}
+      />
     </>
   );
 }

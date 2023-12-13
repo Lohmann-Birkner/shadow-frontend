@@ -42,14 +42,12 @@ interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: MedicationT[];
   pagination: boolean;
-  className: string;
 }
 
 export function MedicationTable({
   columns,
   data,
   pagination,
-  className,
 }: CollapsibleDataTableProps) {
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
@@ -113,7 +111,10 @@ export function MedicationTable({
 
   return (
     <>
-      <div className="rounded-md max-h-[45rem] border-2 h-fit overflow-auto  ">
+      <div
+        className="rounded-md max-h-[48rem] border-2 overflow-auto"
+        style={{ height: "75vh" }}
+      >
         <div className="flex">
           <div>
             <DropdownMenu>
