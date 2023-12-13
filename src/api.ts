@@ -55,7 +55,7 @@ export const getAllPatients = async (authorization: any) => {
 
 export const getPatientSearchResult = async (searchInputs: searchInputs) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const searchQuery = formSearchQuery(searchInputs);
 
   const res = await axios.get(`${API_URL_BASE}/insured?q=${searchQuery}`, {
@@ -67,8 +67,7 @@ export const getPatientSearchResult = async (searchInputs: searchInputs) => {
 
 export const getPatientById = async (id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
-  console.log(authorization);
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/insured/${id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -78,7 +77,7 @@ export const getPatientById = async (id: string) => {
 
 export const getPatientMedicalService = async (id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/medical_service/${id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -88,7 +87,7 @@ export const getPatientMedicalService = async (id: string) => {
 
 export const getPatientMedication = async (id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/medication/${id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -98,7 +97,7 @@ export const getPatientMedication = async (id: string) => {
 
 export const getPatientWorkInability = async (id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/work_inability/${id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -108,7 +107,7 @@ export const getPatientWorkInability = async (id: string) => {
 
 export const getPatientMedaid = async (id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/medaid/${id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -118,7 +117,7 @@ export const getPatientMedaid = async (id: string) => {
 
 export const getPatientHospital = async (id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/hospital/${id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -128,7 +127,7 @@ export const getPatientHospital = async (id: string) => {
 
 export const getPatientRehab = async (id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/rehab/${id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -138,7 +137,7 @@ export const getPatientRehab = async (id: string) => {
 
 export const getDocumentById = async (ins_id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(`${API_URL_BASE}/documentation/${ins_id}`, {
     headers: { authorization: `Token ${authorization}` },
   });
@@ -151,7 +150,7 @@ export const addDocument = async (
 ) => {
   console.log(data);
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   return await axios.post(`${API_URL_BASE}/documentation/${ins_id}`, data, {
     headers: {
       authorization: `Token ${authorization}`,
@@ -161,7 +160,7 @@ export const addDocument = async (
 
 export const deleteDocument = async (doc_id: number | undefined) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.delete(
     `${API_URL_BASE}/documentation/${doc_id}`,
     {
@@ -178,7 +177,7 @@ export const updateDocument = async (
   formData: { doc_text: string }
 ) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   return await axios.put(`${API_URL_BASE}/documentation/${doc_id}`, formData, {
     headers: {
       authorization: `Token ${authorization}`,
@@ -188,7 +187,7 @@ export const updateDocument = async (
 //get the todos/tasks not only for the general tasks also for the the tasks only related to one patient
 export const getTaskRelatedToUserById = async (related_patient_id?: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   if (related_patient_id) {
     const response = await axios.get(
       `${API_URL_BASE}/todos/${related_patient_id}`,
@@ -211,7 +210,7 @@ export const getTaskRelatedToUserById = async (related_patient_id?: string) => {
 
 export const getTaskRelatedToPatient = async (related_patient_id: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.get(
     `${API_URL_BASE}/todos/${related_patient_id}`,
     {
@@ -229,7 +228,7 @@ export const updateTaskByTaskId = async (
   todo_id: string
 ) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   return await axios.put(`${API_URL_BASE}/todos/${todo_id}`, formData, {
     headers: {
       authorization: `Token ${authorization}`,
@@ -239,7 +238,7 @@ export const updateTaskByTaskId = async (
 
 export const deleteTaskbyTaskId = async (taskId: string) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   const response = await axios.delete(`${API_URL_BASE}/todos/${taskId}`, {
     headers: {
       authorization: `Token ${authorization}`,
@@ -254,7 +253,7 @@ export const updateTaskStatusAndPriority = async (
   statusAndPriority: { done: boolean; priority: string }
 ) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
   return await axios.put(`${API_URL_BASE}/todos/${id}`, statusAndPriority, {
     headers: {
       authorization: `Token ${authorization}`,
@@ -264,12 +263,11 @@ export const updateTaskStatusAndPriority = async (
 
 export const addTask = async (data: {
   todo_title: string;
-
   todo_content: string;
   todo_deadline: string;
 }) => {
   const session = await getSession();
-  const authorization = session?.user?.name;
+  const authorization = session?.authorizationToken;
 
   return await axios.post(`${API_URL_BASE}/todos`, data, {
     headers: {
@@ -284,7 +282,7 @@ export const getUser = async (data: { username: string; password: string }) => {
     data
   );
 
-  console.log("response", response);
+  console.log("getUser response", response.data);
 
   return response;
 };

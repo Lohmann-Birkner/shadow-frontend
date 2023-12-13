@@ -4,6 +4,7 @@ import { getUser } from "@/api";
 
 let authorizationToken: string;
 let userId: string;
+let test: string;
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -27,7 +28,7 @@ export const authOptions = {
           response = await getUser({ username, password });
           authorizationToken = response.data.Authorization;
           userId = response.data.user_id;
-        //    console.log("response.data", response.data);
+          console.log("response.data in nextauth", response.data);
         } catch (error) {
           console.log("error", error);
         }
@@ -40,7 +41,8 @@ export const authOptions = {
         return {
           id: response.data.user_id,
           name: response.data.Authorization,
-          email:response.data.username
+          email: response.data.username,
+          test:"aaaaa"
         };
       },
     }),
@@ -50,14 +52,25 @@ export const authOptions = {
     signIn: "/auth/signin",
   },
   callbacks: {
-    async session({ session, token }: any) {
+    async session({ session, token, user, userId }: any) {
       // Send properties to the client, like an access_token from a provider.
 
-      session.authorizationToken = token.name;
-      session.user.user_id = userId;
-      console.log("session after", session);
-       console.log("token", token);
+      // session.authorizationToken = token.name;
+      // session.user.user_id = token.sub;
+      // session.user.image=token.sub
+      session = {
+        ...session,
+        user: {
+          ...user,
+          user_id: token.sub,
+          email: token.email,
+          
+        },
+        authorizationToken: token.name,
+      };
 
+      console.log("session after", session);
+      console.log("token", token);
 
       return session;
     },

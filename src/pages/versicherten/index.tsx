@@ -52,7 +52,7 @@ export default function Home({ patients }: Props) {
 
   const session = useSession();
 
- console.log("session data", session.data);
+  console.log("session data", session.data);
 
   const sortedItems = useMemo(() => {
     if (data) {
@@ -196,7 +196,7 @@ export default function Home({ patients }: Props) {
 export async function getServerSideProps(context:any) {
   const session = await getSession(context)
   try {
-    const patients = await getAllPatients(session?.user?.name)
+    const patients = await getAllPatients(session?.authorizationToken)
     return {
       props : {
         patients
