@@ -21,6 +21,8 @@ import { getAllPatients, getPatientSearchResult } from "@/api";
 import SearchPatient from "@/components/search-patient";
 import { getSession, useSession } from "next-auth/react";
 import { SeachPatientMultipleCatalog } from "@/components/searchPatientMultipleCatalog";
+import { authOptions } from "../api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -194,7 +196,7 @@ export default function Home({ patients }: Props) {
 //   return { props: { patients }, revalidate: 60 * 3 };
 // }
 export async function getServerSideProps(context:any) {
-  const session = await getSession(context)
+  const session = await getServerSession(context.req, context.res, authOptions)
   try {
     const patients = await getAllPatients(session?.authorizationToken)
     return {
