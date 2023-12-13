@@ -45,7 +45,6 @@ export default function AufgabeRelatedToPatient({
 }: CollapsibleDataTableProps) {
   const { query } = useRouter();
   const aaa = query.id as string;
-  console.log(typeof aaa);
   const { formatMessage } = useIntl();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

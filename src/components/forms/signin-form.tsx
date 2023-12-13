@@ -60,7 +60,7 @@ export default function SigninForm({ setIsSignin }: Props) {
             redirect: false,
         });
 
-        // console.log("res", res);
+        console.log("res", res);
 
         if (!res?.ok) {
             setLoginError("Username oder Passwort sind falsch");
