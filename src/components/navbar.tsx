@@ -14,7 +14,7 @@ function Navbar() {
   const { data } = useSession();
   const { asPath } = useRouter();
   const { locale } = useIntl();
-  console.log("data in navbar" + data);
+  console.log("data in navbar" + data?.user);
 
   return (
     <header className="fixed top-0 w-full flex items-center justify-between pl-3 pr-6 py-2 2xl:px-16 shadow-sm mx-0 border-b bg-white h-12">
@@ -23,24 +23,19 @@ function Navbar() {
       <ul className="list-style-none ml-auto flex  pl-0 lg:mt-1 sm:flex-row sm:mt-2 h-10">
         {data?.user && (
           <>
-            <div className="flex h-5 items-center space-x-4 text-sm mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1 mr-5 mt-1">
+            <div className="flex h-5 items-center space-x-4 text-md mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1 mr-5 mt-1">
               <div>Email:{data.user.email}</div>
               <Separator orientation="vertical" />
               <div>User ID:{data.user.user_id}</div>
               <Separator orientation="vertical" />
-              <div>Source</div>
+              <div><FormattedMessage id="Last_name" />:{data.user.last_name}</div>
               <Separator orientation="vertical" />
-            </div>{" "}
-            {/*            
-            <label>
-              {" "}
-              <FormattedMessage id="last_name" />
-            </label>
-            <li>{data.user.email}</li>
-            <label>
-              {" "}
-              <FormattedMessage id="firstname" />
-            </label> */}
+              <div><FormattedMessage id="Firstname" />:{data.user.first_name}</div>
+              <Separator orientation="vertical" />
+
+
+            </div>
+     
           </>
         )}
 
