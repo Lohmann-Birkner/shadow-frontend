@@ -4,7 +4,7 @@ import { getUser } from "@/api";
 
 let authorizationToken: string;
 let userId: string;
-let test: string;
+let firstname:string;
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -42,7 +42,9 @@ export const authOptions = {
           id: response.data.user_id,
           name: response.data.Authorization,
           email: response.data.username,
-          test:"aaaaa"
+          test:"aaaaa",
+          firstname:response.data.first_name,
+          lastname:response.data.last_name
         };
       },
     }),
@@ -52,7 +54,23 @@ export const authOptions = {
     signIn: "/auth/signin",
   },
   callbacks: {
-    async session({ session, token, user, userId }: any) {
+
+    async signIn({ user, account }:any) {
+      account.firstname=user.firstname;
+      account.lastname=user.lastname
+      console.log(user,account)
+      return true
+    },
+    async jwt({ token, account }:any) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        token.firstname = account.firstname;
+        token.lastname=account.lastname
+        
+      }
+      return token
+    },
+    async session({ session, token, user }: any) {
       // Send properties to the client, like an access_token from a provider.
 
       // session.authorizationToken = token.name;
@@ -64,13 +82,15 @@ export const authOptions = {
           ...user,
           user_id: token.sub,
           email: token.email,
+          first_name:token.firstname,
+          last_name:token.lastname
           
         },
         authorizationToken: token.name,
       };
 
-      console.log("session after", session);
-      console.log("token", token);
+        console.log("session after", session);
+      //  console.log("token", token);
 
       return session;
     },
