@@ -69,8 +69,7 @@ export function DataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: 16,
-        
+        pageSize: 12,
       },
     },
     enableColumnResizing:
@@ -85,7 +84,7 @@ export function DataTable<TData, TValue>({
   let checkIfcolumnNeedToBeShown =
     columns[0].header == "Datum Diagnose" ||
     columns[0].header == "Date diagnosis";
-  
+
   return (
     <>
       {checkIfcolumnNeedToBeShown && (
@@ -97,7 +96,7 @@ export function DataTable<TData, TValue>({
           // style={{
           //   width: table.getTotalSize(),
           // }}
-          className={`w-fit border-collapse ${
+          className={`w-full border-collapse ${
             columns[0].header !== "Versichertennummer" &&
             columns[0].header !== "Insurance Number"
               ? `w-${table.getTotalSize()}`
@@ -110,7 +109,7 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="text-left border-r-1 border-b-2 hover:border-r-2"
+                      className="text-left border-r-1 border-b-2 "
                       key={header.id}
                       style={{ position: "relative", width: header.getSize() }}
                     >
@@ -157,7 +156,6 @@ export function DataTable<TData, TValue>({
                       id={cell.id}
                       key={cell.id}
                       style={{ width: cell.column.getSize() }}
-                      
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

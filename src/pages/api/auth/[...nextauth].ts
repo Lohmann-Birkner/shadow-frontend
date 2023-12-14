@@ -4,7 +4,7 @@ import { getUser } from "@/api";
 
 let authorizationToken: string;
 let userId: string;
-let firstname:string;
+let firstname: string;
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -28,7 +28,7 @@ export const authOptions = {
           response = await getUser({ username, password });
           authorizationToken = response.data.Authorization;
           userId = response.data.user_id;
-          console.log("response.data in nextauth", response.data);
+          // console.log("response.data in nextauth", response.data);
         } catch (error) {
           console.log("error", error);
         }
@@ -42,9 +42,8 @@ export const authOptions = {
           id: response.data.user_id,
           name: response.data.Authorization,
           email: response.data.username,
-          test:"aaaaa",
-          firstname:response.data.first_name,
-          lastname:response.data.last_name
+          firstname: response.data.first_name,
+          lastname: response.data.last_name,
         };
       },
     }),
@@ -54,42 +53,36 @@ export const authOptions = {
     signIn: "/auth/signin",
   },
   callbacks: {
-
-    async signIn({ user, account }:any) {
-      account.firstname=user.firstname;
-      account.lastname=user.lastname
-      console.log(user,account)
-      return true
+    async signIn({ user, account }: any) {
+      account.firstname = user.firstname;
+      account.lastname = user.lastname;
+      console.log(user, account);
+      return true;
     },
-    async jwt({ token, account }:any) {
+    async jwt({ token, account }: any) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         token.firstname = account.firstname;
-        token.lastname=account.lastname
-        
+        token.lastname = account.lastname;
       }
-      return token
+      return token;
     },
     async session({ session, token, user }: any) {
       // Send properties to the client, like an access_token from a provider.
 
-      // session.authorizationToken = token.name;
-      // session.user.user_id = token.sub;
-      // session.user.image=token.sub
       session = {
         ...session,
         user: {
           ...user,
           user_id: token.sub,
           email: token.email,
-          first_name:token.firstname,
-          last_name:token.lastname
-          
+          first_name: token.firstname,
+          last_name: token.lastname,
         },
         authorizationToken: token.name,
       };
 
-        console.log("session after", session);
+      console.log("session after", session);
       //  console.log("token", token);
 
       return session;

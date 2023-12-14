@@ -103,6 +103,13 @@ export default function Page() {
       enabled: !!query.id && tab === "hospital",
     }
   );
+// const mappedHospital=()=>{
+//   hospital?.data?.map((data)=>{
+// data.diagnosis.map((diagnose)=>{
+//   diagnose.
+// })
+//   })
+// }
 
   const rehab = useQuery(
     ["rehab", tab],

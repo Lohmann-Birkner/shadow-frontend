@@ -39,7 +39,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Filter } from "../Filter";
 
-
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
   data: MedicalServiceT[];
@@ -114,7 +113,10 @@ export function MedicalServiceTable({
 
   return (
     <>
-      <div className="max-h-[48rem] border-2 rounded-md overflow-y-auto" style={{height:"75vh"}}>
+      <div
+        className="max-h-[48rem] border-2 rounded-md overflow-y-auto"
+        style={{ height: "75vh" }}
+      >
         <div className="flex">
           <div>
             <DropdownMenu>
@@ -175,7 +177,7 @@ export function MedicalServiceTable({
                   return (
                     <>
                       <TableHead
-                        className=" text-slate-950 bg-slate-100 relative h-20 pt-4 border-r-1 hover:border-r-2"
+                        className=" text-slate-950 bg-slate-100 relative h-20 pt-4 border-r-1"
                         key={header.id}
                         colSpan={header.colSpan}
                         draggable={
@@ -187,10 +189,10 @@ export function MedicalServiceTable({
                           e.preventDefault();
                         }}
                         onDrop={onDrop}
-                        style={{
-                          position: "relative",
-                          width: header.getSize(),
-                        }}
+                        // style={{
+                        //   position: "relative",
+                        //   width: header.getSize(),
+                        // }}
                       >
                         {header.isPlaceholder
                           ? null
@@ -198,7 +200,7 @@ export function MedicalServiceTable({
                               header.column.columnDef.header,
                               header.getContext()
                             )}
-                        {header.column.getCanResize() && (
+                        {/* {header.column.getCanResize() && (
                           <div
                             onMouseDown={header.getResizeHandler()}
                             onTouchStart={header.getResizeHandler()}
@@ -214,7 +216,7 @@ export function MedicalServiceTable({
                             //     : "",
                             // }}
                           ></div>
-                        )}
+                        )} */}
 
                         {header.column.getCanFilter()
                           ? isFilterOpen && (
@@ -264,8 +266,9 @@ export function MedicalServiceTable({
                         <>
                           {row.original.diags.length > 0 && (
                             <div
-                              className=" px-10 bg-neutral-100 mb-3 pl-10 w-fit"
+                              className=" bg-neutral-100 mb-3 pl-10 "
                               key={row.id}
+                              style={{width:"65vw"}}
                             >
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
