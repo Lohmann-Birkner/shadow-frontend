@@ -40,20 +40,20 @@ export type TaskRelatedToUserT = {
 export type TaskForFormT = {
   todo_title: string;
   todo_content: string;
-  todo_deadline:date|string;
-  priority: string|undefined;
+  todo_deadline: date | string;
+  priority: string | undefined;
 };
 
 export type searchInputs = {
-  ins_id?: string|undefined,
-  lastname?: string|undefined,
-  firstname?: string|undefined,
-  gender?: string|undefined,
-  postNumber?: string|undefined,
-  dateOfBirthStart?: date|string|undefined,
-  dateOfBirthEnd?: date|string|undefined,
-  entryDateStart?: date|string|undefined
-  entryDateEnd?: date|string|undefined,
+  ins_id?: string | undefined;
+  lastname?: string | undefined;
+  firstname?: string | undefined;
+  gender?: string | undefined;
+  postNumber?: string | undefined;
+  dateOfBirthStart?: date | string | undefined;
+  dateOfBirthEnd?: date | string | undefined;
+  entryDateStart?: date | string | undefined;
+  entryDateEnd?: date | string | undefined;
 };
 
 export type MedicalServiceT = {
@@ -198,9 +198,12 @@ export type HospitalT = {
   Reason_discharge_text;
   diagnosis: {
     ICD_Number: string;
-    Localization_diagnosis: string;
+    Hospital_Localization_diagnosis?: string;
+    Localization_diagnosis?: string;
     ID_type_diagnosis: string;
-    Type_diagnosis: string;
+    Hospital_Type_diagnosis?: string;
+    Type_diagnosis?: string;
+
     Kind_diagnosis: string;
     ICD_Text: string;
   }[];
@@ -253,10 +256,10 @@ export type PrescriberT = {
 };
 
 export type DocumentationT = {
-  id:number;
+  id: number;
   insured_id: number;
   user_id: number;
   doc_text: string;
-  created_at:string,
-  user_name:string
+  created_at: string;
+  user_name: string;
 }[];

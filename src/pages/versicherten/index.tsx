@@ -178,7 +178,6 @@ export default function Home({ patients }: Props) {
                   columns={PatientColumns()}
                   data={sortedItems}
                   pagination
-                  className="w-full"
                 />
               </div>
             )}

@@ -116,7 +116,6 @@ export function HospitalTable({
     currentCols.splice(newPosition, 0, colToBeMoved[0]);
     table.setColumnOrder(currentCols); // <------------------------here you save the column ordering state
   };
-
   return (
     <>
       <div className="rounded-md  overflow-y-auto border-2" style={{height:"75vh"}}>
@@ -261,19 +260,22 @@ export function HospitalTable({
                           {row.original.diagnosis.length > 0 ? (
                             <TabsContent
                               value="Diagnosis"
-                              className="pl-6 border-0 w-fit"
+                              className="pl-6 border-0"
+                              style={{width:"65vw"}}
                             >
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={HospitalDiagnosisColumns()}
                                 pagination={false}
-                                className="w-1/3"
+                                
                               />
                             </TabsContent>
                           ) : (
                             <TabsContent
                               value="Diagnosis"
-                              className="pl-6 border-0 w-fit"
+                              className="pl-6 border-0"
+                              style={{width:"65vw"}}
+
                             >
                               <TableRow>
                                 <TableCell
@@ -288,7 +290,9 @@ export function HospitalTable({
                           {row.original.billing.length > 0 ? (
                             <TabsContent
                               value="Billings"
-                              className="pl-6 border-0 w-fit"
+                              className="pl-6 border-0"
+                              style={{width:"65vw"}}
+
                             >
                               <DataTable
                                 data={row.original.billing}
@@ -314,7 +318,9 @@ export function HospitalTable({
                           {row.original.procedure.length > 0 ? (
                             <TabsContent
                               value="Procedures"
-                              className="border-0 pl-6 w-fit "
+                              className="border-0 pl-6"
+                              style={{width:"65vw"}}
+
                             >
                               <DataTable
                                 data={row.original.procedure}

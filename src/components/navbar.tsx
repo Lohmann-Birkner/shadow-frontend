@@ -30,7 +30,7 @@ function Navbar() {
               <Separator orientation="vertical" />
               <div><FormattedMessage id="Last_name" />:{data.user.last_name}</div>
               <Separator orientation="vertical" />
-              <div><FormattedMessage id="Firstname" />:{data.user.first_name}</div>
+              <div><FormattedMessage id="first_name" />:{data.user.first_name}</div>
               <Separator orientation="vertical" />
 
 

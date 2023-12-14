@@ -186,7 +186,9 @@ export function MadaidTable({
                                   <TableCaption className="my-4 font-semibold text-slate-950">
                                     Positions:
                                   </TableCaption>
-                                  <div className="flex flex-col space-y-5 ">
+                                  <div className="flex flex-col space-y-5"
+                                  
+                                  >
                                     <DataTable
                                       data={row.original.positions}
                                       columns={MedaidPositionsColumns()}

@@ -210,7 +210,9 @@ export function RehabTable({
                           {row.original.payment.length > 0 ? (
                             <TabsContent
                               value="Diagnosis"
-                              className="border-0 w-fit pl-6 "
+                              className="border-0 pl-6 "
+                              style={{width:"65vw"}}
+
                             >
                               <DataTable
                                 data={row.original.diagnosis}
@@ -221,7 +223,9 @@ export function RehabTable({
                           ) : (
                             <TabsContent
                               value="Diagnosis"
-                              className="border-0 w-fit"
+                              className="border-0 "
+                              style={{width:"65vw"}}
+
                             >
                               <TableRow>
                                 <TableCell
@@ -236,7 +240,8 @@ export function RehabTable({
                           {row.original.diagnosis.length > 0 && (
                             <TabsContent
                               value="Payment"
-                              className="border-0 w-fit text-center "
+                              className="border-0"
+                              
                             >
                               <DataTable
                                 data={row.original.payment}

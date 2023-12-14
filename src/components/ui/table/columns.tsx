@@ -624,14 +624,17 @@ export const MedicalServiceDiagsColumns = (): ColumnDef<
     {
       accessorKey: "Number_ICD",
       header: formatMessage({ id: "Number_ICD" }),
+      size: 100,
     },
 
     {
       accessorKey: "ICD",
       header: formatMessage({ id: "ICD" }),
+      size: 50,
     },
     {
       accessorKey: "ICD_Text",
+      size: 700,
       header: formatMessage({ id: "ICD_Text" }),
     },
     {
@@ -1128,6 +1131,7 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
       accessorKey: "Date_diagnosis",
       header: formatMessage({ id: "Date_diagnosis" }),
       cell: ({ row }) => FormatDate(row.getValue("Date_diagnosis")),
+      size: 50,
     },
     {
       accessorKey: "Date_healing",
@@ -1140,26 +1144,28 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
           return FormatDate(row.getValue("Date_healing"));
         }
       },
+      size: 50,
     },
     {
       accessorKey: "Primary_diagnosis",
       header: formatMessage({ id: "Primary_diagnosis" }),
+      size: 50,
       cell: ({ row }) => FormatDate(row.getValue("Primary_diagnosis")),
     },
     {
       accessorKey: "Main_ICD_Text",
       header: formatMessage({ id: "ICD_Text" }),
 
-      cell: ({ row,column }) => {
+      cell: ({ row, column }) => {
         const Main_ICD_Text = row.original.Main_ICD_Text;
         const Main_ICD_Text_Short = row.original.Main_ICD_Text.slice(
           0,
           10
         ).concat("...");
-        const aaa=stringWidth(Main_ICD_Text)
-        const bbb=Main_ICD_Text.length;
-        const ccc=document.querySelector("[id='0_Main_ICD_Text']");
-        console.log(ccc)
+        const aaa = stringWidth(Main_ICD_Text);
+        const bbb = Main_ICD_Text.length;
+        const ccc = document.querySelector("[id='0_Main_ICD_Text']");
+        console.log(ccc);
         const text = (
           <TooltipProvider>
             <Tooltip>
@@ -1191,7 +1197,7 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
 
         // return pznTextTooltip
       },
-      size: 50,
+      size: 600,
     },
     {
       accessorKey: "Secondary_diagnosis",
@@ -1202,6 +1208,7 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
     {
       accessorKey: "Type_diagnosis",
       header: formatMessage({ id: "Type_diagnosis" }),
+      size: 50,
     },
     {
       accessorKey: "Localization_diagnosis",
@@ -1222,6 +1229,7 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
     {
       accessorKey: "Work_accident",
       header: formatMessage({ id: "Work_accident" }),
+      size: 50,
     },
     {
       accessorKey: "Physician_number",
@@ -1231,11 +1239,13 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
       accessorKey: "Start_AU",
       header: formatMessage({ id: "Start_AU" }),
       cell: ({ row }) => FormatDate(row.getValue("Start_AU")),
+      size: 50,
     },
     {
       accessorKey: "End_AU",
       header: formatMessage({ id: "End_AU" }),
       cell: ({ row }) => FormatDate(row.getValue("End_AU")),
+      size: 50,
     },
     {
       accessorKey: "Start_application_AU",
@@ -1243,11 +1253,13 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
         id: "Start_application_AU",
       }),
       cell: ({ row }) => FormatDate(row.getValue("Start_application_AU")),
+      size: 50,
     },
     {
       accessorKey: "End_application_AU",
       header: formatMessage({ id: "End_application_AU" }),
       cell: ({ row }) => FormatDate(row.getValue("End_application_AU")),
+      size: 50,
     },
   ];
 };
@@ -1794,40 +1806,53 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
   ];
 };
 
+//because in the AU colums, there are also 2 columns named Type_diagnosis and
+//Localization_diagnosis. these 2 columns in AU need to be hidden by default.it will
+//effect the columns here(below), so the colums here are renamed and get value by the original columns
 export const HospitalDiagnosisColumns = (): ColumnDef<
   HospitalT["diagnosis"]
 >[] => {
   const { formatMessage } = useIntl();
   return [
     {
+      accessorKey: "ICD_Number",
+      header: formatMessage({ id: "ICD_Number" }),
+      size: 50,
+    },
+    {
+      accessorKey: "ICD_Text",
+      header: formatMessage({ id: "ICD_Text" }),
+      size: 600,
+    },
+    {
       accessorKey: "ID_type_diagnosis",
       header: formatMessage({ id: "ID_type_diagnosis" }),
+      size: 50,
     },
     {
       accessorKey: "Type_diagnosis",
       header: formatMessage({ id: "Type_diagnosis" }),
     },
     {
-      accessorKey: "ICD_Number",
-      header: formatMessage({ id: "ICD_Number" }),
+      accessorKey: "Kind_diagnosis",
+      id: "Kind_diagnosis",
+      header: formatMessage({ id: "Kind_diagnosis" }),
+    },
+
+    {
+      accessorKey: "Hospital_Type_diagnosis",
+      header: formatMessage({ id: "Type_diagnosis" }),
+
+      cell: ({ row }) => row.getValue("Type_diagnosis"),
     },
     {
-      accessorKey: "ICD_Text",
-      header: formatMessage({ id: "ICD_Text" }),
-      cell: (ICD_Text) => (
-        <div className="w-[400px]">
-          {ICD_Text.getValue() as React.ReactNode}
-        </div>
-      ),
+      accessorKey: "Hospital_Localization_diagnosis",
+      header: formatMessage({ id: "Localization_diagnosis" }),
+      cell: ({ row }) => row.getValue("Localization_diagnosis"),
     },
     {
       accessorKey: "Localization_diagnosis",
       header: formatMessage({ id: "Localization_diagnosis" }),
-    },
-
-    {
-      accessorKey: "Kind_diagnosis",
-      header: formatMessage({ id: "Kind_diagnosis" }),
     },
   ];
 };
@@ -1964,10 +1989,18 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
     {
       accessorKey: "Type_diagnosis",
       header: formatMessage({ id: "Type_diagnosis" }),
+      size: 50,
+    },
+    {
+      accessorKey: "Rehab_Type_diagnosis",
+      header: formatMessage({ id: "Type_diagnosis" }),
+      cell: ({ row }) => row.getValue("Type_diagnosis"),
+      size: 50,
     },
     {
       accessorKey: "Main_diagnosis",
       header: formatMessage({ id: "Main_diagnosis" }),
+      size: 50,
     },
     {
       accessorKey: "ICD_Main_Text",
@@ -1976,6 +2009,13 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
     {
       accessorKey: "Localization_diagnosis",
       header: formatMessage({ id: "Localization_diagnosis" }),
+      size: 50,
+    },
+    {
+      accessorKey: "Rehab_Localization_diagnosis",
+      header: formatMessage({ id: "Localization_diagnosis" }),
+      cell: ({ row }) => row.getValue("Localization_diagnosis"),
+      size:50
     },
     {
       accessorKey: "Localization_diagnosis_addition",
@@ -1984,36 +2024,43 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
     {
       accessorKey: "Primary_diagnosis",
       header: formatMessage({ id: "Primary_diagnosis" }),
+      size: 50,
     },
     {
       accessorKey: "ICD_Primary_Text",
       header: formatMessage({ id: "ICD_Text" }),
-      cell: ({ row }) => {
-        const Main_ICD_Text = row.getValue("ICD_Primary_Text") as string;
-        const Main_ICD_Text_Short = Main_ICD_Text.slice(0, 10).concat("...");
+      size: 600,
+      // cell: ({ row }) => {
+      //   const Main_ICD_Text = row.getValue("ICD_Primary_Text") as string;
+      //   const Main_ICD_Text_Short = Main_ICD_Text.slice(0, 10).concat("...");
 
-        const pznTextTooltip = (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger className="flex items-center">
-                {Main_ICD_Text_Short}
-                <Info className="w-4 h-4 ml-1" />
-              </TooltipTrigger>
-              <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        );
+      //   const pznTextTooltip = (
+      //     <TooltipProvider>
+      //       <Tooltip>
+      //         <TooltipTrigger className="flex items-center">
+      //           {Main_ICD_Text_Short}
+      //           <Info className="w-4 h-4 ml-1" />
+      //         </TooltipTrigger>
+      //         <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
+      //       </Tooltip>
+      //     </TooltipProvider>
+      //   );
 
-        return Main_ICD_Text ? (
-          pznTextTooltip
-        ) : (
-          <div>{row.getValue("ICD_Primary_Text")}</div>
-        );
-      },
+      //   return Main_ICD_Text ? (
+      //     pznTextTooltip
+      //   ) : (
+      //     <div>{row.getValue("ICD_Primary_Text")}</div>
+      //   );
+      // },
     },
     {
       accessorKey: "Secondary_diagnosis",
       header: formatMessage({ id: "Secondary_diagnosis" }),
+    },
+    {
+      accessorKey: "Rehab_Secondary_diagnosis",
+      header: formatMessage({ id: "Secondary_diagnosis" }),
+      cell: ({ row }) => row.getValue("Secondary_diagnosis"),
     },
   ];
 };
@@ -2032,27 +2079,38 @@ export const RehabPaymentColumns = (): ColumnDef<RehabT["payment"]>[] => {
           return FormatDate(row.getValue("End_rehab"));
         }
       },
+      size:50
+
     },
 
     {
       accessorKey: "Main_diagnosis",
       header: formatMessage({ id: "Main_diagnosis" }),
+      size:50
     },
     {
       accessorKey: "ICD_Text",
       header: formatMessage({ id: "ICD_Text" }),
+      size:600
+
     },
     {
       accessorKey: "Discharge_reason",
       header: formatMessage({ id: "Discharge_reason" }),
+      size:50
+
     },
     {
       accessorKey: "ID_care_level",
       header: formatMessage({ id: "ID_care_level" }),
+      size:50
+
     },
     {
       accessorKey: "Care_level",
       header: formatMessage({ id: "Care_level" }),
+      size:50
+
     },
     {
       accessorKey: "Payment_amount",
