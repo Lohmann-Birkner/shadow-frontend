@@ -34,17 +34,8 @@ function Navbar() {
               <Separator orientation="vertical" />
 
 
-            </div>{" "}
-            {/*            
-            <label>
-              {" "}
-              
-            </label>
-            <li>{data.user.email}</li>
-            <label>
-              {" "}
-              <FormattedMessage id="firstname" />
-            </label> */}
+            </div>
+     
           </>
         )}
 
