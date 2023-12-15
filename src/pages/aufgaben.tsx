@@ -46,7 +46,7 @@ function Aufgaben() {
   });
   const tasks = taskRelatedToUser.data as TaskRelatedToUserT[];
   const columns = TasksColumns() as { header: string; accessorKey: string }[];
-
+console.log(taskRelatedToUser.data)
   const headerValue = () => {
     // Find the corresponding header value
     const column = columns.find((column) => column.accessorKey === sortBy);
@@ -213,6 +213,7 @@ function Aufgaben() {
                 data={filteredItems}
                 columns={TasksColumns()}
                 pagination
+                className="h-fit max-h-[45rem]"
               />
             )}
           </CardContent>

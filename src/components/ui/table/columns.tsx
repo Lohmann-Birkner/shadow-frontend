@@ -158,6 +158,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
 
   return [
     {
+      id : "related_patient_id",
       accessorKey: "related_patient_id",
       header: ({ column }) => {
         return (
@@ -2015,7 +2016,7 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
       accessorKey: "Rehab_Localization_diagnosis",
       header: formatMessage({ id: "Localization_diagnosis" }),
       cell: ({ row }) => row.getValue("Localization_diagnosis"),
-      size:50
+      size: 50,
     },
     {
       accessorKey: "Localization_diagnosis_addition",
@@ -2079,38 +2080,33 @@ export const RehabPaymentColumns = (): ColumnDef<RehabT["payment"]>[] => {
           return FormatDate(row.getValue("End_rehab"));
         }
       },
-      size:50
-
+      size: 50,
     },
 
     {
       accessorKey: "Main_diagnosis",
       header: formatMessage({ id: "Main_diagnosis" }),
-      size:50
+      size: 50,
     },
     {
       accessorKey: "ICD_Text",
       header: formatMessage({ id: "ICD_Text" }),
-      size:600
-
+      size: 600,
     },
     {
       accessorKey: "Discharge_reason",
       header: formatMessage({ id: "Discharge_reason" }),
-      size:50
-
+      size: 50,
     },
     {
       accessorKey: "ID_care_level",
       header: formatMessage({ id: "ID_care_level" }),
-      size:50
-
+      size: 50,
     },
     {
       accessorKey: "Care_level",
       header: formatMessage({ id: "Care_level" }),
-      size:50
-
+      size: 50,
     },
     {
       accessorKey: "Payment_amount",
