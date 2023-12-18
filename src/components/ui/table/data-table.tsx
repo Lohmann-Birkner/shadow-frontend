@@ -73,8 +73,8 @@ export function DataTable<TData, TValue>({
       },
     },
     enableColumnResizing:
-      columns[0].header !== "Versichertennummer" &&
-      columns[0].header !== "Insurance Number" && columns[0].id !== "related_patient_id" &&
+      columns[0].id !== "ins_id" &&
+      columns[0].id !== "related_patient_id" &&
       true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
@@ -91,14 +91,18 @@ export function DataTable<TData, TValue>({
         <Button onClick={onClickOpenColumns}>expand</Button>
       )}
 
-      <div className={`rounded-md border-2 overflow-auto ${columns[0].id == "related_patient_id" }h-2/3` }>
+      <div
+        className="rounded-md border-2 overflow-auto"
+        style={{
+          height: columns[0].id == "related_patient_id" ? "65vh" : "none",
+        }}
+      >
         <Table
           // style={{
           //   width: table.getTotalSize(),
           // }}
           className={`w-full border-collapse ${
-            columns[0].header !== "Versichertennummer" &&
-            columns[0].header !== "Insurance Number" && columns[0].id !== "related_patient_id"
+            columns[0].id !== "ins_id" && columns[0].id !== "related_patient_id"
               ? `w-${table.getTotalSize()}`
               : ""
           }`}

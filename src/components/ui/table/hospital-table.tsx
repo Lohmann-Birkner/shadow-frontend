@@ -68,8 +68,6 @@ export function HospitalTable({
   const [tab, setTab] = useState("Diagnosis");
   const { formatMessage } = useIntl();
 
-
-
   const table = useReactTable({
     data,
     columns,
@@ -118,7 +116,10 @@ export function HospitalTable({
   };
   return (
     <>
-      <div className="rounded-md  overflow-y-auto border-2" style={{height:"75vh"}}>
+      <div
+        className="rounded-md  overflow-y-auto border-2"
+        style={{ height: "75vh" }}
+      >
         <div className="flex">
           <div>
             <DropdownMenu>
@@ -164,7 +165,11 @@ export function HospitalTable({
               variant="outline"
               className="m-2 shadow w-48"
             >
-              <FormattedMessage id="filter_open" />
+              {isFilterOpen ? (
+                <FormattedMessage id="filter_close" />
+              ) : (
+                <FormattedMessage id="filter_open" />
+              )}
             </Button>
           </div>
         </div>
@@ -261,21 +266,19 @@ export function HospitalTable({
                             <TabsContent
                               value="Diagnosis"
                               className="pl-6 border-0"
-                              style={{width:"65vw"}}
+                              style={{ width: "65vw" }}
                             >
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={HospitalDiagnosisColumns()}
                                 pagination={false}
-                                
                               />
                             </TabsContent>
                           ) : (
                             <TabsContent
                               value="Diagnosis"
                               className="pl-6 border-0"
-                              style={{width:"65vw"}}
-
+                              style={{ width: "65vw" }}
                             >
                               <TableRow>
                                 <TableCell
@@ -291,8 +294,7 @@ export function HospitalTable({
                             <TabsContent
                               value="Billings"
                               className="pl-6 border-0"
-                              style={{width:"65vw"}}
-
+                              style={{ width: "65vw" }}
                             >
                               <DataTable
                                 data={row.original.billing}
@@ -319,8 +321,7 @@ export function HospitalTable({
                             <TabsContent
                               value="Procedures"
                               className="border-0 pl-6"
-                              style={{width:"65vw"}}
-
+                              style={{ width: "65vw" }}
                             >
                               <DataTable
                                 data={row.original.procedure}

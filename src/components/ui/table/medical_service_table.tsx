@@ -9,6 +9,8 @@ import {
   getSortedRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+  getExpandedRowModel,
+  ExpandedState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -33,11 +35,12 @@ import {
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronsDown, ChevronsDownUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Filter } from "../Filter";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -50,15 +53,18 @@ export function MedicalServiceTable({
   data,
   pagination,
 }: CollapsibleDataTableProps) {
-  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
+
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const { formatMessage } = useIntl();
 
   const table = useReactTable({
@@ -67,6 +73,8 @@ export function MedicalServiceTable({
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
+    getSubRows: (row) => row.subRows,
+
     initialState: {
       pagination: {
         pageSize: 12,
@@ -74,16 +82,21 @@ export function MedicalServiceTable({
     },
 
     getPaginationRowModel: getPaginationRowModel(),
+
+    onExpandedChange: setExpanded,
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+
     state: {
       columnVisibility,
       sorting,
       columnFilters,
       globalFilter,
+      expanded,
     },
   });
   // Function to toggle the expanded state of a row
@@ -92,6 +105,7 @@ export function MedicalServiceTable({
       ...prevExpandedRows,
       [rowId]: !prevExpandedRows[rowId],
     }));
+    setExpanded(true);
   };
 
   // how to drag and drop the columns
@@ -162,7 +176,11 @@ export function MedicalServiceTable({
               variant="outline"
               className="m-2 shadow w-48"
             >
-              <FormattedMessage id="filter_open" />
+              {isFilterOpen ? (
+                <FormattedMessage id="filter_close" />
+              ) : (
+                <FormattedMessage id="filter_open" />
+              )}
             </Button>
           </div>
         </div>
@@ -200,23 +218,6 @@ export function MedicalServiceTable({
                               header.column.columnDef.header,
                               header.getContext()
                             )}
-                        {/* {header.column.getCanResize() && (
-                          <div
-                            onMouseDown={header.getResizeHandler()}
-                            onTouchStart={header.getResizeHandler()}
-                            className={`absolute top-0 right-0 h-full w-0.5 bg-opacity-10 bg-black cursor-col-resize select-none touch-none ${
-                              header.column.getIsResizing() ? "opacity-100" : ""
-                            }`}
-                            // style={{
-                            //   transform: header.column.getIsResizing()
-                            //     ? `translateX(${
-                            //         table.getState().columnSizingInfo
-                            //           .deltaOffset
-                            //       }px)`
-                            //     : "",
-                            // }}
-                          ></div>
-                        )} */}
 
                         {header.column.getCanFilter()
                           ? isFilterOpen && (
@@ -234,6 +235,26 @@ export function MedicalServiceTable({
           <TableBody>
             {table.getRowModel().rows.map((row) => (
               <>
+                {expandedRows[row.id] ? (
+                  <div className="h-0">
+                    <button
+                      onClick={() => toggleRowExpansion(row.id)}
+                      className="relative top-7 left-3"
+                    >
+                      <ChevronsDownUp size={20} />{" "}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="h-0">
+                    <button
+                      onClick={() => toggleRowExpansion(row.id)}
+                      className="relative top-7 left-3"
+                    >
+                      <ChevronsDown size={20} />
+                    </button>
+                  </div>
+                )}
+
                 <TableRow
                   key={row.id}
                   className="cursor-pointer "
@@ -268,7 +289,7 @@ export function MedicalServiceTable({
                             <div
                               className=" bg-neutral-100 mb-3 pl-10 "
                               key={row.id}
-                              style={{width:"65vw"}}
+                              style={{ width: "65vw" }}
                             >
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />

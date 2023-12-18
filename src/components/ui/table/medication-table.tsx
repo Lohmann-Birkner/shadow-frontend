@@ -112,7 +112,7 @@ export function MedicationTable({
   return (
     <>
       <div
-        className="rounded-md max-h-[48rem] border-2 overflow-auto"
+        className="rounded-md max-h-[48rem] border-2 overflow-y-auto "
         style={{ height: "75vh" }}
       >
         <div className="flex">
@@ -161,7 +161,11 @@ export function MedicationTable({
               variant="outline"
               className="m-2 shadow w-48"
             >
-              <FormattedMessage id="filter_open" />
+               {isFilterOpen ? (
+                <FormattedMessage id="filter_close" />
+              ) : (
+                <FormattedMessage id="filter_open" />
+              )}
             </Button>
           </div>
         </div>

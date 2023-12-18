@@ -158,7 +158,11 @@ export function WorkInabilityTable({
               variant="outline"
               className="m-2 shadow w-48"
             >
-              <FormattedMessage id="filter_open" />
+               {isFilterOpen ? (
+                <FormattedMessage id="filter_close" />
+              ) : (
+                <FormattedMessage id="filter_open" />
+              )}
             </Button>
           </div>
         </div>
