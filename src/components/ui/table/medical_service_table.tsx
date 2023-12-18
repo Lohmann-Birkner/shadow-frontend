@@ -105,7 +105,6 @@ export function MedicalServiceTable({
       ...prevExpandedRows,
       [rowId]: !prevExpandedRows[rowId],
     }));
-    setExpanded(true);
   };
 
   // how to drag and drop the columns
@@ -195,7 +194,7 @@ export function MedicalServiceTable({
                   return (
                     <>
                       <TableHead
-                        className=" text-slate-950 bg-slate-100 relative h-20 pt-4 border-r-1"
+                        className=" text-slate-950 bg-slate-100 relative h-20 pt-5 text-center"
                         key={header.id}
                         colSpan={header.colSpan}
                         draggable={
