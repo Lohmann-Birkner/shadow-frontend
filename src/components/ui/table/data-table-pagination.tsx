@@ -27,7 +27,7 @@ export function DataTablePagination<TData>({
   return (
     <div className="flex items-center justify-between px-2 mt-4 flex-wrap">
       <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredRowModel().rows.length} Artikel.
+        {table.getFilteredRowModel().rows.length} <FormattedMessage id="results"/>.
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
@@ -44,7 +44,7 @@ export function DataTablePagination<TData>({
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
-              {[12, 16, 20, 24, 28].map((pageSize) => (
+              {[12, 16, 24, 48, 100].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
                 </SelectItem>

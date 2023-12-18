@@ -136,7 +136,7 @@
     "Hospital": "Krankhaus",
     "Rehabilitation": "Rehabilitation",
     "Date": "Datum",
-    "Title": "Title",
+    "Title": "Titel",
     "Content": "Inhalt",
     "Status": "Status",
     "Priority": "Priorität",
@@ -198,7 +198,7 @@
     "confirm_password": "Passwort bestätigen",
     "filter_open":"Filter öffnen",
     "filter":"Filtern",
-    "ins_id":"Versichertennummer",
+    "ins_id":"Versichertennr.",
     "search":"Suchen",
     "until":"bis",
     "date_picker":"Datum auswählen",
@@ -209,7 +209,10 @@
     "OPS_Text":"OPS-Text",
     "Documentation_add":"Dokumentation hinzufügen",
     "Documentation_edit":"Dokumentation bearbeiten",
-    "ICD_Main_Text":"ICD Haupttext"
+    "ICD_Main_Text":"ICD Haupttext",
+    "results":"Ergebinisse",
+    "reset":"Zurücksetzen",
+    "filter_close":"Filter schließen"
 
 
 

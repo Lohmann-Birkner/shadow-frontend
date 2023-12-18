@@ -456,12 +456,12 @@ export function SeachPatientMultipleCatalog({
           {" "}
           {/* <FormattedMessage id="search" /> */}
           {isLoading && <Loader2 className="mx-2 h-4 w-4 animate-spin" />}
-          {isLoading ? "Loading..." : "Search"}
+          {isLoading ? "Loading..." : <FormattedMessage id="search" />}
         </Button>
         <Button className="mx-2"
         onClick={() => form.reset({
           ins_id:""
-        })}>Reset</Button>
+        })}><FormattedMessage id="reset" /></Button>
       </form>
     </Form>
   );

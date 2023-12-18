@@ -25,6 +25,8 @@ import {
   CheckCircle,
   Info,
   Columns,
+  ChevronsDown,
+  ChevronsDownUp,
 } from "lucide-react";
 import { DataTableRowActions } from "./task-row-actions";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -73,15 +75,19 @@ export const PatientColumns = (): ColumnDef<PatientT>[] => {
   return [
     {
       accessorKey: "ins_id",
+      id: "ins_id",
       header: formatMessage({ id: "ins_id" }),
+      size: 50,
     },
     {
       accessorKey: "last_name",
       header: formatMessage({ id: "Last_name" }),
+      minSize: 300,
     },
     {
       accessorKey: "first_name",
       header: formatMessage({ id: "first_name" }),
+      minSize: 300,
     },
 
     {
@@ -90,7 +96,11 @@ export const PatientColumns = (): ColumnDef<PatientT>[] => {
       cell: ({ row }) => FormatDate(row.getValue("Date_of_birth")),
     },
     { accessorKey: "Gender", header: formatMessage({ id: "Gender" }) },
-    { accessorKey: "ZIP_code", header: formatMessage({ id: "ZIP_code" }) },
+    {
+      accessorKey: "ZIP_code",
+      header: formatMessage({ id: "ZIP_code" }),
+      size: 100,
+    },
     {
       accessorKey: "Insured_person_number",
       header: formatMessage({ id: "Insured_person_number" }),
@@ -158,7 +168,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
 
   return [
     {
-      id : "related_patient_id",
+      id: "related_patient_id",
       accessorKey: "related_patient_id",
       header: ({ column }) => {
         return (
@@ -315,10 +325,14 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
 export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
   const { formatMessage } = useIntl();
   return [
+    {id:"action",
+  size:10},
+    
     {
       accessorKey: "Case_number",
-      header: ({ column }) => {
+      header: ({ column,table }) => {
         return (
+        
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -327,9 +341,39 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
+          
         );
       },
       id: "Case_number",
+      // cell: ({ row, getValue }) => (
+      //   <div
+      //     style={{
+      //       // Since rows are flattened by default,
+      //       // we can use the row.depth property
+      //       // and paddingLeft to visually indicate the depth
+      //       // of the row
+      //       paddingLeft: `${row.depth * 2}rem`,
+      //     }}
+      //   >
+      //     <>
+            
+      //       {row.getCanExpand() ? (
+      //         <button
+      //           {...{
+      //             onClick: row.getToggleExpandedHandler(),
+      //             style: { cursor: 'pointer' },
+      //           }}
+      //         >
+      //           {row.getIsExpanded() ? '👇' : '👉'}
+      //         </button>
+      //       ) : (
+      //         '🔵'
+      //       )}{' '}
+      //       {getValue()}
+      //     </>
+      //   </div>
+      // ),
+   
     },
     {
       accessorKey: "Insurance_area",

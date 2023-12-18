@@ -209,7 +209,8 @@ function TaskDialog({
               name="todo_title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>                      <FormattedMessage id="Title" />
+</FormLabel>
                   <FormControl>
                     <Input className="md:h-9" {...field} />
                   </FormControl>

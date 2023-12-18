@@ -200,7 +200,7 @@
     "confirm_password": "Confirm password",
     "filter_open":"Filter open",
     "filter":"Filter",
-    "ins_id":"Insurance Number",
+    "ins_id":"Insurance No.",
     "search":"Search",
     "until":"until",
     "date_picker":"Pick a date",
@@ -211,7 +211,13 @@
     "OPS_Text":"OPS-Text",
     "Documentation_add":"Add documentation",
     "Documentation_edit":"Edit documentation",
-    "ICD_Main_Text":"ICD main text"
+    "ICD_Main_Text":"ICD main text",
+    "results":"Results",
+    "reset":"Reset",
+    "filter_close":"Filter close"
+
+
+
 
 
 

@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn, formatedDate } from "@/lib/utils";
 import { Textarea } from "./ui/textarea";
 import { MoreHorizontal, Pencil, PlusSquare, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -54,6 +54,7 @@ import {
 import { Input } from "./ui/input";
 import DocumentationEdit from "./documentationEdit";
 import { PatientT } from "../../types";
+import { FormatDate } from "@/lib/format-date";
 
 const FormSchema = z.object({
   doc_text: z.string(),
@@ -93,7 +94,7 @@ function Documentation({ queryId, patientData }: Props) {
   const { mutate: deleteDocu } = useMutation({
     mutationFn: () => deleteDocument(doc_id as number),
     onSuccess: () => {
-      queryClient.invalidateQueries(["documentation",queryId]);
+      queryClient.invalidateQueries(["documentation", queryId]);
     },
   });
 
@@ -125,7 +126,7 @@ function Documentation({ queryId, patientData }: Props) {
 
   return (
     <>
-      <Card className="mt-5 rounded-md" style={{height:"49vh"}}>
+      <Card className="lg:mt-5 md:mt:0 rounded-md h-full w-max-[300px]" >
         <CardHeader className="pt-6">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg">
@@ -144,54 +145,63 @@ function Documentation({ queryId, patientData }: Props) {
             </Button>
           </div>
         </CardHeader>
-        <CardContent >
-          <ScrollArea className="rounded-md overflow-auto pb-5" style={{height:"37vh"}}>
+        <CardContent>
+          <ScrollArea
+            className="rounded-md overflow-auto pb-5 w-max-[300px]"
+            style={{ height: "39vh" }}
+          >
             {data?.map((el, index) => (
               <div
                 key={index}
-                className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0 "
+                className="mb-4 items-start py-1 last:mb-0 last:pb-0 w-max-[300px]"
               >
-                <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-                <div className="space-y-1">
-                  <p className="leading-none w-11/12">{el.doc_text}</p>
+                <div className="space-y-1 ">
                   <div className="flex justify-between ">
-                    <p className="text-sm text-muted-foreground p-1 w-full">
-                      {`${el.created_at.split("T")[0]} 
-                        ${el.created_at.split("T")[1].slice(0, 8)}`}
-                    </p>
-                    <div className="self-end ">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost">
-                            <MoreHorizontal className="h-4 w-4 " />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-6 border-1 ">
-                          <DropdownMenuItem
-                            onClick={() => {
-                              onActionClick("edit");
-                              setDoc_id(el.id);
-                              setIndex(index);
-                            }}
-                            className="flex justify-between"
-                          >
-                            <Pencil className="w-4 h-4 m-1" />
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => {
-                              setIsDialogOpen(true);
-                              setDoc_id(el.id);
-                              setIndex(index);
-                            }}
-                            className="flex justify-between"
-                          >
-                            <Trash2 className="w-4 h-4 m-1" />
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                      {isDialogOpen ? dialogDeleteDocu : null}
-                    </div>
+                    {" "}
+                    <span className="flex h-2 w-2 translate-y-1 rounded-full bg-black mr-1" />{" "}
+                    <p className="leading-none w-11/12 w-max-[300px] pl-1">{el.doc_text}</p>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className=" h-4 mr-1"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-6 border-1 ">
+                        <DropdownMenuItem
+                          onClick={() => {
+                            onActionClick("edit");
+                            setDoc_id(el.id);
+                            setIndex(index);
+                          }}
+                          className="flex justify-between"
+                        >
+                          <Pencil className="w-4 h-4 m-1" />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setIsDialogOpen(true);
+                            setDoc_id(el.id);
+                            setIndex(index);
+                          }}
+                          className="flex justify-between"
+                        >
+                          <Trash2 className="w-4 h-4 m-1" />
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    {isDialogOpen ? dialogDeleteDocu : null}
                   </div>
+
+                  <p className="text-sm text-muted-foreground p-1 w-full">
+                    <p>
+                      {FormatDate(el.created_at.split("T")[0])}{" "}
+                      {`${el.created_at.split("T")[1].slice(0, 8)}`}
+                    </p>
+                  </p>
                 </div>
 
                 {/* {dialogType === "edit" ? dialogEditTask : dialogDeleteTask} */}
