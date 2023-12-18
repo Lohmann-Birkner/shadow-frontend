@@ -35,6 +35,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Filter } from "../Filter";
 import { Button } from "@/components/ui/button";
+import { ChevronsDown, ChevronsDownUp } from "lucide-react";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -123,11 +124,11 @@ export function RehabTable({
             variant="outline"
             className="m-2 shadow w-48"
           >
-             {isFilterOpen ? (
-                <FormattedMessage id="filter_close" />
-              ) : (
-                <FormattedMessage id="filter_open" />
-              )}
+            {isFilterOpen ? (
+              <FormattedMessage id="filter_close" />
+            ) : (
+              <FormattedMessage id="filter_open" />
+            )}
           </Button>
         </div>
         <Table>
@@ -173,6 +174,25 @@ export function RehabTable({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <>
+                  {expandedRows[row.id] ? (
+                    <div className="h-0">
+                      <button
+                        onClick={() => toggleRowExpansion(row.id)}
+                        className="relative top-4 left-3"
+                      >
+                        <ChevronsDownUp size={20} />{" "}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="h-0">
+                      <button
+                        onClick={() => toggleRowExpansion(row.id)}
+                        className="relative top-4 left-3"
+                      >
+                        <ChevronsDown size={20} />
+                      </button>
+                    </div>
+                  )}
                   <TableRow
                     key={row.id}
                     className="cursor-pointer"
@@ -215,8 +235,7 @@ export function RehabTable({
                             <TabsContent
                               value="Diagnosis"
                               className="border-0 pl-6 "
-                              style={{width:"65vw"}}
-
+                              style={{ width: "65vw" }}
                             >
                               <DataTable
                                 data={row.original.diagnosis}
@@ -228,8 +247,7 @@ export function RehabTable({
                             <TabsContent
                               value="Diagnosis"
                               className="border-0 "
-                              style={{width:"65vw"}}
-
+                              style={{ width: "65vw" }}
                             >
                               <TableRow>
                                 <TableCell
@@ -242,11 +260,7 @@ export function RehabTable({
                             </TabsContent>
                           )}
                           {row.original.diagnosis.length > 0 && (
-                            <TabsContent
-                              value="Payment"
-                              className="border-0"
-                              
-                            >
+                            <TabsContent value="Payment" className="border-0">
                               <DataTable
                                 data={row.original.payment}
                                 columns={RehabPaymentColumns()}

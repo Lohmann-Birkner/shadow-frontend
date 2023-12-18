@@ -21,6 +21,7 @@ import { DataTablePagination } from "./data-table-pagination";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -102,7 +103,7 @@ export function DataTable<TData, TValue>({
           //   width: table.getTotalSize(),
           // }}
           className={`w-full border-collapse ${
-            columns[0].id !== "ins_id" && columns[0].id !== "related_patient_id"
+            columns[0].id !== "ins_id" 
               ? `w-${table.getTotalSize()}`
               : ""
           }`}
@@ -113,7 +114,9 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className="text-left border-r-1 border-b-2 "
+                      className={cn("bg-slate-100 text-slate-950 h-15 border-b-2 py-2",
+                      columns[0].id=="ins_id"&&"font-bold text-base"
+                      )}
                       key={header.id}
                       style={{ position: "relative", width: header.getSize() }}
                     >

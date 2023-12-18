@@ -174,13 +174,15 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
         return (
           <Button
             variant="ghost"
+            className="text-black"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {formatMessage({ id: "Membership_number" })}
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            <FormattedMessage id="Membership_number" />
+            <ArrowUpDown className="ml-2 h-4 w-4" color="black" />
           </Button>
         );
       },
+      size: 20,
     },
     {
       accessorKey: "todo_date",
@@ -188,6 +190,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
         return (
           <Button
             variant="ghost"
+            className="text-black"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {formatMessage({ id: "Date" })}
@@ -195,6 +198,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
           </Button>
         );
       },
+      size: 50,
       cell: ({ row }) => FormatDate(row.getValue("todo_date")),
     },
 
@@ -204,6 +208,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
         return (
           <Button
             variant="ghost"
+            className="text-black"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {formatMessage({ id: "Title" })}
@@ -214,6 +219,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       cell: ({ row }) => {
         return <div className="w-fit">{row.getValue("todo_title")}</div>;
       },
+      size: 300,
     },
     {
       accessorKey: "todo_content",
@@ -221,6 +227,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
         return (
           <Button
             variant="ghost"
+            className="text-black"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {formatMessage({ id: "Content" })}
@@ -228,6 +235,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
           </Button>
         );
       },
+      size: 700,
     },
     {
       accessorKey: "done",
@@ -235,6 +243,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
         return (
           <Button
             variant="ghost"
+            className="text-black"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {formatMessage({ id: "Done" })}
@@ -269,6 +278,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
         return (
           <Button
             variant="ghost"
+            className="text-black"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {formatMessage({ id: "Priority" })}
@@ -302,6 +312,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
         return (
           <Button
             variant="ghost"
+            className="text-black"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {formatMessage({ id: "Deadline" })}
@@ -316,6 +327,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       //here are the 3 points in the aufgabe list(the end of the row)
       id: "actions",
       cell: ({ row }) => <DataTableRowActions row={row} />,
+      size: 10,
     },
   ];
 };
@@ -714,6 +726,7 @@ export const MedicalServiceOpsColumns = (): ColumnDef<
 
 export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
   return [
+    { id: "action", size: 20 },
     {
       accessorKey: "Issue_date",
       header: ({ column }) => {
@@ -902,6 +915,8 @@ export const MedicationPositionsColumns = (): ColumnDef<
 
 export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
   return [
+    { id: "action", size: 20 },
+
     {
       accessorKey: "Main_ICD",
       header: ({ column }) => {
@@ -1306,6 +1321,7 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
 
 export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
   return [
+    { id: "action", size: 20 },
     {
       accessorKey: "ID_prescriber",
       id: "ID_prescriber",
@@ -1483,6 +1499,8 @@ export const MedaidPositionsColumns = (): ColumnDef<Position>[] => {
 
 export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
   return [
+    { id: "action", size: 20 },
+
     {
       accessorKey: "ID_Insured",
       id: "ID_Insured",
@@ -1987,6 +2005,8 @@ export const HospitalProcedureColumns = (): ColumnDef<
 
 export const RehabColumns = (): ColumnDef<RehabT>[] => {
   return [
+    { id: "action", size: 20 },
+
     {
       accessorKey: "Hospital_indicator",
       header: ({ column }) => {

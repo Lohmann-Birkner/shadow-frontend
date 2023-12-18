@@ -33,7 +33,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, ChevronsDown, ChevronsDownUp, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter } from "../Filter";
@@ -209,6 +209,25 @@ export function WorkInabilityTable({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <>
+                {expandedRows[row.id] ? (
+                  <div className="h-0">
+                    <button
+                      onClick={() => toggleRowExpansion(row.id)}
+                      className="relative top-2 left-3"
+                    >
+                      <ChevronsDownUp size={20} />{" "}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="h-0">
+                    <button
+                      onClick={() => toggleRowExpansion(row.id)}
+                      className="relative top-2 left-3"
+                    >
+                      <ChevronsDown size={20} />
+                    </button>
+                  </div>
+                )}
                   <TableRow
                     key={row.id}
                     className="cursor-pointer "

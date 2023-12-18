@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "@/components/ui/button";
 import { Filter } from "../Filter";
+import { ChevronsDown, ChevronsDownUp } from "lucide-react";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -98,7 +99,10 @@ export function MadaidTable({
 
   return (
     <>
-      <div className="max-h-[45rem] border-2 rounded-md overflow-y-auto" style={{height:"75vh"}}>
+      <div
+        className="max-h-[45rem] border-2 rounded-md overflow-y-auto"
+        style={{ height: "75vh" }}
+      >
         <div className="flex">
           <Input
             placeholder={formatMessage({
@@ -113,11 +117,11 @@ export function MadaidTable({
             variant="outline"
             className="m-2 shadow w-48"
           >
-             {isFilterOpen ? (
-                <FormattedMessage id="filter_close" />
-              ) : (
-                <FormattedMessage id="filter_open" />
-              )}
+            {isFilterOpen ? (
+              <FormattedMessage id="filter_close" />
+            ) : (
+              <FormattedMessage id="filter_open" />
+            )}
           </Button>
         </div>
         <Table>
@@ -162,6 +166,25 @@ export function MadaidTable({
               table.getRowModel().rows?.length
                 ? table.getRowModel().rows.map((row) => (
                     <React.Fragment key={row.id}>
+                      {expandedRows[row.id] ? (
+                        <div className="h-0">
+                          <button
+                            onClick={() => toggleRowExpansion(row.id)}
+                            className="relative top-4 left-3"
+                          >
+                            <ChevronsDownUp size={20} />{" "}
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="h-0">
+                          <button
+                            onClick={() => toggleRowExpansion(row.id)}
+                            className="relative top-4 left-3"
+                          >
+                            <ChevronsDown size={20} />
+                          </button>
+                        </div>
+                      )}
                       <TableRow
                         key={row.id}
                         className="cursor-pointer"
@@ -190,9 +213,7 @@ export function MadaidTable({
                                   <TableCaption className="my-4 font-semibold text-slate-950">
                                     Positions:
                                   </TableCaption>
-                                  <div className="flex flex-col space-y-5"
-                                  
-                                  >
+                                  <div className="flex flex-col space-y-5">
                                     <DataTable
                                       data={row.original.positions}
                                       columns={MedaidPositionsColumns()}

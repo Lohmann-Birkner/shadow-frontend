@@ -163,42 +163,6 @@ console.log(taskRelatedToUser.data)
                 icon={<Search className="mx-2 h-4 w-4" />}
               />
               <div className="flex gap-3 flex-wrap">
-                {/* <Button
-                  onClick={() => setIsFlipped(!isFlipped)}
-                  variant="outline"
-                  className="h-9 md:h-8"
-                >
-                  {isFlipped ? (
-                    <ArrowDownUp className="h-4 w-4" />
-                  ) : (
-                    <ArrowUpDown className="h-4 w-4" />
-                  )}
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className="h-9 md:h-8" variant="outline">
-                      <FormattedMessage id="Sorted_by" />:{" "}
-                      <b className="ml-1">{headerValue()}</b>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-48">
-                    <DropdownMenuRadioGroup
-                      value={sortBy}
-                      onValueChange={setSortBy}
-                    >
-                      {columns
-                        .filter((column) => column.accessorKey)
-                        .map((column) => (
-                          <DropdownMenuRadioItem
-                            key={column.accessorKey}
-                            value={column.accessorKey}
-                          >
-                            {column.header}{" "}
-                          </DropdownMenuRadioItem>
-                        ))}
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu> */}
                 <Button
                   onClick={() => setIsDialogOpen(true)}
                   variant={"outline"}
