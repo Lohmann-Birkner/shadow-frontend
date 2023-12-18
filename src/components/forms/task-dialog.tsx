@@ -359,7 +359,9 @@ function TaskDialog({
               )}
             />
             <AlertDialogFooter className="mt-8">
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>
+                <FormattedMessage id="Cancel"/>
+              </AlertDialogCancel>
               <Button type="submit">
                 {task ? (
                   <FormattedMessage id="Update" />

@@ -57,7 +57,6 @@ export default function DocumentationEdit({
   index,
   patientData,
 }: Props) {
-
   const { query } = useRouter();
   const queryClient = useQueryClient();
 
@@ -171,7 +170,11 @@ export default function DocumentationEdit({
               )}
             />
             <AlertDialogFooter className="mt-8">
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>
+                {" "}
+                <FormattedMessage id="Cancel" />
+              </AlertDialogCancel>
+
               <Button type="submit">
                 {dialogType === "edit" ? (
                   <FormattedMessage id="Update" />
