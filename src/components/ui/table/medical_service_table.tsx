@@ -11,6 +11,7 @@ import {
   getFilteredRowModel,
   getExpandedRowModel,
   ExpandedState,
+  
 } from "@tanstack/react-table";
 import {
   Table,
@@ -187,14 +188,14 @@ export function MedicalServiceTable({
           className="h-fit max-h-[45rem] border-collapse w-full"
           style={{ width: table.getTotalSize() }}
         >
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-white z-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className=" w-full">
                 {headerGroup.headers.map((header) => {
                   return (
                     <>
                       <TableHead
-                        className=" text-slate-950 bg-slate-100 relative h-20 pt-5 text-center"
+                        className=" text-slate-950 bg-slate-100 pt-5 text-center"
                         key={header.id}
                         colSpan={header.colSpan}
                         draggable={
@@ -238,7 +239,7 @@ export function MedicalServiceTable({
                   <div className="h-0">
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-7 left-3"
+                      className="relative top-5 left-3"
                     >
                       <ChevronsDownUp size={20} />{" "}
                     </button>
@@ -247,7 +248,7 @@ export function MedicalServiceTable({
                   <div className="h-0">
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-7 left-3"
+                      className="relative top-5 left-3"
                     >
                       <ChevronsDown size={20} />
                     </button>
@@ -256,7 +257,7 @@ export function MedicalServiceTable({
 
                 <TableRow
                   key={row.id}
-                  className="cursor-pointer "
+                  className="cursor-pointer"
                   data-state={expandedRows[row.id] && "selected"}
                   onClick={() => toggleRowExpansion(row.id)}
                 >

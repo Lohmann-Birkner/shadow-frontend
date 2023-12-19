@@ -89,7 +89,11 @@ export function DataTable<TData, TValue>({
   return (
     <>
       {checkIfcolumnNeedToBeShown && (
-        <Button onClick={onClickOpenColumns}>expand</Button>
+        <Button onClick={onClickOpenColumns}
+        variant={"ghost"}
+        className="relative left-20 -top-8 border-2">
+          <FormattedMessage id="more_info"/>
+        </Button>
       )}
 
       <div

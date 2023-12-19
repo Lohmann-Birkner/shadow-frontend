@@ -49,6 +49,8 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Filter } from "../Filter";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { cn } from "@/lib/utils";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -73,6 +75,7 @@ export function HospitalTable({
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [tab, setTab] = useState("Diagnosis");
   const { formatMessage } = useIntl();
+  const { locale, defaultLocale } = useRouter();
 
   const table = useReactTable({
     data,
@@ -187,8 +190,10 @@ export function HospitalTable({
                   return (
                     <TableHead
                       key={header.id}
-                      className=" text-slate-950 bg-slate-100 
-                      h-20 hover:cursor-grab pt-4"
+                      className={cn(
+                        " text-slate-950 bg-slate-100 hover:cursor-grab pt-4 ",
+                        locale === "en" ? "h-24" : "h-20"
+                      )}
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn
                       }
@@ -199,7 +204,7 @@ export function HospitalTable({
                       }}
                       onDrop={onDrop}
                     >
-                      <div className="h-9">
+                      <div className="h-9 ">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -226,7 +231,7 @@ export function HospitalTable({
                     <div className="h-0">
                       <button
                         onClick={() => toggleRowExpansion(row.id)}
-                        className="relative top-4 left-3"
+                        className="relative top-4 left-1"
                       >
                         <ChevronsDownUp size={20} />{" "}
                       </button>
@@ -235,7 +240,7 @@ export function HospitalTable({
                     <div className="h-0">
                       <button
                         onClick={() => toggleRowExpansion(row.id)}
-                        className="relative top-4 left-3"
+                        className="relative top-4 left-1"
                       >
                         <ChevronsDown size={20} />
                       </button>
@@ -248,7 +253,7 @@ export function HospitalTable({
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14 pl-6" key={cell.id}>
+                      <TableCell className="h-14 pl-2" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
