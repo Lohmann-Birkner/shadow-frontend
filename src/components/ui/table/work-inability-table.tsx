@@ -117,7 +117,7 @@ export function WorkInabilityTable({
   return (
     <>
       <div
-        className="rounded-md max-h-[45rem] border-2 overflow-y-auto"
+        className="rounded-md max-h-[45rem] border-2 overflow-y-auto bg-neutral-100"
         style={{ height: "75vh" }}
       >
         <div className="flex">
@@ -244,7 +244,9 @@ export function WorkInabilityTable({
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14 text-center" key={cell.id}>
+                      <TableCell 
+                      className="h-14 text-center bg-white" 
+                      key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -261,7 +263,7 @@ export function WorkInabilityTable({
                         {/* Add your expanded content here */}
                         <>
                           {row.original.diagnosis.length > 0 ? (
-                            <div className=" px-10 bg-neutral-100 w-9/10 mb-3      ">
+                            <div className=" px-10 bg-neutral-100 w-9/10 mb-3">
                               <TableCaption className="my-2 font-semibold text-slate-950">
                                 <FormattedMessage id="Diagnosis" />
                               </TableCaption>

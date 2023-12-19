@@ -126,7 +126,7 @@ export function HospitalTable({
   return (
     <>
       <div
-        className="rounded-md  overflow-y-auto border-2"
+        className="rounded-md  overflow-y-auto border-2 bg-neutral-100"
         style={{ height: "75vh" }}
       >
         <div className="flex">
@@ -271,7 +271,7 @@ export function HospitalTable({
                   </TableRow>
                   {expandedRows[row.id] && (
                     <TableRow
-                      className="hover:bg-neutral-100 bg-neutral-100"
+                      className="hover:bg-neutral-100 bg-neutral-100 "
                       key={`expanded-${row.id}`}
                     >
                       <TableCell colSpan={columns.length} key={row.id}>

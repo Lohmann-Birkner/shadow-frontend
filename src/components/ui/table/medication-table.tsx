@@ -112,7 +112,7 @@ export function MedicationTable({
   return (
     <>
       <div
-        className="rounded-md max-h-[48rem] border-2 overflow-y-auto "
+        className="rounded-md max-h-[48rem] border-2 overflow-y-auto bg-neutral-100"
         style={{ height: "75vh" }}
       >
         <div className="flex">
@@ -239,7 +239,7 @@ export function MedicationTable({
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14 pl-6" key={cell.id}>
+                      <TableCell className="h-14 pl-6 bg-white" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
