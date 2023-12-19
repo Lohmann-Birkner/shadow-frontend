@@ -11,7 +11,6 @@ import {
   getFilteredRowModel,
   getExpandedRowModel,
   ExpandedState,
-  
 } from "@tanstack/react-table";
 import {
   Table,
@@ -42,6 +41,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Input } from "@/components/ui/input";
 import { Filter } from "../Filter";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CollapsibleDataTableProps {
   columns: ColumnDef<any, any>[];
@@ -191,11 +191,14 @@ export function MedicalServiceTable({
           <TableHeader className="sticky top-0 bg-white z-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className=" w-full">
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, idx) => {
                   return (
                     <>
                       <TableHead
-                        className=" text-slate-950 bg-slate-100 pt-5 text-center"
+                        className={cn(
+                          " text-slate-950 bg-slate-100 pt-5 text-center",
+                          idx === 1  && "sticky left-0 z-30 bg-slate-100"
+                        )}
                         key={header.id}
                         colSpan={header.colSpan}
                         draggable={
@@ -235,37 +238,38 @@ export function MedicalServiceTable({
           <TableBody>
             {table.getRowModel().rows.map((row) => (
               <>
-                {expandedRows[row.id] ? (
-                  <div className="h-0">
+                <div className=" relative h-0">
+                  {expandedRows[row.id] ? (
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-5 left-3"
+                      className="relative top-7 left-3 m-auto z-20 "
                     >
                       <ChevronsDownUp size={20} />{" "}
                     </button>
-                  </div>
-                ) : (
-                  <div className="h-0">
+                  ) : (
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-5 left-3"
+                      className="relative top-7 left-3 m-auto z-20"
                     >
                       <ChevronsDown size={20} />
                     </button>
-                  </div>
-                )}
-
+                  )}
+                </div>
                 <TableRow
                   key={row.id}
                   className="cursor-pointer"
                   data-state={expandedRows[row.id] && "selected"}
                   onClick={() => toggleRowExpansion(row.id)}
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells().map((cell, idx) => (
                     <TableCell
-                      className="h-14 text-center"
+                      // className="h-14 text-center"
+                      className={cn(
+                        "h-14 text-center whitespace-nowrap  bg-white",
+                        (idx === 1 )&& "sticky left-0 z-10 "
+                      )}
                       key={cell.id}
-                      style={{ width: cell.column.getSize() }}
+                      // style={{ width: cell.column.getSize() }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

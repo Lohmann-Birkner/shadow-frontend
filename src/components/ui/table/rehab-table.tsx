@@ -132,14 +132,14 @@ export function RehabTable({
           </Button>
         </div>
         <Table>
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-white z-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
                       className="bg-slate-100 text-slate-950 
-                      hover:cursor-grab h-20 pt-4"
+                      hover:cursor-grab h-16 pt-4"
                       key={header.id}
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn

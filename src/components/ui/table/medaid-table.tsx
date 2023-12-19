@@ -125,14 +125,14 @@ export function MadaidTable({
           </Button>
         </div>
         <Table>
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-white z-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
                     className="bg-slate-100 text-slate-950 
-                    hover:cursor-grab h-20 pt-4"
+                    hover:cursor-grab h-16 pt-4"
                     data-column-index={header.index}
                     draggable={
                       !table.getState().columnSizingInfo.isResizingColumn

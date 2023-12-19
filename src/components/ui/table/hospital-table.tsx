@@ -183,16 +183,17 @@ export function HospitalTable({
           </div>
         </div>
         <Table>
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-white z-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, idx) => {
                   return (
                     <TableHead
                       key={header.id}
                       className={cn(
                         " text-slate-950 bg-slate-100 hover:cursor-grab pt-4 ",
-                        locale === "en" ? "h-24" : "h-20"
+                        locale === "en" ? "h-24" : "h-20",
+                        idx === 1 && "sticky left-0 z-30 bg-slate-100"
                       )}
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn
@@ -252,8 +253,15 @@ export function HospitalTable({
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14 pl-2" key={cell.id}>
+                    {row.getVisibleCells().map((cell, idx) => (
+                      <TableCell
+                        className={cn(
+                          "h-14 text-center whitespace-nowrap  bg-white",
+                          idx === 1 && "sticky left-0 z-10",
+                          expandedRows[row.id] && "border-b-[1px]"
+                        )}
+                        key={cell.id}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
