@@ -213,7 +213,7 @@ export function WorkInabilityTable({
                   <div className="h-0">
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-2 left-3"
+                      className="relative top-3 left-3"
                     >
                       <ChevronsDownUp size={20} />{" "}
                     </button>
@@ -222,7 +222,7 @@ export function WorkInabilityTable({
                   <div className="h-0">
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-2 left-3"
+                      className="relative top-3 left-3"
                     >
                       <ChevronsDown size={20} />
                     </button>

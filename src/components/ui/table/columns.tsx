@@ -343,16 +343,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Case_number",
       header: ({ column }) => {
         return (
-          <div className="flex justify-center align-middle">
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Case_number" />
-
-            <ArrowUpDown
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={16}
-              className="hover:cursor-pointer ml-2"
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -362,16 +363,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Insurance_area",
       header: ({ column }) => {
         return (
-          <div className="flex justify-center align-middle">
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Insurance_area" />
-
-            <ArrowUpDown
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={16}
-              className="hover:cursor-pointer ml-2"
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -383,16 +385,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Quarter",
       header: ({ column }) => {
         return (
-          <div className="flex justify-center ">
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Quarter" />
-
-            <ArrowUpDown
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={16}
-              className="hover:cursor-pointer ml-2"
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -407,16 +410,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
       header: ({ column }) => {
         return (
-          <div className="flex justify-center ">
-            <FormattedMessage id="Insurance_area" />
-
-            <ArrowUpDown
+          <div className="flex font-bold justify-center">
+            <FormattedMessage id="ID_Prescriber" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={16}
-              className="hover:cursor-pointer ml-2"
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -434,15 +438,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Physician_specialty_group",
       header: ({ column }) => {
         return (
-          <div className="flex justify-start ">
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Physician_specialty_group" />
-
-            <ArrowUpDown
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={16}
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -451,16 +457,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Is_accident",
       header: ({ column }) => {
         return (
-          <div className="flex justify-between">
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Is_accident" />
-
-            <ArrowUpDown
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={18}
-              className="hover:cursor-pointer "
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -470,16 +477,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       id: formatMessage({ id: "Treatment_type" }),
       header: ({ column }) => {
         return (
-          <div className="flex justify-start">
-            <FormattedMessage id="Is_accident" />
-
-            <ArrowUpDown
+          <div className="flex font-bold justify-center">
+            <FormattedMessage id="Treatment_type" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={18}
-              className="hover:cursor-pointer"
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -490,14 +498,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Points" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       filterFn: mulitiFunctionFilter,
@@ -508,14 +520,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Total_costs" />
-
-            <ArrowUpDown className="ml-2 h-5 w-5" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
 
@@ -527,14 +543,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Calculated_costs" />
-
-            <ArrowUpDown className="ml-2 h-5 w-5" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
 
@@ -546,16 +566,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
       header: ({ column }) => {
         return (
-          <div className="flex justify-start">
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Non_budget_costs" />
-
-            <ArrowUpDown
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={22}
-              className="hover:cursor-pointer"
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -568,14 +589,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Dialysis_costs" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
 
@@ -585,14 +610,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Start_Treatment",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Start_Treatment" />
-
-            <ArrowUpDown className="ml-2 h-5 w-5" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => FormatDate(row.getValue("Start_Treatment")),
@@ -601,14 +630,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "End_Treatment",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="End_Treatment" />
-
-            <ArrowUpDown className="ml-2 h-5 w-5" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => FormatDate(row.getValue("End_Treatment")),
@@ -617,16 +650,17 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Insurance_stats_5",
       header: ({ column }) => {
         return (
-          <div className="flex justify-start">
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Insurance_status_5th_digit" />
-
-            <ArrowUpDown
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
-              size={24}
-              className="hover:cursor-pointer"
-            />
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
           </div>
         );
       },
@@ -637,14 +671,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Distance" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -652,14 +690,18 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       accessorKey: "Insurance_stats_2",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Insurance_status_2nd_digit" />
-
-            <ArrowUpDown className="ml-2 h-6 w-6" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -733,6 +775,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
         return (
           <Button
             variant="ghost"
+            className="font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <FormattedMessage id="Issue_date" />
@@ -750,6 +793,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
         return (
           <Button
             variant="ghost"
+            className="font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <FormattedMessage id="ID_Prescriber" />
@@ -776,6 +820,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
         return (
           <Button
             variant="ghost"
+            className="font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <FormattedMessage id="Group_prescriber" />
@@ -795,6 +840,7 @@ export const MedicationColumns = (): ColumnDef<MedicationT>[] => {
         return (
           <Button
             variant="ghost"
+            className="font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <FormattedMessage id="KV_area_Prescriber" />
@@ -921,13 +967,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Main_ICD",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Main_ICD" />
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -956,13 +1007,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Case_ID",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Case_ID" />
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -970,13 +1026,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Start_work_inability",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Start_work_inability" />
-            <ArrowUpDown className="ml-2 h-5 w-5" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => FormatDate(row.getValue("Start_work_inability")),
@@ -985,13 +1046,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "End_work_inability",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="End_work_inability" />
-            <ArrowUpDown className="ml-2 h-5 w-5" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => FormatDate(row.getValue("End_work_inability")),
@@ -1002,13 +1068,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       filterFn: mulitiFunctionFilter,
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Total_days_benefits" />
-            <ArrowUpDown className="ml-2 h-7 w-7" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1020,13 +1091,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="ID_Prescriber" />
-            <ArrowUpDown className="ml-2 h-5 w-5" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -1044,13 +1120,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       id: "Core_ID_prescriber",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Core_ID_prescriber" />
-            <ArrowUpDown className="ml-2 h-7 w-7" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1058,13 +1139,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Physician_Specialty_Group",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Physician_Specialty_Group" />
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1072,13 +1158,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Payment_area",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Payment_area" />
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1086,13 +1177,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Type_EEL",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Type_EEL" />
-            <ArrowUpDown className="ml-2 h-6 w-6" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1100,13 +1196,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Start_EEL",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Start_EEL" />
-            <ArrowUpDown className="ml-2 h-6 w-6" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -1122,13 +1223,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "End_EEL",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="End_EEL" />
-            <ArrowUpDown className="ml-2 h-6 w-6" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -1146,13 +1252,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       id: "Total_days_EEL",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Total_days_EEL" />
-            <ArrowUpDown className="ml-2 h-7 w-7" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1162,13 +1273,18 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       id: "Net_amount_EEL",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Net_amount_EEL" />
-            <ArrowUpDown className="ml-2 h-7 w-7" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1331,6 +1447,7 @@ export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
         return (
           <Button
             variant="ghost"
+            className="font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <FormattedMessage id="ID_Prescriber" />
@@ -1354,6 +1471,7 @@ export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
         return (
           <Button
             variant="ghost"
+            className="font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <FormattedMessage id="Date_prescription" />
@@ -1369,6 +1487,7 @@ export const MedaidColumns = (): ColumnDef<MedaidT>[] => {
       header: ({ column }) => {
         return (
           <Button
+            className="font-bold"
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
@@ -1499,7 +1618,7 @@ export const MedaidPositionsColumns = (): ColumnDef<Position>[] => {
 
 export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
   return [
-    { id: "action", size: 20 },
+    { id: "action", size: 10 },
 
     {
       accessorKey: "ID_Insured",
@@ -1508,14 +1627,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex justify-center">
             <FormattedMessage id="ID_Insured" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              className="p-0 ml-1 h-5"
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4 " />
+            </Button>
+          </div>
         );
       },
     },
@@ -1523,14 +1646,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Case_number",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex justify-center">
             <FormattedMessage id="Case_number" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              className="p-0 ml-1 h-5"
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className="h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1538,14 +1665,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Admission_date",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Admission_date" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => formatDateForHospital(row.getValue("Admission_date")),
@@ -1554,14 +1685,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Reason_admission",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            <FormattedMessage id="Reason_admission" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+          <div className="flex font-bold justify-center">
+            <FormattedMessage id="Admission_date" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -1600,14 +1735,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Admission_weight_infant" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1615,14 +1754,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Reason_discharge",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Reason_discharge" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -1658,14 +1801,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Date_discharge",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Date_discharge" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => formatDateForHospital(row.getValue("Date_discharge")),
@@ -1675,14 +1822,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Delivery_date",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Delivery_date" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -1700,14 +1851,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       filterFn: mulitiFunctionFilter,
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Number_ventilation_days" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1719,14 +1874,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
 
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Cost_total" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => showCostInTwoDigit(row.getValue("Cost_total")),
@@ -1735,14 +1894,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "ID_Hospital",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="ID_Hospital" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1750,14 +1913,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Department_Admission",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Department_Admission" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1765,14 +1932,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Department_Discharge",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Department_Discharge" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1798,14 +1969,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       },
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="ICD" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1831,14 +2006,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       },
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex  font-bold justify-center">
             <FormattedMessage id="DRG" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -1848,14 +2027,18 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       id: "Occupancy_days",
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <div className="flex font-bold justify-center">
             <FormattedMessage id="Occupancy_days" />
-
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
     },
@@ -2012,6 +2195,7 @@ export const RehabColumns = (): ColumnDef<RehabT>[] => {
       header: ({ column }) => {
         return (
           <Button
+            className="font-bold"
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
@@ -2027,6 +2211,7 @@ export const RehabColumns = (): ColumnDef<RehabT>[] => {
       header: ({ column }) => {
         return (
           <Button
+            className="font-bold"
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
