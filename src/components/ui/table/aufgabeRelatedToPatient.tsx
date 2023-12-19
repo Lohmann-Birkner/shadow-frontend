@@ -115,7 +115,7 @@ export default function AufgabeRelatedToPatient({
           </Button>
         </div>
         <Table>
-          <TableHeader className="border-2">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
