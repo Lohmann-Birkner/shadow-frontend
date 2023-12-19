@@ -290,7 +290,7 @@ export function SeachPatientMultipleCatalog({
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[220px] justify-between",
+                              "w-[220px] justify-between font-normal",
                               !field.value && "text-muted-foreground"
                             )}
                           >

@@ -17,7 +17,7 @@ function Navbar() {
   console.log("data in navbar" + data?.user);
 
   return (
-    <header className="fixed top-0 w-full flex items-center justify-between pl-3 pr-6 py-2 2xl:px-16 shadow-sm mx-0 border-b bg-white h-12">
+    <header className="fixed top-0 w-full z-20 flex items-center justify-between pl-3 pr-6 py-2 2xl:px-16 shadow-sm mx-0 border-b bg-white h-12">
       {data?.user && <MobileSidebar />}
       <h1 className="hidden lg:block text-xl font-bold">SHADOW</h1>
       <ul className="list-style-none ml-auto flex  pl-0 lg:mt-1 sm:flex-row sm:mt-2 h-10">
