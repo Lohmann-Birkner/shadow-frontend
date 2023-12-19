@@ -115,14 +115,14 @@ export default function AufgabeRelatedToPatient({
           </Button>
         </div>
         <Table>
-          <TableHeader>
+          <TableHeader className="border-2">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
                     className="bg-slate-100 text-slate-950
-                     hover:cursor-grab h-20 pt-4"
+                     hover:cursor-grab h-20 pt-4 font-bold"
                     data-column-index={header.index}
                     draggable={
                       !table.getState().columnSizingInfo.isResizingColumn
@@ -154,7 +154,7 @@ export default function AufgabeRelatedToPatient({
                       <React.Fragment key={row.id}>
                         <TableRow key={row.id} className="cursor-pointer">
                           {row.getVisibleCells().map((cell) => (
-                            <TableCell className="h-14 pl-6" key={cell.id}>
+                            <TableCell className="h-14 pl-2" key={cell.id}>
                               {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext()
