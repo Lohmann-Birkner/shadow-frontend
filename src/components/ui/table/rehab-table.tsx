@@ -107,7 +107,7 @@ export function RehabTable({
   return (
     <>
       <div
-        className="max-h-[45rem] border-2 rounded-md overflow-y-auto"
+        className="max-h-[45rem] border-2 rounded-md overflow-y-auto bg-neutral-100"
         style={{ height: "75vh" }}
       >
         <div className="flex">
@@ -200,7 +200,7 @@ export function RehabTable({
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="h-14 pl-6" key={cell.id}>
+                      <TableCell className="h-14 pl-6 bg-white" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

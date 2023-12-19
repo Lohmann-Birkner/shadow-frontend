@@ -612,7 +612,7 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       cell: ({ row }) => showCostInTwoDigit(row.getValue("Non_budget_costs")),
     },
     {
-      accessorKey: "Dialysis_costs",
+      accessorKey: "Dialysis_cost",
       filterFn: mulitiFunctionFilter,
 
       header: ({ column }) => {
@@ -675,7 +675,7 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       cell: ({ row }) => FormatDate(row.getValue("End_Treatment")),
     },
     {
-      accessorKey: "Insurance_stats_5",
+      accessorKey: "Insurance_status_5th_digit",
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-center">
@@ -715,7 +715,7 @@ export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
       },
     },
     {
-      accessorKey: "Insurance_stats_2",
+      accessorKey: "Insurance_status_2nd_digit",
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-center">

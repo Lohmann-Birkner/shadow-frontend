@@ -128,7 +128,7 @@ export function MedicalServiceTable({
   return (
     <>
       <div
-        className="max-h-[48rem] border-2 rounded-md overflow-y-auto"
+        className="max-h-[48rem] border-2 rounded-md overflow-y-auto bg-neutral-100"
         style={{ height: "75vh" }}
       >
         <div className="flex">
@@ -196,7 +196,7 @@ export function MedicalServiceTable({
                     <>
                       <TableHead
                         className={cn(
-                          " text-slate-950 bg-slate-100 pt-5 text-center",
+                          " text-slate-950 bg-slate-100 py-5 text-center",
                           idx === 1  && "sticky left-0 z-30 bg-slate-100"
                         )}
                         key={header.id}
@@ -263,13 +263,13 @@ export function MedicalServiceTable({
                 >
                   {row.getVisibleCells().map((cell, idx) => (
                     <TableCell
-                      // className="h-14 text-center"
+                   
                       className={cn(
                         "h-14 text-center whitespace-nowrap  bg-white",
                         (idx === 1 )&& "sticky left-0 z-10 "
                       )}
                       key={cell.id}
-                      // style={{ width: cell.column.getSize() }}
+                     
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
