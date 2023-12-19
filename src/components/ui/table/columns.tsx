@@ -365,13 +365,13 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
 export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
   const { formatMessage } = useIntl();
   return [
-    // { id: "action", size: 10 },
+   { id: "action", size: 20 },
 
     {
       accessorKey: "Case_number",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-center sticky">
             <FormattedMessage id="Case_number" />
             <Button
               variant="ghost"

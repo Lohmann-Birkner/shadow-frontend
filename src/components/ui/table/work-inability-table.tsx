@@ -33,7 +33,13 @@ import {
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, ChevronDown, ChevronsDown, ChevronsDownUp, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  ChevronsDown,
+  ChevronsDownUp,
+  MoreHorizontal,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter } from "../Filter";
@@ -158,7 +164,7 @@ export function WorkInabilityTable({
               variant="outline"
               className="m-2 shadow w-48"
             >
-               {isFilterOpen ? (
+              {isFilterOpen ? (
                 <FormattedMessage id="filter_close" />
               ) : (
                 <FormattedMessage id="filter_open" />
@@ -167,7 +173,7 @@ export function WorkInabilityTable({
           </div>
         </div>
         <Table>
-          <TableHeader className="bg-slate-100 text-slate-950 ">
+          <TableHeader className="sticky top-0 bg-white z-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -185,6 +191,9 @@ export function WorkInabilityTable({
                         e.preventDefault();
                       }}
                       onDrop={onDrop}
+                      // style={{
+                      //   width: header.getSize(),
+                      // }}
                     >
                       <div className="h-9">
                         {header.isPlaceholder
@@ -209,25 +218,25 @@ export function WorkInabilityTable({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <>
-                {expandedRows[row.id] ? (
-                  <div className="h-0">
-                    <button
-                      onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-3 left-3"
-                    >
-                      <ChevronsDownUp size={20} />{" "}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="h-0">
-                    <button
-                      onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-3 left-3"
-                    >
-                      <ChevronsDown size={20} />
-                    </button>
-                  </div>
-                )}
+                  {expandedRows[row.id] ? (
+                    <div className="h-0">
+                      <button
+                        onClick={() => toggleRowExpansion(row.id)}
+                        className="relative top-5 left-1"
+                      >
+                        <ChevronsDownUp size={20} />{" "}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="h-0">
+                      <button
+                        onClick={() => toggleRowExpansion(row.id)}
+                        className="relative top-5 left-1"
+                      >
+                        <ChevronsDown size={20} />
+                      </button>
+                    </div>
+                  )}
                   <TableRow
                     key={row.id}
                     className="cursor-pointer "
@@ -235,7 +244,7 @@ export function WorkInabilityTable({
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="pl-6" key={cell.id}>
+                      <TableCell className="h-14 text-center" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
