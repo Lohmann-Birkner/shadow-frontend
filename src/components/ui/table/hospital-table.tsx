@@ -258,7 +258,7 @@ export function HospitalTable({
                         className={cn(
                           "h-14 text-center whitespace-nowrap  bg-white",
                           idx === 1 && "sticky left-0 z-10",
-                          expandedRows[row.id] && "border-b-[1px]"
+                          expandedRows[row.id] && "border-b-2"
                         )}
                         key={cell.id}
                       >
@@ -309,7 +309,8 @@ export function HospitalTable({
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={HospitalDiagnosisColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
                               />
                             </TabsContent>
                           ) : (
@@ -337,7 +338,8 @@ export function HospitalTable({
                               <DataTable
                                 data={row.original.billing}
                                 columns={HospitalBillingColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
                               />
                             </TabsContent>
                           ) : (
@@ -364,7 +366,8 @@ export function HospitalTable({
                               <DataTable
                                 data={row.original.procedure}
                                 columns={HospitalProcedureColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
                               />{" "}
                             </TabsContent>
                           ) : (

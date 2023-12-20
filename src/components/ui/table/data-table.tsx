@@ -31,6 +31,7 @@ interface DataTableProps<TData, TValue> {
   onRowClick?: (item: any) => void;
   pagination: boolean;
   className?: string;
+  ifNeedPagination?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -41,6 +42,7 @@ export function DataTable<TData, TValue>({
   onRowClick,
   pagination,
   className,
+  ifNeedPagination,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] =
@@ -50,6 +52,7 @@ export function DataTable<TData, TValue>({
       Localization_diagnosis: false,
       Severity_diagnosis: false,
     });
+  console.log(columns);
   const onClickOpenColumns = () => {
     setColumnVisibility({
       Secondary_diagnosis: !columnVisibility.Secondary_diagnosis,
@@ -70,7 +73,7 @@ export function DataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: 12,
+        pageSize: ifNeedPagination ? data.length : 12,
       },
     },
     enableColumnResizing:
@@ -96,8 +99,7 @@ export function DataTable<TData, TValue>({
               variant="ghost"
               className="relative left-20 -top-8 border-2"
             >
-             <FormattedMessage id="less_info" />
-              
+              <FormattedMessage id="less_info" />
             </Button>
           ) : (
             <Button
@@ -105,7 +107,7 @@ export function DataTable<TData, TValue>({
               variant="ghost"
               className="relative left-20 -top-8 border-2"
             >
-             <FormattedMessage id="more_info" />
+              <FormattedMessage id="more_info" />
             </Button>
           )}
         </>
@@ -203,7 +205,12 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {pagination && <DataTablePagination table={table} />}
+      {pagination && (
+        <DataTablePagination
+          table={table}
+          ifNeedPagination={ifNeedPagination}
+        />
+      )}
     </>
   );
 }

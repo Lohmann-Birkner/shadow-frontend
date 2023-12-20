@@ -45,7 +45,6 @@ import {
   TooltipTrigger,
 } from "../tooltip";
 import PrescriberTable from "./prescriber-table";
-import stringWidth from "string-width";
 
 //this function is built to filter the columns with data type number,
 //so that the column can be filtered according to a range and also an exact number
@@ -1027,7 +1026,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
         return Main_ICD_Text ? (
           pznTextTooltip
         ) : (
-          <div>{row.getValue("Main_ICD")}</div>
+          <div className="flex">{row.getValue("Main_ICD")}</div>
         );
       },
     },
@@ -1355,14 +1354,8 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
 
       cell: ({ row, column }) => {
         const Main_ICD_Text = row.original.Main_ICD_Text;
-        const Main_ICD_Text_Short = row.original.Main_ICD_Text.slice(
-          0,
-          10
-        ).concat("...");
-        const aaa = stringWidth(Main_ICD_Text);
-        const bbb = Main_ICD_Text.length;
-        const ccc = document.querySelector("[id='0_Main_ICD_Text']");
-        console.log(ccc);
+     
+  
         const text = (
           <TooltipProvider>
             <Tooltip>
@@ -1380,20 +1373,6 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
           </TooltipProvider>
         );
         return text;
-
-        // const pznTextTooltip = (
-        //   <TooltipProvider>
-        //     <Tooltip>
-        //       <TooltipTrigger className="flex items-center w-[100px]   ">
-        //         {Main_ICD_Text}
-        //         {/* <Info className="w-4 h-4 ml-1" /> */}
-        //       </TooltipTrigger>
-        //       <TooltipContent>{Main_ICD_Text as string}</TooltipContent>
-        //     </Tooltip>
-        //   </TooltipProvider>
-        // );
-
-        // return pznTextTooltip
       },
       size: 600,
     },
