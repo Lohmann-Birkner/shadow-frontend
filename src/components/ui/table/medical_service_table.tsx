@@ -185,7 +185,7 @@ export function MedicalServiceTable({
           </div>
         </div>
         <Table
-          className="h-fit max-h-[45rem] border-collapse w-full"
+          className="h-fit max-h-[45rem] w-full"
           style={{ width: table.getTotalSize() }}
         >
           <TableHeader className="sticky top-0 bg-white z-50">
@@ -197,7 +197,7 @@ export function MedicalServiceTable({
                       <TableHead
                         className={cn(
                           " text-slate-950 bg-slate-100 py-5 text-center",
-                          idx === 1  && "sticky left-0 z-30 bg-slate-100"
+                          idx === 1 && "sticky left-0 z-30 bg-slate-100"
                         )}
                         key={header.id}
                         colSpan={header.colSpan}
@@ -238,38 +238,33 @@ export function MedicalServiceTable({
           <TableBody>
             {table.getRowModel().rows.map((row) => (
               <>
-                <div className=" relative h-0">
-                  {expandedRows[row.id] ? (
-                    <button
-                      onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-4 left-3 m-auto z-20 "
-                    >
-                      <ChevronsDownUp size={20} />{" "}
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-4 left-3 m-auto z-20"
-                    >
+                <div
+                  className="h-0 w-0  "
+                >
+                  <button
+                    onClick={() => toggleRowExpansion(row.id)}
+                    className="relative top-4 left-3 m-auto z-20 "
+                  >
+                    {expandedRows[row.id] ? (
+                      <ChevronsDownUp size={20} />
+                    ) : (
                       <ChevronsDown size={20} />
-                    </button>
-                  )}
+                    )}
+                  </button>
                 </div>
                 <TableRow
                   key={row.id}
-                  className="cursor-pointer"
+                  className="cursor-pointer "
                   data-state={expandedRows[row.id] && "selected"}
                   onClick={() => toggleRowExpansion(row.id)}
                 >
                   {row.getVisibleCells().map((cell, idx) => (
                     <TableCell
-                   
                       className={cn(
-                        "h-14 text-center whitespace-nowrap  bg-white",
-                        (idx === 1 )&& "sticky left-0 z-10 "
+                        "h-14 text-center whitespace-nowrap  bg-white ",
+                        idx === 1 && "sticky left-0 z-10"
                       )}
                       key={cell.id}
-                     
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -280,7 +275,7 @@ export function MedicalServiceTable({
                 </TableRow>
                 {expandedRows[row.id] && (
                   <TableRow
-                    className="hover:bg-neutral-100 bg-neutral-100"
+                    className=" bg-neutral-100 "
                     key={`expanded-${row.id}`}
                   >
                     <TableCell colSpan={columns.length} key={row.id}>
@@ -291,7 +286,7 @@ export function MedicalServiceTable({
                         <>
                           {row.original.diags.length > 0 && (
                             <div
-                              className=" bg-neutral-100 mb-3 pl-10 "
+                              className=" bg-neutral-100 pb-3 pl-10 "
                               key={row.id}
                               style={{ width: "65vw" }}
                             >
@@ -302,7 +297,9 @@ export function MedicalServiceTable({
                               <DataTable
                                 data={row.original.diags}
                                 columns={MedicalServiceDiagsColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
+
                               />
                             </div>
                           )}
@@ -319,7 +316,9 @@ export function MedicalServiceTable({
                               <DataTable
                                 data={row.original.ops}
                                 columns={MedicalServiceOpsColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
+
                               />
                             </div>
                           )}

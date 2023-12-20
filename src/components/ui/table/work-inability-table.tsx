@@ -222,7 +222,7 @@ export function WorkInabilityTable({
                     <div className="h-0">
                       <button
                         onClick={() => toggleRowExpansion(row.id)}
-                        className="relative top-5 left-1"
+                        className="relative top-8 left-1"
                       >
                         <ChevronsDownUp size={20} />{" "}
                       </button>
@@ -231,7 +231,7 @@ export function WorkInabilityTable({
                     <div className="h-0">
                       <button
                         onClick={() => toggleRowExpansion(row.id)}
-                        className="relative top-5 left-1"
+                        className="relative top-8 left-1"
                       >
                         <ChevronsDown size={20} />
                       </button>
@@ -239,14 +239,15 @@ export function WorkInabilityTable({
                   )}
                   <TableRow
                     key={row.id}
-                    className="cursor-pointer "
+                    className="cursor-pointer h-20"
                     data-state={expandedRows[row.id] && "selected"}
                     onClick={() => toggleRowExpansion(row.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell 
-                      className="h-14 text-center bg-white" 
-                      key={cell.id}>
+                      <TableCell
+                        className="h-14 text-center bg-white"
+                        key={cell.id}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -271,8 +272,12 @@ export function WorkInabilityTable({
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={WorkInabilityDiagnosisColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
                               />
+                              {/* for all the nested tables, we dont need paganation
+                              only the total amount of data will be shown. this is role for ifNeedPaganation
+                              */}
                             </div>
                           ) : (
                             <FormattedMessage id="No_results" />

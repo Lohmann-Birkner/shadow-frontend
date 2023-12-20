@@ -240,7 +240,9 @@ export function RehabTable({
                               <DataTable
                                 data={row.original.diagnosis}
                                 columns={RehabDiagnosisColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
+
                               />
                             </TabsContent>
                           ) : (
@@ -264,7 +266,9 @@ export function RehabTable({
                               <DataTable
                                 data={row.original.payment}
                                 columns={RehabPaymentColumns()}
-                                pagination={false}
+                                pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
+
                               />
                             </TabsContent>
                           )}

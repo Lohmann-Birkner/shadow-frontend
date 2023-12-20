@@ -264,7 +264,9 @@ export function MedicationTable({
                                 <DataTable
                                   data={row.original.positions}
                                   columns={MedicationPositionsColumns()}
-                                  pagination={false}
+                                  pagination={true}
+                                ifNeedPagination={expandedRows[row.id]}
+
                                 />
                               </div>
                             </div>

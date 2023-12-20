@@ -192,7 +192,10 @@ export function MadaidTable({
                         onClick={() => toggleRowExpansion(row.id)}
                       >
                         {row.getVisibleCells().map((cell) => (
-                          <TableCell className="h-14 pl-6 bg-white" key={cell.id}>
+                          <TableCell
+                            className="h-14 pl-6 bg-white"
+                            key={cell.id}
+                          >
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()
@@ -217,7 +220,8 @@ export function MadaidTable({
                                     <DataTable
                                       data={row.original.positions}
                                       columns={MedaidPositionsColumns()}
-                                      pagination={false}
+                                      pagination={true}
+                                      ifNeedPagination={expandedRows[row.id]}
                                     />
                                   </div>
                                 </div>
