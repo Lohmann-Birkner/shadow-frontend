@@ -203,19 +203,19 @@ export default function Page() {
               <div className="border-b-2 text-center  ">
                 {" "}
                 <CardContent className="px-1 py-1 flex ">
-                  <CardTitle className="mb-1 pl-0 pr-4">
+                  <CardTitle className="mb-1 pl-0 pr-4 text-lg text-start">
                     <FormattedMessage id="ins_id" />:{" "}
-                    <span className="font-light">{data?.ins_id}</span>
+                    <span className="font-light ">{data?.ins_id}</span>
                   </CardTitle>
-                  <CardTitle className="mb-1 text-lg px-4">
+                  <CardTitle className="mb-1 text-lg px-4 text-start">
                     <FormattedMessage id="Name" />:{" "}
                     <span className="font-light">{`${data?.last_name} `}</span>
                   </CardTitle>
-                  <CardTitle className="mb-1 text-lg px-4">
+                  <CardTitle className="mb-1 text-lg px-4 text-start">
                     <FormattedMessage id="first_name" />:{" "}
                     <span className="font-light">{` ${data?.first_name}`}</span>
                   </CardTitle>
-                  <CardTitle className="mb-1 text-lg px-4">
+                  <CardTitle className="mb-1 text-lg px-4 text-start">
                     <FormattedMessage id="Date_of_birth" />:{" "}
                     <span className="font-light">
                       {FormatDate(data?.Date_of_birth)}

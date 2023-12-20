@@ -1366,7 +1366,8 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
         const text = (
           <TooltipProvider>
             <Tooltip>
-              <div className="resize-x text-ellipsis overflow-hidden whitespace-nowrap">
+              {/* <div className="resize-x "> */}
+              <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                 {Main_ICD_Text}
               </div>
               {
