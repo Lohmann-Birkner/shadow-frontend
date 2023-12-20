@@ -89,11 +89,26 @@ export function DataTable<TData, TValue>({
   return (
     <>
       {checkIfcolumnNeedToBeShown && (
-        <Button onClick={onClickOpenColumns}
-        variant={"ghost"}
-        className="relative left-20 -top-8 border-2">
-          <FormattedMessage id="more_info"/>
-        </Button>
+        <>
+          {columnVisibility.Secondary_diagnosis ? (
+            <Button
+              onClick={onClickOpenColumns}
+              variant="ghost"
+              className="relative left-20 -top-8 border-2"
+            >
+             <FormattedMessage id="less_info" />
+              
+            </Button>
+          ) : (
+            <Button
+              onClick={onClickOpenColumns}
+              variant="ghost"
+              className="relative left-20 -top-8 border-2"
+            >
+             <FormattedMessage id="more_info" />
+            </Button>
+          )}
+        </>
       )}
 
       <div
@@ -107,9 +122,7 @@ export function DataTable<TData, TValue>({
           //   width: table.getTotalSize(),
           // }}
           className={`w-full border-collapse ${
-            columns[0].id !== "ins_id" 
-              ? `w-${table.getTotalSize()}`
-              : ""
+            columns[0].id !== "ins_id" ? `w-${table.getTotalSize()}` : ""
           }`}
         >
           <TableHeader>
@@ -118,8 +131,9 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className={cn("bg-slate-100 text-slate-950 h-15 border-b-2 py-2",
-                      columns[0].id=="ins_id"&&"font-bold text-base"
+                      className={cn(
+                        "bg-slate-100 text-slate-950 h-15 border-b-2 py-2",
+                        columns[0].id == "ins_id" && "font-bold text-base"
                       )}
                       key={header.id}
                       style={{ position: "relative", width: header.getSize() }}

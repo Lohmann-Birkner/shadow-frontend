@@ -215,7 +215,11 @@
     "results":"Results",
     "reset":"Reset",
     "filter_close":"Filter close",
-    "more_info":"More details"
+    "more_info":"More details",
+    "userId":"User ID",
+    "less_info":"Less details"
+
+
 
 
 

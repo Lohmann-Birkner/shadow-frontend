@@ -242,14 +242,14 @@ export function MedicalServiceTable({
                   {expandedRows[row.id] ? (
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-7 left-3 m-auto z-20 "
+                      className="relative top-4 left-3 m-auto z-20 "
                     >
                       <ChevronsDownUp size={20} />{" "}
                     </button>
                   ) : (
                     <button
                       onClick={() => toggleRowExpansion(row.id)}
-                      className="relative top-7 left-3 m-auto z-20"
+                      className="relative top-4 left-3 m-auto z-20"
                     >
                       <ChevronsDown size={20} />
                     </button>
