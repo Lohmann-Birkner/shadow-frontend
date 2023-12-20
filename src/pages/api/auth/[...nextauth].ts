@@ -59,6 +59,7 @@ export const authOptions = {
       console.log(user, account);
       return true;
     },
+
     async jwt({ token, account }: any) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
@@ -86,6 +87,11 @@ export const authOptions = {
       //  console.log("token", token);
 
       return session;
+    },
+  },
+  events: {
+    async signOut(message: any) {
+      console.log("message", message);
     },
   },
 };

@@ -14,7 +14,6 @@ function Navbar() {
   const { data } = useSession();
   const { asPath } = useRouter();
   const { locale } = useIntl();
-  console.log("data in navbar" + data?.user);
 
   return (
     <header className="fixed top-0 w-full z-20 flex items-center justify-between pl-3 pr-6 py-2 2xl:px-16 shadow-sm mx-0 border-b bg-white h-12">
