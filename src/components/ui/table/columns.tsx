@@ -172,17 +172,17 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-start">
-          <FormattedMessage id="Membership_number" />
-          <Button
-            variant="ghost"
-            className="p-0 ml-1 h-5"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
-          >
-            <ArrowUpDown className=" h-4 w-4" />
-          </Button>
-        </div>
+            <FormattedMessage id="Membership_number" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       size: 20,
@@ -214,18 +214,17 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-start">
-          <FormattedMessage id="Title" />
-          <Button
-            variant="ghost"
-            className="p-0 ml-1 h-5"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
-          >
-            <ArrowUpDown className=" h-4 w-4" />
-          </Button>
-        </div>
-          
+            <FormattedMessage id="Title" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -238,17 +237,17 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-start">
-          <FormattedMessage id="Content" />
-          <Button
-            variant="ghost"
-            className="p-0 ml-1 h-5"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
-          >
-            <ArrowUpDown className=" h-4 w-4" />
-          </Button>
-        </div>
+            <FormattedMessage id="Content" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       size: 700,
@@ -258,17 +257,17 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-start">
-          <FormattedMessage id="Done" />
-          <Button
-            variant="ghost"
-            className="p-0 ml-1 h-5"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
-          >
-            <ArrowUpDown className=" h-4 w-4" />
-          </Button>
-        </div>
+            <FormattedMessage id="Done" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => {
@@ -297,17 +296,17 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-start">
-          <FormattedMessage id="Priority" />
-          <Button
-            variant="ghost"
-            className="p-0 ml-1 h-5"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
-          >
-            <ArrowUpDown className=" h-4 w-4" />
-          </Button>
-        </div>
+            <FormattedMessage id="Priority" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
 
@@ -335,17 +334,17 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
       header: ({ column }) => {
         return (
           <div className="flex font-bold justify-start">
-          <FormattedMessage id="Deadline" />
-          <Button
-            variant="ghost"
-            className="p-0 ml-1 h-5"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
-          >
-            <ArrowUpDown className=" h-4 w-4" />
-          </Button>
-        </div>
+            <FormattedMessage id="Deadline" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
         );
       },
       cell: ({ row }) => FormatDate(row.getValue("todo_deadline")),
@@ -364,7 +363,7 @@ export const TasksColumns = (): ColumnDef<TaskRelatedToUserT>[] => {
 export const MedicalServiceColumns = (): ColumnDef<MedicalServiceT>[] => {
   const { formatMessage } = useIntl();
   return [
-   { id: "action", size: 20 },
+    { id: "action", size: 20 },
 
     {
       accessorKey: "Case_number",
@@ -1354,8 +1353,7 @@ export const WorkInabilityDiagnosisColumns = (): ColumnDef<
 
       cell: ({ row, column }) => {
         const Main_ICD_Text = row.original.Main_ICD_Text;
-     
-  
+
         const text = (
           <TooltipProvider>
             <Tooltip>
@@ -2151,6 +2149,7 @@ export const HospitalBillingColumns = (): ColumnDef<
     },
     {
       accessorKey: "Total_amount_billed",
+      size: 300,
       header: formatMessage({ id: "Total_amount_billed" }),
       cell: ({ row }) =>
         showCostInTwoDigit(row.getValue("Total_amount_billed")),
@@ -2171,10 +2170,11 @@ export const HospitalProcedureColumns = (): ColumnDef<
       accessorKey: "OPS_Text",
       header: formatMessage({ id: "OPS_Text" }),
       cell: (OPS_Text) => (
-        <div className="w-[400px]">
+        <div className="">
           {OPS_Text.getValue() as React.ReactNode}
         </div>
       ),
+      size:700
     },
     {
       accessorKey: "Date_operation",

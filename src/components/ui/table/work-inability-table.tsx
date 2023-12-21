@@ -222,7 +222,7 @@ export function WorkInabilityTable({
                     <div className="h-0">
                       <button
                         onClick={() => toggleRowExpansion(row.id)}
-                        className="relative top-8 left-1"
+                        className="relative top-7 left-1"
                       >
                         <ChevronsDownUp size={20} />{" "}
                       </button>
@@ -231,7 +231,7 @@ export function WorkInabilityTable({
                     <div className="h-0">
                       <button
                         onClick={() => toggleRowExpansion(row.id)}
-                        className="relative top-8 left-1"
+                        className="relative top-7 left-1"
                       >
                         <ChevronsDown size={20} />
                       </button>
@@ -245,7 +245,7 @@ export function WorkInabilityTable({
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
-                        className="h-14 text-center bg-white"
+                        className="h-14 pl-4 bg-white"
                         key={cell.id}
                       >
                         {flexRender(

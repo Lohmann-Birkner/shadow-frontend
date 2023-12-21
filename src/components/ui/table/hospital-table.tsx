@@ -256,7 +256,7 @@ export function HospitalTable({
                     {row.getVisibleCells().map((cell, idx) => (
                       <TableCell
                         className={cn(
-                          "h-14 text-center whitespace-nowrap  bg-white",
+                          "h-14 whitespace-nowrap pl-4 bg-white",
                           idx === 1 && "sticky left-0 z-10",
                           expandedRows[row.id] && "border-b-2"
                         )}
@@ -332,8 +332,8 @@ export function HospitalTable({
                           {row.original.billing.length > 0 ? (
                             <TabsContent
                               value="Billings"
-                              className="pl-6 border-0"
-                              style={{ width: "65vw" }}
+                              className="pl-6 border-0 w-max"
+                              // style={{ width: "65vw" }}
                             >
                               <DataTable
                                 data={row.original.billing}
@@ -360,8 +360,8 @@ export function HospitalTable({
                           {row.original.procedure.length > 0 ? (
                             <TabsContent
                               value="Procedures"
-                              className="border-0 pl-6"
-                              style={{ width: "65vw" }}
+                              className="border-0 pl-6 w-max"
+                              
                             >
                               <DataTable
                                 data={row.original.procedure}

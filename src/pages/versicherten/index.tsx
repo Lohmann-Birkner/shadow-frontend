@@ -17,18 +17,46 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
 import { useQuery } from "react-query";
-import { getAllPatients, getPatientSearchResult } from "@/api";
-import SearchPatient from "@/components/search-patient";
-import { getSession, useSession } from "next-auth/react";
+import { getAllPatients, getPatientSearchResult, switchDatabase } from "@/api";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { SeachPatientMultipleCatalog } from "@/components/searchPatientMultipleCatalog";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { toast } from "@/components/ui/use-toast";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const inter = Inter({ subsets: ["latin"] });
 
 interface Props {
   patients: PatientT[];
 }
+const FormSchema = z.object({
+  ten_millions: z.boolean().optional(),
+});
 
 export default function Home({ patients }: Props) {
   const [selectedItem, setSelectedItem] = useState<PatientT | null>(null);
@@ -37,13 +65,28 @@ export default function Home({ patients }: Props) {
   const [searchParameters, setSearchParameters] = useState<searchInputs | null>(
     null
   );
-
+  const [tenMillionDb, setTenMillionDb] = useState<boolean>();
   const { push } = useRouter();
   const PatientColumnsTyped = PatientColumns() as {
     header: string;
     accessorKey: string;
   }[];
 
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
+    switchDatabase();
+  };
   const { data, isFetching, error } = useQuery({
     queryKey: ["patients", searchParameters],
     queryFn: () => getPatientSearchResult(searchParameters!),
@@ -51,10 +94,6 @@ export default function Home({ patients }: Props) {
     enabled: Boolean(searchParameters),
     refetchOnWindowFocus: false,
   });
-
-  const session = useSession();
-
-  console.log("session data", session.data);
 
   const sortedItems = useMemo(() => {
     if (data) {
@@ -122,13 +161,44 @@ export default function Home({ patients }: Props) {
       <section className="lg:mr-5 lg:mb-0 ">
         <Card className="border-0 shadow-none">
           <CardHeader>
-            <CardTitle>
-              <FormattedMessage id="Insured_person"/>
+            <CardTitle className="flex justify-between">
+              <FormattedMessage id="Insured_person" />
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="w-auto space-x-6 flex"
+                >
+                  <FormField
+                    control={form.control}
+                    name="ten_millions"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select onValueChange={field.onChange}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a database" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="m@example.com">
+                              1 Million
+                            </SelectItem>
+                            <SelectItem value="m@google.com">
+                              10 Millions
+                            </SelectItem>
+                         
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit">Switch</Button>
+                </form>
+              </Form>
             </CardTitle>
           </CardHeader>
           <CardContent className="px-1 md:px-6 h-full">
             <div className="mt-5 mb-4 xl:flex w-full justify-between flex-wrap space-y-4 md:space-y-0 lg:block">
-             
               <SeachPatientMultipleCatalog
                 setSearchParameters={setSearchParameters}
                 isLoading={isFetching}
@@ -189,26 +259,25 @@ export default function Home({ patients }: Props) {
 }
 
 // export async function getStaticProps() {
- 
- 
+
 //   const patients = await getAllPatients();
 //   return { props: { patients }, revalidate: 60 * 3 };
 // }
-export async function getServerSideProps(context:any) {
-  const session = await getServerSession(context.req, context.res, authOptions)
+export async function getServerSideProps(context: any) {
+  const session = await getServerSession(context.req, context.res, authOptions);
   try {
-    const patients = await getAllPatients(session?.authorizationToken)
+    const patients = await getAllPatients(session?.authorizationToken);
     return {
-      props : {
-        patients
-      }
-    }
-  } catch(error) {
-    console.log('error: ', error)
+      props: {
+        patients,
+      },
+    };
+  } catch (error) {
+    console.log("error: ", error);
     return {
-      props : {
-        error: true
-      }
-    }
-  }  
+      props: {
+        error: true,
+      },
+    };
+  }
 }
