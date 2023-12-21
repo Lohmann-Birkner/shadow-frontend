@@ -32,27 +32,6 @@ export const getAllPatients = async (authorization: any) => {
   return response.data as PatientT[];
 };
 
-// export const getPatientByQuery = async (searchInputs: searchInputs) => {
-//   const response = await axios.get(
-//     `${API_URL_BASE}/insured?q=${searchInputs.catalog};${searchInputs.searchQuery}`
-//   );
-
-//   return response.data as PatientT[];
-// };
-
-// export const getPatientSearchResult = async (searchInputs: searchInputs) => {
-//   const response = await axios.get(
-//     `${API_URL_BASE}/insured?q=ins_id eq ${searchInputs.ins_id};
-//     first_name eq ${searchInputs.firstname};
-//     last_name eq ${searchInputs.lastname};
-//     Gender eq ${searchInputs.gender};
-//     Date_of_birth gte ${searchInputs.dateOfBirthStart};
-//     Date_of_birth ste ${searchInputs.dateOfBirthEnd};
-//     ZIP_code eq ${searchInputs.postNumber};
-//     Entry_date gte ${searchInputs.entryDateStart};
-//     Entry_date ste ${searchInputs.entryDateEnd}`
-//   );
-
 export const getPatientSearchResult = async (searchInputs: searchInputs) => {
   const session = await getSession();
   const authorization = session?.authorizationToken;
@@ -300,4 +279,22 @@ export const signup = async (data: {
   );
 
   return response;
+};
+
+//switch between 2 database: 1 million und 10 millions
+
+export const switchDatabase = async () => {
+  const session = await getSession();
+  const authorization = session?.authorizationToken;
+  const res= await axios.post(
+    `${API_URL_BASE}/change_db`,
+    {},
+    {
+      headers: {
+        authorization: `Token ${authorization}`,
+      },
+    }
+  );
+
+  console.log(res.data)
 };
