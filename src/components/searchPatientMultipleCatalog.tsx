@@ -460,7 +460,7 @@ export function SeachPatientMultipleCatalog({
         </Button>
         <Button className="mx-2"
         onClick={() => form.reset({
-          ins_id:""
+          
         })}><FormattedMessage id="reset" /></Button>
       </form>
     </Form>

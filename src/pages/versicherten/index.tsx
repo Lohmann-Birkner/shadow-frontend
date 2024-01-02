@@ -17,7 +17,12 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
 import { FormattedMessage } from "react-intl";
 import { useQuery } from "react-query";
-import { getAllPatients, getPatientSearchResult, switchDatabase } from "@/api";
+import {
+  getAllPatients,
+  getPatientSearchResult,
+  getWhichDatabase,
+  switchDatabase,
+} from "@/api";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { SeachPatientMultipleCatalog } from "@/components/searchPatientMultipleCatalog";
@@ -55,17 +60,17 @@ interface Props {
   patients: PatientT[];
 }
 const FormSchema = z.object({
-  ten_millions: z.boolean().optional(),
+  ten_millions: z.string(),
 });
 
 export default function Home({ patients }: Props) {
   const [selectedItem, setSelectedItem] = useState<PatientT | null>(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const [sortBy, setSortBy] = useState("last_name");
+  const [database, setDatabase] = useState("");
   const [searchParameters, setSearchParameters] = useState<searchInputs | null>(
     null
   );
-  const [tenMillionDb, setTenMillionDb] = useState<boolean>();
   const { push } = useRouter();
   const PatientColumnsTyped = PatientColumns() as {
     header: string;
@@ -76,23 +81,27 @@ export default function Home({ patients }: Props) {
     resolver: zodResolver(FormSchema),
   });
 
+  const { data: usedDatabase } = useQuery({
+    queryKey: ["database"],
+    queryFn: getWhichDatabase,
+  });
+
+  console.log(usedDatabase);
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    console.log("submitted");
+    console.log(data);
+    setDatabase(data.ten_millions);
+
     switchDatabase();
+    window.location.reload();
   };
   const { data, isFetching, error } = useQuery({
-    queryKey: ["patients", searchParameters],
+    queryKey: ["patients", searchParameters, usedDatabase],
     queryFn: () => getPatientSearchResult(searchParameters!),
     initialData: patients,
     enabled: Boolean(searchParameters),
     refetchOnWindowFocus: false,
+    cacheTime: 0,
   });
 
   const sortedItems = useMemo(() => {
@@ -163,38 +172,47 @@ export default function Home({ patients }: Props) {
           <CardHeader>
             <CardTitle className="flex justify-between">
               <FormattedMessage id="Insured_person" />
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="w-auto space-x-6 flex"
-                >
-                  <FormField
-                    control={form.control}
-                    name="ten_millions"
-                    render={({ field }) => (
-                      <FormItem>
-                        <Select onValueChange={field.onChange}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a database" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="m@example.com">
-                              1 Million
-                            </SelectItem>
-                            <SelectItem value="m@google.com">
-                              10 Millions
-                            </SelectItem>
-                         
-                          </SelectContent>
-                        </Select>
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit">Switch</Button>
-                </form>
-              </Form>
+              <div>
+                {/* <p>You are in {usedDatabase?.active_db.database_name}</p> */}
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit((data) => onSubmit(data))}
+                    className="w-auto space-x-6 flex"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="ten_millions"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder={Intl.NumberFormat(
+                                    "de-DE"
+                                  ).format(
+                                    usedDatabase?.active_db.database_size
+                                  )}
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="false">1.000.000</SelectItem>
+                              <SelectItem value="true">10.000.000</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit">
+                      <FormattedMessage id="switch" />
+                    </Button>
+                  </form>
+                </Form>
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="px-1 md:px-6 h-full">
@@ -265,6 +283,7 @@ export default function Home({ patients }: Props) {
 // }
 export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
+  console.log("---------refresh");
   try {
     const patients = await getAllPatients(session?.authorizationToken);
     return {
