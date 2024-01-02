@@ -6,7 +6,6 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
     const session = useSession();
 
-    console.log("session data", session);
 
     return (
         <main

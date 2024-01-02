@@ -56,7 +56,6 @@ export const authOptions = {
     async signIn({ user, account }: any) {
       account.firstname = user.firstname;
       account.lastname = user.lastname;
-      console.log(user, account);
       return true;
     },
 
@@ -83,7 +82,7 @@ export const authOptions = {
         authorizationToken: token.name,
       };
 
-      console.log("session after", session);
+      // console.log("session after", session);
       //  console.log("token", token);
 
       return session;

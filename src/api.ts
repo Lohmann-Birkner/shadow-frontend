@@ -127,7 +127,6 @@ export const addDocument = async (
   ins_id: undefined | string | string[],
   data: { doc_text: string } | undefined
 ) => {
-  console.log(data);
   const session = await getSession();
   const authorization = session?.authorizationToken;
   return await axios.post(`${API_URL_BASE}/documentation/${ins_id}`, data, {
@@ -298,3 +297,17 @@ export const switchDatabase = async () => {
 
   console.log(res.data)
 };
+
+export const getWhichDatabase =async()=>{
+  const session = await getSession();
+  const authorization = session?.authorizationToken;
+  const response = await axios.get(
+    `${API_URL_BASE}/change_db`,
+    {
+      headers: {
+        authorization: `Token ${authorization}`,
+      },
+    }
+  );
+  return response.data
+}

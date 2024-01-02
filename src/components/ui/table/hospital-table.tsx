@@ -361,7 +361,6 @@ export function HospitalTable({
                             <TabsContent
                               value="Procedures"
                               className="border-0 pl-6 w-max"
-                              
                             >
                               <DataTable
                                 data={row.original.procedure}

@@ -2,6 +2,7 @@ import { SessionProvider, useSession } from "next-auth/react";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
 import Sidebar from "@/components/sidebar";
 import Navbar from "@/components/navbar";
 import { IntlProvider } from "react-intl";
@@ -46,6 +47,7 @@ export default function App({
           </div>
 
           <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
         </QueryClientProvider>
       </SessionProvider>
     </IntlProvider>

@@ -26,7 +26,6 @@ export function DataTablePagination<TData>({
   table,
   ifNeedPagination,
 }: DataTablePaginationProps<TData>) {
-  console.log(ifNeedPagination)
   return (
     <div className="flex items-center justify-between px-2 mt-4 flex-wrap">
       <div className="flex-1 text-sm text-muted-foreground">

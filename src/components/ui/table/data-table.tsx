@@ -52,7 +52,6 @@ export function DataTable<TData, TValue>({
       Localization_diagnosis: false,
       Severity_diagnosis: false,
     });
-  console.log(columns);
   const onClickOpenColumns = () => {
     setColumnVisibility({
       Secondary_diagnosis: !columnVisibility.Secondary_diagnosis,
