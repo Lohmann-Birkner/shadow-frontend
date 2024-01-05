@@ -30,7 +30,7 @@ export function DataTablePagination<TData>({
     <div className="flex items-center justify-between px-2 mt-4 flex-wrap">
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredRowModel().rows.length}{" "}
-        <FormattedMessage id="results" />.
+        <FormattedMessage id="results" />
       </div>
       {ifNeedPagination ? null : (
         <div className="flex items-center space-x-6 lg:space-x-8">

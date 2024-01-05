@@ -17,7 +17,7 @@ import {
 import { formSearchQuery } from "./lib/utils";
 import { getSession, useSession } from "next-auth/react";
 
-export const getAllPatients = async (authorization: any) => {
+export const getAllPatients = async (authorization: any, database?: string) => {
   // const session = await getSession();
   // const authorization = session?.user?.name;
   const response = await axios.get(
@@ -26,6 +26,7 @@ export const getAllPatients = async (authorization: any) => {
     {
       headers: {
         authorization: `Token ${authorization}`,
+        "selected_database": database,
       },
     }
   );
@@ -47,8 +48,14 @@ export const getPatientSearchResult = async (searchInputs: searchInputs) => {
 export const getPatientById = async (id: string) => {
   const session = await getSession();
   const authorization = session?.authorizationToken;
+  const selected_database = localStorage.getItem("selected_database");
+  console.log(selected_database)
   const response = await axios.get(`${API_URL_BASE}/insured/${id}`, {
-    headers: { authorization: `Token ${authorization}` },
+    headers: {'Content-Type': 'application/x-www-form-urlencoded',
+      authorization: `Token ${authorization}`,
+      //  "selected_database": selected_database,
+      // "Access-Control-Allow-Headers":"*"
+    },
   });
 
   return response.data as PatientT;
@@ -285,7 +292,7 @@ export const signup = async (data: {
 export const switchDatabase = async () => {
   const session = await getSession();
   const authorization = session?.authorizationToken;
-  const res= await axios.post(
+  const res = await axios.post(
     `${API_URL_BASE}/change_db`,
     {},
     {
@@ -295,19 +302,16 @@ export const switchDatabase = async () => {
     }
   );
 
-  console.log(res.data)
+  console.log(res.data);
 };
 
-export const getWhichDatabase =async()=>{
+export const getWhichDatabase = async () => {
   const session = await getSession();
   const authorization = session?.authorizationToken;
-  const response = await axios.get(
-    `${API_URL_BASE}/change_db`,
-    {
-      headers: {
-        authorization: `Token ${authorization}`,
-      },
-    }
-  );
-  return response.data
-}
+  const response = await axios.get(`${API_URL_BASE}/change_db`, {
+    headers: {
+      authorization: `Token ${authorization}`,
+    },
+  });
+  return response.data;
+};

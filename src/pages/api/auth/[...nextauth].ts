@@ -28,7 +28,7 @@ export const authOptions = {
           response = await getUser({ username, password });
           authorizationToken = response.data.Authorization;
           userId = response.data.user_id;
-          // console.log("response.data in nextauth", response.data);
+           console.log("response.data in nextauth", response.data);
         } catch (error) {
           console.log("error", error);
         }
@@ -44,6 +44,7 @@ export const authOptions = {
           email: response.data.username,
           firstname: response.data.first_name,
           lastname: response.data.last_name,
+          selected_database:response.data.selected_database
         };
       },
     }),
@@ -56,6 +57,7 @@ export const authOptions = {
     async signIn({ user, account }: any) {
       account.firstname = user.firstname;
       account.lastname = user.lastname;
+      account.selected_database=user.selected_database
       return true;
     },
 
@@ -64,6 +66,7 @@ export const authOptions = {
       if (account) {
         token.firstname = account.firstname;
         token.lastname = account.lastname;
+        token.selected_database=account.selected_database
       }
       return token;
     },
@@ -78,6 +81,7 @@ export const authOptions = {
           email: token.email,
           first_name: token.firstname,
           last_name: token.lastname,
+          selected_database:token.selected_database
         },
         authorizationToken: token.name,
       };

@@ -174,7 +174,7 @@ export default function Home({ patients }: Props) {
               <FormattedMessage id="Insured_person" />
               <div>
                 {/* <p>You are in {usedDatabase?.active_db.database_name}</p> */}
-                <Form {...form}>
+                {/* <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit((data) => onSubmit(data))}
                     className="w-auto space-x-6 flex"
@@ -211,7 +211,7 @@ export default function Home({ patients }: Props) {
                       <FormattedMessage id="switch" />
                     </Button>
                   </form>
-                </Form>
+                </Form> */}
               </div>
             </CardTitle>
           </CardHeader>
@@ -285,7 +285,7 @@ export async function getServerSideProps(context: any) {
   const session = await getServerSession(context.req, context.res, authOptions);
   console.log("---------refresh");
   try {
-    const patients = await getAllPatients(session?.authorizationToken);
+    const patients = await getAllPatients(session?.authorizationToken,session?.selected_data_base);
     return {
       props: {
         patients,

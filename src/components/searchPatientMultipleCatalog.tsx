@@ -116,14 +116,19 @@ export function SeachPatientMultipleCatalog({
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3  flex ">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3  ">
         <Collapsible
           open={isOpen}
           onOpenChange={setIsOpen}
-          className="w-[450px] "
+          className="w-auto border-2"
+          style={{ gridTemplateColumns: "30px 450px auto", display: "grid" }}
         >
-          {" "}
-          <div className="flex">
+          <CollapsibleTrigger asChild className="col-start-1 w-[20px]">
+            <Button variant="ghost" size="sm" className="w-9 p-0">
+              <ChevronsUpDown className="h-4 w-4" />
+            </Button>
+          </CollapsibleTrigger>
+          <div className="flex justify-start w-[250px]">
             <FormLabel className="pt-2 mr-4 w-[150px]">
               <FormattedMessage id="ins_id" />
             </FormLabel>
@@ -140,199 +145,112 @@ export function SeachPatientMultipleCatalog({
                 </FormItem>
               )}
             />{" "}
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="w-9 p-0">
-                <ChevronsUpDown className="h-4 w-4" />
-                <span className="sr-only">Toggle</span>
-              </Button>
-            </CollapsibleTrigger>
-          </div>{" "}
-          <CollapsibleContent>
-            <div className="flex">
-              <FormLabel className="pt-2 mr-4 w-[150px]">
-                <FormattedMessage id="Firstname" />
-              </FormLabel>
-              <FormField
-                control={form.control}
-                name="firstname"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input {...field} className="w-[220px] mb-2 mr-2" />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex">
-              <FormLabel className="pt-2 mr-4 w-[150px]">
-                {" "}
-                <FormattedMessage id="Last_name" />
-              </FormLabel>
-              <FormField
-                control={form.control}
-                name="lastname"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input {...field} className="w-[220px] mb-2 mr-2" />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex w-fit pb-2 mr-4 ">
-              <FormLabel className="w-[150px] pt-2 mr-4">
-                <FormattedMessage id="Date_of_birth" />
-              </FormLabel>
-              <FormField
-                control={form.control}
-                name="dateOfBirthStart"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <Popover>
-                      <PopoverTrigger asChild>
+          </div>
+          <div className="flex border-4">
+            <Button disabled={isLoading} type="submit">
+              {isLoading && <Loader2 className="mx-2 h-4 w-4 animate-spin" />}
+              {isLoading ? "Loading..." : <FormattedMessage id="search" />}
+            </Button>
+            <Button className="mx-2" onClick={() => form.reset({})}>
+              <FormattedMessage id="reset" />
+            </Button>
+          </div>
+          <CollapsibleContent className="col-start-2">
+            <div className="grid grid-cols-2">
+              <div className="col-start-1 border-2 w-fit">
+                <div className="flex">
+                  <FormLabel className="pt-2 mr-4 w-[150px]">
+                    <FormattedMessage id="Firstname" />
+                  </FormLabel>
+                  <FormField
+                    control={form.control}
+                    name="firstname"
+                    render={({ field }) => (
+                      <FormItem>
                         <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-[220px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>
-                                {" "}
-                                <FormattedMessage id="date_picker" />
-                              </span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
+                          <Input {...field} className="w-[220px] mb-2 mr-2" />
                         </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          captionLayout="dropdown"
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          fromYear={1900}
-                          toYear={Number(new Date().getFullYear())}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              <p className="mx-4">
-                <FormattedMessage id="until" />
-              </p>
-              <FormField
-                control={form.control}
-                name="dateOfBirthEnd"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <Popover>
-                      <PopoverTrigger asChild>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex">
+                  <FormLabel className="pt-2 mr-4 w-[150px]">
+                    {" "}
+                    <FormattedMessage id="Last_name" />
+                  </FormLabel>
+                  <FormField
+                    control={form.control}
+                    name="lastname"
+                    render={({ field }) => (
+                      <FormItem>
                         <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-[220px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>
-                                {" "}
-                                <FormattedMessage id="date_picker" />
-                              </span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
+                          <Input {...field} className="w-[220px] mb-2 mr-2" />
                         </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          captionLayout="dropdown"
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          fromYear={1900}
-                          toYear={Number(new Date().getFullYear())}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex">
-              <FormLabel className="pt-2 mr-4 w-[150px]">
-                {" "}
-                <FormattedMessage id="Gender" />
-              </FormLabel>
-              <FormField
-                control={form.control}
-                name="gender"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl className="w-[220px] mb-2 mr-2">
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-[220px] justify-between font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value
-                              ? genders.find(
-                                  (gender) => gender.value === field.value
-                                )?.label
-                              : formatMessage({ id: "select_gender" })}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
-                        <Command>
-                          <CommandGroup>
-                            {genders.map((gender) => (
-                              <CommandItem
-                                value={gender.label}
-                                key={gender.value}
-                                onSelect={() => {
-                                  form.setValue("gender", gender.value);
-                                }}
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex">
+                  <FormLabel className="pt-2 mr-4 w-[150px]">
+                    {" "}
+                    <FormattedMessage id="Gender" />
+                  </FormLabel>
+                  <FormField
+                    control={form.control}
+                    name="gender"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl className="w-[220px] mb-2 mr-2">
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  "w-[220px] justify-between font-normal",
+                                  !field.value && "text-muted-foreground"
+                                )}
                               >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    gender.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {gender.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              {/* <FormField
+                                {field.value
+                                  ? genders.find(
+                                      (gender) => gender.value === field.value
+                                    )?.label
+                                  : formatMessage({ id: "select_gender" })}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-[200px] p-0">
+                            <Command>
+                              <CommandGroup>
+                                {genders.map((gender) => (
+                                  <CommandItem
+                                    value={gender.label}
+                                    key={gender.value}
+                                    onSelect={() => {
+                                      form.setValue("gender", gender.value);
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        gender.value === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {gender.label}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </FormItem>
+                    )}
+                  />
+                  {/* <FormField
                 control={form.control}
                 name="gender"
                 render={({ field }) => (
@@ -342,126 +260,215 @@ export function SeachPatientMultipleCatalog({
                     </FormControl>
                   </FormItem>
                 )} */}
-              {/* /> */}
+                  {/* /> */}
+                </div>
+              </div>
             </div>
-            <div className="flex">
-              <FormLabel className="pt-2 mr-4 w-[150px]">PLZ</FormLabel>
-              <FormField
-                control={form.control}
-                name="postNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input {...field} className="w-[220px] mb-2 mr-2" />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex w-fit pb-2 mr-4 ">
-              <FormLabel className="w-[150px] pt-2 mr-4">
-                <FormattedMessage id="Entry_date" />
-              </FormLabel>
-              <FormField
-                control={form.control}
-                name="entryDateStart"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-[220px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>
-                                {" "}
-                                <FormattedMessage id="date_picker" />
-                              </span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          captionLayout="dropdown"
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          fromYear={1900}
-                          toYear={Number(new Date().getFullYear())}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              <p className="mx-4">
-                <FormattedMessage id="until" />
-              </p>
-              <FormField
-                control={form.control}
-                name="entryDateEnd"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-[220px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>
-                                {" "}
-                                <FormattedMessage id="date_picker" />
-                              </span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          captionLayout="dropdown"
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          fromYear={1900}
-                          toYear={Number(new Date().getFullYear())}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormItem>
-                )}
-              />
+          </CollapsibleContent>
+          <CollapsibleContent className="col-start-3 border-2">
+            <div className=" border-2 ">
+              {" "}
+              <div className="flex w-fit pb-2 mr-4 ">
+                <FormLabel className="w-[150px] pt-2 mr-4">
+                  <FormattedMessage id="Date_of_birth" />
+                </FormLabel>
+                <FormField
+                  control={form.control}
+                  name="dateOfBirthStart"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-[220px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>
+                                  {" "}
+                                  <FormattedMessage id="date_picker" />
+                                </span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            captionLayout="dropdown"
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            fromYear={1900}
+                            toYear={Number(new Date().getFullYear())}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+                <p className="mx-4">
+                  <FormattedMessage id="until" />
+                </p>
+                <FormField
+                  control={form.control}
+                  name="dateOfBirthEnd"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-[220px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>
+                                  {" "}
+                                  <FormattedMessage id="date_picker" />
+                                </span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            captionLayout="dropdown"
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            fromYear={1900}
+                            toYear={Number(new Date().getFullYear())}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex">
+                <FormLabel className="pt-2 mr-4 w-[150px]">PLZ</FormLabel>
+                <FormField
+                  control={form.control}
+                  name="postNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input {...field} className="w-[220px] mb-2 mr-2" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex w-fit pb-2 mr-4 ">
+                <FormLabel className="w-[150px] pt-2 mr-4">
+                  <FormattedMessage id="Entry_date" />
+                </FormLabel>
+                <FormField
+                  control={form.control}
+                  name="entryDateStart"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-[220px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>
+                                  {" "}
+                                  <FormattedMessage id="date_picker" />
+                                </span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            captionLayout="dropdown"
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            fromYear={1900}
+                            toYear={Number(new Date().getFullYear())}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+                <p className="mx-4">
+                  <FormattedMessage id="until" />
+                </p>
+                <FormField
+                  control={form.control}
+                  name="entryDateEnd"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-[220px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>
+                                  {" "}
+                                  <FormattedMessage id="date_picker" />
+                                </span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            captionLayout="dropdown"
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            fromYear={1900}
+                            toYear={Number(new Date().getFullYear())}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
-        <Button disabled={isLoading} type="submit">
-          {" "}
-          {/* <FormattedMessage id="search" /> */}
-          {isLoading && <Loader2 className="mx-2 h-4 w-4 animate-spin" />}
-          {isLoading ? "Loading..." : <FormattedMessage id="search" />}
-        </Button>
-        <Button className="mx-2"
-        onClick={() => form.reset({
-          
-        })}><FormattedMessage id="reset" /></Button>
       </form>
     </Form>
   );
