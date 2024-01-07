@@ -170,8 +170,44 @@ export default function Home({ patients }: Props) {
       <section className="lg:mr-5 lg:mb-0 ">
         <Card className="border-0 shadow-none">
           <CardHeader>
-            <CardTitle className="flex justify-between">
+            <CardTitle className="flex justify-start ">
               <FormattedMessage id="Insured_person" />
+              <div className="flex gap-3 ml-3">
+                <Button
+                  onClick={() => setIsFlipped(!isFlipped)}
+                  variant="outline"
+                  className="h-9 md:h-8"
+                >
+                  {isFlipped ? (
+                    <ArrowDownUp className="h-4 w-4" />
+                  ) : (
+                    <ArrowUpDown className="h-4 w-4" />
+                  )}
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="h-9 md:h-8">
+                      <FormattedMessage id="Sorted_by" />:{" "}
+                      <b className="ml-1">{headerValue()}</b>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-48">
+                    <DropdownMenuRadioGroup
+                      value={sortBy}
+                      onValueChange={setSortBy}
+                    >
+                      {PatientColumnsTyped.map((column) => (
+                        <DropdownMenuRadioItem
+                          key={column.header}
+                          value={column.accessorKey}
+                        >
+                          {column.header}
+                        </DropdownMenuRadioItem>
+                      ))}
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
               <div>
                 {/* <p>You are in {usedDatabase?.active_db.database_name}</p> */}
                 {/* <Form {...form}>
@@ -216,47 +252,12 @@ export default function Home({ patients }: Props) {
             </CardTitle>
           </CardHeader>
           <CardContent className="px-1 md:px-6 h-full">
-            <div className="mt-5 mb-4 xl:flex w-full justify-between flex-wrap space-y-4 md:space-y-0 lg:block">
+            <div className="mt-5 mb-4 xl:flex w-full justify-start flex-wrap space-y-4 md:space-y-0 lg:block">
               <SeachPatientMultipleCatalog
                 setSearchParameters={setSearchParameters}
                 isLoading={isFetching}
               />
-              <div className="flex gap-3">
-                <Button
-                  onClick={() => setIsFlipped(!isFlipped)}
-                  variant="outline"
-                  className="h-9 md:h-8"
-                >
-                  {isFlipped ? (
-                    <ArrowDownUp className="h-4 w-4" />
-                  ) : (
-                    <ArrowUpDown className="h-4 w-4" />
-                  )}
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="h-9 md:h-8">
-                      <FormattedMessage id="Sorted_by" />:{" "}
-                      <b className="ml-1">{headerValue()}</b>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-48">
-                    <DropdownMenuRadioGroup
-                      value={sortBy}
-                      onValueChange={setSortBy}
-                    >
-                      {PatientColumnsTyped.map((column) => (
-                        <DropdownMenuRadioItem
-                          key={column.header}
-                          value={column.accessorKey}
-                        >
-                          {column.header}
-                        </DropdownMenuRadioItem>
-                      ))}
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+              
             </div>
             {sortedItems && (
               <div className="">
