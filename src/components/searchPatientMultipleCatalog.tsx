@@ -120,15 +120,15 @@ export function SeachPatientMultipleCatalog({
         <Collapsible
           open={isOpen}
           onOpenChange={setIsOpen}
-          className="w-auto border-2"
-          style={{ gridTemplateColumns: "30px 450px auto", display: "grid" }}
+          className="w-auto "
+          style={{ gridTemplateColumns: "40px 450px auto", display: "grid" }}
         >
-          <CollapsibleTrigger asChild className="col-start-1 w-[20px]">
+          <CollapsibleTrigger asChild className="col-start-1 w-[30px]">
             <Button variant="ghost" size="sm" className="w-9 p-0">
               <ChevronsUpDown className="h-4 w-4" />
             </Button>
           </CollapsibleTrigger>
-          <div className="flex justify-start w-[250px]">
+          <div className="flex justify-start">
             <FormLabel className="pt-2 mr-4 w-[150px]">
               <FormattedMessage id="ins_id" />
             </FormLabel>
@@ -146,7 +146,7 @@ export function SeachPatientMultipleCatalog({
               )}
             />{" "}
           </div>
-          <div className="flex border-4">
+          <div className="flex ">
             <Button disabled={isLoading} type="submit">
               {isLoading && <Loader2 className="mx-2 h-4 w-4 animate-spin" />}
               {isLoading ? "Loading..." : <FormattedMessage id="search" />}
@@ -157,7 +157,7 @@ export function SeachPatientMultipleCatalog({
           </div>
           <CollapsibleContent className="col-start-2">
             <div className="grid grid-cols-2">
-              <div className="col-start-1 border-2 w-fit">
+              <div className="col-start-1  w-fit">
                 <div className="flex">
                   <FormLabel className="pt-2 mr-4 w-[150px]">
                     <FormattedMessage id="Firstname" />
@@ -265,8 +265,8 @@ export function SeachPatientMultipleCatalog({
               </div>
             </div>
           </CollapsibleContent>
-          <CollapsibleContent className="col-start-3 border-2">
-            <div className=" border-2 ">
+          <CollapsibleContent className="col-start-3 ">
+            <div className="">
               {" "}
               <div className="flex w-fit pb-2 mr-4 ">
                 <FormLabel className="w-[150px] pt-2 mr-4">
