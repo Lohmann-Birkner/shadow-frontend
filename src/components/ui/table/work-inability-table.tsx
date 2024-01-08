@@ -245,7 +245,7 @@ export function WorkInabilityTable({
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
-                        className="h-14 pl-4 bg-white"
+                        className="h-14  bg-white"
                         key={cell.id}
                       >
                         {flexRender(

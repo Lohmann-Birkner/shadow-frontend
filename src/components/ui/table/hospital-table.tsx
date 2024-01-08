@@ -191,10 +191,11 @@ export function HospitalTable({
                     <TableHead
                       key={header.id}
                       className={cn(
-                        " text-slate-950 bg-slate-100 hover:cursor-grab pt-4 ",
+                        " text-slate-950 bg-slate-100 hover:cursor-grab pt-4 text-left",
                         locale === "en" ? "h-24" : "h-20",
                         idx === 1 && "sticky left-0 z-30 bg-slate-100"
                       )}
+                      style={{ width: header.getSize() }}
                       draggable={
                         !table.getState().columnSizingInfo.isResizingColumn
                       }
@@ -256,11 +257,12 @@ export function HospitalTable({
                     {row.getVisibleCells().map((cell, idx) => (
                       <TableCell
                         className={cn(
-                          "h-14 whitespace-nowrap pl-4 bg-white",
+                          "h-14 bg-white",
                           idx === 1 && "sticky left-0 z-10",
                           expandedRows[row.id] && "border-b-2"
                         )}
                         key={cell.id}
+                        style={{ width: cell.column.getSize() }}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

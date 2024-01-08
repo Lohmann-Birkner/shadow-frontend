@@ -45,6 +45,7 @@ import {
   TooltipTrigger,
 } from "../tooltip";
 import PrescriberTable from "./prescriber-table";
+import { Row } from "react-day-picker";
 
 //this function is built to filter the columns with data type number,
 //so that the column can be filtered according to a range and also an exact number
@@ -993,7 +994,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Main_ICD",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Main_ICD" />
             <Button
               variant="ghost"
@@ -1033,7 +1034,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Case_ID",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Case_ID" />
             <Button
               variant="ghost"
@@ -1052,7 +1053,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Start_work_inability",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Start_work_inability" />
             <Button
               variant="ghost"
@@ -1072,7 +1073,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "End_work_inability",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="End_work_inability" />
             <Button
               variant="ghost"
@@ -1094,7 +1095,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       filterFn: mulitiFunctionFilter,
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Total_days_benefits" />
             <Button
               variant="ghost"
@@ -1117,7 +1118,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
 
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="ID_Prescriber" />
             <Button
               variant="ghost"
@@ -1146,7 +1147,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       id: "Core_ID_prescriber",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Core_ID_prescriber" />
             <Button
               variant="ghost"
@@ -1165,7 +1166,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Physician_Specialty_Group",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Physician_Specialty_Group" />
             <Button
               variant="ghost"
@@ -1184,7 +1185,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Payment_area",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Payment_area" />
             <Button
               variant="ghost"
@@ -1203,7 +1204,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Type_EEL",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Type_EEL" />
             <Button
               variant="ghost"
@@ -1222,7 +1223,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "Start_EEL",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Start_EEL" />
             <Button
               variant="ghost"
@@ -1249,7 +1250,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       accessorKey: "End_EEL",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="End_EEL" />
             <Button
               variant="ghost"
@@ -1278,7 +1279,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       id: "Total_days_EEL",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Total_days_EEL" />
             <Button
               variant="ghost"
@@ -1299,7 +1300,7 @@ export const WorkInabilityColumns = (): ColumnDef<WorkInabilityT>[] => {
       id: "Net_amount_EEL",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Net_amount_EEL" />
             <Button
               variant="ghost"
@@ -1633,7 +1634,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
 
       header: ({ column }) => {
         return (
-          <div className="flex justify-center">
+          <div className="flex justify-start">
             <FormattedMessage id="ID_Insured" />
             <Button
               className="p-0 ml-1 h-5"
@@ -1652,7 +1653,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Case_number",
       header: ({ column }) => {
         return (
-          <div className="flex justify-center">
+          <div className="flex justify-start">
             <FormattedMessage id="Case_number" />
             <Button
               className="p-0 ml-1 h-5"
@@ -1671,7 +1672,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Admission_date",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Admission_date" />
             <Button
               variant="ghost"
@@ -1691,7 +1692,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Reason_admission",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Admission_date" />
             <Button
               variant="ghost"
@@ -1733,16 +1734,56 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
         );
       },
     },
-
     {
-      accessorKey: "Admission_weight_infant",
-      id: "Admission_weight_infant",
+      accessorKey: "Cost_total",
+      id: "Cost_total",
+
       filterFn: mulitiFunctionFilter,
 
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="Admission_weight_infant" />
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="Cost_total" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+      cell: ({ row }) => showCostInTwoDigit(row.getValue("Cost_total")),
+    },
+    {
+      accessorKey: "DRG",
+      cell: ({ row }) => {
+        const DRGText = row.original.DRG_Text;
+
+        const DRGTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {row.original.DRG}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="w-[400px] whitespace-normal">
+                  {row.original.DRG_Text}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+        return DRGText ? DRGTextTooltip : <div>{row.getValue("DRG")}</div>;
+      },
+      header: ({ column }) => {
+        return (
+          <div className="flex  font-bold justify-start">
+            <FormattedMessage id="DRG" />
             <Button
               variant="ghost"
               className="p-0 ml-1 h-5"
@@ -1757,10 +1798,155 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       },
     },
     {
+      accessorKey: "DRG_Text",
+      id: "DRG_Text",
+      header: ({ column }) => {
+        return (
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="DRG_Text" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        const DRGText = (
+          <div className="whitespace-normal">{row.original.DRG_Text}</div>
+        );
+        return DRGText;
+      },
+      size: 500,
+    },
+    {
+      filterFn: mulitiFunctionFilter,
+      accessorKey: "Occupancy_days",
+      id: "Occupancy_days",
+      header: ({ column }) => {
+        return (
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="Occupancy_days" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "Number_ventilation_days",
+      id: "Number_ventilation_days",
+      filterFn: mulitiFunctionFilter,
+      header: ({ column }) => {
+        return (
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="Number_ventilation_days" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "Department_Admission",
+      header: ({ column }) => {
+        return (
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="Department_Admission" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "Department_Discharge",
+      header: ({ column }) => {
+        return (
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="Department_Discharge" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "ICD",
+      cell: ({ row }) => {
+        const ICDText = row.original.ICD_Text;
+
+        const ICDTextTooltip = (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="flex items-center">
+                {row.original.ICD}
+                <Info className="w-4 h-4 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{row.original.ICD_Text}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+        return ICDText ? ICDTextTooltip : <div>{row.getValue("ICD")}</div>;
+      },
+      header: ({ column }) => {
+        return (
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="ICD" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+    },
+
+    {
       accessorKey: "Reason_discharge",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Reason_discharge" />
             <Button
               variant="ghost"
@@ -1807,7 +1993,7 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       accessorKey: "Date_discharge",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Date_discharge" />
             <Button
               variant="ghost"
@@ -1825,10 +2011,29 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
     },
 
     {
+      accessorKey: "ID_Hospital",
+      header: ({ column }) => {
+        return (
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="ID_Hospital" />
+            <Button
+              variant="ghost"
+              className="p-0 ml-1 h-5"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <ArrowUpDown className=" h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+    },
+    {
       accessorKey: "Delivery_date",
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
+          <div className="flex font-bold justify-start">
             <FormattedMessage id="Delivery_date" />
             <Button
               variant="ghost"
@@ -1852,189 +2057,14 @@ export const HospitalColumns = (): ColumnDef<HospitalT>[] => {
       },
     },
     {
-      accessorKey: "Number_ventilation_days",
-      id: "Number_ventilation_days",
-      filterFn: mulitiFunctionFilter,
-      header: ({ column }) => {
-        return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="Number_ventilation_days" />
-            <Button
-              variant="ghost"
-              className="p-0 ml-1 h-5"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className=" h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "Cost_total",
-      id: "Cost_total",
-
+      accessorKey: "Admission_weight_infant",
+      id: "Admission_weight_infant",
       filterFn: mulitiFunctionFilter,
 
       header: ({ column }) => {
         return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="Cost_total" />
-            <Button
-              variant="ghost"
-              className="p-0 ml-1 h-5"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className=" h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-      cell: ({ row }) => showCostInTwoDigit(row.getValue("Cost_total")),
-    },
-    {
-      accessorKey: "ID_Hospital",
-      header: ({ column }) => {
-        return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="ID_Hospital" />
-            <Button
-              variant="ghost"
-              className="p-0 ml-1 h-5"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className=" h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "Department_Admission",
-      header: ({ column }) => {
-        return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="Department_Admission" />
-            <Button
-              variant="ghost"
-              className="p-0 ml-1 h-5"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className=" h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "Department_Discharge",
-      header: ({ column }) => {
-        return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="Department_Discharge" />
-            <Button
-              variant="ghost"
-              className="p-0 ml-1 h-5"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className=" h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "ICD",
-      cell: ({ row }) => {
-        const ICDText = row.original.ICD_Text;
-
-        const ICDTextTooltip = (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger className="flex items-center">
-                {row.original.ICD}
-                <Info className="w-4 h-4 ml-1" />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{row.original.ICD_Text}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        );
-        return ICDText ? ICDTextTooltip : <div>{row.getValue("ICD")}</div>;
-      },
-      header: ({ column }) => {
-        return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="ICD" />
-            <Button
-              variant="ghost"
-              className="p-0 ml-1 h-5"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className=" h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "DRG",
-      cell: ({ row }) => {
-        const DRGText = row.original.DRG_Text;
-
-        const DRGTextTooltip = (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger className="flex items-center">
-                {row.original.DRG}
-                <Info className="w-4 h-4 ml-1" />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="w-[400px]">{row.original.DRG_Text}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        );
-        return DRGText ? DRGTextTooltip : <div>{row.getValue("DRG")}</div>;
-      },
-      header: ({ column }) => {
-        return (
-          <div className="flex  font-bold justify-center">
-            <FormattedMessage id="DRG" />
-            <Button
-              variant="ghost"
-              className="p-0 ml-1 h-5"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              <ArrowUpDown className=" h-4 w-4" />
-            </Button>
-          </div>
-        );
-      },
-    },
-    {
-      filterFn: mulitiFunctionFilter,
-      accessorKey: "Occupancy_days",
-      id: "Occupancy_days",
-      header: ({ column }) => {
-        return (
-          <div className="flex font-bold justify-center">
-            <FormattedMessage id="Occupancy_days" />
+          <div className="flex font-bold justify-start">
+            <FormattedMessage id="Admission_weight_infant" />
             <Button
               variant="ghost"
               className="p-0 ml-1 h-5"
@@ -2073,23 +2103,21 @@ export const HospitalDiagnosisColumns = (): ColumnDef<
       accessorKey: "ID_type_diagnosis",
       header: formatMessage({ id: "ID_type_diagnosis" }),
       size: 50,
-    },
-    {
-      accessorKey: "Type_diagnosis",
-      header: formatMessage({ id: "Type_diagnosis" }),
-    },
-    {
-      accessorKey: "Kind_diagnosis",
-      id: "Kind_diagnosis",
-      header: formatMessage({ id: "Kind_diagnosis" }),
+    
     },
 
+    {
+      accessorKey: "Type_diagnosis",
+      id: "Type_diagnosis",
+      header: formatMessage({ id: "Type_diagnosis" }),
+    },
     {
       accessorKey: "Hospital_Type_diagnosis",
       header: formatMessage({ id: "Type_diagnosis" }),
 
       cell: ({ row }) => row.getValue("Type_diagnosis"),
     },
+
     {
       accessorKey: "Hospital_Localization_diagnosis",
       header: formatMessage({ id: "Localization_diagnosis" }),
@@ -2097,7 +2125,13 @@ export const HospitalDiagnosisColumns = (): ColumnDef<
     },
     {
       accessorKey: "Localization_diagnosis",
+      id: "Localization_diagnosis",
       header: formatMessage({ id: "Localization_diagnosis" }),
+    },
+    {
+      accessorKey: "Kind_diagnosis",
+      id: "Kind_diagnosis",
+      header: formatMessage({ id: "Kind_diagnosis" }),
     },
   ];
 };
@@ -2170,11 +2204,9 @@ export const HospitalProcedureColumns = (): ColumnDef<
       accessorKey: "OPS_Text",
       header: formatMessage({ id: "OPS_Text" }),
       cell: (OPS_Text) => (
-        <div className="">
-          {OPS_Text.getValue() as React.ReactNode}
-        </div>
+        <div className="">{OPS_Text.getValue() as React.ReactNode}</div>
       ),
-      size:700
+      size: 700,
     },
     {
       accessorKey: "Date_operation",
@@ -2185,10 +2217,10 @@ export const HospitalProcedureColumns = (): ColumnDef<
       accessorKey: "Localization_Operation",
       header: formatMessage({ id: "Localization_Operation" }),
     },
-    {
-      accessorKey: "Category_115_SGB",
-      header: formatMessage({ id: "Category_115_SGB" }),
-    },
+    // {
+    //   accessorKey: "Category_115_SGB",
+    //   header: formatMessage({ id: "Category_115_SGB" }),
+    // },
   ];
 };
 
@@ -2249,30 +2281,6 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
       size: 50,
     },
     {
-      accessorKey: "Main_diagnosis",
-      header: formatMessage({ id: "Main_diagnosis" }),
-      size: 50,
-    },
-    {
-      accessorKey: "ICD_Main_Text",
-      header: formatMessage({ id: "ICD_Main_Text" }),
-    },
-    {
-      accessorKey: "Localization_diagnosis",
-      header: formatMessage({ id: "Localization_diagnosis" }),
-      size: 50,
-    },
-    {
-      accessorKey: "Rehab_Localization_diagnosis",
-      header: formatMessage({ id: "Localization_diagnosis" }),
-      cell: ({ row }) => row.getValue("Localization_diagnosis"),
-      size: 50,
-    },
-    {
-      accessorKey: "Localization_diagnosis_addition",
-      header: formatMessage({ id: "Localization_diagnosis_addition" }),
-    },
-    {
       accessorKey: "Primary_diagnosis",
       header: formatMessage({ id: "Primary_diagnosis" }),
       size: 50,
@@ -2313,6 +2321,32 @@ export const RehabDiagnosisColumns = (): ColumnDef<RehabT["diagnosis"]>[] => {
       header: formatMessage({ id: "Secondary_diagnosis" }),
       cell: ({ row }) => row.getValue("Secondary_diagnosis"),
     },
+    {
+      accessorKey: "Main_diagnosis",
+      header: formatMessage({ id: "Main_diagnosis" }),
+      size: 50,
+    },
+    {
+      accessorKey: "ICD_Main_Text",
+      header: formatMessage({ id: "ICD_Main_Text" }),
+    },
+    {
+      accessorKey: "Localization_diagnosis",
+      header: formatMessage({ id: "Localization_diagnosis" }),
+      size: 50,
+    },
+    {
+      accessorKey: "Rehab_Localization_diagnosis",
+      header: formatMessage({ id: "Localization_diagnosis" }),
+      cell: ({ row }) => row.getValue("Localization_diagnosis"),
+      size: 50,
+    },
+    {
+      accessorKey: "Localization_diagnosis_addition",
+      header: formatMessage({ id: "Localization_diagnosis_addition" }),
+    },
+   
+    
   ];
 };
 

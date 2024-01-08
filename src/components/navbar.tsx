@@ -23,15 +23,15 @@ function Navbar() {
         {data?.user && (
           <>
             <div className="flex h-5 items-center space-x-4 text-md mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1 mr-5 mt-1">
-              <div>Email:{data.user.email}</div>
+              <div>Email: {data.user.email}</div>
               <Separator orientation="vertical" />
               <div>
                 <FormattedMessage id="userId"/>
-                :{data.user.user_id}</div>
+                : {data.user.user_id}</div>
               <Separator orientation="vertical" />
-              <div><FormattedMessage id="Last_name" />:{data.user.last_name}</div>
+              <div><FormattedMessage id="Last_name" />: {data.user.last_name}</div>
               <Separator orientation="vertical" />
-              <div><FormattedMessage id="first_name" />:{data.user.first_name}</div>
+              <div><FormattedMessage id="first_name" />: {data.user.first_name}</div>
               <Separator orientation="vertical" />
 
 
